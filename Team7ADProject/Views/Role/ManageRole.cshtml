@@ -1,0 +1,41 @@
+﻿@model Team7ADProject.Controllers.ManageRoleViewModel
+
+
+@*{
+        List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole> roles = Model.Roles;
+        List<Team7ADProject.Models.ApplicationUser> users = Model.Users;
+    }*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("ManageRole2", "Role", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <h4>Manage Roles</h4>
+    <hr />
+    @Html.DropDownListFor(m => m.RoleId, Model.RoleList, "Select Role")
+    <br />
+    <br />
+    @Html.DropDownListFor(m => m.UserId, Model.UserList, "Select User")
+
+    @*
+        <select>
+            @foreach (var role in roles)
+            {
+                <option value="@role.Name">@role.Name</option>
+            }
+        </select>
+        <select>
+            @foreach (var user in users)
+            {
+                <option value="@user.UserName">@user.UserName</option>
+            }
+        </select>
+    *@
+
+    <br />
+    <br />
+    <div>
+        <input type="submit" value="Assign" class="btn btn-default" />
+    </div>
+}
