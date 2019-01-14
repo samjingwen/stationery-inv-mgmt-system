@@ -10,6 +10,7 @@ namespace Team7ADProject.Controllers
     {
         public ActionResult Index()
         {
+            //Hungry ttm
             return View();
         }
 
