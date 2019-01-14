@@ -1,32 +1,26 @@
-﻿@model List<Team7ADProject.Entities.CollectionPoint>
+﻿@model Team7ADProject.ViewModels.CollectionPointViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
-@using (Html.BeginForm("Index", "CollectionPoint", FormMethod.Post))
+@using (Html.BeginForm("UpdateCollectionPoint", "CollectionPoint", FormMethod.Post))
 {
-<table>
-    <span>Current Collection Point: @ViewBag.cpName</span>  
-    @foreach (var item in Model)
+    <h2>Current Collection Point: @ViewBag.cpName</h2>
+
+  
+
+    foreach (var cp in Model.CollectionPoints)
     {
-    <tr>
-        <td>
-        </td>
-        <td>
-            @Html.HiddenFor(modelItem => item.CollectionPointId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CollectionDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-    </tr>
+        @Html.RadioButtonFor(m => m.SelectedCP, cp.CollectionPointId, (cp.CollectionPointId.Equals(1) ? new { @checked = "checked" } : null)) 
+        @cp.CollectionDescription
+        <br />
     }
-</table>
+    <br />
+    <br />
+
+    <input type="submit" value="Submit" />
 
 
 

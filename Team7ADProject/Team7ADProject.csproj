@@ -261,6 +261,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CollectionPointViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\useremails.txt" />
@@ -330,9 +331,9 @@
     <Content Include="Views\Role\CreateUsers.cshtml" />
     <Content Include="Views\ManageRep\Index.cshtml" />
     <Content Include="Views\CollectionPoint\Index.cshtml" />
+    <Content Include="Views\CollectionPoint\UpdateCollectionPoint.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\" />
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\ApproveAdjustment\" />
     <Folder Include="Views\ApproveOrder\" />
