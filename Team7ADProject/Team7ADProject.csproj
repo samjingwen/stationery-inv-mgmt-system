@@ -49,6 +49,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -57,6 +60,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -191,22 +200,62 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIControllers\ApproveOrderController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AmendRequestController.cs" />
+    <Compile Include="Controllers\ApproveAdjustmentController.cs" />
+    <Compile Include="Controllers\ApproveOrderController.cs" />
+    <Compile Include="Controllers\ChargeBackController.cs" />
+    <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\ConsolidateDisbursementController.cs" />
+    <Compile Include="Controllers\DelegateHeadController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
+    <Compile Include="Controllers\GenerateReportController.cs" />
+    <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManagePointController.cs" />
     <Compile Include="Controllers\ManageRepController.cs" />
+    <Compile Include="Controllers\ManageRequestController.cs" />
+    <Compile Include="Controllers\ManageRetrievalController.cs" />
+    <Compile Include="Controllers\ManageStationeryController.cs" />
+    <Compile Include="Controllers\ManageSupplierController.cs" />
+    <Compile Include="Controllers\RaiseAdjustmentController.cs" />
+    <Compile Include="Controllers\RaiseOrderController.cs" />
+    <Compile Include="Controllers\RaiseRequestController.cs" />
+    <Compile Include="Controllers\ReceiveGoodsController.cs" />
+    <Compile Include="Controllers\ReceiveOrderController.cs" />
+    <Compile Include="Controllers\ReturnWarehouseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\UpdateWarehouseController.cs" />
+    <Compile Include="Controllers\VoidDisbursementController.cs" />
+    <Compile Include="Entities\AspNetRoles.cs" />
+    <Compile Include="Entities\AspNetUsers.cs" />
+    <Compile Include="Entities\CollectionPoint.cs" />
+    <Compile Include="Entities\DelegationOfAuthority.cs" />
+    <Compile Include="Entities\DeliveryOrder.cs" />
+    <Compile Include="Entities\Department.cs" />
+    <Compile Include="Entities\Disbursement.cs" />
+    <Compile Include="Entities\Invoice.cs" />
+    <Compile Include="Entities\LogicDB.cs" />
+    <Compile Include="Entities\PurchaseOrder.cs" />
+    <Compile Include="Entities\Stationery.cs" />
+    <Compile Include="Entities\StationeryRequest.cs" />
+    <Compile Include="Entities\StationeryRetrieval.cs" />
+    <Compile Include="Entities\StockAdjustment.cs" />
+    <Compile Include="Entities\Supplier.cs" />
+    <Compile Include="Entities\TransactionDetail.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\GitController.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -281,9 +330,31 @@
     <Content Include="Views\ManageRep\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entities\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\AmendRequest\" />
+    <Folder Include="Views\ApproveAdjustment\" />
+    <Folder Include="Views\ApproveOrder\" />
+    <Folder Include="Views\ChargeBack\" />
+    <Folder Include="Views\CollectionPoint\" />
     <Folder Include="Views\Common\" />
-    <Folder Include="Views\Git\" />
+    <Folder Include="Views\ConsolidateDisbursement\" />
+    <Folder Include="Views\DelegateHead\" />
+    <Folder Include="Views\Email\" />
+    <Folder Include="Views\GenerateReport\" />
+    <Folder Include="Views\History\" />
+    <Folder Include="Views\ManagePoint\" />
+    <Folder Include="Views\ManageRequest\" />
+    <Folder Include="Views\ManageRetrieval\" />
+    <Folder Include="Views\ManageStationery\" />
+    <Folder Include="Views\ManageSupplier\" />
+    <Folder Include="Views\RaiseAdjustment\" />
+    <Folder Include="Views\RaiseOrder\" />
+    <Folder Include="Views\RaiseRequest\" />
+    <Folder Include="Views\ReceiveGoods\" />
+    <Folder Include="Views\ReceiveOrder\" />
+    <Folder Include="Views\ReturnWarehouse\" />
+    <Folder Include="Views\UpdateWarehouse\" />
+    <Folder Include="Views\VoidDisbursement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
