@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,11 +14,13 @@ namespace Team7ADProject.Controllers
     public class CollectionPointController : Controller
     {
         #region Author: Sam Jing Wen
-        // GET: CollectionPoint
+        [Authorize(Roles = "Department Head, Department Representative")]
         public ActionResult Index()
         {
-
             LogicDB context = new LogicDB();
+            string userId = User.Identity.GetUserId();
+            string cpName = context.AspNetUsers.FirstOrDefault(x => x.Id == userId).Department.CollectionPoint.CollectionDescription;
+            ViewBag.cpName = cpName;
             var list = context.CollectionPoint.ToList();
             return View(list);
         }

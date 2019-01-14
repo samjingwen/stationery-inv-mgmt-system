@@ -8,12 +8,25 @@
 
 @using (Html.BeginForm("Index", "CollectionPoint", FormMethod.Post))
 {
-    foreach (var item in Model)
+<table>
+    <span>Current Collection Point: @ViewBag.cpName</span>  
+    @foreach (var item in Model)
     {
-        <div>@Html.HiddenFor(modelItem => item.CollectionPointId)</div>
-        <div>@Html.DisplayFor(modelItem => item.CollectionDescription)</div>
-        <div>@Html.DisplayFor(modelItem => item.Time)</div>
+    <tr>
+        <td>
+        </td>
+        <td>
+            @Html.HiddenFor(modelItem => item.CollectionPointId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CollectionDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+    </tr>
     }
+</table>
 
 
 
