@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Team7ADProject.Controllers
 {
-    //For DH or DR to change collection point
+    //For store clerk to add new collection point
     public class ManagePointController : Controller
     {
         // GET: ManagePoint
