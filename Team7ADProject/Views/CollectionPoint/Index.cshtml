@@ -10,8 +10,9 @@
 {
     foreach (var item in Model)
     {
-        @Html.HiddenFor(modelItem => item.CollectionPointId)
-
+        <div>@Html.HiddenFor(modelItem => item.CollectionPointId)</div>
+        <div>@Html.DisplayFor(modelItem => item.CollectionDescription)</div>
+        <div>@Html.DisplayFor(modelItem => item.Time)</div>
     }
 
 
