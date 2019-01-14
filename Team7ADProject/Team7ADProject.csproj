@@ -202,6 +202,22 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageRepController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Entities\AspNetRoles.cs" />
+    <Compile Include="Entities\AspNetUsers.cs" />
+    <Compile Include="Entities\CollectionPoint.cs" />
+    <Compile Include="Entities\DelegationOfAuthority.cs" />
+    <Compile Include="Entities\DeliveryOrder.cs" />
+    <Compile Include="Entities\Department.cs" />
+    <Compile Include="Entities\Disbursement.cs" />
+    <Compile Include="Entities\Invoice.cs" />
+    <Compile Include="Entities\LogicDB.cs" />
+    <Compile Include="Entities\PurchaseOrder.cs" />
+    <Compile Include="Entities\Stationery.cs" />
+    <Compile Include="Entities\StationeryRequest.cs" />
+    <Compile Include="Entities\StationeryRetrieval.cs" />
+    <Compile Include="Entities\StockAdjustment.cs" />
+    <Compile Include="Entities\Supplier.cs" />
+    <Compile Include="Entities\TransactionDetail.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -280,7 +296,6 @@
     <Content Include="Views\ManageRep\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entities\" />
     <Folder Include="Views\Common\" />
   </ItemGroup>
   <ItemGroup>
