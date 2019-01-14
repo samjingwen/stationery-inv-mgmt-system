@@ -39,6 +39,9 @@ namespace Team7ADProject.Entities
         [StringLength(10)]
         public string PONo { get; set; }
 
+        [StringLength(10)]
+        public string Status { get; set; }
+
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         public virtual PurchaseOrder PurchaseOrder { get; set; }

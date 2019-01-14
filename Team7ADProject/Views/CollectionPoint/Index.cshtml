@@ -1,0 +1,19 @@
+﻿@model List<Team7ADProject.Entities.CollectionPoint>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("Index", "CollectionPoint", FormMethod.Post))
+{
+    foreach (var item in Model)
+    {
+        @Html.HiddenFor(modelItem => item.CollectionPointId)
+
+    }
+
+
+
+}

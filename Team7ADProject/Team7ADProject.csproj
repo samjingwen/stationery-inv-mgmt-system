@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -328,6 +329,7 @@
     <Content Include="Views\Role\ManageRole2.cshtml" />
     <Content Include="Views\Role\CreateUsers.cshtml" />
     <Content Include="Views\ManageRep\Index.cshtml" />
+    <Content Include="Views\CollectionPoint\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
@@ -335,7 +337,6 @@
     <Folder Include="Views\ApproveAdjustment\" />
     <Folder Include="Views\ApproveOrder\" />
     <Folder Include="Views\ChargeBack\" />
-    <Folder Include="Views\CollectionPoint\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\DelegateHead\" />
