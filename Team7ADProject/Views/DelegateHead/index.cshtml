@@ -1,0 +1,151 @@
+﻿
+@model Team7ADProject.ViewModels.DelegateHeadViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    foreach (var c in Model.DelegateHead)
+    {
+        listItems.Add(new SelectListItem
+        {
+
+            Text = c.EmployeeName,
+            Value = c.Id
+        });
+    }
+}
+
+
+<h1>Delegate authority</h1>
+
+<h5>Department Name :  @ViewBag.DepName  </h5>
+<br />
+@using (Html.BeginForm("Delegate", "DelegateHead", FormMethod.Post))
+{
+    <label >Employee name: </label>
+    @Html.DropDownListFor(model => model.SelectedUser, listItems, "-- Select Employee --")
+    <br />
+    <br />
+    <label for="datepicker">Start Date : </label>
+
+    @Html.TextBox("YourTextBox", "", new { @class = "date-picker", @readonly = "readonly" })
+
+    <label for="datepicker">End Date : </label>
+
+    @Html.TextBox("YourTextBox2", "", new { @class = "date-picker1", @readonly = "readonly" })
+    <br />
+    <br />
+    <input type="submit" value="Submit" />
+}
+
+@section Scripts {
+    <!-- jQuery UI CSS Reference -->
+    <link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" />
+    <!-- Required jQuery and jQuery UI Javascript references -->
+    <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.10.4.min.js")"></script>
+
+
+    <!-- Code to wire up your DatePicker -->
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker({
+                dateFormat: 'yy-mm-dd',
+                showAnim: 'clip',
+                onSelect: function (date) {
+                    $('.date-picker1').datepicker("option", "disabled", false);
+                    $(".date-picker1").datepicker("option", "minDate", date);
+                    $(".date-picker1").datepicker("option", "maxDate", '+2y');
+                    $('.date-picker1').datepicker('setDate', date);
+                }
+
+            });
+            $(".date-picker").datepicker("option", { minDate: + 0 });
+            // $(".date-picker").datepicker('setDate', 'today');
+
+            $(".date-picker1").datepicker({
+                dateFormat: 'yy-mm-dd',
+                showAnim: 'clip',
+                disabled: true
+
+            });
+
+
+        })
+
+
+
+
+    </script>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<h6>Delegate Department Head Authority for @Html.Display(Model.DelegateHead.First().DepartmentId)</h6>
+
+    <table>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model.DelegateHead)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Delegate", "DelegatAuthority", new { id = item.Id }) |
+                </td>
+            </tr>
+        }
+
+    </table>*@
+
+<br />
+<br />
+
+

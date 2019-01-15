@@ -24,9 +24,16 @@ namespace Team7ADProject.ViewModels
 
     public class ManagePointViewModel
     {
+        [Required]
         public int CollectionPointId { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string CollectionDescription { get; set; }
-        public DateTime Time { get; set; }
+
+        [Required]
+        [RegularExpression(pattern:"\\d{1,2}:\\d{2}\\s*(AM|PM)",ErrorMessage = "Please enter a valid time.")]
+        public string Time { get; set; }
     }
     #endregion
 
