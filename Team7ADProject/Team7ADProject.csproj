@@ -389,18 +389,17 @@
     <Content Include="Views\ManageStationery\Index.cshtml" />
     <Content Include="Views\ManageStationery\StationeryForm.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
+    <Content Include="Views\ChargeBack\ChargeBack.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\ApproveAdjustment\" />
     <Folder Include="Views\ApproveOrder\" />
-    <Folder Include="Views\ChargeBack\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\DelegateHead\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\GenerateReport\" />
-    <Folder Include="Views\History\" />
     <Folder Include="Views\ManageRequest\" />
     <Folder Include="Views\ManageRetrieval\" />
     <Folder Include="Views\RaiseAdjustment\" />
