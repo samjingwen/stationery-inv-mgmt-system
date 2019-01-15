@@ -381,6 +381,7 @@
     <Content Include="Views\ManageSupplier\Details.cshtml" />
     <Content Include="Views\ManageSupplier\Edit.cshtml" />
     <Content Include="Views\ManageSupplier\Index.cshtml" />
+    <Content Include="Views\RaiseRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
@@ -398,7 +399,6 @@
     <Folder Include="Views\ManageStationery\" />
     <Folder Include="Views\RaiseAdjustment\" />
     <Folder Include="Views\RaiseOrder\" />
-    <Folder Include="Views\RaiseRequest\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
     <Folder Include="Views\ReturnWarehouse\" />
