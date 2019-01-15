@@ -1,0 +1,96 @@
+﻿@model Team7ADProject.ViewModels.StationeryFormViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Title</h2>
+@using (Html.BeginForm("Save", "ManageStationery"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+    <div class="form-group">
+        @Html.LabelFor(m => m.ItemId)
+        @Html.TextBoxFor(m => m.ItemId, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ItemId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Categories)
+        @Html.DropDownListFor(m => m.Category, new SelectList(Model.Categories), "Select Category", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Category)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Description)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ReorderLevel)
+        @Html.TextBoxFor(m => m.ReorderLevel, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ReorderLevel)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ReorderQuantity)
+        @Html.TextBoxFor(m => m.ReorderQuantity, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ReorderQuantity)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.UnitOfMeasure)
+        @Html.DropDownListFor(m => m.UnitOfMeasure, new SelectList(Model.Units), "Select Unit", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.UnitOfMeasure)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.QuantityTransit)
+        @Html.TextBoxFor(m => m.QuantityTransit, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.QuantityTransit)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.QuantityWarehouse)
+        @Html.TextBoxFor(m => m.QuantityWarehouse, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.QuantityWarehouse)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Location)
+        @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Location)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstSupplierId)
+        @Html.DropDownListFor(m => m.FirstSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FirstSupplierId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstSuppPrice)
+        @Html.TextBoxFor(m => m.FirstSuppPrice, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FirstSuppPrice)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SecondSupplierId)
+        @Html.DropDownListFor(m => m.SecondSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SecondSupplierId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SecondSuppPrice)
+        @Html.TextBoxFor(m => m.SecondSuppPrice, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SecondSuppPrice)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ThirdSupplierId)
+        @Html.DropDownListFor(m => m.ThirdSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ThirdSupplierId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ThirdSuppPrice)
+        @Html.TextBoxFor(m => m.ThirdSuppPrice, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ThirdSuppPrice)
+    </div>
+    <div>
+        @Html.HiddenFor(m => m.ItemId)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
