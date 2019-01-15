@@ -18,21 +18,25 @@
 }
 
 
-<h2>Delegate authority</h2>
+<h1>Delegate authority</h1>
+
+<h5>Department Name :  @ViewBag.DepName  </h5>
+<br />
 @using (Html.BeginForm("Delegate", "DelegateHead", FormMethod.Post))
 {
-
+    <label >Employee name: </label>
     @Html.DropDownListFor(model => model.SelectedUser, listItems, "-- Select Employee --")
-
-
+    <br />
+    <br />
     <label for="datepicker">Start Date : </label>
 
-    @Html.TextBox("YourTextBox", "", new { @class = "date-picker" })
+    @Html.TextBox("YourTextBox", "", new { @class = "date-picker", @readonly = "readonly" })
 
     <label for="datepicker">End Date : </label>
 
-    @Html.TextBox("YourTextBox2", "", new { @class = "date-picker1" })
-
+    @Html.TextBox("YourTextBox2", "", new { @class = "date-picker1", @readonly = "readonly" })
+    <br />
+    <br />
     <input type="submit" value="Submit" />
 }
 
@@ -48,13 +52,30 @@
     <script type="text/javascript">
         $(function () {
             // This will make every element with the class "date-picker" into a DatePicker element
-            $('.date-picker').datepicker();
-        
+            $('.date-picker').datepicker({
+                dateFormat: 'yy-mm-dd',
+                showAnim: 'clip',
+                onSelect: function (date) {
+                    $('.date-picker1').datepicker("option", "disabled", false);
+                    $(".date-picker1").datepicker("option", "minDate", date);
+                    $(".date-picker1").datepicker("option", "maxDate", '+2y');
+                    $('.date-picker1').datepicker('setDate', date);
+                }
+
+            });
+            $(".date-picker").datepicker("option", { minDate: + 0 });
+            // $(".date-picker").datepicker('setDate', 'today');
+
+            $(".date-picker1").datepicker({
+                dateFormat: 'yy-mm-dd',
+                showAnim: 'clip',
+                disabled: true
+
+            });
+
+
         })
-        $(function () {
-            // This will make every element with the class "date-picker" into a DatePicker element
-            $('.date-picker1').datepicker();
-        })
+
 
 
 
