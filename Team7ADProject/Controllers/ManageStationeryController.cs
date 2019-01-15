@@ -43,8 +43,8 @@ namespace Team7ADProject.Controllers
 
         public ActionResult Save()
         {
-            //if (!ModelState.IsValid)
-            //throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            throw new NotImplementedException();
             return View();
         }
     }

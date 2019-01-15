@@ -18,6 +18,7 @@ namespace Team7ADProject.Entities
 
         [Key]
         [StringLength(10)]
+        [Display(Name = "PO Number")]
         public string PONo { get; set; }
 
         [Required]
@@ -34,7 +35,9 @@ namespace Team7ADProject.Entities
         [Column(TypeName = "numeric")]
         public decimal Amount { get; set; }
 
+
         [Column(TypeName = "date")]
+        [Display(Name = "PO Date")]
         public DateTime Date { get; set; }
 
         [Required]
