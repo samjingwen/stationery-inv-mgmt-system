@@ -15,14 +15,12 @@ namespace Team7ADProject.Entities
             Department = new HashSet<Department>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CollectionPointId { get; set; }
 
         [Required]
         [StringLength(50)]
         public string CollectionDescription { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:hh:mm tt}")]
         public DateTime Time { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

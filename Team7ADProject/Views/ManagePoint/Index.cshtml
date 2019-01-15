@@ -11,7 +11,7 @@
         tableStyle:"table table-responsive table-striped table-bordered",
         columns: grid.Columns(
             grid.Column(header:"Description", format:@<text><div class="edit" data-id="@item.CollectionPointId" data-propertyname="CollectionDescription">@item.CollectionDescription</div></text>),
-                            grid.Column(header: "Time", format:@<text><div class="editTime" data-id="@item.CollectionPointId" data-propertyname="Time">@string.Format("{0:hh:mm tt}", item.Time)</div></text>)
+                            grid.Column(header: "Time", format:@<text><div class="editTime" data-id="@item.CollectionPointId" data-propertyname="Time">@string.Format("{0:HH:mm}", item.Time)</div></text>)
                                                                                                                         )
                                                                                                                     )
 </div>
@@ -25,9 +25,10 @@
     }
 
     .margin10 {
-        margin-left: 10px;
+        margin-left: 20px;
     }
 </style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
 @section scripts{
     <script src="https://www.appelsiini.net/download/jquery.jeditable.js"></script>
     <script src="~/Scripts/jquery.timepicker.js"></script>
@@ -40,6 +41,7 @@
                 tooltip: 'Click to edit',
                 width: 'none',
                 height: 'none',
+                submit: 'OK',
                 onsubmit: function (settings, original) {
                     oldValue = original.revert;
                 },
@@ -60,21 +62,66 @@
                 }
             })
 
+
+            $.editable.addInputType('time', {
+                element: function (settings, original) {
+                    var hourselect = $('<select id="hour_">');
+                    var minselect = $('<select id="min_">');
+
+                    /* Hour loop */
+                    for (var hour = 9; hour <= 17; hour++) {
+                        if (hour < 10) {
+                            hour = '0' + hour;
+                        }
+                        var option = $('<option>').val(hour).append(hour);
+                        hourselect.append(option);
+                    }
+                    $(this).append(hourselect);
+
+                    /* Minutes loop */
+                    for (var min = 0; min <= 45; min = parseInt(min) + 15) {
+                        if (min < 10) {
+                            min = '0' + min;
+                        }
+                        var option = $('<option>').val(min).append(min);
+                        minselect.append(option);
+                    }
+                    $(this).append(minselect);
+
+                    /* Hidden input to store value which is submitted to server. */
+                    var hidden = $('<input type="hidden">');
+                    $(this).append(hidden);
+                    return (hidden);
+                },
+
+                submit: function (settings, original) {
+                    var value = $("#hour_").val() + ":" + $("#min_").val();
+                    $("input", this).val(value);
+                },
+
+                content: function (string, settings, original) {
+                    var hour = parseInt(string.substr(0, 2));
+                    var min = parseInt(string.substr(3, 2));
+
+                    $("#hour_", this).children().each(function () {
+                        if (hour == $(this).val()) {
+                            $(this).attr('selected', 'selected');
+                        }
+                    });
+                    $("#min_", this).children().each(function () {
+                        if (min == $(this).val()) {
+                            $(this).attr('selected', 'selected')
+                        }
+                    });
+                }
+            });
+
+
             $('.editTime').editable('/managepoint/savecp', {
                 cssclass: 'jeditForm',
                 tooltip: 'Click to edit',
-                type: 'timepicker',
-                timepicker: {
-                    timeFormat: 'h:mm p',
-                    interval: 60,
-                    minTime: '10',
-                    maxTime: '5:00pm',
-                    defaultTime: '11',
-                    startTime: '10:00',
-                    dynamic: false,
-                    dropdown: true,
-                    scrollbar: true
-                },
+                type: 'time',
+                submit: 'OK',
                 onsubmit: function (settings, original) {
                     oldValue = original.revert;
                 },

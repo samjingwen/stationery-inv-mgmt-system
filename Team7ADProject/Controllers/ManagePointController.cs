@@ -40,27 +40,24 @@ namespace Team7ADProject.Controllers
         {
             var status = false;
             var message = "";
+
             //Update data to database
             using (LogicDB context = new LogicDB())
             {
                 var CollPoint = context.CollectionPoint.Find(id);
 
                 object updateValue = value;
-                bool isValid = true;
                 
-                if(propertyName == "CollectionDescription")
+                if(propertyName == "Time")
                 {
-
-                }
-                else if(propertyName == "Time")
-                {
-                    //DateTime time;
-                    //if (DateTime.TryParse)
+                    string date = DateTime.Now.ToString("yyyy/M/dd ");
+                    DateTime time = DateTime.ParseExact(date + value, "yyyy/M/dd HH:mm", null);
+                    updateValue = time;
                 }
 
                 if (CollPoint != null)
                 {
-                    context.Entry(CollPoint).Property(propertyName).CurrentValue = value;
+                    context.Entry(CollPoint).Property(propertyName).CurrentValue = updateValue;
                     context.SaveChanges();
                     status = true;
                 }
@@ -69,7 +66,7 @@ namespace Team7ADProject.Controllers
                     message = "Error";
                 }
             }
-                var response = new { value = value, status = status, message = message };
+            var response = new { value = value, status = status, message = message };
             JObject obj = JObject.FromObject(response);
             return Content(obj.ToString());
 
