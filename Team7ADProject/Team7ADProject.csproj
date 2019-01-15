@@ -262,6 +262,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
+    <Compile Include="ViewModels\PoDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\useremails.txt" />
@@ -337,11 +338,12 @@
     <Content Include="Views\ManageSupplier\Details.cshtml" />
     <Content Include="Views\ManageSupplier\Edit.cshtml" />
     <Content Include="Views\ManageSupplier\Index.cshtml" />
+    <Content Include="Views\ApproveOrder\ViewPORecord.cshtml" />
+    <Content Include="Views\ApproveOrder\PODetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\ApproveAdjustment\" />
-    <Folder Include="Views\ApproveOrder\" />
     <Folder Include="Views\ChargeBack\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
