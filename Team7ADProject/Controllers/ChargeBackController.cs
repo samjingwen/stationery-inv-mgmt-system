@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
+using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
@@ -17,9 +18,25 @@ namespace Team7ADProject.Controllers
         // GET: ChargeBack
         public ActionResult ChargeBack()
         {
-            
-            var chargeback = new List<Disbursement>();
-            chargeback = context.Disbursement.ToList();
+            LogicDB context = new LogicDB();
+            var chargeback = context.Disbursement.ToList().Select(x => new DepartmentChargeBackViewModel()
+            {
+                DisbursementId = x.DisbursementId,
+                DisbursementNo = x.DisbursementNo,
+                DepartmentId = x.DepartmentId,
+                Department = x.Department,
+                AcknowledgedBy = x.AcknowledgedBy,
+                DisbursedBy = x.DisbursedBy,
+                Date = x.Date,
+                RequestId = x.RequestId,
+                StationeryRequest = x.StationeryRequest,
+                OTP = x.OTP,
+                Status = x.Status,
+                AspNetUsers = x.AspNetUsers,
+                AspNetUsers1 = x.AspNetUsers1,
+                TransactionDetail = x.TransactionDetail
+            });
+           
             return View(chargeback);
         }
         #endregion
