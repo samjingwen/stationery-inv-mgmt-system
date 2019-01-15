@@ -383,7 +383,6 @@
     <Content Include="Views\ManageRep\Index.cshtml" />
     <Content Include="Views\CollectionPoint\Index.cshtml" />
     <Content Include="Views\CollectionPoint\UpdateCollectionPoint.cshtml" />
-    <Content Include="Views\ManagePoint\Index.cshtml" />
     <Content Include="Views\ManageSupplier\Create.cshtml" />
     <Content Include="Views\ManageSupplier\Details.cshtml" />
     <Content Include="Views\ManageSupplier\Edit.cshtml" />
@@ -395,7 +394,11 @@
     <Content Include="Views\ChargeBack\ChargeBack.cshtml" />
     <Content Include="Views\ApproveOrder\ViewPORecord.cshtml" />
     <Content Include="Views\ApproveOrder\PODetails.cshtml" />
-    <Content Include="Views\ManagePoint\AddCP.cshtml" />
+    <Content Include="Views\ManagePoint\Create.cshtml" />
+    <Content Include="Views\ManagePoint\Delete.cshtml" />
+    <Content Include="Views\ManagePoint\Edit.cshtml" />
+    <Content Include="Views\ManagePoint\Index.cshtml" />
+
     <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>

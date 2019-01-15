@@ -16,6 +16,9 @@
         @Html.RadioButtonFor(m => m.SelectedCP, cp.CollectionPointId, (cp.CollectionPointId.Equals(1) ? new { @checked = "checked" } : null)) 
         @cp.CollectionDescription
         <br />
+        @cp.Time.ToShortTimeString();
+        <br />
+        <br />
     }
     <br />
     <br />

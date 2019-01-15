@@ -16,13 +16,50 @@
         });
     }
 }
+
+
 <h2>Delegate authority</h2>
-@using (Html.BeginForm("Delegate","DelegateHead",FormMethod.Post))
+@using (Html.BeginForm("Delegate", "DelegateHead", FormMethod.Post))
 {
 
-@Html.DropDownListFor(model => model.SelectedUser, listItems, "-- Select Employee --")
-    
+    @Html.DropDownListFor(model => model.SelectedUser, listItems, "-- Select Employee --")
+
+
+    <label for="datepicker">Start Date : </label>
+
+    @Html.TextBox("YourTextBox", "", new { @class = "date-picker" })
+
+    <label for="datepicker">End Date : </label>
+
+    @Html.TextBox("YourTextBox2", "", new { @class = "date-picker1" })
+
     <input type="submit" value="Submit" />
+}
+
+@section Scripts {
+    <!-- jQuery UI CSS Reference -->
+    <link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" />
+    <!-- Required jQuery and jQuery UI Javascript references -->
+    <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.10.4.min.js")"></script>
+
+
+    <!-- Code to wire up your DatePicker -->
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker();
+        
+        })
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker1').datepicker();
+        })
+
+
+
+    </script>
+
 }
 
 
@@ -87,7 +124,7 @@
 
     </table>*@
 
-    <br />
-    <br />
+<br />
+<br />
 
 
