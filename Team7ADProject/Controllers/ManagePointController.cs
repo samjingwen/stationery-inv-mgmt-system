@@ -23,8 +23,8 @@ namespace Team7ADProject.Controllers
                 {
                     CollectionPointId = x.CollectionPointId,
                     CollectionDescription = x.CollectionDescription,
-                    Time = x.Time
-                }).ToList();
+                    Time = x.Time.ToShortDateString()
+            }).ToList();
             return View(cpList);
         }
 
