@@ -268,6 +268,7 @@
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
+    <Compile Include="ViewModels\StationeryRetrievalViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\useremails.txt" />
