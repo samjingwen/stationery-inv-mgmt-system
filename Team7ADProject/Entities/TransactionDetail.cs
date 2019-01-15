@@ -27,6 +27,9 @@ namespace Team7ADProject.Entities
         [Column(TypeName = "date")]
         public DateTime TransactionDate { get; set; }
 
+        [Column(TypeName = "numeric")]
+        public decimal? UnitPrice { get; set; }
+
         public virtual DeliveryOrder DeliveryOrder { get; set; }
 
         public virtual Disbursement Disbursement { get; set; }

@@ -262,6 +262,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
+    <Compile Include="ViewModels\StationeryFormViewModel.cs" />
+    <Compile Include="ViewModels\DepartmentChargeBackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\useremails.txt" />
@@ -330,6 +332,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.jeditable.datepicker.js" />
+    <Content Include="Scripts\jquery.timepicker.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -387,7 +391,6 @@
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\ApproveAdjustment\" />
     <Folder Include="Views\ApproveOrder\" />
-    <Folder Include="Views\ChargeBack\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\DelegateHead\" />
@@ -396,7 +399,6 @@
     <Folder Include="Views\History\" />
     <Folder Include="Views\ManageRequest\" />
     <Folder Include="Views\ManageRetrieval\" />
-    <Folder Include="Views\ManageStationery\" />
     <Folder Include="Views\RaiseAdjustment\" />
     <Folder Include="Views\RaiseOrder\" />
     <Folder Include="Views\ReceiveGoods\" />
