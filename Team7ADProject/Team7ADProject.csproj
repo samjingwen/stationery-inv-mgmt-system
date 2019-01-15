@@ -404,13 +404,13 @@
     <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
+    <Content Include="Views\DelegateHead\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\ApproveAdjustment\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
-    <Folder Include="Views\DelegateHead\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\GenerateReport\" />
     <Folder Include="Views\ManageRequest\" />
