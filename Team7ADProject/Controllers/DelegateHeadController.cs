@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
 using Team7ADProject.Models;
+using Microsoft.AspNet.Identity.Owin;
 using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
@@ -43,7 +44,11 @@ namespace Team7ADProject.Controllers
             dd.DepartmentId = "BUSI";
 
             //AspNetUserRoles r = new AspNetUserRoles();
-            
+            ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+            manager.RemoveFromRole(dd.DelegatedTo, "Employee");
+            manager.AddToRole(dd.DelegatedTo, "Acting Department Head");
+
 
             if (ModelState.IsValid)
             {

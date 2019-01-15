@@ -1,7 +1,26 @@
-﻿
+﻿@model Team7ADProject.ViewModels.ManageRepViewModel
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Assign Rep</h2>
 
+
+
+@using (Html.BeginForm("ManageRep", "ManageRep", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <h4>Manage Rep</h4>
+    <hr />
+    <br />
+    <div>Current Representative: @ViewBag.empRep</div>
+    <br />
+    @Html.DropDownListFor(m => m.UserId, Model.UserList, "Select employee")
+    @Html.ValidationMessageFor(model => model.UserList, "", new { @class = "text-danger" })
+
+    <br />
+    <br />
+    <div>
+        <input type="submit" value="Assign" class="btn btn-default" />
+    </div>
+}
