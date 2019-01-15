@@ -3,10 +3,19 @@
 @{
     ViewBag.Title = "ChargeBack";
 }
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.date-picker').datepicker();
+    })
+</script>
 
 <h2>Department Charge Back</h2>
 <p></p>
-
+<hr />
 @{decimal total = 0;
     foreach (var item in Model.Select(x => x.TransactionDetail))
     {
@@ -15,55 +24,61 @@
         total = total + (decimal)q;
     }
 }
+
+<div>
+    View Charge Back from
+    <input class="date-picker" />
+    @Html.TextBox("YourTextBox", "", new { @class = "date-picker" })
+</div>
+
+
+<hr />
 <p>
     Total charge back for the department is @String.Format("{0:c}", total)
 </p>
+<hr />
 <div>
-    <table class="table">
-        <tr>
-            <th>
-
-            </th>
-            <th>
-                Acknowledged By
-            </th>
-            <th>
-                Disbursement Date
-            </th>
-            <th>
-                Amount
-            </th>
-            <th>
-                Status
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
-        {
+    @if (Model.ToList().Count() > 0)
+    {
+        <table class="table">
             <tr>
-                <td>
-                    @item.Index
-                </td>
-                <td>
-                    @item.Data.AcknowledgedBy
-                </td>
-                <td>
-                    @String.Format("{0:dd MMM yyyy}", item.Data.Date)
-                </td>
-                <td>
-                    @String.Format("{0:c}",
-                   item.Data.TransactionDetail.Where(x=>x.TransactionRef == item.Data.DisbursementId).
-                   Sum(x=>x.Quantity*x.UnitPrice))
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Data.Status)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "ChargeBackDetails", new { id = item.Data.DisbursementId })
-                </td>
-            </tr>
-        }
+                <th>
 
-    </table>
+                </th>
+                <th>Acknowledged By</th>
+                <th>Disbursement Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
+            {
+                <tr>
+                    <td>
+                        @item.Index
+                    </td>
+                    <td>
+                        @item.Data.AcknowledgedBy
+                    </td>
+                    <td>
+                        @String.Format("{0:dd MMM yyyy}", item.Data.Date)
+                    </td>
+                    <td>
+                        @String.Format("{0:c}",
+                    item.Data.TransactionDetail.Where(x => x.TransactionRef == item.Data.DisbursementId).
+                    Sum(x => x.Quantity * x.UnitPrice))
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data.Status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "ChargeBackDetails", new { id = item.Data.DisbursementId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+
 </div>
