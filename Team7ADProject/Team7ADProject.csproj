@@ -263,6 +263,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />

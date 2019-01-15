@@ -6,6 +6,8 @@ namespace Team7ADProject.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    //Author: Teh Li Heng 15/1/2019
+    //Added Validation and Regex to all models
     [Table("Stationery")]
     public partial class Stationery
     {

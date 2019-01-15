@@ -5,10 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Team7ADProject.Entities;
-using Team7ADProject.Validation;
 
 namespace Team7ADProject.ViewModels
 {
+    //Author: Teh Li Heng 15/1/2019
+    //Added Validation and Regex to all properties
     public class StationeryFormViewModel
     {
         [Key]

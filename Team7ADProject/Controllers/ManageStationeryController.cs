@@ -11,6 +11,10 @@ using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
+    //Author: Teh Li Heng 15/1/2019
+    //CRUD operation for stationery completed with validation
+
+    #region Teh Li Heng
     //For SC to change stationeries information
     public class ManageStationeryController : Controller
     {
@@ -64,7 +68,7 @@ namespace Team7ADProject.Controllers
                 _context.Stationery.Add(stationery);
             }
 
-            
+
             //for Update Stationery operation
             else
             {
@@ -92,7 +96,7 @@ namespace Team7ADProject.Controllers
             {
                 Console.WriteLine(e);
             }
-            return RedirectToAction("Index","ManageStationery");
+            return RedirectToAction("Index", "ManageStationery");
         }
 
         public ActionResult New()
@@ -112,7 +116,7 @@ namespace Team7ADProject.Controllers
             description += " ";
             //P024 P is first letter, 02 is category, and 4 is specs
             string firstCharacter = description.Substring(0, 1).ToUpper();
-            
+
 
             //Check for item sub-type
             //parsing first letter
@@ -147,4 +151,5 @@ namespace Team7ADProject.Controllers
             return firstCharacter + secondAndThirdCharacter + fourthCharacter;
         }
     }
+    #endregion
 }
