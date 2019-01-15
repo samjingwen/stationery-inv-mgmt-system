@@ -10,7 +10,6 @@ namespace Team7ADProject.Entities
     public partial class DelegationOfAuthority
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int DOAId { get; set; }
 
         [Required]
