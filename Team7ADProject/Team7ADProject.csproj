@@ -240,7 +240,6 @@
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
     <Compile Include="Entities\CollectionPoint.cs" />
-    <Compile Include="Entities\DelegationOfAuthority.cs" />
     <Compile Include="Entities\DeliveryOrder.cs" />
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\Disbursement.cs" />
