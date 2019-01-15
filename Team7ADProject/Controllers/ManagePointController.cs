@@ -71,6 +71,14 @@ namespace Team7ADProject.Controllers
             return Content(obj.ToString());
 
         }
+
+        public ActionResult AddCP()
+        {
+            return View(new ManagePointViewModel());
+
+        }
+
+
     }
     #endregion
 

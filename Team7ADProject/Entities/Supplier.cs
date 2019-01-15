@@ -24,6 +24,7 @@ namespace Team7ADProject.Entities
         public string SupplierId { get; set; }
 
         [Required]
+        [Display(Name = "Suppiler")]
         public string SupplierName { get; set; }
 
         [Required]
