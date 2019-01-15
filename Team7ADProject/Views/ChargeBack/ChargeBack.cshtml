@@ -25,7 +25,7 @@
 
             </th>
             <th>
-                Requested By
+                Acknowledged By
             </th>
             <th>
                 Disbursement Date
@@ -46,7 +46,7 @@
                     @item.Index
                 </td>
                 <td>
-                    @item.Data.StationeryRequest.AspNetUsers.EmployeeName
+                    @item.Data.AcknowledgedBy
                 </td>
                 <td>
                     @String.Format("{0:dd MMM yyyy}", item.Data.Date)
@@ -60,7 +60,7 @@
                     @Html.DisplayFor(modelItem => item.Data.Status)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.Data.DisbursementId })
+                    @Html.ActionLink("Details", "ChargeBackDetails", new { id = item.Data.DisbursementId })
                 </td>
             </tr>
         }

@@ -261,10 +261,11 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
-    <Compile Include="ViewModels\DepartmentChargeBackViewModel.cs" />
+    <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -395,24 +396,20 @@
     <Content Include="Views\ApproveOrder\ViewPORecord.cshtml" />
     <Content Include="Views\ApproveOrder\PODetails.cshtml" />
     <Content Include="Views\ManagePoint\AddCP.cshtml" />
+    <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\ApproveAdjustment\" />
-    <Folder Include="Views\ApproveOrder\" />
-    <Folder Include="Views\ChargeBack\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\DelegateHead\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\GenerateReport\" />
-    <Folder Include="Views\History\" />
     <Folder Include="Views\ManageRequest\" />
     <Folder Include="Views\ManageRetrieval\" />
-    <Folder Include="Views\ManageStationery\" />
     <Folder Include="Views\RaiseAdjustment\" />
     <Folder Include="Views\RaiseOrder\" />
-    <Folder Include="Views\RaiseRequest\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
     <Folder Include="Views\ReturnWarehouse\" />
