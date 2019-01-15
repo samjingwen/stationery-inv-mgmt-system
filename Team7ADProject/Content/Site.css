@@ -87,9 +87,13 @@ textarea {
 }
 
 .field-validation-error {
-    color: red;d
+    color: red;
 }
 
 .input-validation-error {
     border: 2px solid red;
+}
+
+td {
+    line-height: 40px;
 }

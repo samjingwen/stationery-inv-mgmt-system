@@ -210,6 +210,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AmendRequestController.cs" />
+    <Compile Include="Controllers\Api\StationeriesController.cs" />
     <Compile Include="Controllers\ApproveAdjustmentController.cs" />
     <Compile Include="Controllers\ApproveOrderController.cs" />
     <Compile Include="Controllers\ChargeBackController.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Validation\UniqueSupplier.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\DepartmentChargeBackViewModel.cs" />
@@ -317,6 +319,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
