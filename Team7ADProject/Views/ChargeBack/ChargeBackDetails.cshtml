@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Team7ADProject.ViewModels.ChargeBack.DisbursementDetailsViewModel>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@{decimal total = 0;
+    foreach (var item in Model)
+    {
+        var q = item.Amount;
+        total = total + (decimal)q;
+    }
+}
+    <h2>Disbursement Details</h2>
+
+    <div>
+        <hr />
+        <table class="table">
+            <tr>
+                <th>Disbursement ID</th>
+                <td>@Model.First().DisbursementNo</td>
+            </tr>
+            <tr>
+                <th>Disbursement Date</th>
+                <td>@String.Format("{0:dd MMM yyyy}", Model.First().DisbDate)</td>
+            </tr>
+            <tr>
+                <th>Acknowledged By</th>
+                <td>@Model.First().DisbAcknowledgedBy</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>@Model.First().DisbStatus</td>
+            </tr>
+        </table>
+        <hr />
+    </div>
+    <h4>Breakdown:</h4>
+    <table class="table">
+        <tr>
+            <th>Request ID</th>
+            <th>Request Date</th>
+            <th>Requested By</th>
+            <th>Status</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RequestId</td>
+                <td>@String.Format("{0:dd MMM yyyy}", item.RequestDate)</td>
+                <td>@item.RequestedBy</td>
+                <td>@item.ReqStatus</td>
+                <td>@item.ItemDesc</td>
+                <td>@item.Quantity</td>
+                <td>@item.Amount</td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><b>Total:</b></td>
+            <td>
+                <b>
+                @String.Format("{0:c}",total)
+                </b>
+            </td>
+        </tr>
+
+    </table>
+
+    <div>
+
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "ChargeBack")
+    </p>

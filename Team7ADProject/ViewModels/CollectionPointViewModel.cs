@@ -28,6 +28,7 @@ namespace Team7ADProject.ViewModels
         public int CollectionPointId { get; set; }
 
         [Required]
+        [StringLength(50)]
         public string CollectionDescription { get; set; }
 
         [Required]
