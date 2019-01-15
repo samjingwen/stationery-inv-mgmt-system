@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Team7ADProject.Entities.Disbursement>
+
+@{
+    ViewBag.Title = "ChargeBack";
+}
+
+<h2>Department Charge Back</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            Requested By
+        </th>
+        <th>
+            Disbursement Date
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Select((x,i) => new { Data = x, Index = i + 1 })) {
+    <tr>
+        <td>
+            @item.Index
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.StationeryRequest.AspNetUsers.EmployeeName)
+        </td>
+        <td>
+            @String.Format("{0:dd MMM yyyy}",item.Data.Date)
+        </td>
+        <td>
+            @*@String.Format("{0:c}",item.Data.TransactionDetail.Where(x=>x.TransactionRef == item.Data.DisbursementId).ToList().)*@
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.Data.DisbursementId })
+         </td>
+    </tr>
+}
+
+</table>
