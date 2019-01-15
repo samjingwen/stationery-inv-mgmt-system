@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Team7ADProject.Entities;
@@ -19,6 +20,13 @@ namespace Team7ADProject.ViewModels
                 return context.CollectionPoint.ToList();
             }
         }
+    }
+
+    public class ManagePointViewModel
+    {
+        public int CollectionPointId { get; set; }
+        public string CollectionDescription { get; set; }
+        public DateTime Time { get; set; }
     }
     #endregion
 
