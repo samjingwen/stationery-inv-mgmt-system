@@ -265,6 +265,7 @@
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
+    <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
