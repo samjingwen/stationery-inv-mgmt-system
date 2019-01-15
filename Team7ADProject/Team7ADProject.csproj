@@ -261,11 +261,12 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
-    <Compile Include="ViewModels\DepartmentChargeBackViewModel.cs" />
+    <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -398,6 +399,8 @@
     <Content Include="Views\ManagePoint\Delete.cshtml" />
     <Content Include="Views\ManagePoint\Edit.cshtml" />
     <Content Include="Views\ManagePoint\Index.cshtml" />
+
+    <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
