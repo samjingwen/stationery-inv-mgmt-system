@@ -55,25 +55,38 @@ namespace Team7ADProject.Controllers
         public ActionResult ChargeBackDetails(String id)
         {
             LogicDB context = new LogicDB();
-            var disbursement = context.TransactionDetail.Where(x => x.TransactionRef == id).ToList().
-                Select(x => new DisbursementDetailsViewModel()
-                {
-                    DisbursementId = x.TransactionRef,
-                    DisbursementNo = x.Disbursement.DisbursementNo,
-                    DisbAcknowledgedBy = x.Disbursement.AspNetUsers1.EmployeeName,
-                    DisbDate = x.Disbursement.Date,
-                    DisbStatus = x.Disbursement.Status,
-                    RequestId = x.Disbursement.RequestId,
-                    RequestedBy = x.Disbursement.StationeryRequest.AspNetUsers1.EmployeeName,
-                    RequestDepartmentId = x.Disbursement.StationeryRequest.DepartmentId,
-                    ReqStatus = x.Disbursement.StationeryRequest.Status,
-                    RequestDate = x.Disbursement.StationeryRequest.RequestDate,
-                    ItemDesc = context.Stationery.Where(y=>y.ItemId == x.ItemId).First().Description,
-                    Quantity = x.Quantity,
-                    Amount = (x.Quantity)*(x.UnitPrice)
-                    
-                });
-            return View(disbursement);
+            String UID = User.Identity.GetUserId();
+            String DID = context.Department.
+            Where(x => x.DepartmentHeadId == UID).
+            First().DepartmentId;
+
+            String QueryDeptID = context.Disbursement.Where(y => y.DisbursementId == id).First().DepartmentId;
+
+            if (DID == QueryDeptID)
+            {
+
+                var disbursement = context.TransactionDetail.Where(x => x.TransactionRef == id).ToList().
+                    Select(x => new DisbursementDetailsViewModel()
+                    {
+                        DisbursementId = x.TransactionRef,
+                        DisbursementNo = x.Disbursement.DisbursementNo,
+                        DisbAcknowledgedBy = x.Disbursement.AspNetUsers1.EmployeeName,
+                        DisbDate = x.Disbursement.Date,
+                        DisbStatus = x.Disbursement.Status,
+                        RequestId = x.Disbursement.RequestId,
+                        RequestedBy = x.Disbursement.StationeryRequest.AspNetUsers1.EmployeeName,
+                        RequestDepartmentId = x.Disbursement.StationeryRequest.DepartmentId,
+                        ReqStatus = x.Disbursement.StationeryRequest.Status,
+                        RequestDate = x.Disbursement.StationeryRequest.RequestDate,
+                        ItemDesc = context.Stationery.Where(y => y.ItemId == x.ItemId).First().Description,
+                        Quantity = x.Quantity,
+                        Amount = (x.Quantity) * (x.UnitPrice)
+
+                    });
+
+                return View(disbursement);
+            }
+            else { return HttpNotFound(); }
         }
         #endregion
 

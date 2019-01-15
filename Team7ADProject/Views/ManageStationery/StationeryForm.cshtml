@@ -1,96 +1,243 @@
 ﻿@model Team7ADProject.ViewModels.StationeryFormViewModel
 
 @{
-    ViewBag.Title = Model.Title;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+                /**/
 
+                ViewBag.Title = Model.Title;
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
 <h2>@Model.Title</h2>
+
 @using (Html.BeginForm("Save", "ManageStationery"))
 {
     @Html.ValidationSummary(true, "Please fix the following errors.")
     <div class="form-group">
-        @Html.LabelFor(m => m.ItemId)
-        @Html.TextBoxFor(m => m.ItemId, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ItemId)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Categories)
-        @Html.DropDownListFor(m => m.Category, new SelectList(Model.Categories), "Select Category", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Category)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Description)
-        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Description)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ReorderLevel)
-        @Html.TextBoxFor(m => m.ReorderLevel, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ReorderLevel)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ReorderQuantity)
-        @Html.TextBoxFor(m => m.ReorderQuantity, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ReorderQuantity)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.UnitOfMeasure)
-        @Html.DropDownListFor(m => m.UnitOfMeasure, new SelectList(Model.Units), "Select Unit", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.UnitOfMeasure)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.QuantityTransit)
-        @Html.TextBoxFor(m => m.QuantityTransit, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.QuantityTransit)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.QuantityWarehouse)
-        @Html.TextBoxFor(m => m.QuantityWarehouse, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.QuantityWarehouse)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Location)
-        @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Location)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.FirstSupplierId)
-        @Html.DropDownListFor(m => m.FirstSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.FirstSupplierId)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.FirstSuppPrice)
-        @Html.TextBoxFor(m => m.FirstSuppPrice, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.FirstSuppPrice)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.SecondSupplierId)
-        @Html.DropDownListFor(m => m.SecondSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.SecondSupplierId)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.SecondSuppPrice)
-        @Html.TextBoxFor(m => m.SecondSuppPrice, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.SecondSuppPrice)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ThirdSupplierId)
-        @Html.DropDownListFor(m => m.ThirdSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ThirdSupplierId)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ThirdSuppPrice)
-        @Html.TextBoxFor(m => m.ThirdSuppPrice, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ThirdSuppPrice)
-    </div>
-    <div>
+    <table>
+        <tr>
+            <td width="200">@Html.LabelFor(m => m.ItemId)</td>
+            <td>
+                @Html.EditorFor(m => m.ItemId, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.ItemId)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.Categories)</td>
+            <td>
+                @Html.DropDownListFor(m => m.Category, new SelectList(Model.Categories), "Select Category", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Category)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.Description)</td>
+            <td>
+                @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Description)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.ReorderLevel)</td>
+            <td>
+                @Html.TextBoxFor(m => m.ReorderLevel, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ReorderLevel)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.ReorderQuantity)</td>
+            <td>
+                @Html.TextBoxFor(m => m.ReorderQuantity, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ReorderQuantity)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.UnitOfMeasure)</td>
+            <td>
+                @Html.DropDownListFor(m => m.UnitOfMeasure, new SelectList(Model.Units), "Select Unit", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.UnitOfMeasure)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.QuantityWarehouse)</td>
+            <td>
+                @Html.TextBoxFor(m => m.QuantityWarehouse, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.QuantityWarehouse)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.Location)</td>
+            <td>
+                @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Location)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.FirstSupplierId)</td>
+            <td>
+                @Html.DropDownListFor(m => m.FirstSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control", id = "team1" })
+                @Html.ValidationMessageFor(m => m.FirstSupplierId)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.FirstSuppPrice)</td>
+            <td>
+                @Html.TextBoxFor(m => m.FirstSuppPrice, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstSuppPrice)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.SecondSupplierId)</td>
+            <td>
+                @Html.DropDownListFor(m => m.SecondSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control", id = "team2" })
+                @Html.ValidationMessageFor(m => m.SecondSupplierId)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.SecondSuppPrice)</td>
+            <td>
+                @Html.TextBoxFor(m => m.SecondSuppPrice, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.SecondSuppPrice)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.ThirdSupplierId)</td>
+            <td>
+                @Html.DropDownListFor(m => m.ThirdSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control", id = "team3" })
+                @Html.ValidationMessageFor(m => m.ThirdSupplierId)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.ThirdSuppPrice)</td>
+            <td>
+                @Html.TextBoxFor(m => m.ThirdSuppPrice, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ThirdSuppPrice)
+            </td>
+        </tr>
         @Html.HiddenFor(m => m.ItemId)
+    </table>
+    </div>
         @Html.AntiForgeryToken()
         <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-}
+        }
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var $dropdown1 = $("select[name='FirstSupplierId']");
+        var $dropdown2 = $("select[name='SecondSupplierId']");
+        var $dropdown3 = $("select[name='ThirdSupplierId']");
+
+        var selectedItem = $dropdown1.val();
+        if (selectedItem) {
+            $dropdown2.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+        }
+        var selectedItem = $dropdown1.val();
+        if (selectedItem) {
+            $dropdown3.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+        }
+        var selectedItem = $dropdown2.val();
+        if (selectedItem) {
+            $dropdown1.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+        }
+        var selectedItem = $dropdown2.val();
+        if (selectedItem) {
+            $dropdown3.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+        }
+        var selectedItem = $dropdown3.val();
+        if (selectedItem) {
+            $dropdown1.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+        }
+        var selectedItem = $dropdown3.val();
+        if (selectedItem) {
+            $dropdown2.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+        }
+
+
+        $dropdown1.change(function() {
+            $dropdown2.find('option').prop("disabled", false);
+            $dropdown3.find('option').prop("disabled", false);
+            var selectedItem = $(this).val();
+            if (selectedItem) {
+                $dropdown2.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $(this).val();
+            if (selectedItem) {
+                $dropdown3.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown2.val();
+            if (selectedItem) {
+                $dropdown1.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown2.val();
+            if (selectedItem) {
+                $dropdown3.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown3.val();
+            if (selectedItem) {
+                $dropdown1.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown3.val();
+            if (selectedItem) {
+                $dropdown2.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+        });
+
+        $dropdown2.change(function () {
+            $dropdown1.find('option').prop("disabled", false);
+            $dropdown3.find('option').prop("disabled", false);
+            var selectedItem = $(this).val();
+            if (selectedItem) {
+                $dropdown1.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $(this).val();
+            if (selectedItem) {
+                $dropdown3.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown1.val();
+            if (selectedItem) {
+                $dropdown2.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown1.val();
+            if (selectedItem) {
+                $dropdown3.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown3.val();
+            if (selectedItem) {
+                $dropdown1.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown3.val();
+            if (selectedItem) {
+                $dropdown2.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+        });
+        $dropdown3.change(function() {
+            $dropdown1.find('option').prop("disabled", false);
+            $dropdown2.find('option').prop("disabled", false);
+            var selectedItem = $(this).val();
+            if (selectedItem) {
+                $dropdown1.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $(this).val();
+            if (selectedItem) {
+                $dropdown2.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown2.val();
+            if (selectedItem) {
+                $dropdown1.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown2.val();
+            if (selectedItem) {
+                $dropdown3.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown1.val();
+            if (selectedItem) {
+                $dropdown2.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+            var selectedItem = $dropdown1.val();
+            if (selectedItem) {
+                $dropdown3.find('option[value="' + selectedItem + '"]').prop("disabled", true);
+            }
+        });
+    </script>
 }
