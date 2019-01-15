@@ -233,6 +233,7 @@
     <Compile Include="Controllers\RaiseRequestController.cs" />
     <Compile Include="Controllers\ReceiveGoodsController.cs" />
     <Compile Include="Controllers\ReceiveOrderController.cs" />
+    <Compile Include="Controllers\RetrieveOwnRequestHistoryController.cs" />
     <Compile Include="Controllers\ReturnWarehouseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UpdateWarehouseController.cs" />
@@ -399,8 +400,8 @@
     <Content Include="Views\ManagePoint\Delete.cshtml" />
     <Content Include="Views\ManagePoint\Edit.cshtml" />
     <Content Include="Views\ManagePoint\Index.cshtml" />
-
     <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
+    <Content Include="Views\RequisitionHistory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
@@ -416,6 +417,7 @@
     <Folder Include="Views\RaiseOrder\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
+    <Folder Include="Views\RetrieveOwnRequestHistory\" />
     <Folder Include="Views\ReturnWarehouse\" />
     <Folder Include="Views\UpdateWarehouse\" />
     <Folder Include="Views\VoidDisbursement\" />
