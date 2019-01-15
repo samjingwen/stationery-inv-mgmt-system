@@ -1,0 +1,93 @@
+﻿
+@model Team7ADProject.ViewModels.DelegateHeadViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    foreach (var c in Model.DelegateHead)
+    {
+        listItems.Add(new SelectListItem
+        {
+
+            Text = c.EmployeeName,
+            Value = c.Id
+        });
+    }
+}
+<h2>Delegate authority</h2>
+@using (Html.BeginForm("Delegate","DelegateHead",FormMethod.Post))
+{
+
+@Html.DropDownListFor(model => model.SelectedUser, listItems, "-- Select Employee --")
+    
+    <input type="submit" value="Submit" />
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<h6>Delegate Department Head Authority for @Html.Display(Model.DelegateHead.First().DepartmentId)</h6>
+
+    <table>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model.DelegateHead)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Delegate", "DelegatAuthority", new { id = item.Id }) |
+                </td>
+            </tr>
+        }
+
+    </table>*@
+
+    <br />
+    <br />
+
+

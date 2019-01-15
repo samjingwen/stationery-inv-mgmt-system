@@ -1,0 +1,36 @@
+﻿@model System.Collections.Generic.List<Team7ADProject.Entities.Stationery>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Stationery Details</h2>
+<table id="stationeries" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Stock</th>
+        <th>Reorder Level</th>
+        <th>Location</th>
+    </tr>
+    </thead>
+    <tbody>
+        @{int i = 1;}
+        @foreach (var stationery in Model)
+        {
+            <tr>
+                <td>@(i++)</td>
+                <td>@Html.ActionLink(stationery.Description, "Edit", "ManageStationery", new {id = stationery.ItemId}, null)</td>
+                <td>@stationery.Category</td>
+                <td>@stationery.QuantityWarehouse</td>
+                <td>@stationery.ReorderLevel</td>
+                <td>@stationery.Location</td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
