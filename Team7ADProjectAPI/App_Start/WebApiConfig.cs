@@ -25,6 +25,7 @@ namespace Team7ADProjectAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
         }
     }
 }

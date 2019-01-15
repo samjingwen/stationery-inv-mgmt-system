@@ -235,6 +235,7 @@
     <Compile Include="Controllers\ReceiveOrderController.cs" />
     <Compile Include="Controllers\ReturnWarehouseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\TesController.cs" />
     <Compile Include="Controllers\UpdateWarehouseController.cs" />
     <Compile Include="Controllers\VoidDisbursementController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
