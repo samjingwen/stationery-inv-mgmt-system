@@ -45,6 +45,7 @@ namespace Team7ADProject.Controllers
         {
             if (!ModelState.IsValid)
             throw new NotImplementedException();
+            return View();
         }
     }
 }
