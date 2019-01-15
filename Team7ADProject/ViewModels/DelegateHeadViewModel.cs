@@ -8,6 +8,8 @@ namespace Team7ADProject.ViewModels
 {
     public class DelegateHeadViewModel
     {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public string SelectedUser { get; set; }
         public List<AspNetUsers> DelegateHead

@@ -46,7 +46,6 @@ namespace Team7ADProject.Controllers
                 var CollPoint = context.CollectionPoint.Find(id);
 
                 object updateValue = value;
-                bool isValid = true;
                 
                 if(propertyName == "CollectionDescription")
                 {
