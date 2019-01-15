@@ -10,7 +10,6 @@
     <h2>Current Collection Point: @ViewBag.cpName</h2>
 
   
-
     foreach (var cp in Model.CollectionPoints)
     {
         @Html.RadioButtonFor(m => m.SelectedCP, cp.CollectionPointId, (cp.CollectionPointId.Equals(1) ? new { @checked = "checked" } : null)) 
@@ -21,7 +20,6 @@
     <br />
 
     <input type="submit" value="Submit" />
-
 
 
 }
