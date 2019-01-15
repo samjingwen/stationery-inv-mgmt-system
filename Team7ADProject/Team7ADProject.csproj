@@ -400,6 +400,7 @@
     <Folder Include="Views\DelegateHead\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\GenerateReport\" />
+    <Folder Include="Views\History\" />
     <Folder Include="Views\ManageRequest\" />
     <Folder Include="Views\ManageRetrieval\" />
     <Folder Include="Views\RaiseAdjustment\" />
