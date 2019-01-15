@@ -86,3 +86,10 @@ textarea {
     }
 }
 
+.field-validation-error {
+    color: red;d
+}
+
+.input-validation-error {
+    border: 2px solid red;
+}
