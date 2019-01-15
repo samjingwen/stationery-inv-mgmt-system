@@ -16,17 +16,17 @@ namespace Team7ADProject.Controllers
     [Authorize(Roles = "Store Clerk, Store Manager, Store Supervisor")]
     public class ManagePointController : Controller
     {
-        //public ActionResult Index()
-        //{
-        //    LogicDB context = new LogicDB();
-        //    //var cpList = (from x in context.CollectionPoint select new ManagePointViewModel
-        //    //    {
-        //    //        CollectionPointId = x.CollectionPointId,
-        //    //        CollectionDescription = x.CollectionDescription,
-        //    //        Time = x.Time
-        //    //    }).ToList();
-        //    return View(cpList);
-        //}
+        public ActionResult Index()
+        {
+            LogicDB context = new LogicDB();
+            var cpList = (from x in context.CollectionPoint select new ManagePointViewModel
+                {
+                    CollectionPointId = x.CollectionPointId,
+                    CollectionDescription = x.CollectionDescription,
+                    Time = x.Time.ToShortDateString()
+            }).ToList();
+            return View(cpList);
+        }
 
 
         //public ActionResult GetData()

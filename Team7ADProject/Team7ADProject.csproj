@@ -233,6 +233,7 @@
     <Compile Include="Controllers\RaiseRequestController.cs" />
     <Compile Include="Controllers\ReceiveGoodsController.cs" />
     <Compile Include="Controllers\ReceiveOrderController.cs" />
+    <Compile Include="Controllers\RetrieveOwnRequisitionHistoryController.cs" />
     <Compile Include="Controllers\ReturnWarehouseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UpdateWarehouseController.cs" />
@@ -268,6 +269,7 @@
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
+    <Compile Include="ViewModels\StationeryRetrievalViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\useremails.txt" />
@@ -400,17 +402,18 @@
     <Content Include="Views\ManagePoint\Edit.cshtml" />
     <Content Include="Views\ManagePoint\Index.cshtml" />
     <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
-    <Content Include="Views\DelegateHead\index.cshtml" />
+    <Content Include="Views\ManageRetrieval\Index.cshtml" />
+    <Content Include="Views\RequisitionHistory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\ApproveAdjustment\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
+    <Folder Include="Views\DelegateHead\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\GenerateReport\" />
     <Folder Include="Views\ManageRequest\" />
-    <Folder Include="Views\ManageRetrieval\" />
     <Folder Include="Views\RaiseAdjustment\" />
     <Folder Include="Views\RaiseOrder\" />
     <Folder Include="Views\ReceiveGoods\" />

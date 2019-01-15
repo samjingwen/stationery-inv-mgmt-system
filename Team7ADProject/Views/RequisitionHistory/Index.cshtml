@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Team7ADProject.Entities.StationeryRequest>
+
+@{
+    ViewBag.Title = "Requisition History";
+}
+
+<h2><b>Requisition History</b></h2>
+
+<form asp-controller="RequisitionHistory" asp-action="Index">
+    <p>
+        Search: <input type="text" name="SearchString">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+
+<table class="table">
+    <tr>
+        <th>No</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Department.DepartmentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>Action</th>
+    </tr>
+    @{ int i = 1;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@(i++)</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.RequestId })
+            </td>
+        </tr>
+    }
+
+</table>
