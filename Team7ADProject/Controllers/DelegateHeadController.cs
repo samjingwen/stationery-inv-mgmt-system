@@ -40,7 +40,6 @@ namespace Team7ADProject.Controllers
             LogicDB context = new LogicDB();
             DelegationOfAuthority dd = new DelegationOfAuthority();
 
-          //  AspNetUsers c = context.AspNetUsers.Where(x => x.Id == selectedGender).First();//validate lote yan
             dd.DelegatedBy = userId;
             dd.DelegatedTo = selectedGEmployee;//"b36a58f3-51f9-47eb-8601-bcc757a8cadb";//selected Employee ID;
             dd.StartDate = model.StartDate;//new DateTime(2017,3,5);
@@ -50,7 +49,6 @@ namespace Team7ADProject.Controllers
 
             dd.DepartmentId = model.DepartmentID;
 
-            //AspNetUserRoles r = new AspNetUserRoles();
             ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
             manager.RemoveFromRole(dd.DelegatedTo, "Employee");
