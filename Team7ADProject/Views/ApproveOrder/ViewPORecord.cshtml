@@ -37,7 +37,7 @@
                                 <td>@po.Supplier.SupplierName</td>
                                 <td>@po.AspNetUsers1.EmployeeName</td>
                                 <td>@po.Amount</td>
-                                <td><button type="submit">@po.Status</button></td>
+                                <td>@Html.ActionLink("link caption", "actionName", new { Model.Page }) </td>
                             </tr>
                         }
                     </tbody>
