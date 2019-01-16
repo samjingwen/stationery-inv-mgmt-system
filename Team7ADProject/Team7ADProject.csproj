@@ -404,6 +404,7 @@
     <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
+    <Content Include="Views\RequisitionHistory\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
