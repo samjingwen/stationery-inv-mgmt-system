@@ -400,6 +400,7 @@
     <Content Include="Views\ManageSupplier\Details.cshtml" />
     <Content Include="Views\ManageSupplier\Edit.cshtml" />
     <Content Include="Views\ManageSupplier\Index.cshtml" />
+    <Content Include="Views\RaiseRequest\Index.cshtml" />
     <Content Include="Views\ManageStationery\Index.cshtml" />
     <Content Include="Views\ManageStationery\StationeryForm.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
@@ -419,6 +420,7 @@
     <Content Include="Views\GenerateReport\GenerateDashboard.cshtml" />
     <Content Include="Views\RequisitionHistory\Details.cshtml" />
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
+    <Content Include="Views\ManageRetrieval\GenerateDisbursement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
@@ -427,6 +429,7 @@
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\ManageRequest\" />
+    <Folder Include="Views\RaiseAdjustment\" />
     <Folder Include="Views\RaiseOrder\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
