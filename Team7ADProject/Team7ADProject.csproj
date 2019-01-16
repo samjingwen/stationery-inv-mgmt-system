@@ -272,6 +272,7 @@
     <Compile Include="ViewModels\GenerateReport\GenerateReportViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
+    <Compile Include="ViewModels\RaisePOViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
@@ -420,6 +421,7 @@
     <Content Include="Views\RequisitionHistory\Details.cshtml" />
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\GenerateDisbursement.cshtml" />
+    <Content Include="Views\RaiseOrder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
@@ -428,7 +430,6 @@
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\ManageRequest\" />
-    <Folder Include="Views\RaiseOrder\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
     <Folder Include="Views\ReturnWarehouse\" />
