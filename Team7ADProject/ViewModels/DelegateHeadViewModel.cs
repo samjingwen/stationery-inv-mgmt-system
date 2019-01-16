@@ -14,6 +14,8 @@ namespace Team7ADProject.ViewModels
         {
             CurrentUser = usrId;
         }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public string DepartmentName
         {
             get
@@ -23,6 +25,17 @@ namespace Team7ADProject.ViewModels
 
                 string s = context.Department.Where(x=>x.DepartmentId== depId).Select(x => x.DepartmentName).First();
                 return s;
+
+            }
+        }
+        public string DepartmentID
+        {
+            get
+            {
+                LogicDB context = new LogicDB();
+                String depId = context.AspNetUsers.Where(x => x.Id == CurrentUser).Select(x => x.DepartmentId).First();
+
+                return depId;
 
             }
         }

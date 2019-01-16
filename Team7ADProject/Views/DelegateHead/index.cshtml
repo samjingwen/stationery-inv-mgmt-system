@@ -24,17 +24,17 @@
 <br />
 @using (Html.BeginForm("Delegate", "DelegateHead", FormMethod.Post))
 {
-    <label >Employee name: </label>
+    <label>Employee name: </label>
     @Html.DropDownListFor(model => model.SelectedUser, listItems, "-- Select Employee --")
     <br />
     <br />
     <label for="datepicker">Start Date : </label>
 
-    @Html.TextBox("YourTextBox", "", new { @class = "date-picker", @readonly = "readonly" })
-
+    @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly" })
+ 
     <label for="datepicker">End Date : </label>
 
-    @Html.TextBox("YourTextBox2", "", new { @class = "date-picker1", @readonly = "readonly" })
+    @Html.TextBoxFor(model => model.EndDate, new { @class = "date-picker1", @readonly = "readonly" })
     <br />
     <br />
     <input type="submit" value="Submit" />
