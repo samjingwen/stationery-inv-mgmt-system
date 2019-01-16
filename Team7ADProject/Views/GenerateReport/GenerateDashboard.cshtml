@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Team7ADProject.ViewModels.GenerateReport.GenerateReportViewModel>
+@{
+    ViewBag.Title = "GenerateDashboard";
+}
+
+<head>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <script>
+
+                    window.onload = function () {
+                        var reqChart = new CanvasJS.Chart("DisbChart", {
+                animationEnabled: true,
+                theme: "light2",
+                title: { text: "Live Data" },
+                data: [{
+                        type: "column",
+                    dataPoints: [
+                        {label:}
+                    ]
+                }]
+            });
+
+                    var chargebackChart = new CanvasJS.Chart("ChargeBack", {
+                animationEnabled: true,
+                title: { text: "Live Data" },
+                data: [{
+                    type: "column",
+                    dataPoints: [
+                        { label: "apple", y: 10 },
+                        { label: "orange", y: 15 },
+                        { label: "banana", y: 25 },
+                        { label: "mango", y: 30 },
+                        { label: "grape", y: 28 }
+                    ]
+                }]
+            });
+
+            var deptChart = new CanvasJS.Chart("Dept", {
+                animationEnabled: true,
+                title: {
+                    text: "Live Data"
+                },
+                data: [{
+                    type: "line",
+                    dataPoints: [
+                        { label: "apple", y: 10 },
+                        { label: "orange", y: 15 },
+                        { label: "banana", y: 25 },
+                        { label: "mango", y: 30 },
+                        { label: "grape", y: 28 }
+                    ]
+                }]
+            });
+
+            reqChart.render();
+            chargebackChart.render();
+            deptChart.render();
+        }
+    </script>
+
+</head>
+
+<h2>Store Dashboard</h2>
+
+<div id="DisbChart" style="height: 250px; width: 30%;">
+
+
+</div>
+
+<div id="ChargeBack" style="height: 250px; width: 30%;">
+
+
+</div>
+
+<div id="Dept" style="height: 250px; width: 30%;">
+
+
+</div>
+
