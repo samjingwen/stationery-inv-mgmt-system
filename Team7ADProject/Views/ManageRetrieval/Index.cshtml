@@ -1,7 +1,66 @@
-﻿
+﻿@model List<Team7ADProject.ViewModels.StationeryRetrievalViewModel>
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+@using (Html.BeginForm("SaveRetrieval", "ManageRetrieval", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Id")
+            </th>
+            <th>
+                @Html.Label("Description")
+            </th>
+            <th>
+                @Html.Label("Category")
+            </th>
+            <th>
+                @Html.Label("UnitOfMeasure")
+            </th>
+            <th>
+                @Html.Label("Location")
+            </th>
+            <th>
+                @Html.Label("Quantity")
+            </th>
+            <th>
+                @Html.Label("RetrievedQty")
+            </th>
+            <th></th>
+        </tr>
 
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitOfMeasure)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => item.RetrievedQty, new { htmlAttributes = new { min = 0, max = @item.Quantity } })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+<input type="submit" value="Submit" class="btn btn-default" />
+}

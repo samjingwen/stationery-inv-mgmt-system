@@ -408,6 +408,7 @@
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
     <Content Include="Views\DelegateHead\index.cshtml" />
+    <Content Include="Views\ManageRetrieval\SaveRetrieval.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />

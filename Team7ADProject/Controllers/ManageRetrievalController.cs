@@ -16,8 +16,21 @@ namespace Team7ADProject.Controllers
         public ActionResult Index()
         {
             CompiledRequestViewModel model = new CompiledRequestViewModel();
+            return View(model.RetrievalList);
+        }
+
+        [HttpPost]
+        public ActionResult SaveRetrieval(CompiledRequestViewModel model)
+        {
+            ViewBag.testing = model.RetrievalList[0].ItemId;
+            ViewBag.testing2 = model.RetrievalList[0].RetrievedQty;
+            ViewBag.testing3 = "adasda";
             return View();
         }
+
+        
+
+
     }
     #endregion
 
