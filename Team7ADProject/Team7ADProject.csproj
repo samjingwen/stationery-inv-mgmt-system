@@ -263,10 +263,12 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\Api\RaiseRequestDTO.cs" />
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
+    <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
@@ -393,7 +395,6 @@
     <Content Include="Views\ManageSupplier\Details.cshtml" />
     <Content Include="Views\ManageSupplier\Edit.cshtml" />
     <Content Include="Views\ManageSupplier\Index.cshtml" />
-    <Content Include="Views\RaiseRequest\Index.cshtml" />
     <Content Include="Views\ManageStationery\Index.cshtml" />
     <Content Include="Views\ManageStationery\StationeryForm.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
@@ -408,6 +409,7 @@
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
     <Content Include="Views\DelegateHead\index.cshtml" />
+    <Content Include="Views\RaiseRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
