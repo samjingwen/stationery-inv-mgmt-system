@@ -22,9 +22,11 @@ namespace Team7ADProject.Entities
 
         [Required]
         [StringLength(128)]
+        [Display(Name = "Request from")]
         public string RequestedBy { get; set; }
 
         [StringLength(128)]
+        [Display(Name = "Approved by")]
         public string ApprovedBy { get; set; }
 
         [Required]
@@ -37,6 +39,8 @@ namespace Team7ADProject.Entities
 
         public string Comment { get; set; }
 
+        [Display(Name = "Request Date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyy}")]
         public DateTime RequestDate { get; set; }
 
         [Column(TypeName = "date")]

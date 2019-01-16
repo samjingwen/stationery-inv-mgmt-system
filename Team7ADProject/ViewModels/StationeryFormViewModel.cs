@@ -8,6 +8,8 @@ using Team7ADProject.Entities;
 
 namespace Team7ADProject.ViewModels
 {
+    //Author: Teh Li Heng 15/1/2019
+    //Added Validation and Regex to all properties
     public class StationeryFormViewModel
     {
         [Key]
@@ -23,9 +25,11 @@ namespace Team7ADProject.ViewModels
         public string Description { get; set; }
 
         [Display(Name = "Reorder level")]
+        [RegularExpression(@"^\d+", ErrorMessage = "Please enter a valid quantity.")]
         public int ReorderLevel { get; set; }
 
         [Display(Name = "Reorder quantity")]
+        [RegularExpression(@"^\d+", ErrorMessage = "Please enter a valid quantity.")]
         public int ReorderQuantity { get; set; }
 
         [Required]
@@ -33,10 +37,11 @@ namespace Team7ADProject.ViewModels
         [Display(Name = "Unit of measure")]
         public string UnitOfMeasure { get; set; }
 
-        [Display(Name = "Quantity in transit")]
-        public int QuantityTransit { get; set; }
+        //[Display(Name = "Quantity in transit")]
+        //public int QuantityTransit { get; set; }
 
         [Display(Name = "Quantity at warehouse")]
+        [RegularExpression(@"^\d+",ErrorMessage = "Please enter a valid quantity.")]
         public int QuantityWarehouse { get; set; }
 
         [Required]
@@ -50,6 +55,7 @@ namespace Team7ADProject.ViewModels
 
         [Column(TypeName = "numeric")]
         [Display(Name = "#1 Price")]
+        [Range(0.0, Double.MaxValue,ErrorMessage = "Please enter a valid price.")]
         public decimal FirstSuppPrice { get; set; }
 
         [Required]
@@ -59,6 +65,7 @@ namespace Team7ADProject.ViewModels
 
         [Column(TypeName = "numeric")]
         [Display(Name = "#2 Price")]
+        [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
         public decimal SecondSuppPrice { get; set; }
 
         [Required]
@@ -68,6 +75,7 @@ namespace Team7ADProject.ViewModels
 
         [Display(Name = "#3 Price")]
         [Column(TypeName = "numeric")]
+        [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
         public decimal ThirdSuppPrice { get; set; }
         public IEnumerable<Supplier> Suppliers { get; set; }
 
@@ -92,7 +100,6 @@ namespace Team7ADProject.ViewModels
             ReorderLevel = stationery.ReorderLevel;
             ReorderQuantity = stationery.ReorderQuantity;
             UnitOfMeasure = stationery.UnitOfMeasure;
-            QuantityTransit = stationery.QuantityTransit;
             QuantityWarehouse = stationery.QuantityWarehouse;
             Location = stationery.Location;
             FirstSupplierId = stationery.FirstSupplierId;
