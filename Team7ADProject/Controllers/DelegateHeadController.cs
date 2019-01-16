@@ -16,32 +16,39 @@ namespace Team7ADProject.Controllers
     {
         #region Author: Kay Thi Swe Tun
         // GET: DelegateHead
+        [Authorize(Roles = "Department Head")]
         public ActionResult Index()
         {
             LogicDB context = new LogicDB();
-            DelegateHeadViewModel vmodel = new DelegateHeadViewModel();
-           
-               return View(vmodel);
+            string userId = User.Identity.GetUserId();
+            DelegateHeadViewModel vmodel = new DelegateHeadViewModel(userId);
+
+           List<AspNetUsers> ll= vmodel.DelegateHead;
+            ViewBag.DepName = vmodel.DepartmentName;
+            return View(vmodel);
            
         }
 
-
         [HttpPost]
+        [Authorize(Roles = "Department Head")]
         public string Delegate(DelegateHeadViewModel model)
         {
             string userId = User.Identity.GetUserId();
             // the value is received in the controller.
-            var selectedGender = model.SelectedUser;
+            var selectedGEmployee = model.SelectedUser;
      
             LogicDB context = new LogicDB();
             DelegationOfAuthority dd = new DelegationOfAuthority();
 
           //  AspNetUsers c = context.AspNetUsers.Where(x => x.Id == selectedGender).First();//validate lote yan
-            dd.DelegatedBy = "992addd3-07ff-48c5-8c48-9561b163cf57";
-            dd.DelegatedTo = "b36a58f3-51f9-47eb-8601-bcc757a8cadb";//selected Employee ID;
-            dd.StartDate = new DateTime(2017,3,5);
-            dd.EndDate = new DateTime(2017, 5, 5);
-            dd.DepartmentId = "BUSI";
+            dd.DelegatedBy = userId;
+            dd.DelegatedTo = selectedGEmployee;//"b36a58f3-51f9-47eb-8601-bcc757a8cadb";//selected Employee ID;
+            dd.StartDate = model.StartDate;//new DateTime(2017,3,5);
+            dd.EndDate = model.EndDate;//new DateTime(2017, 5, 5);
+
+            model.CurrentUser = userId;
+
+            dd.DepartmentId = model.DepartmentID;
 
             //AspNetUserRoles r = new AspNetUserRoles();
             ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();

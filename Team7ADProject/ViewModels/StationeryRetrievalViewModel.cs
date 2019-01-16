@@ -29,6 +29,9 @@ namespace Team7ADProject.ViewModels
         [Required]
         [StringLength(50)]
         public string Location { get; set; }
+
+        [StringLength(10)]
+        public string RequestId { get; set; }
     }
 
     public class CompiledRequestViewModel
@@ -39,20 +42,37 @@ namespace Team7ADProject.ViewModels
             {
                 LogicDB context = new LogicDB();
                 List<StationeryRetrievalViewModel> newList = new List<StationeryRetrievalViewModel>();
-                var query = from x in context.StationeryRequest where x.Status.Equals("Pending Disbursement") select x;
-                foreach (var request in query)
-                {
-                    var trxList = request.TransactionDetail;
-                    foreach (var trx in trxList)
-                    {
-                        if (newList.Exists(x => x.ItemId == trx.ItemId))
-                        {
-                            var srvm = newList.Find(x => x.ItemId == trx.ItemId);
-                            srvm.Quantity += trx.Quantity;
-                        }
+                var query = from x in context.StationeryRequest
+                            where x.Status.Equals("Pending Disbursement")
+                            join y in context.TransactionDetail 
+                            on x.RequestId equals y.TransactionRef
+                            select new StationeryRetrievalViewModel
+                            {
+                                ItemId = y.ItemId,
+                                Category = y.Stationery.Category,
+                                Description = y.Stationery.Description,
+                                UnitOfMeasure = y.Stationery.UnitOfMeasure,
+                                Location = y.Stationery.Location,
+                                RequestId = x.RequestId
+                            };
 
-                    }
-                }
+
+
+
+
+                //foreach (var request in query)
+                //{
+                //    var trxList = request.TransactionDetail;
+                //    foreach (var trx in trxList)
+                //    {
+                //        if (newList.Exists(x => x.ItemId == trx.ItemId))
+                //        {
+                //            var srvm = newList.Find(x => x.ItemId == trx.ItemId);
+                //            srvm.Quantity += trx.Quantity;
+                //        }
+
+                //    }
+                //}
                 return newList;
             }
 
