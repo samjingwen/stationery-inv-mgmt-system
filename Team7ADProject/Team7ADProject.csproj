@@ -415,7 +415,6 @@
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
     <Content Include="Views\DelegateHead\index.cshtml" />
-    <Content Include="Views\RaiseRequest\Index.cshtml" />
     <Content Include="Views\History\Detail.cshtml" />
     <Content Include="Views\GenerateReport\GenerateDashboard.cshtml" />
     <Content Include="Views\RequisitionHistory\Details.cshtml" />
@@ -429,7 +428,6 @@
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\ManageRequest\" />
-    <Folder Include="Views\RaiseAdjustment\" />
     <Folder Include="Views\RaiseOrder\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />

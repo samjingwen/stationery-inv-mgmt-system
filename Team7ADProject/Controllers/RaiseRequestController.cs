@@ -27,7 +27,7 @@ namespace Team7ADProject.Controllers
 
         public ActionResult Index()
         {
-            List<RaiseRequestViewModel> viewModels= new List<RaiseRequestViewModel>();
+            RaiseRequestViewModel viewModels= new RaiseRequestViewModel();
             return View(viewModels);
         }
        
@@ -57,10 +57,11 @@ namespace Team7ADProject.Controllers
 
         #endregion
 
-        public ActionResult Add()
+        public ActionResult Add(RaiseRequestViewModel viewModel)
         {
-
-            throw new NotImplementedException();
+            RaiseRequestViewModel selection = new RaiseRequestViewModel(viewModel.Category,viewModel.Description,viewModel.Quantity,viewModel.UnitOfMeasure);
+            viewModel.Models.Add(selection);
+            return View("Index", viewModel);
         }
     }
 }
