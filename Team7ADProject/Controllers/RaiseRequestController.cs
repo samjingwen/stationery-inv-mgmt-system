@@ -51,7 +51,6 @@ namespace Team7ADProject.Controllers
             };
             
             
-            viewModel.
             throw new NotImplementedException();
         }
 

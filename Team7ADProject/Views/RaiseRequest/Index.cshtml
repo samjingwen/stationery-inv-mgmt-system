@@ -10,65 +10,62 @@
 @using (Html.BeginForm("Add", "RaiseRequest"))
 {
     @Html.ValidationSummary(true, "Please fix the following errors.")
-<div class="form-group">
-    <table>
-        <thead>
+    <div class="form-group">
+        <table>
             <tr>
                 <td>Category</td>
-                <td>Description</td>
-                <td>Unit of measure</td>
-                <td>Quantity</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
                 <td>
                     @Html.DropDownList("category", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })
                 </td>
+            <tr>
+                <td>Description</td>
                 <td>
-                    @Html.DropDownList("description", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })
+                    @Html.DropDownList("description", Enumerable.Empty<SelectListItem>(), "Select Item", new { @class = "form-control" })
                 </td>
+            <tr>
+                <td>Unit of measure</td>
                 <td>
-                    @Html.Label("", new { id = "unit-of-measure" })
+                    @Html.Label("a", new { id = "uom", @class })
                 </td>
+            <tr>
+                <td>Quantity</td>
                 <td>
                     @Html.TextBox("quantity")
                 </td>
             </tr>
-        </tbody>
-    </table>
-    @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Add</button>
-</div>
+        </table>
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
 }
 
 <h2>Request List</h2>
 <div class="form-group">
     <table>
         <thead>
-        <tr>
-            <td>No.</td>
-            <td>Category</td>
-            <td>Description</td>
-            <td>Unit of measure</td>
-            <td>Quantity</td>
-        </tr>
+            <tr>
+                <td>No.</td>
+                <td>Category</td>
+                <td>Item name</td>
+                <td>Unit of measure</td>
+                <td>Quantity</td>
+            </tr>
         </thead>
         <tbody>
-        @{int i = 1;}
-        @foreach (var request in Model)
-        {
-            <tr>
-                <td>@(i++)</td>
-                <td>@request.Category</td>
-                <td>@request.Description</td>
-                <td>@request.Quantity</td>
-                <td>@request.</td>
-                <td>
-                    <button data-stationery-id="@stationery.ItemId" class="btn-link js-delete">Delete</button>
-                </td>
-            </tr>
-        }
+            @{int i = 1;}
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@(i++)</td>
+                    <td>@request.Category</td>
+                    <td>@request.Description</td>
+                    <td>@request.Quantity</td>
+                    <td>@request.</td>
+                    <td>
+                        <button data-stationery-id="" class="btn-link js-delete">Delete</button>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
     @Html.AntiForgeryToken()
@@ -76,5 +73,46 @@
 </div>
 @section scripts
 {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var $dropdown1 = $("select[name='category']");
+
+        $.ajax({
+            url:'../api/stationeries/categories/',
+            type:'GET',
+            //data: 'q=' + str,
+            dataType: 'json',
+            success: function( json ) {
+                $.each(json, function(i, value) {
+                    $dropdown1.append($('<option>').text(value).attr('value', value));
+                    //$('#myselect').append($('<option>').text(value).attr('value', value));
+                });
+            }
+        });
+
+        var $dropdown2 = $("select[name='description']");
+        
+        $dropdown1.change(function () {
+            $dropdown2.empty();
+            $dropdown2.append('<option>Select Item</option>');
+            //$('#myselect').append($('<option>').text(value).attr('value', value));
+            $.ajax({
+                url: '../api/stationeries/categories/' + $dropdown1.val(),
+                type:'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function( json ) {
+                    $.each(json, function(i, value) {
+                        $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
+                        //$('#myselect').append($('<option>').text(value).attr('value', value));
+                    });
+                }
+            });
+        });
+
+        var $labelQty = $("#uom");
+        $dropdown2.change(function () {
+            $dropdown2.Text("hey");
+        });
+
+    </script>
 }
