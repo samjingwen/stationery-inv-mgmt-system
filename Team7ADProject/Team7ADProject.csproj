@@ -266,6 +266,7 @@
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
+    <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
@@ -408,6 +409,7 @@
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
     <Content Include="Views\DelegateHead\index.cshtml" />
+    <Content Include="Views\History\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />

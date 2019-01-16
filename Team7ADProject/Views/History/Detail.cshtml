@@ -1,0 +1,54 @@
+﻿@model Team7ADProject.ViewModels.HistoryDetailViewModel
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Details.First().Stationery.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Details.First().Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Details.First().Remarks)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Details.First().TransactionDate)
+                </th>
+            </tr>
+
+            @foreach (var item in Model.Details)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stationery.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remarks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TransactionDate)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</body>
+</html>
