@@ -1,47 +1,80 @@
-﻿@model Team7ADProject.Entities.Stationery
+﻿@model List<Team7ADProject.ViewModels.RaiseRequestViewModel>
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Raise Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View</h2>
+<h2>Raise Request</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
+@using (Html.BeginForm("Add", "RaiseRequest"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+<div class="form-group">
+    <table>
+        <thead>
+            <tr>
+                <td>Category</td>
+                <td>Description</td>
+                <td>Unit of measure</td>
+                <td>Quantity</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DropDownList("category", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })
+                </td>
+                <td>
+                    @Html.DropDownList("description", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })
+                </td>
+                <td>
+                    @Html.Label("", new { id = "unit-of-measure" })
+                </td>
+                <td>
+                    @Html.TextBox("quantity")
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Add</button>
+</div>
+}
 
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<h2>Request List</h2>
+<div class="form-group">
+    <table>
+        <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ItemId })
-
-            </td>
+            <td>No.</td>
+            <td>Category</td>
+            <td>Description</td>
+            <td>Unit of measure</td>
+            <td>Quantity</td>
         </tr>
-    }
-
-</table>
+        </thead>
+        <tbody>
+        @{int i = 1;}
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@(i++)</td>
+                <td>@request.Category</td>
+                <td>@request.Description</td>
+                <td>@request.Quantity</td>
+                <td>@request.</td>
+                <td>
+                    <button data-stationery-id="@stationery.ItemId" class="btn-link js-delete">Delete</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

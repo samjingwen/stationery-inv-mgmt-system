@@ -30,7 +30,7 @@ namespace Team7ADProject.Entities
         [Display(Name = "Item Description")]
         public string Description { get; set; }
 
-        [Display(Name = "Reorder level Jiaxue")]
+        [Display(Name = "Reorder level")]
         [RegularExpression(@"^\d+", ErrorMessage = "Please enter a valid quantity.")]
         public int ReorderLevel { get; set; }
 
