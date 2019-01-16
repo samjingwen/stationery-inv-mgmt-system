@@ -5,21 +5,24 @@
 }
 
 <h2><b>Requisition History</b></h2>
-<h5>Department Name :  @ViewBag.DepartmentName </h5>
-<form asp-controller="RequisitionHistory" asp-action="Index">
-    <p>
-        @using (Html.BeginForm("Index", "RequisitionHistory", FormMethod.Get))
-        {
-            <b>Search By:</b>
-            @Html.TextBox("Search") <input type="submit" value="search" />
 
-            @*Search: <input type="text" name="SearchString">
-                <input type="submit" value="Filter" />*@
-        }
-    </p>
-</form>
+@*<h5>Department Name :  @ViewBag.DepartmentName </h5>*@
 
-
+<div>
+    <form id="rangeDTP" name="rangeDTP" action='@Url.Action("Index","RequisitionHistory")' method="post">
+        <table>
+            <tr>
+                <td>
+                    <b> Search: </b><input type="text" name="search" id="search" placeholder="Search">
+                </td>
+                <td>
+                    <input type="submit" id="submitBtn" value="Go" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<br/>
 <table class="table">
     <tr>
         <th>No</th>
