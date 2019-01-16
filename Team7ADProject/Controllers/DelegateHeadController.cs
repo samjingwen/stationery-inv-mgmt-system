@@ -42,7 +42,7 @@ namespace Team7ADProject.Controllers
             dd.EndDate = new DateTime(2017, 5, 5);
             dd.DepartmentId = "BUSI";
 
-            AspNetUserRoles r = new AspNetUserRoles();
+           //AspNetUserRoles r = new AspNetUserRoles();
             
 
             if (ModelState.IsValid)

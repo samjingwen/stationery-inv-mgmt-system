@@ -39,12 +39,12 @@ namespace Team7ADProject.Controllers
             return View("StationeryForm",viewModel);
         }
 
-        [HttpPost]
+      //  [HttpPost]
 
-        public ActionResult Save()
-        {
-            if (!ModelState.IsValid)
-            throw new NotImplementedException();
-        }
-    }
+        //public ActionResult  Save()
+        //{
+        //    if (!ModelState.IsValid)
+        //    throw new NotImplementedException();
+        //}
+   }
 }
