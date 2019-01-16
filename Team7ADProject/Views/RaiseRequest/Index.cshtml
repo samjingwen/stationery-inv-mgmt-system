@@ -15,9 +15,9 @@
             <tr>
                 <td>Category</td>
                 <td>
-                    @Html.DropDownList("category", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })
-                    @*@Html.DropDownListFor(m=>m.Category,new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control", name="category" })
-                        @Html.ValidationMessageFor(m => m.Category)*@
+                    @*@Html.DropDownList("category", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })*@
+                    @Html.DropDownListFor(m => m.Category, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", name = "category" })
+                    @Html.ValidationMessageFor(m => m.Category)
                 </td>
             <tr>
                 <td>Description</td>
@@ -29,7 +29,8 @@
             <tr>
                 <td>Unit of measure</td>
                 <td>
-                    @Html.Label("N/A", new { id = "uom", @class = "form-control" })
+                    @Html.EditorFor(m => m.UnitOfMeasure, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", id="uom" } })
+                    @*@Html.LabelFor(m => m.UnitOfMeasure, new { id = "uom", @class = "form-control" })*@
                 </td>
             <tr>
                 <td>Quantity</td>
@@ -46,19 +47,25 @@
 
 <h2>Request List</h2>
 <div class="form-group">
-    <table>
+    <table class="table table-bordered table-hover">
         <thead>
-            <tr>
-                <td>No.</td>
-                <td>Category</td>
-                <td>Item name</td>
-                <td>Unit of measure</td>
-                <td>Quantity</td>
-                <td>Delete</td>
-            </tr>
+        <tr>
+            <td>No.</td>
+            <td>Category</td>
+            <td>Item name</td>
+            <td>Unit of measure</td>
+            <td>Quantity</td>
+            <td>Delete</td>
+        </tr>
         </thead>
-        <tbody>
-            @{int i = 1;}
+        @if (Model==null)
+        {
+            <p>We don't have any request yet.</p>
+        }
+        else
+        {
+            <tbody>
+            @{ int i = 1; }
             @foreach (var current in Model.Models)
             {
                 <tr>
@@ -72,66 +79,60 @@
                     </td>
                 </tr>
             }
-        </tbody>
+            </tbody>
+        }
     </table>
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Submit</button>
 </div>
 @section scripts
 {
-    @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $(document).ready(function () {
-            var $dropdown1 = $("select[name='category']");
-            $dropdown1.append('<option>Select Category1</option>');
+        var $dropdown1 = $("select[name='Category']");
+        var $dropdown2 = $("select[name='Description']");
+        $dropdown1.append('<option>Select Category</option>');
+        $dropdown2.append('<option>Select Item</option>');
+        //First load of list
+        $.ajax({
+            url: '../api/stationeries/categories/',
+            type: 'GET',
+            //data: 'q=' + str,
+            dataType: 'json',
+            success: function (json) {
+                $.each(json, function (i, value) {
+                    $dropdown1.append($('<option>').text(value).attr('value', value));
+                    //$('#myselect').append($('<option>').text(value).attr('value', value));
+                });
+            }
+        });
+        //Load 2nd list
+        $dropdown1.change(function () {
+            $dropdown2.empty();
             $dropdown2.append('<option>Select Item</option>');
-            //First load of list
+            //$('#myselect').append($('<option>').text(value).attr('value', value));
             $.ajax({
-                url: '../api/stationeries/categories/',
+                url: '../api/stationeries/categories/' + $dropdown1.val(),
                 type: 'GET',
                 //data: 'q=' + str,
                 dataType: 'json',
                 success: function (json) {
                     $.each(json, function (i, value) {
-                        $dropdown1.append($('<option>').text(value).attr('value', value));
-                        //$('#myselect').append($('<option>').text(value).attr('value', value));
+                        $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
                     });
                 }
             });
-
-
-            //Load 2nd list
-            var $dropdown2 = $("select[name='description']");
-            $dropdown1.change(function () {
-                $dropdown2.empty();
-                $dropdown2.append('<option>Select Item</option>');
-                //$('#myselect').append($('<option>').text(value).attr('value', value));
-                $.ajax({
-                    url: '../api/stationeries/categories/' + $dropdown1.val(),
-                    type: 'GET',
-                    //data: 'q=' + str,
-                    dataType: 'json',
-                    success: function (json) {
-                        $.each(json, function (i, value) {
-                            $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
-                        });
-                    }
-                });
-            });
-
-            //Load unit of measure
-            $dropdown2.change(function () {
-                $.ajax({
-                    url: '../api/stationeries/item/' + $dropdown2.val(),
-                    type: 'GET',
-                    //data: 'q=' + str,
-                    dataType: 'json',
-                    success: function (json) {
-                        $("#uom").text(json);
-                    }
-                });
+        });
+        //Load unit of measure
+        $dropdown2.change(function () {
+            $.ajax({
+                url: '../api/stationeries/item/' + $dropdown2.val(),
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $("#uom").val(json);
+                }
             });
         });
-
     </script>
 }

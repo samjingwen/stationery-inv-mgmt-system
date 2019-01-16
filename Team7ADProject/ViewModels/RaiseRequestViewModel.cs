@@ -22,12 +22,12 @@ namespace Team7ADProject.ViewModels
         public string UnitOfMeasure { get; set; }
         public  List<RaiseRequestViewModel> Models { get; set; }
 
-        public RaiseRequestViewModel(string category, string description, int quantity, string unitOfMeasure)
+        public RaiseRequestViewModel(RaiseRequestViewModel other)
         {
-            Category = category;
-            Description = description;
-            Quantity = quantity;
-            UnitOfMeasure = unitOfMeasure;
+            Category = other.Category;
+            Description = other.Description;
+            Quantity = other.Quantity;
+            UnitOfMeasure = other.UnitOfMeasure;
         }
 
         public RaiseRequestViewModel()

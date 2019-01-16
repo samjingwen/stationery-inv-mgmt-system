@@ -27,8 +27,7 @@ namespace Team7ADProject.Controllers
 
         public ActionResult Index()
         {
-            RaiseRequestViewModel viewModels= new RaiseRequestViewModel();
-            return View(viewModels);
+            return View();
         }
        
         [HttpPost]
@@ -59,9 +58,10 @@ namespace Team7ADProject.Controllers
 
         public ActionResult Add(RaiseRequestViewModel viewModel)
         {
-            RaiseRequestViewModel selection = new RaiseRequestViewModel(viewModel.Category,viewModel.Description,viewModel.Quantity,viewModel.UnitOfMeasure);
-            viewModel.Models.Add(selection);
-            return View("Index", viewModel);
+            RaiseRequestViewModel selection = new RaiseRequestViewModel(viewModel);
+            RaiseRequestViewModel newModel = new RaiseRequestViewModel();
+            newModel.Models.Add(selection);
+            return View("Index", newModel);
         }
     }
 }
