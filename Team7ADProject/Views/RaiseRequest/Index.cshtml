@@ -1,47 +1,128 @@
-﻿@model Team7ADProject.Entities.Stationery
+﻿@model List<Team7ADProject.ViewModels.RaiseRequestViewModel>
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Raise Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View</h2>
+<h2>Raise Request</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
+@using (Html.BeginForm("Add", "RaiseRequest"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+    <div class="form-group">
+        <table>
+            <tr>
+                <td>Category</td>
+                <td>
+                    @Html.DropDownList("category", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })
+                    @*@Html.DropDownListFor(m=>m.ca)*@
+                </td>
+            <tr>
+                <td>Description</td>
+                <td>
+                    @Html.DropDownList("description", Enumerable.Empty<SelectListItem>(), "Select Item", new { @class = "form-control table2" })
+                </td>
+            <tr>
+                <td>Unit of measure</td>
+                <td>
+                    @Html.Label("a", new { id = "uom", @class = "form-control" })
+                </td>
+            <tr>
+                <td>Quantity</td>
+                <td>
 
-        </th>
-    </tr>
+                </td>
+            </tr>
+        </table>
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+}
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ItemId })
+<h2>Request List</h2>
+<div class="form-group">
+    <table>
+        <thead>
+            <tr>
+                <td>No.</td>
+                <td>Category</td>
+                <td>Item name</td>
+                <td>Unit of measure</td>
+                <td>Quantity</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 1;}
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@(i++)</td>
+                    <td>@request.Category</td>
+                    <td>@request.Description</td>
+                    <td>@request.Quantity</td>
+                    <td>@request.</td>
+                    <td>
+                        <button data-stationery-id="" class="btn-link js-delete">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+@section scripts
+{
+    <script>
+        var $dropdown1 = $("select[name='category']");
 
-            </td>
-        </tr>
-    }
+        //First load of list
+        $.ajax({
+            url:'../api/stationeries/categories/',
+            type:'GET',
+            //data: 'q=' + str,
+            dataType: 'json',
+            success: function( json ) {
+                $.each(json, function(i, value) {
+                    $dropdown1.append($('<option>').text(value).attr('value', value));
+                    //$('#myselect').append($('<option>').text(value).attr('value', value));
+                });
+            }
+        });
 
-</table>
+
+        //Load 2nd list
+        var $dropdown2 = $("select[name='description']");
+        $dropdown1.change(function () {
+            $dropdown2.empty();
+            $dropdown2.append('<option>Select Item</option>');
+            //$('#myselect').append($('<option>').text(value).attr('value', value));
+            $.ajax({
+                url: '../api/stationeries/categories/' + $dropdown1.val(),
+                type:'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function( json ) {
+                    $.each(json, function(i, value) {
+                        $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
+                    });
+                }
+            });
+        });
+
+        //Load unit of measure
+        $dropdown2.change(function () {
+            $.ajax({
+                url: '../api/stationeries/item/' + $dropdown2.val(),
+                type:'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $("#uom").text(json);
+                }
+            });
+        });
+
+    </script>
+}

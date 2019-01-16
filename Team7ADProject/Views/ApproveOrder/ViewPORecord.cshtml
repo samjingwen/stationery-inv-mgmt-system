@@ -9,6 +9,8 @@
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/core.css">
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
@@ -16,7 +18,7 @@
 {
     <div class="container">
         <div class="row">
-            <div class="span5">
+            <div >
                 <table class="table table-striped table-condensed">
                     <thead>
                         <tr>
@@ -32,12 +34,23 @@
                         @foreach (var po in Model)
                         {
                             <tr>
-                                <td>@po.Date</td>
+                                <td>@Html.Label(po.Date.ToShortDateString())</td>
                                 <td>@po.PONo</td>
                                 <td>@po.Supplier.SupplierName</td>
                                 <td>@po.AspNetUsers1.EmployeeName</td>
-                                <td>@po.Amount</td>
-                                <td>@Html.ActionLink("link caption", "actionName", new { Model.Page }) </td>
+                                <td>$@po.Amount</td>
+                                @{ 
+                                    string className = "";
+                                    if (po.Status == "Completed")
+                                    { className = "action - button shadow animate blue"; }
+                                    if (po.Status == "Pending Approval")
+                                    { className = "action - button shadow animate red"; }
+                                    if (po.Status == "Pending Delivery")
+                                    { className = "action - button shadow animate yellow"; }
+                                    if (po.Status == "Partially Fulfilled")
+                                    { className = "action - button shadow animate green"; }
+                                    }
+                                <td>@Html.ActionLink(po.Status, "PODetails", "ApproveOrder", new {poNo = po.PONo }, new {@class = className }) </td>
                             </tr>
                         }
                     </tbody>

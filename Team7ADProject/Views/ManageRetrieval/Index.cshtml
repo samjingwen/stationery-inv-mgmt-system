@@ -1,7 +1,61 @@
-﻿
+﻿@model Team7ADProject.ViewModels.CompiledRequestViewModel
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+@using (Html.BeginForm("GenerateDisbursement", "ManageRetrieval", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Description")
+        </th>
+        <th>
+            @Html.Label("Category")
+        </th>
+        <th>
+            @Html.Label("UnitOfMeasure")
+        </th>
+        <th>
+            @Html.Label("Location")
+        </th>
+        <th>
+            @Html.Label("Quantity")
+        </th>
+        <th>
+            @Html.Label("RetrievedQty")
+        </th>
+        <th></th>
+    </tr>
 
+    @for (int i = 0; i < Model.RetrievalList.Count; i++)
+    {
+        @Html.HiddenFor(x => x.RetrievalList[i].ItemId)
+        <tr>
+            <td>
+                @Html.DisplayFor(x => x.RetrievalList[i].Description)
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.RetrievalList[i].Category)
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.RetrievalList[i].UnitOfMeasure)
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.RetrievalList[i].Location)
+            </td>
+            <td>
+                @Html.DisplayFor(x => x.RetrievalList[i].Quantity)
+            </td>
+            <td>
+                @Html.EditorFor(x => x.RetrievalList[i].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model.RetrievalList[i].Quantity } })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<input type="submit" value="Generate Disbursement List" class="btn btn-default" />
+}

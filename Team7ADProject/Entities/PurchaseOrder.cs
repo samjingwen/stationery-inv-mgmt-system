@@ -38,6 +38,8 @@ namespace Team7ADProject.Entities
 
         [Column(TypeName = "date")]
         [Display(Name = "PO Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
         [Required]

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -9,17 +10,22 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Team7ADProject.Entities;
+using Team7ADProject.ViewModels.Api;
 
 namespace Team7ADProject.Controllers.Api
 {
     public class StationeriesController : ApiController
     {
+        //Author: Teh Li Heng 16/1/2019
+        //Delete operation for stationeries, and loading of stationeries based on categories
+        #region Teh Li Heng
         private LogicDB _context;
 
         public StationeriesController()
         {
             _context=new LogicDB();
         }
+
 
         // DELETE: api/Stationeries/5
         [ResponseType(typeof(Stationery))]
@@ -37,6 +43,51 @@ namespace Team7ADProject.Controllers.Api
             return Ok(stationery);
         }
 
+        //For loading DropDownList
+        [Route("~/api/stationeries/categories")]
+        public IHttpActionResult GetCategory()
+        {
+            IEnumerable<String> categories = _context.Stationery.Select(m => m.Category).Distinct().ToList();
+
+            if (categories == null)
+            {
+                return NotFound();
+            }
+
+            List<String> collections = new List<String>();
+            foreach (string current in categories)
+            {
+                collections.Add(current);
+            }
+            
+            return Ok(collections);
+        }
+
+        [Route("~/api/stationeries/categories/{category}")]
+        public IHttpActionResult GetItemsFromCategory(string category)
+        {
+            List<Stationery> items = _context.Stationery.Where(m => m.Category == category).ToList();
+
+            List<RaiseRequestDTO> viewModels = new List<RaiseRequestDTO>();
+            for (int i = 0; i < items.Count; i++)
+            {
+                RaiseRequestDTO viewModel = new RaiseRequestDTO();
+                viewModel.Id = items[i].ItemId;
+                viewModel.ItemDescription = items[i].Description;
+                viewModels.Add(viewModel);
+            }
+            return Ok(viewModels);
+        }
+
+        [Route("~/api/stationeries/item/{itemId}")]
+        public IHttpActionResult GetUnitFromItem(string itemId)
+        {
+            Stationery stationery = _context.Stationery.Single(m => m.ItemId==itemId);
+            string unit = stationery.UnitOfMeasure;
+
+            return Ok(unit);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -45,5 +96,8 @@ namespace Team7ADProject.Controllers.Api
             }
             base.Dispose(disposing);
         }
+
+
+        #endregion
     }
 }
