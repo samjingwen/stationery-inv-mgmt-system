@@ -6,6 +6,8 @@ namespace Team7ADProject.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    //Author: Teh Li Heng 15/1/2019
+    //Added Validation and Regex to all models
     [Table("Stationery")]
     public partial class Stationery
     {
@@ -17,6 +19,7 @@ namespace Team7ADProject.Entities
 
         [Key]
         [StringLength(4)]
+        [Display(Name = "Item ID")]
         public string ItemId { get; set; }
 
         [Required]
@@ -26,16 +29,23 @@ namespace Team7ADProject.Entities
         [Required]
         public string Description { get; set; }
 
+        [Display(Name = "Reorder level Jiaxue")]
+        [RegularExpression(@"^\d+", ErrorMessage = "Please enter a valid quantity.")]
         public int ReorderLevel { get; set; }
 
+        [Display(Name = "Reorder quantity")]
+        [RegularExpression(@"^\d+", ErrorMessage = "Please enter a valid quantity.")]
         public int ReorderQuantity { get; set; }
 
         [Required]
         [StringLength(25)]
+        [Display(Name = "Unit of measure")]
         public string UnitOfMeasure { get; set; }
 
         public int QuantityTransit { get; set; }
 
+        [Display(Name = "Quantity at warehouse")]
+        [RegularExpression(@"^\d+", ErrorMessage = "Please enter a valid quantity.")]
         public int QuantityWarehouse { get; set; }
 
         [Required]
@@ -44,23 +54,32 @@ namespace Team7ADProject.Entities
 
         [Required]
         [StringLength(4)]
+        [Display(Name = "#1 Supplier")]
         public string FirstSupplierId { get; set; }
 
         [Column(TypeName = "numeric")]
+        [Display(Name = "#1 Price")]
+        [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
         public decimal FirstSuppPrice { get; set; }
 
         [Required]
         [StringLength(4)]
+        [Display(Name = "#2 Supplier")]
         public string SecondSupplierId { get; set; }
 
         [Column(TypeName = "numeric")]
+        [Display(Name = "#2 Price")]
+        [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
         public decimal SecondSuppPrice { get; set; }
 
         [Required]
         [StringLength(4)]
+        [Display(Name = "#3 Supplier")]
         public string ThirdSupplierId { get; set; }
 
         [Column(TypeName = "numeric")]
+        [Display(Name = "#3 Price")]
+        [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
         public decimal ThirdSuppPrice { get; set; }
 
         public virtual Supplier Supplier { get; set; }

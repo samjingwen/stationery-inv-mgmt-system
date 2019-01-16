@@ -210,6 +210,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AmendRequestController.cs" />
+    <Compile Include="Controllers\Api\StationeriesController.cs" />
     <Compile Include="Controllers\ApproveAdjustmentController.cs" />
     <Compile Include="Controllers\ApproveOrderController.cs" />
     <Compile Include="Controllers\ChargeBackController.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Controllers\RaiseRequestController.cs" />
     <Compile Include="Controllers\ReceiveGoodsController.cs" />
     <Compile Include="Controllers\ReceiveOrderController.cs" />
+    <Compile Include="Controllers\RetrieveOwnRequisitionHistoryController.cs" />
     <Compile Include="Controllers\ReturnWarehouseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UpdateWarehouseController.cs" />
@@ -322,6 +324,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -402,13 +406,14 @@
     <Content Include="Views\ManagePoint\Index.cshtml" />
     <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
+    <Content Include="Views\RequisitionHistory\Index.cshtml" />
+    <Content Include="Views\DelegateHead\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\ApproveAdjustment\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
-    <Folder Include="Views\DelegateHead\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\GenerateReport\" />
     <Folder Include="Views\ManageRequest\" />
