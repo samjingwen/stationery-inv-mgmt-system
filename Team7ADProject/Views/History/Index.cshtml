@@ -3,14 +3,55 @@
     ViewBag.Title = "Index";
 
 }
+<head>
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
 
+
+    <script>
+        $(function () {
+            $("#fromDTP").datepicker({
+                yearRange: "2017:+0",
+                maxDate: '0',
+                changeMonth: true,
+                changeYear: true,
+                showOn: "both",
+                onSelect: function (dateText, inst) {
+                    $("#toDTP").datepicker("option", "minDate", $("#fromDTP").datepicker("getDate"));
+                }
+            }
+            );
+            $("#toDTP").datepicker({
+                minDate: '-2y',
+                maxDate: '0',
+                changeMonth: true,
+                changeYear: true,
+                showOn: "both",
+                onSelect: function () {
+                    $("#fromDTP").datepicker("option", "maxDate", $("#toDTP").datepicker("getDate"));
+                }
+            });
+        });
+    </script>
+</head>
 <h2>Department Request History</h2>
 
-<div class='input-group date' id='datetimepicker1'>
-    <input type='text' class="form-control" ng-model="selectedDt" data-date-time-picker />
-    <span class="input-group-addon">
-        <span class="glyphicon glyphicon-calendar"></span>
-    </span>
+<div>
+    <form id="rangeDTP" name="rangeDTP" action='@Url.Action("Index","History")' method="post">
+        <table>
+            <tr>
+                <td>
+                    View requisition history from <input type="text" name="fromDTP" id="fromDTP" placeholder="Please select a date">
+                    to <input type="text" name="toDTP" id="toDTP" placeholder="Please select a date">.
+                </td>
+                <td width="100px" height="80px"></td>
+                <td>
+                    <input type="submit" id="submitBtn" value="View"/>
+                </td>
+            </tr>
+        </table>     
+    </form>
 </div>
 
 <table class="table">
@@ -36,10 +77,10 @@
     {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers.EmployeeName)
+            @Html.DisplayFor(modelItem => item.AspNetUsers1.EmployeeName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers1.EmployeeName)
+            @Html.DisplayFor(modelItem => item.AspNetUsers.EmployeeName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Status)
