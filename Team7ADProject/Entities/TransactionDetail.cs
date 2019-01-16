@@ -18,6 +18,7 @@ namespace Team7ADProject.Entities
 
         public int Quantity { get; set; }
 
+        [Display(Name = "Status")]
         public string Remarks { get; set; }
 
         [Required]
@@ -25,9 +26,11 @@ namespace Team7ADProject.Entities
         public string TransactionRef { get; set; }
 
         [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyyy}")]
         public DateTime TransactionDate { get; set; }
 
         [Column(TypeName = "numeric")]
+        [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal? UnitPrice { get; set; }
 
         public virtual DeliveryOrder DeliveryOrder { get; set; }
