@@ -1,0 +1,36 @@
+﻿@model Team7ADProject.ViewModels.OwnRequisitionHistoryViewModel
+
+@{
+    ViewBag.Title = "Detail";
+}
+<table class="table">
+    <tr>
+        <th>No</th>
+        <th>Item Name</th>
+        <th>Quantity</th>
+        <th>UOM</th>      
+    </tr>
+    @{int i = 1; }
+    @foreach (var item in Model.StationeryItems)
+    {
+        <tr>
+            <td>
+                @(i++)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantityTransit)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitOfMeasure)
+            </td>
+
+        </tr>
+    }
+    </table>
+
+
+

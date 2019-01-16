@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Team7ADProject.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using Team7ADProject.ViewModels;
 //Authors:Lynn Lynn Oo
 namespace Team7ADProject.Controllers
 {
@@ -27,19 +28,31 @@ namespace Team7ADProject.Controllers
         // To view the Requisition History
         public ActionResult Index()
         {
+            
             string userid = User.Identity.GetUserId();
             string depId = _context.AspNetUsers.Where(x => x.Id == userid).Select(x => x.DepartmentId).First();
             var stationery = _context.StationeryRequest.Where(x => x.DepartmentId==depId).ToList();
+            //ViewBag.DepName = _context.StationeryRequest.DepartmentId;
             return View(stationery);
         }
 
-        //RequisitionHistory/detail
-        //public ActionResult Detail(string id)
-        //{
-        //    var stationerydetail = _context.StationeryRequest.Include(y => y.RequestId);
-        //    return View(stationerydetail);
+        //RequisitionHistory/details
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OwnRequisitionHistoryViewModel vmodel = new OwnRequisitionHistoryViewModel();
+            vmodel.ReqID = id;
+            //StationeryRequest stationeryreq = _context.StationeryRequest.Find(id);
+            //if (stationeryreq == null)
+            //{
+            //    return HttpNotFound();
+            //}
+          return View(vmodel);
 
-        //}
+        }
         //public async Task<ActionResult> Index(string searchString)
         //{
         //    var request = from m in _context.StationeryRequest
