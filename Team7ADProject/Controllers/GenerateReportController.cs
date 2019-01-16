@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
 using Team7ADProject.ViewModels.GenerateReport;
+using Newtonsoft.Json;
 
 namespace Team7ADProject.Controllers
 {
@@ -17,16 +18,20 @@ namespace Team7ADProject.Controllers
         [Authorize(Roles = "Store Manager, Store Supervisor")]
         public ActionResult GenerateDashboard()
         {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            
             LogicDB context = new LogicDB();
-
-            var genRpt = context.TransactionDetail.ToList().Select(x => new GenerateReportViewModel()
+            var genRpt = context.TransactionDetail.GroupBy(x => new { x.Disbursement.DepartmentId }).
+                Select(y => new { DeptID = y.Key.DepartmentId, TotalAmt = y.Sum(z => (z.Quantity * z.UnitPrice))});
+                
+            foreach (var i in genRpt)
             {
-                DepartmentId = x.Disbursement.DepartmentId,
-                Date = x.TransactionDate,
-                Amount = (x.Quantity * x.UnitPrice)
-            });
+                dataPoints.Add(new DataPoint(i.DeptID, (double)i.TotalAmt));
+            }
 
-            return View(genRpt);
+            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+
+            return View();
         }
 
 

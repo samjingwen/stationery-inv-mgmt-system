@@ -36,16 +36,31 @@ namespace Team7ADProject.Controllers
             return View(poList);
         }
         //Approve or Reject PO
-        [HttpPost]
+        [HttpGet]
         public ActionResult PODetails(string  poNo)
         {
            PurchaseOrder purchaseOrder = _context.PurchaseOrder.SingleOrDefault(c => c.PONo == poNo);
             List<TransactionDetail> transactionDetail = _context.TransactionDetail.Where(c => c.TransactionRef == poNo).ToList();
-                if (poNo == null)
+                if (purchaseOrder == null)
             { return HttpNotFound(); }
             var poDetailsViewModel = new PoDetailsViewModel
             { PurchaseOrder = purchaseOrder,PODetails=transactionDetail};
             return View(poDetailsViewModel);
+        }
+        public ActionResult Approve(string poNo)
+        {
+            var thisPo = _context.PurchaseOrder.SingleOrDefault(c => c.PONo == poNo);
+            thisPo.Status = "Pending Delivery";
+            _context.SaveChanges();
+            return RedirectToAction("ViewPORecord", "ApproveOrder");
+
+        }
+        public ActionResult Reject(string poNo)
+        {
+            var thisPo = _context.PurchaseOrder.SingleOrDefault(c => c.PONo == poNo);
+            _context.PurchaseOrder.Remove(thisPo);
+            _context.SaveChanges();
+            return RedirectToAction("ViewPORecord", "ApproveOrder");
         }
         #endregion
     }
