@@ -28,6 +28,7 @@ namespace Team7ADProject.Entities
         public DateTime TransactionDate { get; set; }
 
         [Column(TypeName = "numeric")]
+        [DisplayFormat(DataFormatString = "{0:c}")]
         public decimal? UnitPrice { get; set; }
 
         public virtual DeliveryOrder DeliveryOrder { get; set; }
