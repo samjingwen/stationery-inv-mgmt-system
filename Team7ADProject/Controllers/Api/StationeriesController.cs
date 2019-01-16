@@ -74,10 +74,18 @@ namespace Team7ADProject.Controllers.Api
                 RaiseRequestDTO viewModel = new RaiseRequestDTO();
                 viewModel.Id = items[i].ItemId;
                 viewModel.ItemDescription = items[i].Description;
-                viewModel.UnitOfMeasure = items[i].UnitOfMeasure;
                 viewModels.Add(viewModel);
             }
             return Ok(viewModels);
+        }
+
+        [Route("~/api/stationeries/item/{itemId}")]
+        public IHttpActionResult GetUnitFromItem(string itemId)
+        {
+            Stationery stationery = _context.Stationery.Single(m => m.ItemId==itemId);
+            string unit = stationery.UnitOfMeasure;
+
+            return Ok(unit);
         }
 
         protected override void Dispose(bool disposing)

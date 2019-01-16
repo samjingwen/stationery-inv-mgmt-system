@@ -16,21 +16,22 @@
                 <td>Category</td>
                 <td>
                     @Html.DropDownList("category", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })
+                    @*@Html.DropDownListFor(m=>m.ca)*@
                 </td>
             <tr>
                 <td>Description</td>
                 <td>
-                    @Html.DropDownList("description", Enumerable.Empty<SelectListItem>(), "Select Item", new { @class = "form-control" })
+                    @Html.DropDownList("description", Enumerable.Empty<SelectListItem>(), "Select Item", new { @class = "form-control table2" })
                 </td>
             <tr>
                 <td>Unit of measure</td>
                 <td>
-                    @Html.Label("a", new { id = "uom", @class })
+                    @Html.Label("a", new { id = "uom", @class = "form-control" })
                 </td>
             <tr>
                 <td>Quantity</td>
                 <td>
-                    @Html.TextBox("quantity")
+
                 </td>
             </tr>
         </table>
@@ -76,6 +77,7 @@
     <script>
         var $dropdown1 = $("select[name='category']");
 
+        //First load of list
         $.ajax({
             url:'../api/stationeries/categories/',
             type:'GET',
@@ -89,8 +91,9 @@
             }
         });
 
+
+        //Load 2nd list
         var $dropdown2 = $("select[name='description']");
-        
         $dropdown1.change(function () {
             $dropdown2.empty();
             $dropdown2.append('<option>Select Item</option>');
@@ -103,15 +106,22 @@
                 success: function( json ) {
                     $.each(json, function(i, value) {
                         $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
-                        //$('#myselect').append($('<option>').text(value).attr('value', value));
                     });
                 }
             });
         });
 
-        var $labelQty = $("#uom");
+        //Load unit of measure
         $dropdown2.change(function () {
-            $dropdown2.Text("hey");
+            $.ajax({
+                url: '../api/stationeries/item/' + $dropdown2.val(),
+                type:'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $("#uom").text(json);
+                }
+            });
         });
 
     </script>
