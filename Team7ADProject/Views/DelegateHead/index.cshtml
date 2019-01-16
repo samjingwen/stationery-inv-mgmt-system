@@ -16,13 +16,71 @@
         });
     }
 }
-<h2>Delegate authority</h2>
-@using (Html.BeginForm("Delegate","DelegateHead",FormMethod.Post))
-{
 
-@Html.DropDownListFor(model => model.SelectedUser, listItems, "-- Select Employee --")
-    
+
+<h1>Delegate authority</h1>
+
+<h5>Department Name :  @ViewBag.DepName  </h5>
+<br />
+@using (Html.BeginForm("Delegate", "DelegateHead", FormMethod.Post))
+{
+    <label >Employee name: </label>
+    @Html.DropDownListFor(model => model.SelectedUser, listItems, "-- Select Employee --")
+    <br />
+    <br />
+    <label for="datepicker">Start Date : </label>
+
+    @Html.TextBox("YourTextBox", "", new { @class = "date-picker", @readonly = "readonly" })
+
+    <label for="datepicker">End Date : </label>
+
+    @Html.TextBox("YourTextBox2", "", new { @class = "date-picker1", @readonly = "readonly" })
+    <br />
+    <br />
     <input type="submit" value="Submit" />
+}
+
+@section Scripts {
+    <!-- jQuery UI CSS Reference -->
+    <link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" />
+    <!-- Required jQuery and jQuery UI Javascript references -->
+    <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.10.4.min.js")"></script>
+
+
+    <!-- Code to wire up your DatePicker -->
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker({
+                dateFormat: 'yy-mm-dd',
+                showAnim: 'clip',
+                onSelect: function (date) {
+                    $('.date-picker1').datepicker("option", "disabled", false);
+                    $(".date-picker1").datepicker("option", "minDate", date);
+                    $(".date-picker1").datepicker("option", "maxDate", '+2y');
+                    $('.date-picker1').datepicker('setDate', date);
+                }
+
+            });
+            $(".date-picker").datepicker("option", { minDate: + 0 });
+            // $(".date-picker").datepicker('setDate', 'today');
+
+            $(".date-picker1").datepicker({
+                dateFormat: 'yy-mm-dd',
+                showAnim: 'clip',
+                disabled: true
+
+            });
+
+
+        })
+
+
+
+
+    </script>
+
 }
 
 
@@ -87,7 +145,7 @@
 
     </table>*@
 
-    <br />
-    <br />
+<br />
+<br />
 
 

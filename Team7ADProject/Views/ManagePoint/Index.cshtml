@@ -1,148 +1,38 @@
-﻿@model List<Team7ADProject.ViewModels.ManagePointViewModel>
+﻿@model IEnumerable<Team7ADProject.Entities.CollectionPoint>
+
 @{
     ViewBag.Title = "Index";
-    WebGrid grid = new WebGrid(Model, rowsPerPage: 10);
 }
 
-<h2>Manage Collection Points</h2>
-<hr />
-<div class="row">
-    @grid.GetHtml(
-        tableStyle:"table table-responsive table-striped table-bordered",
-        columns: grid.Columns(
-            grid.Column(header:"Description", format:@<text><div class="edit" data-id="@item.CollectionPointId" data-propertyname="CollectionDescription">@item.CollectionDescription</div></text>),
-                            grid.Column(header: "Time", format:@<text><div class="editTime" data-id="@item.CollectionPointId" data-propertyname="Time">@string.Format("{0:HH:mm}", item.Time)</div></text>)
-                                                                                                                        )
-                                                                                                                    )
-</div>
-<style>
-    .table td {
-        width: 25%;
-    }
+<h2>Index</h2>
 
-    .w100 {
-        width: 100px;
-    }
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Description")
+        </th>
+        <th>
+            @Html.Label("Time")
+        </th>
+        <th></th>
+    </tr>
 
-    .margin10 {
-        margin-left: 20px;
-    }
-</style>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
-@section scripts{
-    <script src="https://www.appelsiini.net/download/jquery.jeditable.js"></script>
-    <script src="~/Scripts/jquery.timepicker.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            var oldValue = '';
-            $('.edit').editable('/managepoint/savecp', {
-                cssclass: 'jeditForm',
-                tooltip: 'Click to edit',
-                width: 'none',
-                height: 'none',
-                submit: 'OK',
-                onsubmit: function (settings, original) {
-                    oldValue = original.revert;
-                },
-                submitdata: function () {
-                    return {
-                        id: $(this).data('id'),
-                        PropertyName: $(this).data('propertyname')
-                    }
-                },
-                callback: function (value, settings) {
-                    var jsonData = $.parseJSON(value);
-                    if (jsonData.status) {
-                        $(this).text(jsonData.value);
-                    }
-                    else {
-                        $(this).text(oldValue);
-                    }
-                }
-            })
-
-
-            $.editable.addInputType('time', {
-                element: function (settings, original) {
-                    var hourselect = $('<select id="hour_">');
-                    var minselect = $('<select id="min_">');
-
-                    /* Hour loop */
-                    for (var hour = 9; hour <= 17; hour++) {
-                        if (hour < 10) {
-                            hour = '0' + hour;
-                        }
-                        var option = $('<option>').val(hour).append(hour);
-                        hourselect.append(option);
-                    }
-                    $(this).append(hourselect);
-
-                    /* Minutes loop */
-                    for (var min = 0; min <= 45; min = parseInt(min) + 15) {
-                        if (min < 10) {
-                            min = '0' + min;
-                        }
-                        var option = $('<option>').val(min).append(min);
-                        minselect.append(option);
-                    }
-                    $(this).append(minselect);
-
-                    /* Hidden input to store value which is submitted to server. */
-                    var hidden = $('<input type="hidden">');
-                    $(this).append(hidden);
-                    return (hidden);
-                },
-
-                submit: function (settings, original) {
-                    var value = $("#hour_").val() + ":" + $("#min_").val();
-                    $("input", this).val(value);
-                },
-
-                content: function (string, settings, original) {
-                    var hour = parseInt(string.substr(0, 2));
-                    var min = parseInt(string.substr(3, 2));
-
-                    $("#hour_", this).children().each(function () {
-                        if (hour == $(this).val()) {
-                            $(this).attr('selected', 'selected');
-                        }
-                    });
-                    $("#min_", this).children().each(function () {
-                        if (min == $(this).val()) {
-                            $(this).attr('selected', 'selected')
-                        }
-                    });
-                }
-            });
-
-
-            $('.editTime').editable('/managepoint/savecp', {
-                cssclass: 'jeditForm',
-                tooltip: 'Click to edit',
-                type: 'time',
-                submit: 'OK',
-                onsubmit: function (settings, original) {
-                    oldValue = original.revert;
-                },
-                submitdata: function () {
-                    return {
-                        id: $(this).data('id'),
-                        PropertyName: $(this).data('propertyname')
-                    }
-                },
-                callback: function (value, settings) {
-                    var jsonData = $.parseJSON(value);
-                    if (jsonData.status) {
-                        $(this).text(jsonData.value);
-                    }
-                    else {
-                        $(this).text(oldValue);
-                    }
-                }
-            })
-
-
-        })
-    </script>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CollectionDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CollectionPointId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CollectionPointId })
+        </td>
+    </tr>
 }
+
+</table>

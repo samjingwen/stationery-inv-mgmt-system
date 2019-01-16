@@ -21,6 +21,7 @@ namespace Team7ADProject.Entities
         [StringLength(50)]
         public string CollectionDescription { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm tt}")]
         public DateTime Time { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
