@@ -267,6 +267,7 @@
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
+    <Compile Include="ViewModels\GenerateReport\GenerateReportViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\MRequisitionRequestViewModel.cs" />
@@ -412,6 +413,7 @@
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
     <Content Include="Views\DelegateHead\index.cshtml" />
     <Content Include="Views\History\Detail.cshtml" />
+    <Content Include="Views\GenerateReport\GenerateDashboard.cshtml" />
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -420,8 +422,8 @@
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
-    <Folder Include="Views\GenerateReport\" />
     <Folder Include="Views\ManageRequest\" />
+    <Folder Include="Views\RaiseAdjustment\" />
     <Folder Include="Views\RaiseOrder\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
