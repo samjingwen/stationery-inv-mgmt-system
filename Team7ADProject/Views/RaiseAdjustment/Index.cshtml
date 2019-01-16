@@ -16,16 +16,16 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayName(Team7ADProject.ViewModels.AdjustmentViewModel.Items.FirstOrDefault().Category)
+                    Category
                 </th>
                 <th>
-                    @Html.DisplayName(Team7ADProject.ViewModels.AdjustmentViewModel.Items.FirstOrDefault().Description)
+                    Item Description
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model=>model.Detail.FirstOrDefault().Quantity)
+                    Quantity
                 </th>
                 <th>
-                    @Html.DisplayName(Team7ADProject.ViewModels.AdjustmentViewModel.Items.FirstOrDefault().QuantityWarehouse.ToString())
+                    Current Stock
                 </th>
                 <th>
                     Amount
@@ -35,8 +35,16 @@
             <tr>
                 <td>
                     @Html.DropDownList(Team7ADProject.ViewModels.AdjustmentViewModel.Items.FirstOrDefault().Category,
-                   new SelectList(Team7ADProject.ViewModels.AdjustmentViewModel.Items.Select(x => x.Category).Distinct(),"category","category"), 
+                   new SelectList(Team7ADProject.ViewModels.AdjustmentViewModel.Items.Select(x => x.Category).Distinct()),
                    "Select Category"  )
+                </td>
+                <td>
+                    @Html.DropDownList(Team7ADProject.ViewModels.AdjustmentViewModel.Items.FirstOrDefault().ItemId,
+                   new SelectList(Team7ADProject.ViewModels.AdjustmentViewModel.Items,"ItemId","description"),
+                   "Select Item"  )
+                </td>
+                <td>
+                    @Html.
                 </td>
             </tr>
         </table>
