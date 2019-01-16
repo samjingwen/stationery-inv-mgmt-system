@@ -8,10 +8,16 @@
 
 <form asp-controller="RequisitionHistory" asp-action="Index">
     <p>
-        Search: <input type="text" name="SearchString">
-        <input type="submit" value="Filter" />
+        @using (Html.BeginForm("Index", "RequisitionHistory", FormMethod.Get))
+        {
+            <b>Search By:</b>
+            @Html.TextBox("Search") <input type="submit" value="search" />
+
+            @*Search: <input type="text" name="SearchString">
+            <input type="submit" value="Filter" />*@
+        }
     </p>
-</form>
+</form> 
 
 
 <table class="table">
@@ -31,7 +37,9 @@
         </th>
         <th>Action</th>
     </tr>
+ <h6>Department Name: @ViewBag.DepartmentName</h6>
     @{ int i = 1;}
+    
     @foreach (var item in Model)
     {
         <tr>

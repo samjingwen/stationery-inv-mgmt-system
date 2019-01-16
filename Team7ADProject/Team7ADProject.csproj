@@ -268,6 +268,7 @@
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
+    <Compile Include="ViewModels\MRequisitionRequestViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
@@ -419,7 +420,6 @@
     <Folder Include="Views\Email\" />
     <Folder Include="Views\GenerateReport\" />
     <Folder Include="Views\ManageRequest\" />
-    <Folder Include="Views\ManageRetrieval\" />
     <Folder Include="Views\RaiseAdjustment\" />
     <Folder Include="Views\RaiseOrder\" />
     <Folder Include="Views\ReceiveGoods\" />
