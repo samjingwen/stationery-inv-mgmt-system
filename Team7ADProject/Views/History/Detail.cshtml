@@ -12,6 +12,57 @@
     <title>Details</title>
 </head>
 <body>
+    <table>
+        <tr>
+            <td width="1000px">
+                <h2>Request Details</h2>
+            </td>
+            <td>
+                @Html.ActionLink("Back", "Index", "History", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
+            </td>
+        </tr>       
+    </table>
+
+
+    <div>
+        <table class="table">
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Request.RequestedBy):
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Request.AspNetUsers.EmployeeName)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Request.ApprovedBy):
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Request.AspNetUsers1.EmployeeName)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Request.Status):
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Request.Status)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Request.RequestDate):
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Request.RequestDate)
+                </td>
+            </tr>
+        </table>
+    </div>
     <div>
         <table class="table">
             <tr>
