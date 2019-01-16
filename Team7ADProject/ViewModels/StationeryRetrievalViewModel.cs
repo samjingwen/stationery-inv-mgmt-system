@@ -25,7 +25,6 @@ namespace Team7ADProject.ViewModels
         [StringLength(25)]
         public string UnitOfMeasure { get; set; }
 
-
         public int Quantity { get; set; }
 
         public int RetrievedQty { get; set; }
@@ -44,6 +43,10 @@ namespace Team7ADProject.ViewModels
                 Description = item.Description;
                 UnitOfMeasure = item.UnitOfMeasure;
                 Location = item.Location;
+                if (item.QuantityWarehouse < Quantity)
+                {
+                    Quantity = item.QuantityWarehouse;
+                }
             }
         }
 
@@ -102,6 +105,11 @@ namespace Team7ADProject.ViewModels
 
         }
 
+    }
+
+    public class RetrievedListViewModel
+    {
+        public List<StationeryRetrievalViewModel> RetrievalList { get; set; }
     }
 
 
