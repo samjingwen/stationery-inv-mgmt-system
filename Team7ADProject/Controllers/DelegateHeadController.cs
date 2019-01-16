@@ -16,6 +16,7 @@ namespace Team7ADProject.Controllers
     {
         #region Author: Kay Thi Swe Tun
         // GET: DelegateHead
+        [Authorize(Roles = "Department Head")]
         public ActionResult Index()
         {
             LogicDB context = new LogicDB();
@@ -28,8 +29,8 @@ namespace Team7ADProject.Controllers
            
         }
 
-
         [HttpPost]
+        [Authorize(Roles = "Department Head")]
         public string Delegate(DelegateHeadViewModel model)
         {
             string userId = User.Identity.GetUserId();
@@ -42,9 +43,12 @@ namespace Team7ADProject.Controllers
           //  AspNetUsers c = context.AspNetUsers.Where(x => x.Id == selectedGender).First();//validate lote yan
             dd.DelegatedBy = userId;
             dd.DelegatedTo = selectedGEmployee;//"b36a58f3-51f9-47eb-8601-bcc757a8cadb";//selected Employee ID;
-            dd.StartDate = new DateTime(2017,3,5);
-            dd.EndDate = new DateTime(2017, 5, 5);
-            dd.DepartmentId = "BUSI";
+            dd.StartDate = model.StartDate;//new DateTime(2017,3,5);
+            dd.EndDate = model.EndDate;//new DateTime(2017, 5, 5);
+
+            model.CurrentUser = userId;
+
+            dd.DepartmentId = model.DepartmentID;
 
             //AspNetUserRoles r = new AspNetUserRoles();
             ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
