@@ -52,6 +52,45 @@ namespace Team7ADProject.Controllers
         }
 
         [Authorize(Roles = "Department Head")]
+        [HttpPost]
+        public ActionResult ChargeBack(DateTime? fromDTP, DateTime? toDTP)
+        {if ((fromDTP== null) || (toDTP == null))
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                LogicDB context = new LogicDB();
+                String UID = User.Identity.GetUserId();
+                String DID = context.Department.
+                Where(x => x.DepartmentHeadId == UID).
+                First().DepartmentId;
+
+                var chargeback = context.Disbursement.
+                Where(x => x.DepartmentId == DID && x.Date >= fromDTP && x.Date <= toDTP).ToList().
+                Select(x => new DepartmentChargeBackViewModel()
+                {
+                    DisbursementId = x.DisbursementId,
+                    DisbursementNo = x.DisbursementNo,
+                    DepartmentId = x.DepartmentId,
+                    Department = x.Department,
+                    AcknowledgedBy = context.AspNetUsers.Where(y => y.Id == x.AcknowledgedBy).First().EmployeeName,
+                    DisbursedBy = x.DisbursedBy,
+                    Date = x.Date,
+                    RequestId = x.RequestId,
+                    StationeryRequest = x.StationeryRequest,
+                    OTP = x.OTP,
+                    Status = x.Status,
+                    AspNetUsers = x.AspNetUsers,
+                    AspNetUsers1 = x.AspNetUsers1,
+                    TransactionDetail = x.TransactionDetail
+                });
+
+                return View(chargeback);
+            }
+        }
+
+        [Authorize(Roles = "Department Head")]
         public ActionResult ChargeBackDetails(String id)
         {
             LogicDB context = new LogicDB();

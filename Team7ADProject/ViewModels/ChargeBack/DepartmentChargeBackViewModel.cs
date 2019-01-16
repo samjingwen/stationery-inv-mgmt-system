@@ -61,5 +61,7 @@ namespace Team7ADProject.ViewModels
         public virtual ICollection<TransactionDetail> TransactionDetail { get; set; }
         #endregion
 
+        public DateTime toDTP { get; set; }
+        public DateTime fromDTP { get; set; }
     }
 }
