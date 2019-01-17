@@ -39,4 +39,3 @@ namespace Team7ADProject.ViewModels.GenerateReport
         public string Color = null;
     }
 }
-}
