@@ -16,11 +16,16 @@ namespace Team7ADProject.Entities
 
         [Key]
         [Column(Order = 1)]
+        [StringLength(50)]
+        public string DepartmentName { get; set; }
+
+        [Key]
+        [Column(Order = 2)]
         [StringLength(4)]
         public string ItemId { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 3)]
         public string Description { get; set; }
 
         public int? Quantity { get; set; }

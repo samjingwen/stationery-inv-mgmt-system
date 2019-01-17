@@ -23,6 +23,11 @@ namespace Team7ADProject.Entities
         [StringLength(4)]
         public string DepartmentId { get; set; }
 
+        [Key]
+        [Column(Order = 3)]
+        [StringLength(50)]
+        public string DepartmentName { get; set; }
+
         public int? Quantity { get; set; }
     }
 }
