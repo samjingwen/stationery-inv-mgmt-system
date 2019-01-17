@@ -42,6 +42,8 @@ namespace Team7ADProject.ViewModels
 
         public IEnumerable<Supplier> Suppliers { get; set; }
 
+        public IEnumerable<PurchaseOrder> PurchaseOrders { get; set; }
+
         public IEnumerable<TransactionDetail> TransactionDetail { get; set; }
         public IEnumerable<Stationery> Stationeries { get; set; }
 
@@ -64,6 +66,7 @@ namespace Team7ADProject.ViewModels
         {
 
         }
+        
 
         public RaisePOViewModel(Stationery stationery)
         {
@@ -79,6 +82,10 @@ namespace Team7ADProject.ViewModels
         public int Quantity { get; set; }
 
         public string Remarks { get; set; }
+
+
+        [Required]
+        public string Description { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -98,6 +105,6 @@ namespace Team7ADProject.ViewModels
         [Display(Name = "Category")]
         public IEnumerable<String> Categories { get; set; }
 
-
+       
     }
 }

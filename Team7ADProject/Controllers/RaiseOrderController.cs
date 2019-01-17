@@ -7,6 +7,7 @@ using Team7ADProject.Entities;
 using Team7ADProject.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Net;
+using System.Text;
 
 namespace Team7ADProject.Controllers
 {
@@ -32,7 +33,11 @@ namespace Team7ADProject.Controllers
             RaisePOViewModel viewModel = new RaisePOViewModel();
             viewModel.Suppliers = suppliers;
             viewModel.Stationeries = stationeries;
-            viewModel.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + DateTime.Now.Date.ToString("dd");
+
+
+
+            viewModel.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + "03" ;
+            //viewModel.PONo = GetSerialNumber().ToString();
             ViewBag.PoNo = viewModel.PONo;
             viewModel.Categories = _context.Stationery.Select(m => m.Category).Distinct().ToList();
 
@@ -41,23 +46,68 @@ namespace Team7ADProject.Controllers
 
 
             return View(viewModel);
-        }
+        }   
 
-        [HttpGet]
-        public JsonResult GetStatList(string category)
+        public ActionResult ViewPo()
         {
-            _context.Configuration.ProxyCreationEnabled = false;
-            var stationeries = _context.Stationery.Where(x => x.Category == category).ToList();
+            // to get the user ID of the current user
+            string userId = User.Identity.GetUserId();
+           // var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
 
-            List<String> itemlist = new List<string>();
-            foreach (Stationery stat in stationeries)
-            {
-                itemlist.Add(stat.Description);
-            }
-
-            return Json(itemlist, JsonRequestBehavior.AllowGet);
-
+            var po = _context.PurchaseOrder.Where(x => x.OrderedBy == userId).ToList().
+                Select(x => new RaisePOViewModel()
+                {
+                    PONo = x.PONo,
+                    SupplierId = x.SupplierId,
+                    ApprovedBy = x.ApprovedBy,
+                    Amount = x.Amount,
+                    Date = x.Date,
+                    Status = x.Status
+                }
+                );
+     
+            return View(po);
         }
+
+        // PO18/02/##
+        //private static int GetSerialNumber()
+        //{
+        //    LogicDB context1 = new LogicDB();
+        //    var lastPo = context1.PurchaseOrder.Select(m => m.PONo).LastOrDefault();
+        //    string date = lastPo.Substring(2,10);
+        //    string todayDate = DateTime.Today.ToString();
+        //    if(date == todayDate)
+        //    {
+        //        string poSerial = lastPo.Substring(11);
+        //        int poSerialInt = int.Parse(poSerial);
+        //        return poSerialInt + 1;
+        //    }
+
+        //    else
+        //    {
+        //        return 1;
+        //    }
+
+           // string start = DateTime.Today.AddDays(-1).ToString();
+            //return (DateTime.Now - DateTime.Parse(start)).Days;
+        //}
+
+
+        //[HttpGet]
+        //public JsonResult GetStatList(string category)
+        //{
+        //    _context.Configuration.ProxyCreationEnabled = false;
+        //    var stationeries = _context.Stationery.Where(x => x.Category == category).ToList();
+
+        //    List<String> itemlist = new List<string>();
+        //    foreach (Stationery stat in stationeries)
+        //    {
+        //        itemlist.Add(stat.Description);
+        //    }
+
+        //    return Json(itemlist, JsonRequestBehavior.AllowGet);
+
+        //}
 
         [HttpPost]
         public string Save(RaisePOViewModel poModel)
@@ -74,7 +124,8 @@ namespace Team7ADProject.Controllers
             PurchaseOrder newPO = new PurchaseOrder();
             TransactionDetail newTD = new TransactionDetail();
 
-            newPO.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + DateTime.Now.Date.ToString("dd");
+            //newPO.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + DateTime.Now.Date.ToString("dd");
+            newPO.PONo = "PO19/01/03";
             newPO.OrderedBy = "4e858936-0926-4bde-9a5f-76129ab96941";
             newPO.ApprovedBy = poModel.ApprovedBy;
             newPO.SupplierId = poModel.SupplierId;     // from view

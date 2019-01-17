@@ -216,6 +216,7 @@
     <Compile Include="Controllers\ChargeBackController.cs" />
     <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\ConsolidateDisbursementController.cs" />
     <Compile Include="Controllers\DelegateHeadController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\GenerateReportController.cs" />
@@ -249,8 +250,6 @@
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\LogicDB.cs" />
     <Compile Include="Entities\PurchaseOrder.cs" />
-    <Compile Include="Entities\RequestByDeptView.cs" />
-    <Compile Include="Entities\RequestByItemView.cs" />
     <Compile Include="Entities\Stationery.cs" />
     <Compile Include="Entities\StationeryRequest.cs" />
     <Compile Include="Entities\StationeryRetrieval.cs" />
@@ -270,14 +269,14 @@
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
-    <Compile Include="ViewModels\GenerateReport\DataPoint.cs" />
+    <Compile Include="ViewModels\GenerateReport\DoubleStrColDPViewModel.cs" />
     <Compile Include="ViewModels\GenerateReport\GenerateReportViewModel.cs" />
+    <Compile Include="ViewModels\GenerateReport\StringDoubleDPViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\RaisePOViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
-    <Compile Include="ViewModels\StationeryDisbursementViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
@@ -419,14 +418,13 @@
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
     <Content Include="Views\DelegateHead\index.cshtml" />
-    <Content Include="Views\RaiseRequest\Index.cshtml" />
     <Content Include="Views\History\Detail.cshtml" />
     <Content Include="Views\GenerateReport\GenerateDashboard.cshtml" />
     <Content Include="Views\RequisitionHistory\Details.cshtml" />
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\GenerateDisbursement.cshtml" />
     <Content Include="Views\RaiseOrder\Index.cshtml" />
-    <Content Include="Views\RaiseAdjustment\Confirm.cshtml" />
+    <Content Include="Views\RaiseRequest\ViewPo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
