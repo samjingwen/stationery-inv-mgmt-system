@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Team7ADProject.Entities;
 using Team7ADProject.ViewModels;
-using Team7ADProject.ViewModels.Api;
 
-//Authors: Lynn Lynn Oo
 namespace Team7ADProject.Controllers
 {
+    
     public class RaiseRequestController : Controller
     {
         #region Teh Li Heng
-        private LogicDB _context;
+        static private LogicDB _context;
+        static List<RaiseRequestViewModel> test;
 
         public RaiseRequestController()
         {
             _context=new LogicDB();
+            test=new List<RaiseRequestViewModel>();
         }
 
         protected override void Dispose(bool disposing)
@@ -48,20 +49,21 @@ namespace Team7ADProject.Controllers
                 TransactionRef = "",
                 TransactionDate = DateTime.Now,
             };
-            
-            
             throw new NotImplementedException();
         }
 
-
-        #endregion
-
         public ActionResult Add(RaiseRequestViewModel viewModel)
         {
-            RaiseRequestViewModel selection = new RaiseRequestViewModel(viewModel);
-            RaiseRequestViewModel newModel = new RaiseRequestViewModel();
-            newModel.Models.Add(selection);
-            return View("Index", newModel);
+            string userid = User.Identity.GetUserId();
+            TransactionDetail newTransactionDetail = new TransactionDetail
+            {
+                TransactionId = "Temp
+
+            };
+            test.Add(selection);
+            viewModel.Models = test;
+            return View("Index",viewModel);
         }
+        #endregion
     }
 }

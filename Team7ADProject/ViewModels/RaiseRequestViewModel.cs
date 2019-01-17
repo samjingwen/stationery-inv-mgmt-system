@@ -15,6 +15,8 @@ namespace Team7ADProject.ViewModels
         [Required]
         public string Description { get; set; }
 
+        [Required]
+        public string ItemId { get; set; }
         
         [RegularExpression(@"^\d+", ErrorMessage = "Please enter a valid quantity.")]
         public int Quantity { get; set; }
