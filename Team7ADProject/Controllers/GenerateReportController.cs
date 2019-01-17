@@ -19,11 +19,11 @@ namespace Team7ADProject.Controllers
         public ActionResult GenerateDashboard()
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
-            
+
             LogicDB context = new LogicDB();
             var genRpt = context.TransactionDetail.GroupBy(x => new { x.Disbursement.DepartmentId }).
-                Select(y => new { DeptID = y.Key.DepartmentId, TotalAmt = y.Sum(z => (z.Quantity * z.UnitPrice))});
-                
+                Select(y => new { DeptID = y.Key.DepartmentId, TotalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
+
             foreach (var i in genRpt)
             {
                 dataPoints.Add(new DataPoint(i.DeptID, (double)i.TotalAmt));
