@@ -18,5 +18,10 @@ namespace Team7ADProject.Controllers
 
             return View();
         }
+
+        public ActionResult Confirm()
+        {
+            return View();
+        }
     }
 }

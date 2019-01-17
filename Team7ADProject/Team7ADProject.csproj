@@ -422,6 +422,7 @@
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\GenerateDisbursement.cshtml" />
     <Content Include="Views\RaiseOrder\Index.cshtml" />
+    <Content Include="Views\RaiseAdjustment\Confirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
