@@ -136,7 +136,7 @@ namespace Team7ADProject.Controllers
             newPO.SupplierId = poModel.SupplierId;     // from view
             newPO.Amount = (decimal)(poModel.Quantity * poModel.UnitPrice);
             newPO.Date = DateTime.Now;
-            newPO.Status = "Pending";
+            newPO.Status = "Pending Approval";
 
             newTD.TransactionDate = newPO.Date;
             newTD.Quantity = poModel.Quantity;          // from view
