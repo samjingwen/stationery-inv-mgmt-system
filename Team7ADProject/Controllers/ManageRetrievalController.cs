@@ -17,7 +17,7 @@ namespace Team7ADProject.Controllers
         // GET: ManageRetrieval
         public ActionResult Index()
         {
-            CompiledRequestViewModel model = new CompiledRequestViewModel();
+            RequestByItemViewModel model = new RequestByItemViewModel();
             return View(model);
         }
 
