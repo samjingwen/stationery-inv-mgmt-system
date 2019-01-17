@@ -1,65 +1,47 @@
-﻿@model IEnumerable<Team7ADProject.Entities.StationeryRequest>
+﻿@model IEnumerable<Team7ADProject.ViewModels.OwnRequisitionHistoryViewModel>
 
 @{
     ViewBag.Title = "Requisition History";
 }
 
-<h2><b>Requisition History</b></h2>
+<div class="container">
 
-<form asp-controller="RequisitionHistory" asp-action="Index">
-    <p>
-        @using (Html.BeginForm("Index", "RequisitionHistory", FormMethod.Get))
-        {
-            <b>Search By:</b>
-            @Html.TextBox("Search") <input type="submit" value="search" />
-
-            @*Search: <input type="text" name="SearchString">
-            <input type="submit" value="Filter" />*@
-        }
-    </p>
-</form> 
+    <h2><b>Requisition History</b></h2>
+    <br />
+    <table class="table table-bordered table-hover">
 
 
-<table class="table">
-    <tr>
-        <th>No</th>
-        <th>
-            @Html.DisplayNameFor(model => model.Department.DepartmentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RequestDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RequestId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>Action</th>
-    </tr>
- <h6>Department Name: @ViewBag.DepartmentName</h6>
-    @{ int i = 1;}
-    
-    @foreach (var item in Model)
-    {
         <tr>
-            <td>@(i++)</td>
+            <th>No.</th>
+            <th>Item Description</th>
+            <th>Quantity</th>
+            <th>Unit of Measure</th>
+            <th>Request Date</th>
+            <th>Status</th>
+        </tr>
+
+
+        @{ int i = 1;}
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(i++)</td>
+                <td>@item.ItemDescription</td>
+                <td>@item.ItemQuantity</td>
+                <td>@item.UnitOfMeasure</td>
+                <td>@item.RequestDate</td>
+                <td>@item.Status</td>
+            </tr>
+        }
+
+    </table>
+
+    <table>
+        <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Department.DepartmentName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.RequestId })
+                @Html.ActionLink("Back", "Index", "RequisitionHistory", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
             </td>
         </tr>
-    }
-
-</table>
+    </table>
+</div>

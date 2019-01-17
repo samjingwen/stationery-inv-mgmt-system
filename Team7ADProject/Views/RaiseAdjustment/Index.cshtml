@@ -1,0 +1,61 @@
+﻿@model Team7ADProject.ViewModels.AdjustmentViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h2>Stock Adjustment</h2>
+    @using (Html.BeginForm("Confirm", "RaiseAdjustment"))
+    {
+        <div>
+            <table class="table">
+                <tr>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Item Description
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Current Stock
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.DropDownList(Team7ADProject.ViewModels.AdjustmentViewModel.Items.FirstOrDefault().Category,
+                       new SelectList(Team7ADProject.ViewModels.AdjustmentViewModel.Items.Select(x => x.Category).Distinct()),
+                       "Select Category"  )
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model=>model.Detail.Last().ItemId,
+                       new SelectList(Team7ADProject.ViewModels.AdjustmentViewModel.Items,"ItemId","description"),
+                       "Select Item"  )
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Detail.Last().Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(model => model.Detail.Last().Stationery.QuantityWarehouse)
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <input type="submit" value="Confirm" />
+    }
+</body>
+</html>

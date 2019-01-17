@@ -4,20 +4,64 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
+using Team7ADProject.ViewModels;
+using Team7ADProject.ViewModels.Api;
+
 //Authors: Lynn Lynn Oo
 namespace Team7ADProject.Controllers
 {
     public class RaiseRequestController : Controller
     {
-        private Stationery context = new Stationery();
-        #region Lynn Lynn Oo
-        // GET: RaiseRequest
-        //[Authorize(Roles = "Employee,Department Representative")]
+        #region Teh Li Heng
+        private LogicDB _context;
+
+        public RaiseRequestController()
+        {
+            _context=new LogicDB();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
 
         public ActionResult Index()
         {
-            return View(context);
+            return View();
         }
+       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(RaiseRequestViewModel viewModel)
+        {
+            //Check if there's any existing stationery request
+
+            //Adding transaction detail for each item
+            int transactionId = _context.TransactionDetail.Count();
+            string itemId = _context.Stationery.Single(m => m.Description == viewModel.Description).ItemId;
+            TransactionDetail transactionDetailInDb = new TransactionDetail
+            {
+                TransactionId = transactionId+1,
+                ItemId = itemId,
+                Quantity = viewModel.Quantity,
+                Remarks = string.Empty,
+                TransactionRef = "",
+                TransactionDate = DateTime.Now,
+            };
+            
+            
+            throw new NotImplementedException();
+        }
+
+
         #endregion
+
+        public ActionResult Add(RaiseRequestViewModel viewModel)
+        {
+            RaiseRequestViewModel selection = new RaiseRequestViewModel(viewModel);
+            RaiseRequestViewModel newModel = new RaiseRequestViewModel();
+            newModel.Models.Add(selection);
+            return View("Index", newModel);
+        }
     }
 }
