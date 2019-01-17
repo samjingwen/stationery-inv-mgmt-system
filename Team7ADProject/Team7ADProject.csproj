@@ -216,7 +216,6 @@
     <Compile Include="Controllers\ChargeBackController.cs" />
     <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
-    <Compile Include="Controllers\ConsolidateDisbursementController.cs" />
     <Compile Include="Controllers\DelegateHeadController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\GenerateReportController.cs" />
@@ -249,6 +248,8 @@
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\LogicDB.cs" />
     <Compile Include="Entities\PurchaseOrder.cs" />
+    <Compile Include="Entities\RequestByDeptView.cs" />
+    <Compile Include="Entities\RequestByItemView.cs" />
     <Compile Include="Entities\Stationery.cs" />
     <Compile Include="Entities\StationeryRequest.cs" />
     <Compile Include="Entities\StationeryRetrieval.cs" />
@@ -424,6 +425,7 @@
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\GenerateDisbursement.cshtml" />
     <Content Include="Views\RaiseOrder\Index.cshtml" />
+    <Content Include="Views\RaiseAdjustment\Confirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
@@ -432,8 +434,6 @@
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\ManageRequest\" />
-    <Folder Include="Views\RaiseAdjustment\" />
-    <Folder Include="Views\RaiseOrder\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
     <Folder Include="Views\ReturnWarehouse\" />
