@@ -17,7 +17,34 @@ namespace Team7ADProject.Controllers
         // GET: ManageRetrieval
         public ActionResult Index()
         {
-            RequestByItemViewModel model = new RequestByItemViewModel();
+            List<RequestByItemViewModel> model = new List<RequestByItemViewModel>();
+            LogicDB context = new LogicDB();
+            var query = context.RequestByItemView.OrderBy(x => x.ItemId).ToList();
+            foreach(var i in query)
+            {
+                var item = model.Find(x => x.ItemId == i.ItemId);
+                if (item != null)
+                {
+                    item.requestList.Add(new BreakdownByDeptViewModel
+                    {
+                        DepartmentId = i.DepartmentId,
+                        DepartmentName = i.DepartmentName,
+                        Quantity = (int) i.Quantity
+                    });
+                }
+                else
+                {
+                    RequestByItemViewModel requestByItemViewModel = new RequestByItemViewModel();
+                    requestByItemViewModel.ItemId = item.ItemId;
+                    requestByItemViewModel.requestList.Add(new BreakdownByDeptViewModel
+                    {
+                        DepartmentId = i.DepartmentId,
+                        DepartmentName = i.DepartmentName,
+                        Quantity = (int)i.Quantity
+                    });
+                    model.Add(requestByItemViewModel);
+                }
+            }
             return View(model);
         }
 

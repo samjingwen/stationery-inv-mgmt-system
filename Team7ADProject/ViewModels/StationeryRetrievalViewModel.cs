@@ -12,6 +12,7 @@ namespace Team7ADProject.ViewModels
     public class RequestByDeptViewModel
     {
         public string DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
         public List<BreakdownByItemViewModel> requestList { get; set; }
     }
 
@@ -32,6 +33,7 @@ namespace Team7ADProject.ViewModels
     public class BreakdownByDeptViewModel
     {
         public string DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
         public int Quantity { get; set; }
     }
     
