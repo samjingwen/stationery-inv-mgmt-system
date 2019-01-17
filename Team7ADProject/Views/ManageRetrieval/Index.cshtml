@@ -34,6 +34,7 @@
             @Html.HiddenFor(x => x[i].ItemId)
         <td>
             @Html.DisplayFor(x => x[i].Description)
+            @Html.HiddenFor(x => x[i].Description)
         </td>
         <td></td>
         <td></td>
@@ -51,6 +52,7 @@
         </td>
         <td>
             @Html.DisplayFor(x => x[i].requestList[j].DepartmentName)
+            @Html.HiddenFor(x => x[i].requestList[j].DepartmentName)
         </td>
         <td>
             @Html.DisplayFor(x => x[i].requestList[j].Quantity)
