@@ -22,7 +22,7 @@ namespace Team7ADProject.Controllers
             _context = new LogicDB();
         }
 
-        // [Authorize(Roles = "Store Supervisor")]
+        //[Authorize(Roles = "Store Supervisor")]
         // GET: RaiseOrder
         public ActionResult Index()
         {
@@ -34,26 +34,29 @@ namespace Team7ADProject.Controllers
             viewModel.Suppliers = suppliers;
             viewModel.Stationeries = stationeries;
 
-
-
-            viewModel.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + "03" ;
+            viewModel.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + "03";
             //viewModel.PONo = GetSerialNumber().ToString();
             ViewBag.PoNo = viewModel.PONo;
             viewModel.Categories = _context.Stationery.Select(m => m.Category).Distinct().ToList();
+
+
+
+
 
 
             //ViewBag.Cate = _context.Stationery.Select(m => m.Category).Distinct().ToList();
 
 
             return View(viewModel);
-        }   
+        }
 
+        #region // For the Store Staff To View His/Her Own POs
         public ActionResult ViewPo()
         {
             // to get the user ID of the current user
-            string userId = User.Identity.GetUserId();
-           // var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
-
+            string userId = "5042e8ca-ef83-4458-a78c-07e4f6ba0d1d";// User.Identity.GetUserId();
+            // var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
+            //ViewBag.UserName = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId).UserName;
             var po = _context.PurchaseOrder.Where(x => x.OrderedBy == userId).ToList().
                 Select(x => new RaisePOViewModel()
                 {
@@ -65,9 +68,11 @@ namespace Team7ADProject.Controllers
                     Status = x.Status
                 }
                 );
-     
+
             return View(po);
         }
+
+        #endregion
 
         // PO18/02/##
         //private static int GetSerialNumber()
@@ -88,8 +93,8 @@ namespace Team7ADProject.Controllers
         //        return 1;
         //    }
 
-           // string start = DateTime.Today.AddDays(-1).ToString();
-            //return (DateTime.Now - DateTime.Parse(start)).Days;
+        // string start = DateTime.Today.AddDays(-1).ToString();
+        //return (DateTime.Now - DateTime.Parse(start)).Days;
         //}
 
 
@@ -148,5 +153,23 @@ namespace Team7ADProject.Controllers
             //return View("Index");//check if naming is correct
             return "success";
         }
+
+        // GET: RaiseOrder/Details/id
+        public ActionResult Details(string poNo)
+        {
+            if (poNo == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            PurchaseOrder purchaseOrder = _context.PurchaseOrder.SingleOrDefault(x => x.PONo == poNo);
+            List<TransactionDetail> transactionDetail = _context.TransactionDetail.Where(c => c.TransactionRef == poNo).ToList();
+            if (purchaseOrder == null)
+            { return HttpNotFound(); }
+            var poDetailsViewModel = new PoDetailsViewModel
+            { PurchaseOrder = purchaseOrder, PODetails = transactionDetail };
+            return View(poDetailsViewModel);
+        }
+
     }
 }
