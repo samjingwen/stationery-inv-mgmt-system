@@ -274,6 +274,7 @@
     <Compile Include="ViewModels\GenerateReport\GenerateReportViewModel.cs" />
     <Compile Include="ViewModels\GenerateReport\StringDoubleDPViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
+    <Compile Include="ViewModels\InvoiceDetailsViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\RaisePOViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
