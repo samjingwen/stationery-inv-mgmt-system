@@ -70,46 +70,59 @@ namespace Team7ADProject.Controllers
         [HttpPost]
         public ActionResult Save(RaiseRequestViewModel[] requests)
         {
-            string currentUserId = User.Identity.GetUserId();
-            AspNetUsers currentUser = _context.AspNetUsers.First(m => m.Id == currentUserId);
-
             string result = "Error! Request is incomplete!";
-            string newStationeryRequestId = GenerateRequestId();
-            if (requests != null)
+            bool validQuantity = false;
+            for (int i = 0; i < requests.Length; i++)
             {
-                StationeryRequest stationeryRequestInDb = new StationeryRequest
-                {
-                    RequestId = newStationeryRequestId,
-                    RequestedBy = currentUserId,
-                    ApprovedBy = null,
-                    DepartmentId = currentUser.DepartmentId,
-                    Status = "Pending Approval",
-                    Comment = null,
-                    RequestDate = DateTime.Today,
-                    CollectionDate = null
-                };
-
-                _context.StationeryRequest.Add(stationeryRequestInDb);
-                _context.SaveChanges();
-
-                foreach (var item in requests)
-                {
-                    TransactionDetail transactionDetailInDb = new TransactionDetail
-                    {
-                        TransactionId = GenerateTransactionDetailId(),
-                        ItemId = item.Description,
-                        Quantity = item.Quantity,
-                        Remarks = "Pending Approval",
-                        TransactionRef = newStationeryRequestId,
-                        TransactionDate = DateTime.Today,
-                        UnitPrice = 1 //to be changed tomorrow
-                    };
-                    _context.TransactionDetail.Add(transactionDetailInDb);
-                }
-                _context.SaveChanges();
-                result = "Success! Request is complete!";
+                validQuantity = requests[i].Quantity > 0;
+            }
+            if (!validQuantity)
+            {
+                result = "Invalid input! Kindly raise a valid request.";
             }
 
+            else
+            {
+                string currentUserId = User.Identity.GetUserId();
+                AspNetUsers currentUser = _context.AspNetUsers.First(m => m.Id == currentUserId);
+
+
+                string newStationeryRequestId = GenerateRequestId();
+                if (requests != null)
+                {
+                    StationeryRequest stationeryRequestInDb = new StationeryRequest
+                    {
+                        RequestId = newStationeryRequestId,
+                        RequestedBy = currentUserId,
+                        ApprovedBy = null,
+                        DepartmentId = currentUser.DepartmentId,
+                        Status = "Pending Approval",
+                        Comment = null,
+                        RequestDate = DateTime.Today,
+                        CollectionDate = null
+                    };
+
+                    _context.StationeryRequest.Add(stationeryRequestInDb);
+                    _context.SaveChanges();
+
+                    foreach (var item in requests)
+                    {
+                        TransactionDetail transactionDetailInDb = new TransactionDetail
+                        {
+                            TransactionId = GenerateTransactionDetailId(),
+                            ItemId = item.Description,
+                            Quantity = item.Quantity,
+                            Remarks = "Pending Approval",
+                            TransactionRef = newStationeryRequestId,
+                            TransactionDate = DateTime.Today,
+                            UnitPrice = 1 //to be changed tomorrow
+                        };
+                        _context.TransactionDetail.Add(transactionDetailInDb);
+                    }
+                    _context.SaveChanges();
+                    result = "Success! Request is complete!";
+                }
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

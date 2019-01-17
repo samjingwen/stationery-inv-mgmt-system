@@ -115,7 +115,7 @@
                             </label>
                             <div class="col-md-4">
                                 @*<input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />*@
-                                <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />
+                                <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="1"/>
                             </div>
                             <div class="col-md-2 col-lg-offset-4">
                                 <a id="addToList" class="btn btn-primary">Add To List</a>
@@ -335,9 +335,10 @@
                 category = $("#category").val(),
                 quantity = $("#quantity").val(),
                 unitOfMeasure = $("#uom").val(),
+                name = $("#description option:selected").text(),
                 detailsTableBody = $("#detailsTable tbody");
 
-            var requestItem = '<tr><td>' + description + '</td><td>' + category + '</td><td>' + quantity + '</td><td>' + unitOfMeasure + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+            var requestItem = '<tr><td style="display:none;">' + description + '</td><td>' + name + '</td><td>' + category + '</td><td>' + quantity + '</td><td>' + unitOfMeasure + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
             detailsTableBody.append(requestItem);
             clearItem();
         });
@@ -400,8 +401,8 @@
                 requestArr.push({
                     description: $(this).find('td:eq(0)').html(),
                     //category: $(this).find('td:eq(1)').html(),
-                    quantity: $(this).find('td:eq(2)').html(),
-                    unitOfMeasure: $(this).find('td:eq(3)').html()
+                    quantity: $(this).find('td:eq(3)').html(),
+                    unitOfMeasure: $(this).find('td:eq(4)').html()
                 });
             });
 
