@@ -33,27 +33,27 @@ namespace Team7ADProject.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(RaiseRequestViewModel viewModel)
-        {
-            //Check if there's any existing stationery request
+        //public ActionResult Save(RaiseRequestViewModel viewModel)
+        //{
+        //    //Check if there's any existing stationery request
 
-            //Adding transaction detail for each item
-            int transactionId = _context.TransactionDetail.Count();
-            string itemId = _context.Stationery.Single(m => m.Description == viewModel.Description).ItemId;
-            TransactionDetail transactionDetailInDb = new TransactionDetail
-            {
-                TransactionId = transactionId+1,
-                ItemId = itemId,
-                Quantity = viewModel.Quantity,
-                Remarks = string.Empty,
-                TransactionRef = "",
-                TransactionDate = DateTime.Now,
-            };
+        //    //Adding transaction detail for each item
+        //    int transactionId = _context.TransactionDetail.Count();
+        //    string itemId = _context.Stationery.Single(m => m.Description == viewModel.Description).ItemId;
+        //    TransactionDetail transactionDetailInDb = new TransactionDetail
+        //    {
+        //        TransactionId = transactionId+1,
+        //        ItemId = itemId,
+        //        Quantity = viewModel.Quantity,
+        //        Remarks = string.Empty,
+        //        TransactionRef = "",
+        //        TransactionDate = DateTime.Now,
+        //    };
             
             
-            viewModel.
-            throw new NotImplementedException();
-        }
+        //    //viewModel.
+        //    //throw new NotImplementedException();
+        //}
 
 
         #endregion
