@@ -9,6 +9,34 @@ using Team7ADProject.Models;
 //Author: Sam Jing Wen
 namespace Team7ADProject.ViewModels
 {
+    public class DeptRequestViewModel
+    {
+        public string ItemId { get; set; }
+        public List<DeptItemDetailViewModel> DeptList { get; set; }
+
+        public DeptRequestViewModel(string ItemId)
+        {
+            this.ItemId = ItemId;
+            LogicDB context = new LogicDB();
+            var queryPendDisb = context.StationeryRequest.Where(x => x.Status == "Pending Disbursement" || x.Status == "Partially Fulfilled");
+            var query = from x in queryPendDisb
+                        join y in context.TransactionDetail
+                        on x.RequestId equals y.TransactionRef
+                        group y by x.DepartmentId into g
+                        select new
+                        {
+                            DepartmentId = g.Key,
+                            Quantity = g.Where(x => x.ItemId == ItemId).Sum(x => x.Quantity)
+                        };
+        }
+    }
+
+    public class DeptItemDetailViewModel
+    {
+        public string DepartmentId { get; set; }
+        public string Quantity { get; set; }
+    }
+
     public class StationeryRetrievalViewModel
     {
         [StringLength(4)]
