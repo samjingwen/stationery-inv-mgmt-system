@@ -18,7 +18,7 @@ namespace Team7ADProject.Controllers
         [Authorize(Roles = "Store Manager, Store Supervisor")]
         public ActionResult GenerateDashboard()
         {
-            List<DataPoint> dataPoints = new List<DataPoint>();
+            List<StringDoubleDPViewModel> dataPoints = new List<StringDoubleDPViewModel>();
 
             LogicDB context = new LogicDB();
             var genRpt = context.TransactionDetail.GroupBy(x => new { x.Disbursement.DepartmentId }).
@@ -26,7 +26,7 @@ namespace Team7ADProject.Controllers
 
             foreach (var i in genRpt)
             {
-                dataPoints.Add(new DataPoint(i.DeptID, (double)i.TotalAmt));
+                dataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
             }
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
