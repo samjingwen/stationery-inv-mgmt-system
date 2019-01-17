@@ -21,6 +21,7 @@ namespace Team7ADProject.ViewModels
         public string ItemId { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
+        public int RetrievedQty { get; set; }
     }
 
     public class RequestByItemViewModel
@@ -35,6 +36,7 @@ namespace Team7ADProject.ViewModels
         public string DepartmentId { get; set; }
         public string DepartmentName { get; set; }
         public int Quantity { get; set; }
+        public int RetrievedQty { get; set; }
     }
     
 

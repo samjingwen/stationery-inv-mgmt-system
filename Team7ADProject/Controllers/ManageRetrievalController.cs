@@ -23,24 +23,28 @@ namespace Team7ADProject.Controllers
             foreach(var i in query)
             {
                 var item = model.Find(x => x.ItemId == i.ItemId);
+                var disb = context.DisbByDept.Where(x => x.ItemId == i.ItemId && x.DepartmentId == i.DepartmentId).FirstOrDefault();
                 if (item != null)
                 {
                     item.requestList.Add(new BreakdownByDeptViewModel
                     {
                         DepartmentId = i.DepartmentId,
                         DepartmentName = i.DepartmentName,
-                        Quantity = (int) i.Quantity
+                        Quantity = disb == null ? (int)i.Quantity : ((int)i.Quantity - (int)disb.Quantity)
                     });
                 }
                 else
                 {
+
                     RequestByItemViewModel requestByItemViewModel = new RequestByItemViewModel();
-                    requestByItemViewModel.ItemId = item.ItemId;
+                    requestByItemViewModel.ItemId = i.ItemId;
+                    requestByItemViewModel.Description = i.Description;
+                    requestByItemViewModel.requestList = new List<BreakdownByDeptViewModel>();
                     requestByItemViewModel.requestList.Add(new BreakdownByDeptViewModel
                     {
                         DepartmentId = i.DepartmentId,
                         DepartmentName = i.DepartmentName,
-                        Quantity = (int)i.Quantity
+                        Quantity = disb == null ? (int)i.Quantity : ((int)i.Quantity - (int)disb.Quantity)
                     });
                     model.Add(requestByItemViewModel);
                 }
