@@ -20,22 +20,18 @@
                 axisY: {valueFormatString: "#,###", prefix: "$"},
                 data: [{
                     type: "column",
-                    dataPoints: @Html.Raw(ViewBag.DataPoints)
+                    dataPoints: @Html.Raw(ViewBag.deptDataPoints)
                 }]
             });
 
-            var chargebackChart = new CanvasJS.Chart("ChargeBack", {
+            var disbStatChart = new CanvasJS.Chart("DisbStat", {
                 animationEnabled: true,
-                title: { text: "Live Data" },
+                theme: "light1",
+                title: { text: "Disbursement by Stationery type" },
+                axisY: { valueFormatString: "#,###", prefix: "$" },
                 data: [{
-                    type: "column",
-                    dataPoints: [
-                        { label: "apple", y: 10 },
-                        { label: "orange", y: 15 },
-                        { label: "banana", y: 25 },
-                        { label: "mango", y: 30 },
-                        { label: "grape", y: 28 }
-                    ]
+                    type: "bar",
+                    dataPoints: @Html.Raw(ViewBag.statDataPoints)
                 }]
             });
 
@@ -57,7 +53,7 @@
             });
 
             disbChart.render();
-            chargebackChart.render();
+            disbStatChart.render();
             deptChart.render();
         }
     </script>
@@ -93,36 +89,35 @@
 </head>
 
 <h2>Store Dashboard</h2>
-<p>Dates selected: <input type="text" id="altfromDTP" disabled> to 
-    <input type="text" id="alttoDTP" disabled></p>
+<p>
+    Dates selected: <input type="text" id="altfromDTP" disabled> to
+    <input type="text" id="alttoDTP" disabled>
+</p>
 <div style="width:80%">
-                    <div id="ReportFilters" style="width:25%; height:100%; float:right; border:groove ">
-                        <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post" >
-                            <p>Select period:</p>
-                            <p><input type="text" name="fromDateTP" id="fromDateTP"></p>
-                            <p><input type="text" name="toDateTP" id="toDateTP"></p>
-                            <input type="submit" />
-                        </form>
-                    </div>
-                    <div>
-                        <div id="DisbChart" style="height: 300px; width: 30%;">
-                        </div>
-                        <div>
+    <div id="ReportFilters" style="width:25%; height:100%; float:right; border:groove ">
+        <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post">
+            <p>Select period:</p>
+            <p><input type="text" name="fromDateTP" id="fromDateTP"></p>
+            <p><input type="text" name="toDateTP" id="toDateTP"></p>
+            <input type="submit" />
+        </form>
+    </div>
+    <div>
+        <div id="DisbChart" style="height: 300px; width: 30%;">
+        </div>
+    </div>
 
-                        </div>
-                    </div>
-
-                    <div>
-                        <div id="ChargeBack" style="height: 300px; width: 30%; ">
+    <div>
+        <div id="DisbStat" style="height: 300px; width: 30%; ">
 
 
-                        </div>
-                    </div>
+        </div>
+    </div>
 
-                    <div>
-                        <div id="Dept" style="height: 300px; width: 30%;">
+    <div>
+        <div id="Dept" style="height: 300px; width: 30%;">
 
 
-                        </div>
-                    </div>
-                </div>
+        </div>
+    </div>
+</div>

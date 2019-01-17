@@ -18,22 +18,39 @@ namespace Team7ADProject.Controllers
         [Authorize(Roles = "Store Manager, Store Supervisor")]
         public ActionResult GenerateDashboard()
         {
-            List<StringDoubleDPViewModel> dataPoints = new List<StringDoubleDPViewModel>();
-
             LogicDB context = new LogicDB();
-            //var genRpt = context.TransactionDetail.GroupBy(x => new { x.Disbursement.DepartmentId }).
-            //    Select(y => new { DeptID = y.Key.DepartmentId, TotalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
-            var genRpt = context.TransactionDetail.
-               Where(x => x.Disbursement.DepartmentId=="BUSI").
-               GroupBy(y => new { y.Disbursement.DepartmentId }).
-               Select(z => new { DeptID = z.Key.DepartmentId, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
-            foreach (var i in genRpt)
+            #region Disbursement by DeptID
+            List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
+
+            var gendeptRpt = context.TransactionDetail.GroupBy(x => new { x.Disbursement.DepartmentId }).
+                Select(y => new { DeptID = y.Key.DepartmentId, TotalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
+
+            foreach (var i in gendeptRpt)
             {
-                dataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                deptdataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
             }
 
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            ViewBag.deptDataPoints = JsonConvert.SerializeObject(deptdataPoints);
+            #endregion
+
+            #region Disbursement by Stationery Category
+
+            List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
+
+            var genstatRpt = context.TransactionDetail.Where(x => x.Disbursement.AcknowledgedBy != null).
+                    GroupBy(y => new { y.Stationery.Category }).
+                    Select(z => new { itemCat = z.Key.Category, totalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
+
+            foreach (var i in genstatRpt)
+            {
+                statdataPoints.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+            }
+
+            ViewBag.statDataPoints = JsonConvert.SerializeObject(statdataPoints);
+
+            #endregion
+
 
             return View();
         }
@@ -42,20 +59,39 @@ namespace Team7ADProject.Controllers
         [HttpPost]
         public ActionResult GenerateDashboard(DateTime? fromDateTP, DateTime? toDateTP)
         {
-            List<StringDoubleDPViewModel> dataPoints = new List<StringDoubleDPViewModel>();
             LogicDB context = new LogicDB();
 
-            var genRpt = context.TransactionDetail.
+            #region Disbursement by DeptId
+            List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
+            var gendeptRpt = context.TransactionDetail.
                 Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
                 GroupBy(y => new { y.Disbursement.DepartmentId }).
-                Select(z => new { DeptID = z.Key.DepartmentId, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice))});
+                Select(z => new { DeptID = z.Key.DepartmentId, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
-            foreach (var i in genRpt)
+            foreach (var i in gendeptRpt)
             {
-                dataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                deptdataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
             }
 
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            ViewBag.deptDataPoints = JsonConvert.SerializeObject(deptdataPoints);
+            #endregion
+
+            #region Disbursement by Stationery Category
+
+            List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
+            var genstatRpt = context.TransactionDetail.
+                Where(x => x.Disbursement.AcknowledgedBy != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                    GroupBy(y => new { y.Stationery.Category }).
+                    Select(z => new { itemCat = z.Key.Category, totalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
+
+            foreach (var i in genstatRpt)
+            {
+                statdataPoints.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+            }
+
+            ViewBag.statDataPoints = JsonConvert.SerializeObject(statdataPoints);
+
+            #endregion
 
             return View();
         }
