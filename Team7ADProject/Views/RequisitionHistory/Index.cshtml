@@ -5,9 +5,12 @@
 }
 
 <div class="container">
+
     <h2><b>Requisition History</b></h2>
     <br />
     <table class="table table-bordered table-hover">
+
+
         <tr>
             <th>No.</th>
             <th>Item Description</th>
@@ -16,6 +19,7 @@
             <th>Request Date</th>
             <th>Status</th>
         </tr>
+
 
         @{ int i = 1;}
 
@@ -30,5 +34,14 @@
                 <td>@item.Status</td>
             </tr>
         }
+
+    </table>
+
+    <table>
+        <tr>
+            <td>
+                @Html.ActionLink("Back", "Index", "History", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
+            </td>
+        </tr>
     </table>
 </div>

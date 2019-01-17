@@ -16,7 +16,7 @@ namespace Team7ADProject.Controllers
     //For employee/department rep can view their own requisition histories
     public class RequisitionHistoryController : Controller
     {
-        #region Lynn Lynn Oo
+        #region Lynn Lynn Oo        
         private LogicDB _context;
 
         public RequisitionHistoryController()
@@ -26,6 +26,9 @@ namespace Team7ADProject.Controllers
 
         // GET: RequisitionHistory
         // To view the Requisition History
+
+        [Authorize(Roles = "Employee,Department Representation")]
+
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
