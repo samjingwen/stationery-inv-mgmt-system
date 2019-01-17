@@ -15,25 +15,34 @@ namespace Team7ADProject.Entities
             TransactionDetail = new HashSet<TransactionDetail>();
         }
 
+        [Required]
         [StringLength(10)]
+        [Display(Name = "Invoice ID")]
         public string InvoiceId { get; set; }
 
         [Required]
         [StringLength(10)]
+        [Display(Name = "Invoice No")]
         public string InvoiceNo { get; set; }
 
         [Column(TypeName = "date")]
+        [Display(Name = "Invoice Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime InvoiceDate { get; set; }
 
         [Required]
         [StringLength(4)]
+        [Display(Name = "Supplier ID")]
         public string SupplierId { get; set; }
 
         [Column(TypeName = "numeric")]
+        [Display(Name = "Amount")]
         public decimal InvoiceAmount { get; set; }
 
         [Required]
         [StringLength(10)]
+        [Display(Name = "DeliveryOrder ID")]
         public string DelOrderId { get; set; }
 
         public virtual DeliveryOrder DeliveryOrder { get; set; }

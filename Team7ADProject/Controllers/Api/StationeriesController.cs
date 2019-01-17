@@ -49,18 +49,13 @@ namespace Team7ADProject.Controllers.Api
         {
             IEnumerable<String> categories = _context.Stationery.Select(m => m.Category).Distinct().ToList();
 
-            if (categories == null)
-            {
-                return NotFound();
-            }
-
-            List<String> collections = new List<String>();
-            foreach (string current in categories)
-            {
-                collections.Add(current);
-            }
+            //List<String> collections = new List<String>();
+            //foreach (string current in categories)
+            //{
+            //    collections.Add(current);
+            //}
             
-            return Ok(collections);
+            return Ok(categories);
         }
 
         [Route("~/api/stationeries/categories/{category}")]
