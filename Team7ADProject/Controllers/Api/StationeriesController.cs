@@ -64,6 +64,13 @@ namespace Team7ADProject.Controllers.Api
             }
 
             return Ok(collections);
+            //List<String> collections = new List<String>();
+            //foreach (string current in categories)
+            //{
+            //    collections.Add(current);
+            //}
+            
+            return Ok(categories);
         }
 
         [Route("~/api/stationeries/categories/{category}")]

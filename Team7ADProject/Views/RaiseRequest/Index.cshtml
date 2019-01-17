@@ -72,8 +72,9 @@
                     <td>@(i++)</td>
                     <td>@current.Category</td>
                     <td>@current.Description</td>
-                    <td>@current.Quantity</td>
+
                     <td>@current.UnitOfMeasure</td>
+                                        <td>@current.Quantity</td>
                     <td>
                         <button data-stationery-id="@current.Description" class="btn-link js-delete">Delete</button>
                     </td>
@@ -134,5 +135,15 @@
                 }
             });
         });
+    </script>
+    
+    <script>
+            $("#addChild").on("click", function () {
+        $.ajax({
+            url: '@Url.Action("AddChild", "YourController")'
+        }).success(function (partialView) {
+            $('#children> tbody:last-child').append(partialView);
+        });
+    });
     </script>
 }

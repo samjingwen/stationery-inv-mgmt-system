@@ -4,10 +4,11 @@
 
 
 <head>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
     <script>
 
@@ -19,50 +20,40 @@
                 axisY: {valueFormatString: "#,###", prefix: "$"},
                 data: [{
                     type: "column",
-                    dataPoints: @Html.Raw(ViewBag.DataPoints)
+                    dataPoints: @Html.Raw(ViewBag.deptDataPoints)
                 }]
             });
 
-            var chargebackChart = new CanvasJS.Chart("ChargeBack", {
+            var disbStatChart = new CanvasJS.Chart("DisbStat", {
                 animationEnabled: true,
-                title: { text: "Live Data" },
+                theme: "light1",
+                title: { text: "Disbursement by Stationery type" },
+                axisY: { valueFormatString: "#,###", prefix: "$" },
                 data: [{
-                    type: "column",
-                    dataPoints: [
-                        { label: "apple", y: 10 },
-                        { label: "orange", y: 15 },
-                        { label: "banana", y: 25 },
-                        { label: "mango", y: 30 },
-                        { label: "grape", y: 28 }
-                    ]
+                    type: "bar",
+                    dataPoints: @Html.Raw(ViewBag.statDataPoints)
                 }]
             });
 
-            var deptChart = new CanvasJS.Chart("Dept", {
+            var disbTimeChart = new CanvasJS.Chart("DisbTime", {
                 animationEnabled: true,
                 title: {
-                    text: "Live Data"
+                    text: "Disbursement over time"
                 },
                 data: [{
                     type: "line",
-                    dataPoints: [
-                        { label: "apple", y: 10 },
-                        { label: "orange", y: 15 },
-                        { label: "banana", y: 25 },
-                        { label: "mango", y: 30 },
-                        { label: "grape", y: 28 }
-                    ]
+                    dataPoints: @Html.Raw(ViewBag.timedataPoints)
                 }]
             });
 
             disbChart.render();
-            chargebackChart.render();
-            deptChart.render();
+            disbStatChart.render();
+            disbTimeChart.render();
         }
     </script>
     <script>
         $(function () {
-            $("#fromDTP").datepicker({
+            $("#fromDateTP").datepicker({
                 altField: "#altfromDTP",
                 altFormat: "d MM yy",
                 yearRange: "2017:+0",
@@ -70,13 +61,13 @@
                 changeMonth: true,
                 changeYear: true,
                 showOn: "both",
-                defaultDate: "1/1/2018",
+                defaultDate: "1/1/2017",
                 onSelect: function (dateText, inst) {
-                    $("#toDTP").datepicker("option", "minDate", $("#fromDTP").datepicker("getDate"));
+                    $("#toDateTP").datepicker("option", "minDate", $("#fromDateTP").datepicker("getDate"));
                 }
-            }
-            );
-            $("#toDTP").datepicker({
+            });
+
+            $("#toDateTP").datepicker({
                 altField: "#alttoDTP",
                 altFormat: "d MM yy",
                 minDate: '-2y',
@@ -84,43 +75,43 @@
                 changeMonth: true,
                 changeYear: true,
                 showOn: "both",
-                defaultDate: "31/12/2018"
             });
         });
     </script>
 
 
-</head >
+</head>
 
 <h2>Store Dashboard</h2>
-<p>Dates selected: <input type="text" id="altfromDTP" disabled> to <input type="text" id="alttoDTP" disabled></p>
+<p>
+    Dates selected: <input type="text" id="altfromDTP" disabled> to
+    <input type="text" id="alttoDTP" disabled>
+</p>
 <div style="width:80%">
-                    <div id="ReportFilters" style="width:25%; height:100%; float:right; border:groove ">
-                        <form id="filterOps" name="filterOps" action=" " method="post">
-                            <p>Select period:</p>
-                            <p><input type="text" name="fromDTP" id="fromDTP" placeholder="Please select a date"></p>
-                            <p><input type="text" name="toDTP" id="toDTP" placeholder="Please select a date"></p>
-                        </form>
-                    </div>
-                    <div>
-                        <div id="DisbChart" style="height: 300px; width: 30%;">
-                        </div>
-                        <div>
+    <div id="ReportFilters" style="width:25%; height:100%; float:right; border:groove ">
+        <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post">
+            <p>Select period:</p>
+            <p><input type="text" name="fromDateTP" id="fromDateTP"></p>
+            <p><input type="text" name="toDateTP" id="toDateTP"></p>
+            <input type="submit" />
+        </form>
+    </div>
+    <div>
+        <div id="DisbChart" style="height: 300px; width: 30%;">
+        </div>
+    </div>
 
-                        </div>
-                    </div>
-
-                    <div>
-                        <div id="ChargeBack" style="height: 300px; width: 30%; ">
+    <div>
+        <div id="DisbStat" style="height: 300px; width: 30%; ">
 
 
-                        </div>
-                    </div>
+        </div>
+    </div>
 
-                    <div>
-                        <div id="Dept" style="height: 300px; width: 30%;">
+    <div>
+        <div id="DisbTime" style="height: 300px; width: 80%;">
 
 
-                        </div>
-                    </div>
-                </div>
+        </div>
+    </div>
+</div>

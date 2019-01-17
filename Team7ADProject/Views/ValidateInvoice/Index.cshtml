@@ -1,0 +1,60 @@
+﻿@using Team7ADProject.Entities
+@model Team7ADProject.ViewModels.InvoiceDetailsViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Save", "ValidateInvoice"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+    <div class="form-group">
+        <table>
+            <tr>
+                <td>@Html.Label("No Of DeliveryOrder")</td>
+                <td>
+                    <button class="qty" type="button" data-func="minus" data-field="field1">-</button>
+                    <input type="text" name="field1" value="0" />
+                    <button class="qty" type="button" data-func="plus" data-field="field1">+</button>
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Invoice.InvoiceId)</td>
+                <td>
+                    @Html.EditorFor(m => m.Invoice.InvoiceId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.Invoice.InvoiceId)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Invoice.InvoiceNo)</td>
+                <td>
+                    @Html.EditorFor(m => m.Invoice.InvoiceNo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.Invoice.InvoiceNo)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Invoice.InvoiceDate)</td>
+                <td>
+                    @Html.EditorFor(m => m.Invoice.InvoiceDate)
+                    @Html.ValidationMessageFor(m => m.Invoice.InvoiceDate)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Invoice.SupplierId)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.Invoice.SupplierId, new SelectList(Model.Suppliers,"SupplierId", "SupplierName"), "Select Supplier", null)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Invoice.InvoiceAmount)</td>
+                <td>
+                    @Html.EditorFor(m => m.Invoice.InvoiceAmount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.Invoice.InvoiceAmount)
+                </td>
+            </tr>
+        </table>
+    </div>
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+  
