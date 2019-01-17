@@ -77,6 +77,8 @@
             }
             );
             $("#toDTP").datepicker({
+                altField: "#alttoDTP",
+                altFormat: "d MM yy",
                 minDate: '-2y',
                 maxDate: '0',
                 changeMonth: true,
@@ -91,7 +93,7 @@
 </head >
 
 <h2>Store Dashboard</h2>
-<p>Dates selected: <input type="text" id="altfromDTP"></p>
+<p>Dates selected: <input type="text" id="altfromDTP" disabled> to <input type="text" id="alttoDTP" disabled></p>
 <div style="width:80%">
                     <div id="ReportFilters" style="width:25%; height:100%; float:right; border:groove ">
                         <form id="filterOps" name="filterOps" action=" " method="post">
