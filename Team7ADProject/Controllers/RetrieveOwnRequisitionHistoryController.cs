@@ -26,31 +26,34 @@ namespace Team7ADProject.Controllers
 
         // GET: RequisitionHistory
         // To view the Requisition History
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
-            
+            OwnRequisitionHistoryViewModel vModel = new OwnRequisitionHistoryViewModel();
             string userid = User.Identity.GetUserId();
             string depId = _context.AspNetUsers.Where(x => x.Id == userid).Select(x => x.DepartmentId).First();
             var stationery = _context.StationeryRequest.Where(x => x.DepartmentId==depId).ToList();
+            //forsearch
+            string reqid = _context.StationeryRequest.Single(x => x.DepartmentId == depId).RequestId;
+            if (search!=null)
+            {
+                return View(_context.StationeryRequest.Where(x => x.RequestId == reqid).ToList());
+            }
+            else
+                return View(stationery);
             //ViewBag.DepName = _context.StationeryRequest.DepartmentId;
-            return View(stationery);
+
         }
 
-        //RequisitionHistory/details
+        //RequisitionHistory/Details
         public ActionResult Details(string id)
         {
+            OwnRequisitionHistoryViewModel vmodel = new OwnRequisitionHistoryViewModel();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OwnRequisitionHistoryViewModel vmodel = new OwnRequisitionHistoryViewModel();
             vmodel.ReqID = id;
-            //StationeryRequest stationeryreq = _context.StationeryRequest.Find(id);
-            //if (stationeryreq == null)
-            //{
-            //    return HttpNotFound();
-            //}
-          return View(vmodel);
+             return View(vmodel);
 
         }
         //public async Task<ActionResult> Index(string searchString)

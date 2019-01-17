@@ -6,6 +6,7 @@ using Team7ADProject.Entities;
 
 namespace Team7ADProject.ViewModels
 {
+    #region Lynn Lynn Oo
     public class OwnRequisitionHistoryViewModel
     {
         public string ReqID
@@ -19,6 +20,7 @@ namespace Team7ADProject.ViewModels
             set;
         }
         public StationeryRequest Request;
+        public string searchstring { get; set; }
         public Stationery Station{
             get {
                 LogicDB context = new LogicDB();
@@ -42,5 +44,6 @@ namespace Team7ADProject.ViewModels
                 return list;
             }
         }
+        #endregion
     }
 }
