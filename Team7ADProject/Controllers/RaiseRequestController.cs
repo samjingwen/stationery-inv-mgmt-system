@@ -57,10 +57,9 @@ namespace Team7ADProject.Controllers
             string userid = User.Identity.GetUserId();
             TransactionDetail newTransactionDetail = new TransactionDetail
             {
-                TransactionId = "Temp
 
             };
-            test.Add(selection);
+            //test.Add(selection);
             viewModel.Models = test;
             return View("Index",viewModel);
         }

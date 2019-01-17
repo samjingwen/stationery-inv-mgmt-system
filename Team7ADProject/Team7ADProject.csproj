@@ -216,7 +216,6 @@
     <Compile Include="Controllers\ChargeBackController.cs" />
     <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
-    <Compile Include="Controllers\ConsolidateDisbursementController.cs" />
     <Compile Include="Controllers\DelegateHeadController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\GenerateReportController.cs" />
@@ -238,7 +237,6 @@
     <Compile Include="Controllers\ReturnWarehouseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UpdateWarehouseController.cs" />
-    <Compile Include="Controllers\ValidateInvoiceController.cs" />
     <Compile Include="Controllers\VoidDisbursementController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
@@ -251,6 +249,8 @@
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\LogicDB.cs" />
     <Compile Include="Entities\PurchaseOrder.cs" />
+    <Compile Include="Entities\RequestByDeptView.cs" />
+    <Compile Include="Entities\RequestByItemView.cs" />
     <Compile Include="Entities\Stationery.cs" />
     <Compile Include="Entities\StationeryRequest.cs" />
     <Compile Include="Entities\StationeryRetrieval.cs" />
@@ -274,7 +274,6 @@
     <Compile Include="ViewModels\GenerateReport\GenerateReportViewModel.cs" />
     <Compile Include="ViewModels\GenerateReport\StringDoubleDPViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
-    <Compile Include="ViewModels\InvoiceDetailsViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\RaisePOViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
