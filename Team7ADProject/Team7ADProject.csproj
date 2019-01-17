@@ -432,6 +432,7 @@
     <Content Include="Views\RaiseOrder\ViewPo.cshtml" />
     <Content Include="Views\ValidateInvoice\Index.cshtml" />
     <Content Include="Views\RaiseOrder\Details.cshtml" />
+    <Content Include="Views\GenerateReport\_Charts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />

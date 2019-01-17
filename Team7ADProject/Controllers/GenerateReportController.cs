@@ -66,7 +66,6 @@ namespace Team7ADProject.Controllers
             }
 
             ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
-
             #endregion
 
             return View();
@@ -128,7 +127,7 @@ namespace Team7ADProject.Controllers
 
             #endregion
 
-            return View();
+            return PartialView("_Charts",ViewBag);
         }
 
 
