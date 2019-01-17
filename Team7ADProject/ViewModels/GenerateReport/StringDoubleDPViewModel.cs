@@ -7,9 +7,9 @@ using System.Web;
 namespace Team7ADProject.ViewModels.GenerateReport
 {   
     [DataContract]
-    public class DataPoint
+    public class StringDoubleDPViewModel
     {
-        public DataPoint(string label, double y)
+        public StringDoubleDPViewModel(string label, double y)
         {
             this.Label = label;
             this.Y = y;
@@ -24,3 +24,4 @@ namespace Team7ADProject.ViewModels.GenerateReport
         public Nullable<double> Y = null;
     }
 }
+

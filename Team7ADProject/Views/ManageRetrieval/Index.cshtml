@@ -1,4 +1,4 @@
-﻿@model Team7ADProject.ViewModels.CompiledRequestViewModel
+﻿@model List<Team7ADProject.ViewModels.RequestByItemViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -30,32 +30,52 @@
         <th></th>
     </tr>
 
-    @for (int i = 0; i < Model.RetrievalList.Count; i++)
+    @for (int i = 0; i < Model.Count; i++)
     {
-        @Html.HiddenFor(x => x.RetrievalList[i].ItemId)
-        <tr>
-            <td>
-                @Html.DisplayFor(x => x.RetrievalList[i].Description)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.RetrievalList[i].Category)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.RetrievalList[i].UnitOfMeasure)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.RetrievalList[i].Location)
-            </td>
-            <td>
-                @Html.DisplayFor(x => x.RetrievalList[i].Quantity)
-            </td>
-            <td>
-                @Html.EditorFor(x => x.RetrievalList[i].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model.RetrievalList[i].Quantity } })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(x => x[i].ItemId)
+        </td>
+        <td>
+            @Html.DisplayFor(x => x[i].Description)
+
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+
+        <td></td>
+
+
+    </tr>
+        for (int j = 0; j < Model[i].requestList.Count; j++)
+        {
+    <tr>
+
+
+        <td></td>
+
+        <td></td>
+        <td>
+            @Html.DisplayFor(x => x[i].requestList[j].DepartmentId)
+        </td>
+        <td>
+            @Html.DisplayFor(x => x[i].requestList[j].DepartmentName)
+        </td>
+        <td>
+            @Html.DisplayFor(x => x[i].requestList[j].Quantity)
+        </td>
+        <td>
+            @Html.EditorFor(x => x[i].requestList[j].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].requestList[j].Quantity } })
+        </td>
+
+
+
+    </tr>
+        }
     }
 
-</table>
+    </table>
 
 <input type="submit" value="Generate Disbursement List" class="btn btn-default" />
 }

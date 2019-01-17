@@ -17,7 +17,38 @@ namespace Team7ADProject.Controllers
         // GET: ManageRetrieval
         public ActionResult Index()
         {
-            CompiledRequestViewModel model = new CompiledRequestViewModel();
+            List<RequestByItemViewModel> model = new List<RequestByItemViewModel>();
+            LogicDB context = new LogicDB();
+            var query = context.RequestByItemView.OrderBy(x => x.ItemId).ToList();
+            foreach(var i in query)
+            {
+                var item = model.Find(x => x.ItemId == i.ItemId);
+                var disb = context.DisbByDept.Where(x => x.ItemId == i.ItemId && x.DepartmentId == i.DepartmentId).FirstOrDefault();
+                if (item != null)
+                {
+                    item.requestList.Add(new BreakdownByDeptViewModel
+                    {
+                        DepartmentId = i.DepartmentId,
+                        DepartmentName = i.DepartmentName,
+                        Quantity = disb == null ? (int)i.Quantity : ((int)i.Quantity - (int)disb.Quantity)
+                    });
+                }
+                else
+                {
+
+                    RequestByItemViewModel requestByItemViewModel = new RequestByItemViewModel();
+                    requestByItemViewModel.ItemId = i.ItemId;
+                    requestByItemViewModel.Description = i.Description;
+                    requestByItemViewModel.requestList = new List<BreakdownByDeptViewModel>();
+                    requestByItemViewModel.requestList.Add(new BreakdownByDeptViewModel
+                    {
+                        DepartmentId = i.DepartmentId,
+                        DepartmentName = i.DepartmentName,
+                        Quantity = disb == null ? (int)i.Quantity : ((int)i.Quantity - (int)disb.Quantity)
+                    });
+                    model.Add(requestByItemViewModel);
+                }
+            }
             return View(model);
         }
 
@@ -56,33 +87,34 @@ namespace Team7ADProject.Controllers
                 }
             }
             context.StationeryRetrieval.Add(retrieval);
-
-            CompiledRequestViewModel crViewModel = new CompiledRequestViewModel();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             context.SaveChanges();
+
+            //Generate Disbursement
+            StationeryDisbursementViewModel sdViewModel = new StationeryDisbursementViewModel(retrieval);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             return View();
         }
 
