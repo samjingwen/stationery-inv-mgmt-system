@@ -1,0 +1,67 @@
+﻿@model Team7ADProject.ViewModels.RaisePOViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+}
+
+<h4>Raise Purchase Order</h4>
+<h3> @ViewBag.PoNo</h3>
+
+
+@using (Html.BeginForm("Save", "RaiseOrder", FormMethod.Post))
+{
+    <input type="submit" value="Save" class="btn btn-default" />
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Item</th>
+            <th>Supplier</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Remarks</th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <td>@Html.DropDownListFor(model => model.Category, new SelectList(Model.Categories), "Select Category", new { @class = "form-control", @id = "Category" })</td>
+            <td>@Html.DropDownListFor(model => model.ItemId, new SelectList(Model.Stationeries, "ItemId", "Description"), "Select Item", new { @class = "form-control", @id = "ItemId" })</td>
+            <td>@Html.DropDownListFor(model => model.SupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select supplier", new { @class = "form-control" })</td>
+            <td>
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </td>
+
+            <td>
+                @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+            </td>
+            <td></td>
+            <td>
+                @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+            </td>
+
+        </tr>
+    </table>
+}
+
+<script>
+            $(document).ready(function () {
+                $("#Category").change(function () {
+                    $.getJSON("/RaiseOrder/GetStatList", { category: $('#Category').val() }, function (data) {
+                        $('#ItemId').empty();
+                        $.each(data, function (index, row) {
+                            $("#ItemId").append($("<option value='" + row.ItemId + "'>" + row.Description + "</option>"))
+                        });
+                    });
+                })
+            });
+</script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+        }
+
+
+
