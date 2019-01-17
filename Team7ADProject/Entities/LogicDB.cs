@@ -27,6 +27,8 @@ namespace Team7ADProject.Entities
         public virtual DbSet<StockAdjustment> StockAdjustment { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<TransactionDetail> TransactionDetail { get; set; }
+        public virtual DbSet<RequestByDeptView> RequestByDeptView { get; set; }
+        public virtual DbSet<RequestByItemView> RequestByItemView { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
