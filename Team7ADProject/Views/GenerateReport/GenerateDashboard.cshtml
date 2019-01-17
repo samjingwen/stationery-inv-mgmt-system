@@ -35,26 +35,20 @@
                 }]
             });
 
-            var deptChart = new CanvasJS.Chart("Dept", {
+            var disbTimeChart = new CanvasJS.Chart("DisbTime", {
                 animationEnabled: true,
                 title: {
-                    text: "Live Data"
+                    text: "Disbursement over time"
                 },
                 data: [{
                     type: "line",
-                    dataPoints: [
-                        { label: "apple", y: 10 },
-                        { label: "orange", y: 15 },
-                        { label: "banana", y: 25 },
-                        { label: "mango", y: 30 },
-                        { label: "grape", y: 28 }
-                    ]
+                    dataPoints: @Html.Raw(ViewBag.timedataPoints)
                 }]
             });
 
             disbChart.render();
             disbStatChart.render();
-            deptChart.render();
+            disbTimeChart.render();
         }
     </script>
     <script>
@@ -115,7 +109,7 @@
     </div>
 
     <div>
-        <div id="Dept" style="height: 300px; width: 30%;">
+        <div id="DisbTime" style="height: 300px; width: 80%;">
 
 
         </div>

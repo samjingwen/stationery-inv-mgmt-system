@@ -51,6 +51,23 @@ namespace Team7ADProject.Controllers
 
             #endregion
 
+            #region Disbursements over time
+
+            List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
+
+            var timeRpt = context.TransactionDetail.Where(x => x.Disbursement.AcknowledgedBy != null).
+                OrderBy(x => x.TransactionDate).
+                GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month }).ToArray().
+                Select(y => new { dateval = string.Format("{0} {1}", Enum.Parse(typeof(EnumMonth),y.Key.Month.ToString()), y.Key.Year), totalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
+
+            foreach(var i in timeRpt)
+            {
+                timedataPoints.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+            }
+
+            ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
+
+            #endregion
 
             return View();
         }
@@ -90,6 +107,24 @@ namespace Team7ADProject.Controllers
             }
 
             ViewBag.statDataPoints = JsonConvert.SerializeObject(statdataPoints);
+
+            #endregion
+
+            #region Disbursements over time
+
+            List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
+
+            var timeRpt = context.TransactionDetail.Where(x => x.Disbursement.AcknowledgedBy != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                OrderBy(x => x.TransactionDate).
+                GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month }).ToArray().
+                Select(y => new { dateval = string.Format("{0} {1}", Enum.Parse(typeof(EnumMonth), y.Key.Month.ToString()), y.Key.Year), totalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
+
+            foreach (var i in timeRpt)
+            {
+                timedataPoints.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+            }
+
+            ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
 
             #endregion
 
