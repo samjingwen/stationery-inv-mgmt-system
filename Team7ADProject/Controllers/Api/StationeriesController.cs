@@ -69,8 +69,7 @@ namespace Team7ADProject.Controllers.Api
             //{
             //    collections.Add(current);
             //}
-            
-            return Ok(categories);
+            //return Ok(categories);
         }
 
         [Route("~/api/stationeries/categories/{category}")]
