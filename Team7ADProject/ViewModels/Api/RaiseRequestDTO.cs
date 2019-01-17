@@ -8,13 +8,7 @@ namespace Team7ADProject.ViewModels.Api
 {
     public class RaiseRequestDTO
     {
-        public List<string> UnitOfMeasure { get; set; }
-        public List<string> ItemDescription { get; set; }
-
-        public RaiseRequestDTO()
-        {
-            UnitOfMeasure = new List<string>();
-            ItemDescription = new List<string>();
-        }
+        public string Id { get; set; }
+        public string ItemDescription { get; set; }
     }
 }

@@ -54,7 +54,13 @@ namespace Team7ADProject.Controllers.Api
                 return NotFound();
             }
 
-            return Ok(categories);
+            List<String> collections = new List<String>();
+            foreach (string current in categories)
+            {
+                collections.Add(current);
+            }
+            
+            return Ok(collections);
         }
 
         [Route("~/api/stationeries/categories/{category}")]
@@ -62,13 +68,24 @@ namespace Team7ADProject.Controllers.Api
         {
             List<Stationery> items = _context.Stationery.Where(m => m.Category == category).ToList();
 
-            RaiseRequestDTO viewModelApi = new RaiseRequestDTO();
+            List<RaiseRequestDTO> viewModels = new List<RaiseRequestDTO>();
             for (int i = 0; i < items.Count; i++)
             {
-                viewModelApi.UnitOfMeasure.Add(items[i].UnitOfMeasure);
-                viewModelApi.ItemDescription.Add(items[i].Description);
+                RaiseRequestDTO viewModel = new RaiseRequestDTO();
+                viewModel.Id = items[i].ItemId;
+                viewModel.ItemDescription = items[i].Description;
+                viewModels.Add(viewModel);
             }
-            return Ok(viewModelApi);
+            return Ok(viewModels);
+        }
+
+        [Route("~/api/stationeries/item/{itemId}")]
+        public IHttpActionResult GetUnitFromItem(string itemId)
+        {
+            Stationery stationery = _context.Stationery.Single(m => m.ItemId==itemId);
+            string unit = stationery.UnitOfMeasure;
+
+            return Ok(unit);
         }
 
         protected override void Dispose(bool disposing)

@@ -16,7 +16,7 @@ namespace Team7ADProject.Controllers
     //For employee/department rep can view their own requisition histories
     public class RequisitionHistoryController : Controller
     {
-        #region Lynn Lynn Oo
+        #region Lynn Lynn Oo        
         private LogicDB _context;
 
         public RequisitionHistoryController()
@@ -26,45 +26,32 @@ namespace Team7ADProject.Controllers
 
         // GET: RequisitionHistory
         // To view the Requisition History
+
+        [Authorize(Roles = "Employee,Department Representation")]
+
         public ActionResult Index()
         {
-            
-            string userid = User.Identity.GetUserId();
-            string depId = _context.AspNetUsers.Where(x => x.Id == userid).Select(x => x.DepartmentId).First();
-            var stationery = _context.StationeryRequest.Where(x => x.DepartmentId==depId).ToList();
-            //ViewBag.DepName = _context.StationeryRequest.DepartmentId;
-            return View(stationery);
-        }
-
-        //RequisitionHistory/details
-        public ActionResult Details(string id)
-        {
-            if (id == null)
+            string userId = User.Identity.GetUserId();
+            List<string> requestId = _context.StationeryRequest.Where(m => m.RequestedBy == userId).Select(m=>m.RequestId).ToList();
+            List<TransactionDetail> transactionDetails = new List<TransactionDetail>();
+            foreach(string current in requestId)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                List<TransactionDetail> itemsInEachRequest = _context.TransactionDetail.Where(m => m.TransactionRef == current).ToList();
+                transactionDetails.AddRange(itemsInEachRequest);
             }
-            OwnRequisitionHistoryViewModel vmodel = new OwnRequisitionHistoryViewModel();
-            vmodel.ReqID = id;
-            //StationeryRequest stationeryreq = _context.StationeryRequest.Find(id);
-            //if (stationeryreq == null)
-            //{
-            //    return HttpNotFound();
-            //}
-          return View(vmodel);
-
+            List<OwnRequisitionHistoryViewModel> viewModel = new List<OwnRequisitionHistoryViewModel>();
+            foreach(TransactionDetail current in transactionDetails)
+            {
+                OwnRequisitionHistoryViewModel tempModel = new OwnRequisitionHistoryViewModel();
+                tempModel.ItemDescription=current.Stationery.Description;
+                tempModel.ItemQuantity=current.Quantity;
+                tempModel.UnitOfMeasure=current.Stationery.UnitOfMeasure;
+                tempModel.RequestDate=current.StationeryRequest.RequestDate;
+                tempModel.Status=current.StationeryRequest.Status;
+                viewModel.Add(tempModel);
+            }
+            return View(viewModel);
         }
-        //public async Task<ActionResult> Index(string searchString)
-        //{
-        //    var request = from m in _context.StationeryRequest
-        //                 select m;
-
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        request = request.Where(s => s.DepartmentId.Contains(searchString));
-        //    }
-
-        //    return View(await request.ToListAsync());
-        //}
         #endregion  
     }
 }

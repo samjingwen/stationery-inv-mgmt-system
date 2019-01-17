@@ -4,9 +4,14 @@
 
 
 <head>
+
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-    <script>        
+    <script>
+
         window.onload = function () {
             var disbChart = new CanvasJS.Chart("DisbChart", {
                 animationEnabled: true,
@@ -56,23 +61,68 @@
             deptChart.render();
         }
     </script>
+    <script>
+        $(function () {
+            $("#fromDateTP").datepicker({
+                altField: "#altfromDTP",
+                altFormat: "d MM yy",
+                yearRange: "2017:+0",
+                maxDate: '0',
+                changeMonth: true,
+                changeYear: true,
+                showOn: "both",
+                defaultDate: "1/1/2017",
+                onSelect: function (dateText, inst) {
+                    $("#toDateTP").datepicker("option", "minDate", $("#fromDateTP").datepicker("getDate"));
+                }
+            });
+
+            $("#toDateTP").datepicker({
+                altField: "#alttoDTP",
+                altFormat: "d MM yy",
+                minDate: '-2y',
+                maxDate: '0',
+                changeMonth: true,
+                changeYear: true,
+                showOn: "both",
+            });
+        });
+    </script>
+
 
 </head>
 
 <h2>Store Dashboard</h2>
+<p>Dates selected: <input type="text" id="altfromDTP" disabled> to 
+    <input type="text" id="alttoDTP" disabled></p>
+<div style="width:80%">
+                    <div id="ReportFilters" style="width:25%; height:100%; float:right; border:groove ">
+                        <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post" >
+                            <p>Select period:</p>
+                            <p><input type="text" name="fromDateTP" id="fromDateTP"></p>
+                            <p><input type="text" name="toDateTP" id="toDateTP"></p>
+                            <input type="submit" />
+                        </form>
+                    </div>
+                    <div>
+                        <div id="DisbChart" style="height: 300px; width: 30%;">
+                        </div>
+                        <div>
 
-<div id="DisbChart" style="height: 250px; width: 30%;">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="ChargeBack" style="height: 300px; width: 30%; ">
 
 
-</div>
+                        </div>
+                    </div>
 
-<div id="ChargeBack" style="height: 250px; width: 30%;">
-
-
-</div>
-
-<div id="Dept" style="height: 250px; width: 30%;">
+                    <div>
+                        <div id="Dept" style="height: 300px; width: 30%;">
 
 
-</div>
-
+                        </div>
+                    </div>
+                </div>

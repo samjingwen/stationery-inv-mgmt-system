@@ -3,29 +3,40 @@
 @{
     ViewBag.Title = "Detail";
 }
+<table>
+    <tr>
+        <td width="1000px">
+            <h2><b>Requisition Details</b></h2>
+        </td>
+        <td>
+            @Html.ActionLink("Back", "Index", "RequisitionHistory", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
+        </td>
+    </tr>
+</table>
+
 <table class="table">
     <tr>
-        <th>No</th>
+        <th>No.</th>
         <th>Item Name</th>
         <th>Quantity</th>
-        <th>UOM</th>      
+        <th>Unit of measure</th>      
     </tr>
     @{int i = 1; }
-    @foreach (var item in Model.StationeryItems)
+    @foreach (var item in Model.TransactionDetails)
     {
         <tr>
             <td>
                 @(i++)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Stationery.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.QuantityTransit)
+                @Html.DisplayFor(modelItem => item.Quantity)
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.UnitOfMeasure)
+                @Html.DisplayFor(modelItem => item.Stationery.UnitOfMeasure)
             </td>
 
         </tr>
