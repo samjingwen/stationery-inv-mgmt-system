@@ -17,7 +17,7 @@ namespace Team7ADProject.Controllers
         // GET: ManageRetrieval
         public ActionResult Index()
         {
-            CompiledRequestViewModel model = new CompiledRequestViewModel();
+            RequestByItemViewModel model = new RequestByItemViewModel();
             return View(model);
         }
 
@@ -56,33 +56,34 @@ namespace Team7ADProject.Controllers
                 }
             }
             context.StationeryRetrieval.Add(retrieval);
-
-            CompiledRequestViewModel crViewModel = new CompiledRequestViewModel();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             context.SaveChanges();
+
+            //Generate Disbursement
+            StationeryDisbursementViewModel sdViewModel = new StationeryDisbursementViewModel(retrieval);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             return View();
         }
 
