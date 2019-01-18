@@ -252,6 +252,7 @@
     <Compile Include="Entities\PurchaseOrder.cs" />
     <Compile Include="Entities\RequestByDeptView.cs" />
     <Compile Include="Entities\RequestByItemView.cs" />
+    <Compile Include="Entities\RequestByReqIdView.cs" />
     <Compile Include="Entities\Stationery.cs" />
     <Compile Include="Entities\StationeryRequest.cs" />
     <Compile Include="Entities\StationeryRetrieval.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\Api\RaiseRequestDTO.cs" />
     <Compile Include="ViewModels\AdjustmentViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
@@ -431,13 +433,15 @@
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\GenerateDisbursement.cshtml" />
     <Content Include="Views\RaiseOrder\Index.cshtml" />
-    <Content Include="Views\RaiseRequest\ViewPo.cshtml" />
+    <Content Include="Views\RaiseOrder\ViewPo.cshtml" />
     <Content Include="Views\ValidateInvoice\Index.cshtml" />
+    <Content Include="Views\RaiseOrder\Details.cshtml" />
     <Content Include="Views\GenerateReport\_Charts.cshtml" />
+    <Content Include="Views\ApproveAdjustment\Index.cshtml" />
+    <Content Include="Views\ApproveAdjustment\AdjDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
-    <Folder Include="Views\ApproveAdjustment\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />

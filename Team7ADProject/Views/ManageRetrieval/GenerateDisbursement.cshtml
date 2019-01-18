@@ -5,3 +5,64 @@
 }
 
 <h2>GenerateDisbursement</h2>
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <table class="table">
+        <tr>
+
+            <th>
+                @Html.Label("Department Name")
+            </th>
+            <th>@Html.Label("Collection Point")</th>
+
+            <th>
+                @Html.Label("Item Name")
+            </th>
+
+            <th>
+                @Html.Label("Quantity")
+            </th>
+        </tr>
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                @Html.HiddenFor(x => x[i].DepartmentId)
+                <td>@Html.DisplayFor(x => x[i].DepartmentName)</td>
+                <td>@Html.DisplayFor(x => x[i].CollectionDescription)
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            for (int j = 0; j < Model[i].requestList.Count; j++)
+            {
+                <tr>
+                    <td></td>
+                    <td>
+                        @Html.HiddenFor(x => x[i].requestList[j].ItemId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x[i].requestList[j].Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x[i].requestList[j].RetrievedQty)
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        }
+
+    </table>
+}

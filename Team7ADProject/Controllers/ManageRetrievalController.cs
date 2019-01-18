@@ -56,40 +56,41 @@ namespace Team7ADProject.Controllers
         public ActionResult GenerateDisbursement(List<RequestByItemViewModel> model)
         {
             //Create new Retrieval
-            string rid;
+
+            //string rid;
             LogicDB context = new LogicDB();
-            var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).FirstOrDefault();
-            if (ret.Date.Year == DateTime.Now.Year)
-            {
-                rid = "R" + DateTime.Now.Year.ToString() + "-" + (Convert.ToInt32(ret.RetrievalId.Substring(6, 4)) + 1).ToString("0000");
-            }
-            else
-            {
-                rid = "R" + DateTime.Now.Year.ToString() + "-" + "0001";
-            }
+            //var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).FirstOrDefault();
+            //if (ret.Date.Year == DateTime.Now.Year)
+            //{
+            //    rid = "R" + DateTime.Now.Year.ToString() + "-" + (Convert.ToInt32(ret.RetrievalId.Substring(6, 4)) + 1).ToString("0000");
+            //}
+            //else
+            //{
+            //    rid = "R" + DateTime.Now.Year.ToString() + "-" + "0001";
+            //}
 
-            StationeryRetrieval retrieval = new StationeryRetrieval();
-            retrieval.RetrievalId = rid;
-            retrieval.RetrievedBy = User.Identity.GetUserId();
-            retrieval.Date = DateTime.Now;
+            //StationeryRetrieval retrieval = new StationeryRetrieval();
+            //retrieval.RetrievalId = rid;
+            //retrieval.RetrievedBy = User.Identity.GetUserId();
+            //retrieval.Date = DateTime.Now;
 
-            //Save to database
-            foreach (var sr in model)
-            {
-                if (sr.requestList.Sum(x => x.RetrievedQty) > 0)
-                {
-                    TransactionDetail detail = new TransactionDetail();
-                    detail.ItemId = sr.ItemId;
-                    detail.Quantity = sr.requestList.Sum(x => x.RetrievedQty);
-                    detail.TransactionDate = DateTime.Now;
-                    detail.Remarks = "Retrieved";
-                    detail.TransactionRef = rid;
-                    retrieval.TransactionDetail.Add(detail);
-                }
-            }
+            ////Save to database
+            //foreach (var sr in model)
+            //{
+            //    if (sr.requestList.Sum(x => x.RetrievedQty) > 0)
+            //    {
+            //        TransactionDetail detail = new TransactionDetail();
+            //        detail.ItemId = sr.ItemId;
+            //        detail.Quantity = sr.requestList.Sum(x => x.RetrievedQty);
+            //        detail.TransactionDate = DateTime.Now;
+            //        detail.Remarks = "Retrieved";
+            //        detail.TransactionRef = rid;
+            //        retrieval.TransactionDetail.Add(detail);
+            //    }
+            //}
 
-            context.StationeryRetrieval.Add(retrieval);
-            context.SaveChanges();
+            //context.StationeryRetrieval.Add(retrieval);
+            //context.SaveChanges();
 
             //Generate Disbursement
 
@@ -111,6 +112,7 @@ namespace Team7ADProject.Controllers
                         {
                             BreakdownByItemViewModel breakdown = new BreakdownByItemViewModel();
                             breakdown.ItemId = model[i].ItemId;
+                            breakdown.Description = model[i].Description;
                             breakdown.RetrievedQty = model[i].requestList[j].RetrievedQty;
                             disb.requestList.Add(breakdown);
                         }
@@ -119,23 +121,41 @@ namespace Team7ADProject.Controllers
                     {
                         DisbursementByDeptViewModel disbModel = new DisbursementByDeptViewModel();
                         disbModel.DepartmentId = model[i].requestList[j].DepartmentId;
+                        disbModel.DepartmentName = model[i].requestList[j].DepartmentName;
                         BreakdownByItemViewModel breakdown = new BreakdownByItemViewModel();
                         breakdown.RetrievedQty = model[i].requestList[j].RetrievedQty;
                         breakdown.ItemId = model[i].ItemId;
+                        breakdown.Description = model[i].Description;
+                        disbModel.requestList = new List<BreakdownByItemViewModel>();
                         disbModel.requestList.Add(breakdown);
                         disbList.Add(disbModel);
                     }
                 }
             }
 
+            //Create new disbursement
+            string did;
+            string dno;
+            var disbursement = context.Disbursement.OrderByDescending(x => x.DisbursementId).First();
+            did = "DISB" + (Convert.ToInt32(disbursement.DisbursementId.Substring(4, 6)) + 1).ToString("000000");
+            //dept id need to change
+            dno = "D" + "FINC" + (Convert.ToInt32(disbursement.DisbursementNo.Substring(5, 5)) + 1).ToString("00000");
+            for (int i = 0; i < disbList.Count; i++)
+            {
 
+
+
+
+
+
+            }
 
 
 
 
             return View(disbList);
         }
-
+        
 
 
     }

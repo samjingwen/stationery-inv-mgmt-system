@@ -26,11 +26,9 @@ namespace Team7ADProject.Entities
         [StringLength(4)]
         public string DepartmentId { get; set; }
 
-        [Required]
         [StringLength(128)]
         public string AcknowledgedBy { get; set; }
 
-        [Required]
         [StringLength(128)]
         public string DisbursedBy { get; set; }
 

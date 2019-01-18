@@ -1,4 +1,4 @@
-﻿@model Team7ADProject.ViewModels.AdjustmentViewModel
+﻿@model Team7ADProject.Entities.StockAdjustment
 @{
     ViewBag.Title = "Confirm";
 }
@@ -11,7 +11,45 @@
     <title>Confirm</title>
 </head>
 <body>
+    <h2>Confirm Page</h2>
     <div>
+        <table class="table">
+            <tr>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Item Description
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Current Stock
+                </th>
+                <th>
+                    Amount
+                </th>
+            </tr>
+            @foreach (var item in Model.TransactionDetail)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stationery.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stationery.ItemId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stationery.QuantityWarehouse)
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        </table>
     </div>
 </body>
 </html>
