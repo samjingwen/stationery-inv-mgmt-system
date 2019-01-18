@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
 using Team7ADProject.ViewModels;
-using static System.Collections.Generic.Dictionary<TKey, TValue>;
 
 namespace Team7ADProject.Controllers
 {
@@ -134,69 +133,106 @@ namespace Team7ADProject.Controllers
                 }
             }
 
-            List<DisbursementByDeptViewModel> modDisbList = new List<DisbursementByDeptViewModel>(disbList);
-            
+
             //Create new disbursement
-            var query = context.RequestByReqIdView.OrderBy(x => x.RequestId).ToList();
 
-            IEnumerator<DisbursementByDeptViewModel> iter = modDisbList.GetEnumerator();
+            List<DisbursementByDeptViewModel> modDisbList = new List<DisbursementByDeptViewModel>(disbList);
 
-            for (int i = 0; i < query.Count; i++)
+            var query = CreateDisbHelpers.GetRequestQuery();
+
+            IEnumerator<RequestByReqIdView> iter = query.GetEnumerator();
+
+            string currentReqId = "";
+            string prevReqId = "";
+            Disbursement newDisb = new Disbursement();
+            string disbNo = "";
+
+            while (iter.MoveNext())
             {
-                string currentReqId = query[i].RequestId;
-                string 
-                var getDeptDisb = modDisbList.Where(x => x.DepartmentId == query[i].DepartmentId).FirstOrDefault();
-                var getItem = getDeptDisb.requestList.Where(x => x.ItemId == query[i].ItemId).FirstOrDefault();
+                RequestByReqIdView currentReq = iter.Current;
 
-                Disbursement newDisb = new Disbursement();
-                newDisb.DisbursementId = CreateDisbHelpers.GetNewDisbId();
-                newDisb.DisbursementNo = CreateDisbHelpers.GetNewDisbNo(;
-                if (getItem.Quantity > query[i].Quantity)
+                currentReqId = currentReq.RequestId;
+                string DeptId = currentReq.DepartmentId;
+
+                if (currentReqId != prevReqId)
                 {
-                    Disbursement newDisb = new Disbursement();
-                    newDisb.DisbursementId = did;
-                    newDisb.DisbursementNo = dno;
+                    context.SaveChanges();
+                    newDisb = new Disbursement();
+                    disbNo = CreateDisbHelpers.GetNewDisbNo(DeptId);
+                }
+
+                
+
+                DisbursementByDeptViewModel getDeptDisb = modDisbList.Where(x => x.DepartmentId == DeptId).FirstOrDefault();
+                if (getDeptDisb == null)
+                    continue;
+                BreakdownByItemViewModel getItem = getDeptDisb.requestList.Where(x => x.ItemId == currentReq.ItemId).FirstOrDefault();
+                if (getItem == null)
+                    continue;
+
+                newDisb.DisbursementId = CreateDisbHelpers.GetNewDisbId();
+                newDisb.DisbursementNo = disbNo;
+                newDisb.DepartmentId = DeptId;
+                newDisb.Date = DateTime.Now;
+                newDisb.DisbursedBy = User.Identity.GetUserId();
+                newDisb.RequestId = currentReqId;
+                newDisb.Status = "In Transit";
+                if (getItem.Quantity >= currentReq.Quantity)
+                {
                     TransactionDetail newDetail = new TransactionDetail();
                     newDetail.ItemId = getItem.ItemId;
+                    newDetail.Quantity = currentReq.Quantity;
+                    newDetail.Remarks = "In Transit";
+                    newDetail.TransactionRef = newDisb.DisbursementId;
+                    newDetail.TransactionDate = DateTime.Now;
+                    newDetail.UnitPrice = getItem.UnitPrice;
+                    newDisb.TransactionDetail.Add(newDetail);
 
-                    getDeptDisb.requestList.Remove(getItem);
-
+                    if (getItem.Quantity == currentReq.Quantity)
+                    {
+                        getDeptDisb.requestList.Remove(getItem);
+                    }
+                    else
+                    {
+                        getItem.Quantity -= currentReq.Quantity;
+                    }
+                    if (getDeptDisb.requestList.Count <= 0)
+                    {
+                        modDisbList.Remove(getDeptDisb);
+                    }
                 }
                 else
                 {
-                    getItem.Quantity -= query[i].Quantity;
+                    //Partially fulfilled
+                    TransactionDetail newDetail = new TransactionDetail();
+                    newDetail.ItemId = getItem.ItemId;
+                    newDetail.Quantity = getItem.Quantity;
+                    var getReq = context.StationeryRequest.Where(x => x.RequestId == currentReqId).FirstOrDefault();
+                    getReq.Status = "Partially Fulfilled";
+
+
+
+
 
 
 
                 }
-                query[0].DepartmentId
 
 
+                if (modDisbList.Count == 0)
+                {
+                    break;
+                }
 
-            }
-
-
-
-            for (int i = 0; i < disbList.Count; i++)
-            {
-                
-
-                Disbursement newDisb = new Disbursement();
-                newDisb.DisbursementId = did;
-                newDisb.DisbursementNo = dno;
-                newDisb.DepartmentId = deptId;
-                bool isCompleted = true;
-
-
-
-
-
-
-
-
-
+                prevReqId = currentReqId;
 
             }
+
+
+
+
+
+            
 
 
 
