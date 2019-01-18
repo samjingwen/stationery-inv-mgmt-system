@@ -27,7 +27,7 @@ namespace Team7ADProject.Controllers
         // GET: ManageStationery
         public ActionResult Index()
         {
-            var stationeries = _context.Stationery.ToList();
+            var stationeries = _context.Stationery.Where(m=>m.ActiveState==true).ToList();
             return View(stationeries);
         }
 
@@ -65,6 +65,7 @@ namespace Team7ADProject.Controllers
             if (stationery.ItemId == null)
             {
                 stationery.ItemId = GenerateItemId(stationery.Description);
+                stationery.ActiveState = true;
                 _context.Stationery.Add(stationery);
             }
 
