@@ -1,11 +1,12 @@
-﻿@model IEnumerable<Team7ADProject.Entities.StationeryRequest>
+﻿@model  IEnumerable<Team7ADProject.ViewModels.PostponeCollDateViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Postpone Collection Date";
 }
 
+<div class="container">
 <center><h1><b>Postpone Collection Date</b></h1></center>
-
+<br/>
 <table class="table table-bordered table-hover">
     <tr>
        <th>No.</th>
@@ -14,6 +15,7 @@
         <th>Collection Date</th>
         <th>Postpone</th>
     </tr>
+
 @{ int i = 1;}
 @foreach (var item in Model) {
     <tr>
@@ -21,19 +23,22 @@
         
         <td>@(i++)</td>
         <td>
-            @Html.DisplayFor(modelItem=>item.RequestId)
+           @item.RequestID
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id = item.RequestId })
+            @Html.ActionLink("Details", "Details", new { id = item.RequestID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CollectionDate)
+            @item.CollectionDate
         </td>
         
         <td>
-            @Html.ActionLink("Postpone", "Postpone", new { id=item.RequestId }) 
+            @Html.ActionLink("Postpone", "Postpone", new { id=item.RequestID }) 
         </td>
     </tr>
 }
 
 </table>
+    </div>
+    
+

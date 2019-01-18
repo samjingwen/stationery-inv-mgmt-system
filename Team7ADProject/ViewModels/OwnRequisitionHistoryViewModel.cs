@@ -9,7 +9,7 @@ namespace Team7ADProject.ViewModels
     
     public class OwnRequisitionHistoryViewModel
     {
-        #region Lynn Lynn Oo
+        #region Author:Lynn Lynn Oo
         public string ItemDescription { get; set; }
         public int ItemQuantity { get; set; }
         public string UnitOfMeasure { get; set; }
