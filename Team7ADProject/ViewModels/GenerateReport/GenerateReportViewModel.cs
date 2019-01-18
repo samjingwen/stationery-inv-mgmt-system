@@ -13,8 +13,10 @@ namespace Team7ADProject.ViewModels.GenerateReport
 
     public class GenerateReportViewModel
     {
-        public string fDate { get; set; }
-        public string tDate { get; set; }
+        [Required]
+        public DateTime fDate { get; set; }
+        [Required]
+        public DateTime tDate { get; set; }
 
     }
 
