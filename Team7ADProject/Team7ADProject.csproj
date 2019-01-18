@@ -210,16 +210,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AmendRequestController.cs" />
-    <Compile Include="Controllers\Api\Stationeries1Controller.cs" />
     <Compile Include="Controllers\Api\StationeriesController.cs" />
-    <Compile Include="Controllers\Api\ValuesController1.cs" />
     <Compile Include="Controllers\ApproveAdjustmentController.cs" />
     <Compile Include="Controllers\ApproveOrderController.cs" />
     <Compile Include="Controllers\ChargeBackController.cs" />
     <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DelegateHeadController.cs" />
-    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\GenerateReportController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -250,6 +247,7 @@
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\DisbByDept.cs" />
     <Compile Include="Entities\Disbursement.cs" />
+    <Compile Include="Entities\Email.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\LogicDB.cs" />
     <Compile Include="Entities\PurchaseOrder.cs" />

@@ -21,7 +21,7 @@ namespace Team7ADProject.Controllers
             List<RequestByItemViewModel> model = new List<RequestByItemViewModel>();
             LogicDB context = new LogicDB();
             var query = context.RequestByItemView.OrderBy(x => x.ItemId).ToList();
-            foreach(var i in query)
+            foreach (var i in query)
             {
                 var item = model.Find(x => x.ItemId == i.ItemId);
                 var disb = context.DisbByDept.Where(x => x.ItemId == i.ItemId && x.DepartmentId == i.DepartmentId).FirstOrDefault();
@@ -135,7 +135,7 @@ namespace Team7ADProject.Controllers
             }
 
             List<DisbursementByDeptViewModel> modDisbList = new List<DisbursementByDeptViewModel>(disbList);
-            
+
             //Create new disbursement
             var query = context.RequestByReqIdView.OrderBy(x => x.RequestId).ToList();
 
@@ -144,7 +144,7 @@ namespace Team7ADProject.Controllers
             for (int i = 0; i < query.Count; i++)
             {
                 string currentReqId = query[i].RequestId;
-                string 
+                string
                 var getDeptDisb = modDisbList.Where(x => x.DepartmentId == query[i].DepartmentId).FirstOrDefault();
                 var getItem = getDeptDisb.requestList.Where(x => x.ItemId == query[i].ItemId).FirstOrDefault();
 
@@ -179,7 +179,7 @@ namespace Team7ADProject.Controllers
 
             for (int i = 0; i < disbList.Count; i++)
             {
-                
+
 
                 Disbursement newDisb = new Disbursement();
                 newDisb.DisbursementId = did;
@@ -203,7 +203,7 @@ namespace Team7ADProject.Controllers
 
             return View(disbList);
         }
-        
+
 
 
     }
