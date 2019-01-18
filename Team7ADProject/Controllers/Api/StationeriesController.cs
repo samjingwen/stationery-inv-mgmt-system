@@ -30,9 +30,9 @@ namespace Team7ADProject.Controllers.Api
         }
 
 
-        // DELETE: api/Stationeries/5
-        [ResponseType(typeof(Stationery))]
-        public IHttpActionResult DeleteStationery(string id)
+        // PUT: api/Stationeries/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutStationery(string id)
         {
             Stationery stationery = _context.Stationery.Find(id);
             if (stationery == null)
@@ -43,7 +43,7 @@ namespace Team7ADProject.Controllers.Api
             stationery.ActiveState = false;
             _context.SaveChanges();
 
-            return Ok(stationery);
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         //For loading DropDownList
