@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +9,7 @@ using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
+    #region Gao Jiaxue
     public class ApproveOrderController : Controller
     {   //get Data
         private LogicDB _context;
@@ -26,7 +28,7 @@ namespace Team7ADProject.Controllers
         {
             return View();
         }
-        #region Gao Jiaxue
+   
         //Get data from DB
    
         //Retrieve All  PO
@@ -35,7 +37,7 @@ namespace Team7ADProject.Controllers
            List<PurchaseOrder> poList = _context.PurchaseOrder.ToList();
             return View(poList);
         }
-        //Approve or Reject PO
+        //Get PoDetails
         [HttpGet]
         public ActionResult PODetails(string  poNo)
         {
@@ -47,19 +49,35 @@ namespace Team7ADProject.Controllers
             { PurchaseOrder = purchaseOrder,PODetails=transactionDetail};
             return View(poDetailsViewModel);
         }
+        //Approve Po
         public ActionResult Approve(string poNo)
         {
             var thisPo = _context.PurchaseOrder.SingleOrDefault(c => c.PONo == poNo);
             thisPo.Status = "Pending Delivery";
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.WriteLine(e);
+            }
             return RedirectToAction("ViewPORecord", "ApproveOrder");
 
         }
+        //Reject PO
         public ActionResult Reject(string poNo)
         {
             var thisPo = _context.PurchaseOrder.SingleOrDefault(c => c.PONo == poNo);
             _context.PurchaseOrder.Remove(thisPo);
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.WriteLine(e);
+            }
             return RedirectToAction("ViewPORecord", "ApproveOrder");
         }
         #endregion

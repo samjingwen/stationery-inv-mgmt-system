@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Team7ADProject.ViewModels.RequestItem_ByEmp>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@*@{
+        foreach (var cp in Model.SRequest)
+        {
+            @cp.Status
+            <br />
+        }
+
+    }*@
+
+<div class="card-body">
+    @if (ViewBag.ShowItems)
+    {
+        <p>true</p>
+       int j = 0; int i = 0;
+        foreach (var cp in Model)
+        {
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne" style="background-color:darkgreen; ">
+                <h4 class="panel-title">
+                    <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" class="trigger collapsed">
+                        <span style="color:azure">Requisition Request by</span> @cp.Empname
+
+                        <span style="color:azure ;display: block;float:right">Requested Date :@cp.RequestDate</span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse_@j" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th>No.</th>
+                            <th>Item Description</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                           
+                        </tr>
+                        @{ int ii = 1;}
+
+                        @foreach (var item in cp.Itemlist)
+                        {
+
+                        <tr>
+                            <td>@(ii++)</td>
+                            <td>@item.Description</td>
+                            <td>@item.Category</td>
+                            <td>@item.QuantityTransit</td>
+                            @*<td>@item.UnitOfMeasure</td>
+        <td>@item.RequestDate</td>
+        <td>@item.Status</td>*@
+                        </tr>
+                            }
+                        </table>
+
+                    </div>
+                </div>
+
+                </div>
+                    j++;
+                }
+
+            }
+
+            else
+            {
+        <h5 class="text-center text-info">There is no requests yet!!!</h5>
+
+    }
+</div>
+
+            @section Scripts {
+    <link href="~/Content/expend-bar/accordion.css" rel="stylesheet" />
+}

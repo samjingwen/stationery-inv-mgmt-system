@@ -12,56 +12,126 @@
 
 @using (Html.BeginForm("Save", "RaiseOrder", FormMethod.Post))
 {
-    <input type="submit" value="Save" class="btn btn-default" />
     <table>
         <tr>
-            <th>Category</th>
-            <th>Item</th>
-            <th>Supplier</th>
-            <th>Quantity</th>
-            <th>Amount</th>
-            <th>Remarks</th>
-            <th></th>
+            <td>Category</td>
+            <td>@Html.DropDownListFor(m => m.Category, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", name = "category" })</td>
+        </tr>
+        <tr>
+            <td>Item</td>
+            <td>@Html.DropDownListFor(m => m.Description, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "description" })</td>
+
         </tr>
 
         <tr>
-            <td>@Html.DropDownListFor(model => model.Category, new SelectList(Model.Categories), "Select Category", new { @class = "form-control", @id = "Category" })</td>
-            <td>@Html.DropDownListFor(model => model.ItemId, new SelectList(Model.Stationeries, "ItemId", "Description"), "Select Item", new { @class = "form-control", @id = "ItemId" })</td>
-            <td>@Html.DropDownListFor(model => model.SupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select supplier", new { @class = "form-control" })</td>
+            <td>Item</td>
+            <td>@Html.DropDownListFor(m => m.SupplierAndPrice, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "supplier" })</td>
+            <td>@Html.EditorFor(m => m.SupplierId, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", id = "supplier" } })</td>
+        </tr>
+
+        <tr>
+            <td>Supplier</td>
+            <td>@Html.DropDownListFor(model => model.Suppliers, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select supplier", new { @class = "form-control", name = "supplier" })</td>
+        </tr>
+        <tr>
+            <td>Quantity</td>
             <td>
                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
             </td>
-
+            <td>
+                @Html.EditorFor(m => m.UnitOfMeasure, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", id = "uom" } })
+            </td>
+        </tr>
+        <tr>
+            <td>Amount</td>
             <td>
                 @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
             </td>
-            <td></td>
+        </tr>
+        <tr>
+            <td>Remarks</td>
             <td>
                 @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
             </td>
-
         </tr>
     </table>
+    <input type="submit" value="Save" class="btn btn-default" />
 }
 
-<script>
-            $(document).ready(function () {
-                $("#Category").change(function () {
-                    $.getJSON("/RaiseOrder/GetStatList", { category: $('#Category').val() }, function (data) {
-                        $('#ItemId').empty();
-                        $.each(data, function (index, row) {
-                            $("#ItemId").append($("<option value='" + row.ItemId + "'>" + row.Description + "</option>"))
-                        });
-                    });
-                })
-            });
-</script>
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
-        }
+
+@section scripts
+{
+    <script>
+        var $dropdown1 = $("select[name='Category']");
+        var $dropdown2 = $("select[name='Description']");
+        var $dropdown3 = $("select[name='SupplierAndPrice']")
+        $dropdown1.append('<option>Select Category</option>');
+        $dropdown2.append('<option>Select Item</option>');
+        $dropdown3.append('<option>Select Supplier<option>');
+        //First load of list
+        $.ajax({
+            url: '../api/stationeries/categories/',
+            type: 'GET',
+            //data: 'q=' + str,
+            dataType: 'json',
+            success: function (json) {
+                $.each(json, function (i, value) {
+                    $dropdown1.append($('<option>').text(value).attr('value', value));
+                    //$('#myselect').append($('<option>').text(value).attr('value', value));
+                });
+            }
+        });
+        //Load 2nd list
+        $dropdown1.change(function () {
+            $dropdown2.empty();
+            $dropdown2.append('<option>Select Item</option>');
+            //$('#myselect').append($('<option>').text(value).attr('value', value));
+            $.ajax({
+                url: '../api/stationeries/categories/' + $dropdown1.val(),
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
+                    });
+                }
+            });
+        });
+        //Load unit of measure
+        $dropdown2.change(function () {
+            $dropdown3.empty();
+            $dropdown3.append('<option>Select Supplier<option>');
+            $.ajax({
+                url: '../api/stationeries/item/' + $dropdown2.val(),
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $("#uom").val(json);
+                }
+            });
+        });
+
+        //Load suppliers and price
+        $dropdown2.change(function () {
+            $.ajax({
+                url: '../api/stationeries/supplierandprice/' + $dropdown2.val(),
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $("#supplier").val(json);
+                }
+            });
+        });
+
+    </script>
+}
 
 
 
