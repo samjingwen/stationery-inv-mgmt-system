@@ -35,18 +35,6 @@
                 showOn: "both",
             });
 
-            $('#filterBtn').click(function () {
-                $.ajax({
-                    url: '@Url.Action("GenerateDashboard", "GenerateReport")',
-                    type: 'POST',
-                    cache: false,
-                    data: {
-                        fromDateTP: $('#fromDateTP').datepicker("getDate"),
-                        toDateTP: $('#toDateTP').datepicker("getDate") }
-                }).done(function (result) {
-                    $('#charts').html(result);
-                });
-            });
         });
     </script>
 
@@ -59,21 +47,14 @@
 </p>
 <div style="width:80%;">
         <div id="ReportFilters" style="width:20%; height:100%; border:groove; float:right;">
-            <p>Select period:</p>
-            <p><input type="text" name="fromDateTP" id="fromDateTP"></p>
-            <p><input type="text" name="toDateTP" id="toDateTP"></p>
-            <input type="button" id="filterBtn" value="Filter" />
-        </div>
+            <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post">
+                <p>Select period:</p>
+                <p><input type="text" name="fromDateTP" id="fromDateTP"></p>
+                <p><input type="text" name="toDateTP" id="toDateTP"></p>
+                <input type="submit" id="filterBtn" value="Filter" />
+            </form>
+</div>
     
-    @if (IsPost)
-    {
-        <div id="charts">@Html.Action("_Charts",
-                        new ViewDataDictionary { {"deptDataPoints",ViewBag.deptDataPoints },
-                            { "statDataPoints",ViewBag.statDataPoints },
-                            { "timedataPoints", ViewBag.timedataPoints } })</div>
-    }
-    else
-    {
-        <div id="charts">@Html.Partial("_Charts")</div>
-    }
+ <div id="charts">@Html.Partial("_Charts")</div>
+
 </div>
