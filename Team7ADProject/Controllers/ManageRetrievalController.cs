@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
 using Team7ADProject.ViewModels;
+using static System.Collections.Generic.Dictionary<TKey, TValue>;
 
 namespace Team7ADProject.Controllers
 {
@@ -133,16 +134,52 @@ namespace Team7ADProject.Controllers
                 }
             }
 
+            List<DisbursementByDeptViewModel> modDisbList = new List<DisbursementByDeptViewModel>(disbList);
+            
             //Create new disbursement
-            string did;
-            string dno;
-            var query = context.RequestByReqIdView.ToList();
+            var query = context.RequestByReqIdView.OrderBy(x => x.RequestId).ToList();
+
+            IEnumerator<DisbursementByDeptViewModel> iter = modDisbList.GetEnumerator();
+
+            for (int i = 0; i < query.Count; i++)
+            {
+                string currentReqId = query[i].RequestId;
+                string 
+                var getDeptDisb = modDisbList.Where(x => x.DepartmentId == query[i].DepartmentId).FirstOrDefault();
+                var getItem = getDeptDisb.requestList.Where(x => x.ItemId == query[i].ItemId).FirstOrDefault();
+
+                Disbursement newDisb = new Disbursement();
+                newDisb.DisbursementId = CreateDisbHelpers.GetNewDisbId();
+                newDisb.DisbursementNo = CreateDisbHelpers.GetNewDisbNo(;
+                if (getItem.Quantity > query[i].Quantity)
+                {
+                    Disbursement newDisb = new Disbursement();
+                    newDisb.DisbursementId = did;
+                    newDisb.DisbursementNo = dno;
+                    TransactionDetail newDetail = new TransactionDetail();
+                    newDetail.ItemId = getItem.ItemId;
+
+                    getDeptDisb.requestList.Remove(getItem);
+
+                }
+                else
+                {
+                    getItem.Quantity -= query[i].Quantity;
+
+
+
+                }
+                query[0].DepartmentId
+
+
+
+            }
+
+
+
             for (int i = 0; i < disbList.Count; i++)
             {
-                var disbursement = context.Disbursement.OrderByDescending(x => x.DisbursementId).First();
-                did = "DISB" + (Convert.ToInt32(disbursement.DisbursementId.Substring(4, 6)) + 1).ToString("000000");
-                string deptId = disbList[i].DepartmentId;
-                dno = "D" + deptId + (Convert.ToInt32(disbursement.DisbursementNo.Substring(5, 5)) + 1).ToString("00000");
+                
 
                 Disbursement newDisb = new Disbursement();
                 newDisb.DisbursementId = did;
