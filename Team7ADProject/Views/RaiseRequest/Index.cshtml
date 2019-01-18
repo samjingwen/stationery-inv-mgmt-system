@@ -251,6 +251,7 @@
     <script>
         var $dropdown1 = $("select[name='category']");
         var $dropdown2 = $("select[name='description']");
+        var $textboxquantity = $("select[name='quantity']");
         loadItem();
         //$dropdown1.append('<option>Select Category</option>');
         //$dropdown2.append('<option>Select Item</option>');
@@ -318,14 +319,15 @@
             });
         });
     </script>
+    
 
     @*script for popup*@
     <script>
-        //Show Modal.
+        //Show modal
         function addNewOrder() {
             $("#newOrderModal").modal();
         }
-        //Add Multiple Order.
+        //Add multiple request
         $("#addToList").click(function (e) {
             e.preventDefault();
 
@@ -342,10 +344,11 @@
             detailsTableBody.append(requestItem);
             clearItem();
         });
-        //After Add A New Order In The List, Clear Clean The Form For Add More Order.
+        //function to reinitialize drop down list after adding
         function clearItem() {
             $dropdown1.empty();
             $dropdown2.empty();
+            $('#quantity').val('1');
             $dropdown1.append('<option>Select Category</option>');
             $dropdown2.append('<option>Select Item</option>');
             $dropdown1.prop('selectedIndex', 0);
@@ -363,7 +366,7 @@
                 }
             });
         }
-        // After Add A New Order In The List, If You Want, You Can Remove It.
+        // Add a new request in the list with remove option
         $(document).on('click', 'a.deleteItem', function (e) {
             e.preventDefault();
             var $self = $(this);
@@ -386,7 +389,7 @@
                     location.reload();
                 },
                 error: function () {
-                    alert("Error!");
+                    alert("Error! Invalid items in list.");
                 }
             });
         }
