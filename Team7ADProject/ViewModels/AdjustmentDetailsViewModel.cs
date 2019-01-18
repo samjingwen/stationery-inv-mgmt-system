@@ -9,6 +9,8 @@ namespace Team7ADProject.ViewModels
     public class AdjustmentDetailsViewModel
     {
         public StockAdjustment StockAdjustment { get; set; }
+        public Stationery Stationery { get; set; }
         public List<TransactionDetail> AdjustmentDetails { get; set; }
+
     }
 }
