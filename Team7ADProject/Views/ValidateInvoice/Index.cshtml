@@ -12,11 +12,12 @@
         <table>
             <tr>
                 <td>@Html.Label("No Of DeliveryOrder")</td>
-                <td>
-                    <button class="qty" type="button" data-func="minus" data-field="field1">-</button>
-                    <input type="text" name="field1" value="0" />
-                    <button class="qty" type="button" data-func="plus" data-field="field1">+</button>
-                </td>
+                @*<td>
+                    <button id="decrease" onclick="decreaseValue()">-</button>
+                    <input type="number" id="number" value="0" />
+                    <button id="increase" onclick="increaseValue()" value="Increase Value">+</button>
+                </td>*@
+                <td>  @Html.DropDownListFor(m => m.Invoice.SupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Supplier", null)</td>
             </tr>
             <tr>
                 <td>@Html.LabelFor(m => m.Invoice.InvoiceId)</td>
@@ -42,7 +43,7 @@
             <tr>
                 <td>@Html.LabelFor(m => m.Invoice.SupplierId)</td>
                 <td>
-                    @Html.DropDownListFor(m => m.Invoice.SupplierId, new SelectList(Model.Suppliers,"SupplierId", "SupplierName"), "Select Supplier", null)
+                    @Html.DropDownListFor(m => m.Invoice.SupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Supplier", null)
                 </td>
             </tr>
             <tr>
@@ -52,9 +53,40 @@
                     @Html.ValidationMessageFor(m => m.Invoice.InvoiceAmount)
                 </td>
             </tr>
+            <tr>
+                <td>
+                    @Html.Label("Item")
+                    <button  type="button" onclick="create(1)">+</button>
+                </td>
+                <td> <div id="screens"></div></td>
+            </tr>
         </table>
     </div>
     @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" onclick="" class="btn btn-primary">Save</button>
 }
-  
+
+<script>
+    function increaseValue() {
+        var value = parseInt(document.getElementById('number').value, 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById('number').value = value;
+    }
+    function create(param) {
+        var s = ""; 
+        for (var i = 0; i < param; i++) {
+            s += '<input type="text" name="Fname">'; //Create one textbox as HTML
+        }
+        document.getElementById("screens").innerHTML = s;
+    }
+
+    function decreaseValue() {
+        var value = parseInt(document.getElementById('number').value, 10);
+        value = isNaN(value) ? 0 : value;
+        value < 1 ? value = 1 : '';
+        value--;
+        document.getElementById('number').value = value;
+    }</script>
+
+

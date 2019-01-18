@@ -223,6 +223,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagePointController.cs" />
+    <Compile Include="Controllers\ManagePostponeCollectionDateController.cs" />
     <Compile Include="Controllers\ManageRepController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
     <Compile Include="Controllers\ManageRetrievalController.cs" />
@@ -442,6 +443,7 @@
     <Content Include="Views\ApproveAdjustment\Index.cshtml" />
     <Content Include="Views\ApproveAdjustment\AdjDetails.cshtml" />
     <Content Include="Views\ManageRequest\Index.cshtml" />
+    <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
