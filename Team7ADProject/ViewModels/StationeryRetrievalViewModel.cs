@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -84,7 +85,25 @@ namespace Team7ADProject.ViewModels
             }
         }
         public List<BreakdownByItemViewModel> requestList { get; set; }
+    }
 
+    public static class CreateDisbHelpers
+    {
+        public static String GetNewDisbId()
+        {
+            LogicDB context = new LogicDB();
+            var disbursement = context.Disbursement.OrderByDescending(x => x.DisbursementId).First();
+            string did = "DISB" + (Convert.ToInt32(disbursement.DisbursementId.Substring(4, 6)) + 1).ToString("000000");
+            return did;
+        }
+
+        public static string GetNewDisbNo(string DepartmentId)
+        {
+            LogicDB context = new LogicDB();
+            var disbursement = context.Disbursement.OrderByDescending(x => x.DisbursementId).First();
+            string dno = "D" + DepartmentId + (Convert.ToInt32(disbursement.DisbursementNo.Substring(5, 5)) + 1).ToString("00000");
+            return dno;
+        }
     }
 
 }

@@ -12,7 +12,7 @@ namespace Team7ADProject.Entities
         {
         }
 
-        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<CollectionPoint> CollectionPoint { get; set; }
         public virtual DbSet<DelegationOfAuthority> DelegationOfAuthority { get; set; }
@@ -34,11 +34,6 @@ namespace Team7ADProject.Entities
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AspNetUsers>()
-                .HasMany(e => e.AspNetUserRoles)
-                .WithRequired(e => e.AspNetUsers)
-                .HasForeignKey(e => e.UserId);
-
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.DelegationOfAuthority)
                 .WithRequired(e => e.AspNetUsers)
@@ -71,15 +66,13 @@ namespace Team7ADProject.Entities
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.Disbursement)
-                .WithRequired(e => e.AspNetUsers)
-                .HasForeignKey(e => e.DisbursedBy)
-                .WillCascadeOnDelete(false);
+                .WithOptional(e => e.AspNetUsers)
+                .HasForeignKey(e => e.DisbursedBy);
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.Disbursement1)
-                .WithRequired(e => e.AspNetUsers1)
-                .HasForeignKey(e => e.AcknowledgedBy)
-                .WillCascadeOnDelete(false);
+                .WithOptional(e => e.AspNetUsers1)
+                .HasForeignKey(e => e.AcknowledgedBy);
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.PurchaseOrder)
