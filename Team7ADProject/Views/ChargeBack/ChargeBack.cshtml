@@ -12,7 +12,9 @@
     <script>
         $(function () {
             $("#fromDTP").datepicker({
+                required: true,
                 yearRange: "2017:+0",
+                message: "This is a required field",
                 maxDate: '0',
                 changeMonth: true,
                 changeYear: true,
@@ -23,12 +25,23 @@
             }
             ).datepicker("setDate","1/1/2017");
             $("#toDTP").datepicker({
+                required: true,
                 minDate: '-2y',
+                message: "This is a required field",
                 maxDate: '0',
                 changeMonth: true,
                 changeYear: true,
                 showOn: "both"
-            }).datepicker("setDate","0");
+            }).datepicker("setDate", "0");
+
+            $("#toDTP").validate();
+            $("#fromDTP").validate();
+
+            $("[type=date]").datepicker({
+                onClose: function () {
+                    $(this).valid();
+                }
+            });
         });
         
     </script>
@@ -48,7 +61,8 @@
 
 <div>
     <form id="rangeDTP" name="rangeDTP" action='@Url.Action("ChargeBack","ChargeBack")' method="post">
-        <p>View charge back from <input type="text" name="fromDTP" id="fromDTP" placeholder="Please select a date"> to <input type="text" name="toDTP" id="toDTP" placeholder="Please select a date">.</p>
+        <p>View charge back from <input type="text" name="fromDTP" id="fromDTP" placeholder="Please select a date" onkeypress="return false;"> to 
+        <input type="text" name="toDTP" id="toDTP" placeholder="Please select a date" onkeypress="return false;">.</p>
         <p><input type="submit" id="submitBtn" value="View" /></p>
     </form>
 </div>

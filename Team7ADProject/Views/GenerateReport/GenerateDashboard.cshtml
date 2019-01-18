@@ -14,63 +14,81 @@
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+
 
     <script>
-
+      
         $(function () {
 
             $("#fromDateTP").datepicker({
-                altField: "#altfromDTP",
-                altFormat: "d MM yy",
+                required: true,
+                message: "This is a required field",
                 yearRange: "2017:+0",
                 maxDate: '0',
                 changeMonth: true,
                 changeYear: true,
+                dateFormat: 'dd MM yy',
                 showOn: "both",
-                defaultDate: "1/1/2017",
+                defaultDate: "01 January 2017",
                 onSelect: function (dateText, inst) {
                     $("#toDateTP").datepicker("option", "minDate", $("#fromDateTP").datepicker("getDate"));
                 }
             });
 
             $("#toDateTP").datepicker({
-                altField: "#alttoDTP",
-                altFormat: "d MM yy",
+                required: true,
+                showOn: "both",
+                message: "This is a required field",
                 minDate: '-2y',
                 maxDate: '0',
                 changeMonth: true,
                 changeYear: true,
                 showOn: "both",
+                dateFormat: 'dd MM yy'
             });
+            $("#toDateTP").validate();
+            $("#fromDateTP").validate();
 
+            $("[type=date]").datepicker({
+                onClose: function () {
+                    $(this).valid();
+                }
+            });
         });
     </script>
 
 </head>
 
 <h2>Store Dashboard</h2>
-<p>
-
-    Dates selected: <input type="text" id="altfromDTP" disabled> to
-    <input type="text" id="alttoDTP" disabled value="today">
-</p>
+<br/>
 <table>
     <tr>
-        <th>Period selected from</th>
-        <th>To</th>
+        <th>Module selected:</th>
+        <td>@Model.module</td>
     </tr>
     <tr>
-        <td>@Model.fDate</td>
-        <td>@Model.tDate</td>
+        <th>Period selected from: </th>
+        <td>@String.Format("{0:dd MMM yyyy}", @Model.fDate) to @String.Format("{0:dd MMM yyyy}", @Model.tDate)</td>     
     </tr>
+
 
 </table>
 <div style="width:80%;">
     <div id="ReportFilters" style="width:20%; height:100%; border:groove; float:right;">
         <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post">
+            <p>Select module:</p>
+            <p><select>
+    <option value="Disbursement">Disbursement</option>
+    <option value="Purchases">Purchases</option>
+</select></p>
             <p>Select period:</p>
-            <p><input type="text" name="fromDateTP" id="fromDateTP"></p>
-            <p><input type="text" name="toDateTP" id="toDateTP"></p>
+            <p>
+                <input type="text" required name="fromDateTP" id="fromDateTP" onkeypress="return false;">
+            </p>
+            <p>
+                <input type="text" required name="toDateTP" id="toDateTP" onkeypress="return false;">
+            </p>
             <input type="submit" id="filterBtn" value="Filter" />
         </form>
     </div>
