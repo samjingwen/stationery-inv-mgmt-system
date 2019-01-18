@@ -5,36 +5,7 @@
 }
 
 @*Author:Lynn Lynn Oo*@
-<head>
-    <script type="text/javascript">
-        $(function () {
-          
-            $('.date-picker').datepicker({
-                dateFormat: 'yy-mm-dd',
-                showAnim: 'clip',
-                onSelect: function (date) {
-                    $('.date-picker1').datepicker("option", "disabled", false);
-                    $(".date-picker1").datepicker("option", "minDate", date);
-                    $(".date-picker1").datepicker("option", "maxDate", '+2y');
-                    $('.date-picker1').datepicker('setDate', date);
-                }
 
-            });
-            $(".date-picker").datepicker("option", { minDate: + 0 });
-            // $(".date-picker").datepicker('setDate', 'today');
-
-            $(".date-picker1").datepicker({
-                dateFormat: 'yy-mm-dd',
-                showAnim: 'clip',
-                disabled: true
-
-            });
-
-
-        })
-
-    </script>
-</head>
 <div class="container">
     <center><h1><b>Postpone Collection Date</b></h1></center>
     @* Design *@
@@ -54,7 +25,7 @@
     <br />
 
 
-    <table class="table breadcrumb table-bordered">
+    <table class="table table-bordered table-striped table-hover">
         <col style="width:8%">
         <col style="width:10%">
         <col style="width:10%">
