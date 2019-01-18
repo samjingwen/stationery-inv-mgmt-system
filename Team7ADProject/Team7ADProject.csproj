@@ -253,6 +253,7 @@
     <Compile Include="Entities\PurchaseOrder.cs" />
     <Compile Include="Entities\RequestByDeptView.cs" />
     <Compile Include="Entities\RequestByItemView.cs" />
+    <Compile Include="Entities\RequestByReqIdView.cs" />
     <Compile Include="Entities\Stationery.cs" />
     <Compile Include="Entities\StationeryRequest.cs" />
     <Compile Include="Entities\StationeryRetrieval.cs" />

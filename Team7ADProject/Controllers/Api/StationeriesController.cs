@@ -40,7 +40,7 @@ namespace Team7ADProject.Controllers.Api
                 return NotFound();
             }
 
-            _context.Stationery.Remove(stationery);
+            stationery.ActiveState = false;
             _context.SaveChanges();
 
             return Ok(stationery);
@@ -75,7 +75,7 @@ namespace Team7ADProject.Controllers.Api
         [Route("~/api/stationeries/categories/{category}")]
         public IHttpActionResult GetItemsFromCategory(string category)
         {
-            List<Stationery> items = _context.Stationery.Where(m => m.Category == category).ToList();
+            List<Stationery> items = _context.Stationery.Where(m => m.Category == category && m.ActiveState==true).ToList();
 
             List<RaiseRequestDTO> viewModels = new List<RaiseRequestDTO>();
             for (int i = 0; i < items.Count; i++)
