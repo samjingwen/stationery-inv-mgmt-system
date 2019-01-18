@@ -37,20 +37,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var adj in Model.AdjustmentDetails)
-                        {
-                            <tr>
-                                <td>@adj.ItemId</td>
-                                <td>@adj.Stationery.Description</td>
-                                <td>@adj.Quantity</td>
-                                <td>$@adj.UnitPrice.ToString()</td>
-                                <td>$@(adj.Quantity * adj.UnitPrice)</td>
-                                <td>@adj.Remarks</td>
-                            </tr>
+                        @{
+                            decimal? amount = 0;
+
+                            foreach (var adj in Model.AdjustmentDetails)
+                            {
+                                <tr>
+                                    <td>@adj.ItemId</td>
+                                    <td>@adj.Stationery.Description</td>
+                                    <td>@adj.Quantity</td>
+                                    <td>$@adj.UnitPrice.ToString()</td>
+                                    <td>$@(adj.Quantity * adj.UnitPrice)</td>
+                                    <td>@adj.Remarks</td>
+                                </tr>
+                                amount += adj.Quantity * adj.UnitPrice;
+                            }
                         }
                         <tr>
-                            @*<td><strong>Total</strong></td>
-                                <td><strong>Amount</strong></td>*@
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total</strong></td>
+                            <td><strong>$@amount</strong></td>
                         </tr>
                     </tbody>
                 </table>
