@@ -9,22 +9,12 @@ using System.Web;
 namespace Team7ADProject.ViewModels.GenerateReport
 {
     //Author: Elaine Chan
-    [DataContract]
+
     public class GenerateReportViewModel
     {
+        public List<StringDoubleDPViewModel> statdataPoints { get; set; }
+        public List<StringDoubleDPViewModel> timedataPoints { get; set; }
+        public List<StringDoubleDPViewModel> deptdataPoints { get; set; }
 
-        [DataMember(Name = "label")]
-        public string Label = "";
-
-        [DataMember(Name = "y")]
-        public Nullable<double> Y = null;
-        private string deptID;
-        private decimal? totalAmt;
-
-        public GenerateReportViewModel(string deptID, decimal? totalAmt)
-        {
-            this.deptID = deptID;
-            this.totalAmt = totalAmt;
-        }
     }
 }

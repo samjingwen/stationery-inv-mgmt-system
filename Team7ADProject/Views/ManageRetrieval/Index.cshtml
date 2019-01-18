@@ -9,17 +9,15 @@
 {
 <table class="table">
     <tr>
+       
         <th>
             @Html.Label("Description")
         </th>
         <th>
-            @Html.Label("Category")
+            @Html.Label("DepartmentId")
         </th>
         <th>
-            @Html.Label("UnitOfMeasure")
-        </th>
-        <th>
-            @Html.Label("Location")
+            @Html.Label("Department Name")
         </th>
         <th>
             @Html.Label("Quantity")
@@ -33,34 +31,28 @@
     @for (int i = 0; i < Model.Count; i++)
     {
     <tr>
-        <td>
-            @Html.DisplayFor(x => x[i].ItemId)
-        </td>
+            @Html.HiddenFor(x => x[i].ItemId)
         <td>
             @Html.DisplayFor(x => x[i].Description)
-
+            @Html.HiddenFor(x => x[i].Description)
         </td>
         <td></td>
         <td></td>
+        <td>
+        </td>
         <td></td>
-
-        <td></td>
-
-
     </tr>
         for (int j = 0; j < Model[i].requestList.Count; j++)
         {
     <tr>
-
-
-        <td></td>
-
         <td></td>
         <td>
             @Html.DisplayFor(x => x[i].requestList[j].DepartmentId)
+            @Html.HiddenFor(x => x[i].requestList[j].DepartmentId)
         </td>
         <td>
             @Html.DisplayFor(x => x[i].requestList[j].DepartmentName)
+            @Html.HiddenFor(x => x[i].requestList[j].DepartmentName)
         </td>
         <td>
             @Html.DisplayFor(x => x[i].requestList[j].Quantity)
@@ -68,11 +60,21 @@
         <td>
             @Html.EditorFor(x => x[i].requestList[j].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].requestList[j].Quantity } })
         </td>
-
-
-
     </tr>
         }
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+
+        <td style="font-weight:bold; font-size: 18px">
+            @Html.DisplayFor(x => x[i].TotalQty)
+
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
     }
 
     </table>

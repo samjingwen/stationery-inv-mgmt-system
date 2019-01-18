@@ -30,6 +30,7 @@ namespace Team7ADProject.Entities
         public virtual DbSet<DisbByDept> DisbByDept { get; set; }
         public virtual DbSet<RequestByDeptView> RequestByDeptView { get; set; }
         public virtual DbSet<RequestByItemView> RequestByItemView { get; set; }
+        public virtual DbSet<RequestByReqIdView> RequestByReqIdView { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
