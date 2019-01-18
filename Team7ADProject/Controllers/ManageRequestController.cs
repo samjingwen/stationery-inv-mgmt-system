@@ -26,7 +26,8 @@ namespace Team7ADProject.Controllers
             string userId = User.Identity.GetUserId();
             string dep_id = context.AspNetUsers.Where(x => x.Id == userId).Select(x => x.DepartmentId).First();
 
-            List<StationeryRequest> reqlist = context.StationeryRequest.Where(x => x.Status == "Pending Approval" && x.DepartmentId == dep_id).ToList();
+
+           List<StationeryRequest> reqlist = context.StationeryRequest.Where(x => x.Status == "Pending Approval" && x.DepartmentId == dep_id).ToList();
 
             try
             {
@@ -47,12 +48,10 @@ namespace Team7ADProject.Controllers
                         foreach (var i in tran)
                         {
                             Stationery it = context.Stationery.Where(x => x.ItemId == i.ItemId).First();
-                            it.QuantityTransit = i.Quantity;
+                           it.QuantityTransit = i.Quantity;
                             items.Add(it);
 
                         }
-
-
 
                         req_item.Itemlist = items;
                         modellist.Add(req_item);
@@ -65,7 +64,7 @@ namespace Team7ADProject.Controllers
             }
             catch (Exception e)
             {
-
+                Console.WriteLine("KTST " + e.Message);
             }
 
             return View(modellist);
@@ -80,23 +79,23 @@ namespace Team7ADProject.Controllers
             {
                 result = "data include";
             }
-            var stationery = _context.StationeryRequest.Where(c => c.RequestId==requests.RequestId).First();
+            string userId = User.Identity.GetUserId();
 
+            var stationery = _context.StationeryRequest.Find(requests.RequestId);
             if (stationery == null)
                 return HttpNotFound();
 
             else
             {
-                stationery.Status = "Approved";
-                _context.StationeryRequest.Add(stationery);
+                
+                _context.Entry(stationery).Property("Status").CurrentValue = requests.Status;
+
+                _context.Entry(stationery).Property("ApprovedBy").CurrentValue = userId;
+
+                _context.Entry(stationery).Property("Comment").CurrentValue = requests.Comment;
                 _context.SaveChanges();
             }
-            //var viewModel = new StationeryFormViewModel(stationery);
-            //viewModel.Suppliers = _context.Supplier.ToList();
-           // viewModel.Categories = _context.Stationery.Select(m => m.Category).Distinct().ToList();
-           // viewModel.Units = _context.Stationery.Select(m => m.UnitOfMeasure).Distinct().ToList();
-            //return View("StationeryForm", viewModel);
-
+         
             return Json(result, JsonRequestBehavior.AllowGet);
         
     }

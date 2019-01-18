@@ -225,7 +225,6 @@
     <Compile Include="Controllers\ManagePostponeCollectionDateController.cs" />
     <Compile Include="Controllers\ManageRepController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
-    <Compile Include="Controllers\ManageRetrievalController.cs" />
     <Compile Include="Controllers\ManageStationeryController.cs" />
     <Compile Include="Controllers\ManageSupplierController.cs" />
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
@@ -297,6 +296,7 @@
   <ItemGroup>
     <Content Include="App_Data\useremails.txt" />
     <Content Include="App_Data\usernames.txt" />
+    <Content Include="Content\accordion.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
