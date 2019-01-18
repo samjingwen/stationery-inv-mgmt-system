@@ -17,63 +17,93 @@
     @if (ViewBag.ShowItems)
     {
         <p>true</p>
-       int j = 0; int i = 0;
+        int j = 0; int i = 0;
         foreach (var cp in Model)
         {
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne" style="background-color:darkgreen;">
-                <h4 class="panel-title">
-                    <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" class="trigger collapsed">
-                        <span style="color:azure">Requisition Request by</span> @cp.Empname
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne" style="background-color:darkgreen;">
+                    <h4 class="panel-title">
+                        <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" class="trigger collapsed">
+                            <span style="color:azure">Requisition Request by</span> @cp.Empname
 
-                        <span style="color:azure ;display: block;float:right">Requested Date :@cp.RequestDate</span>
-                    </a>
-                </h4>
-            </div>
-            <div id="collapse_@j" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
+                            <span style="color:azure ;display: block;float:right">Requested Date :@cp.RequestDate  </span>
 
-                    <table class="table table-bordered table-hover">
-                        <tr>
-                            <th>No.</th>
-                            <th>Item Description</th>
-                            <th>Category</th>
-                            <th>Quantity</th>
-                           
-                        </tr>
-                        @{ int ii = 1;}
+                        </a>
+                        <button data-stationery-id="@cp.RequestID" class="js-approve">Delete</button>
+                    </h4>
+                </div>
+                <div id="collapse_@j" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
 
-                        @foreach (var item in cp.Itemlist)
-                        {
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th>No.</th>
+                                <th>Item Description</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
 
-                        <tr>
-                            <td>@(ii++)</td>
-                            <td>@item.Description</td>
-                            <td>@item.Category</td>
-                            <td>@item.QuantityTransit</td>
-                            @*<td>@item.UnitOfMeasure</td>
-        <td>@item.RequestDate</td>
-        <td>@item.Status</td>*@
-                        </tr>
+                            </tr>
+                            @{ int ii = 1;}
+
+                            @foreach (var item in cp.Itemlist)
+                            {
+
+                                <tr>
+                                    <td>@(ii++)</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.Category</td>
+                                    <td>@item.QuantityTransit</td>
+                                    @*<td>@item.UnitOfMeasure</td>
+                                        <td>@item.RequestDate</td>
+                                        <td>@item.Status</td>*@
+                                </tr>
                             }
                         </table>
 
                     </div>
                 </div>
 
-                </div>
-                    j++;
-                }
+            </div>
+            j++;
+        }
 
-            }
+    }
 
-            else
-            {
+    else
+    {
         <h5 class="text-center text-info">There is no requests yet!!!</h5>
 
     }
 </div>
 
-            @section Scripts {
+@section Scripts {
     <link href="~/Content/accordion.css" rel="stylesheet" />
 }
+
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("#station .js-delete").on("click",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Are you sure you want to delete this stationery?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "../api/stationeries/" + button.attr("data-stationery-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        button.parents("tr").remove();
+                                    }
+                                });
+                            }
+                        });
+                });
+        })
+    </script>
+}
+
