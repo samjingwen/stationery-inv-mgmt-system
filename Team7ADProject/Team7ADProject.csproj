@@ -225,6 +225,7 @@
     <Compile Include="Controllers\ManagePostponeCollectionDateController.cs" />
     <Compile Include="Controllers\ManageRepController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
+    <Compile Include="Controllers\ManageRetrievalController.cs" />
     <Compile Include="Controllers\ManageStationeryController.cs" />
     <Compile Include="Controllers\ManageSupplierController.cs" />
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
