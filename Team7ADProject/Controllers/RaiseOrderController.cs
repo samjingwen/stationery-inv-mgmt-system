@@ -22,7 +22,7 @@ namespace Team7ADProject.Controllers
             _context = new LogicDB();
         }
 
-        // [Authorize(Roles = "Store Supervisor")]
+        //[Authorize(Roles = "Store Supervisor")]
         // GET: RaiseOrder
         public ActionResult Index()
         {
@@ -34,26 +34,24 @@ namespace Team7ADProject.Controllers
             viewModel.Suppliers = suppliers;
             viewModel.Stationeries = stationeries;
 
-
-
-            viewModel.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + "03" ;
+            viewModel.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + GetSerialNumber();
             //viewModel.PONo = GetSerialNumber().ToString();
             ViewBag.PoNo = viewModel.PONo;
             viewModel.Categories = _context.Stationery.Select(m => m.Category).Distinct().ToList();
-
 
             //ViewBag.Cate = _context.Stationery.Select(m => m.Category).Distinct().ToList();
 
 
             return View(viewModel);
-        }   
+        }
 
+        #region // For the Store Staff To View His/Her Own POs
         public ActionResult ViewPo()
         {
             // to get the user ID of the current user
-            string userId = User.Identity.GetUserId();
-           // var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
-
+            string userId = "5042e8ca-ef83-4458-a78c-07e4f6ba0d1d";// User.Identity.GetUserId();
+            // var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
+            //ViewBag.UserName = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId).UserName;
             var po = _context.PurchaseOrder.Where(x => x.OrderedBy == userId).ToList().
                 Select(x => new RaisePOViewModel()
                 {
@@ -65,32 +63,25 @@ namespace Team7ADProject.Controllers
                     Status = x.Status
                 }
                 );
-     
+
             return View(po);
         }
 
-        // PO18/02/##
-        //private static int GetSerialNumber()
-        //{
-        //    LogicDB context1 = new LogicDB();
-        //    var lastPo = context1.PurchaseOrder.Select(m => m.PONo).LastOrDefault();
-        //    string date = lastPo.Substring(2,10);
-        //    string todayDate = DateTime.Today.ToString();
-        //    if(date == todayDate)
-        //    {
-        //        string poSerial = lastPo.Substring(11);
-        //        int poSerialInt = int.Parse(poSerial);
-        //        return poSerialInt + 1;
-        //    }
+        #endregion
 
-        //    else
-        //    {
-        //        return 1;
-        //    }
+        #region Generate Running Number
 
-           // string start = DateTime.Today.AddDays(-1).ToString();
-            //return (DateTime.Now - DateTime.Parse(start)).Days;
-        //}
+        // Format : PO18/02/##
+        private static string GetSerialNumber()
+        {
+            LogicDB context1 = new LogicDB();
+            var lastPoNo = context1.PurchaseOrder.OrderByDescending(x => x.PONo).FirstOrDefault();
+            string current = lastPoNo.PONo.Substring(8);
+            int newSerial = Int32.Parse(current);
+            return ((newSerial + 1).ToString("00"));
+        }
+
+        #endregion
 
 
         //[HttpGet]
@@ -116,7 +107,7 @@ namespace Team7ADProject.Controllers
             string userId = User.Identity.GetUserId();
             var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
 
-            poModel.OrderedBy = "4e858936-0926-4bde-9a5f-76129ab96941"; // query.Id; //logic to get from login user
+            poModel.OrderedBy = query.Id; //logic to get from login user
             poModel.ApprovedBy = null;
 
             //add transaction details input by clerk
@@ -124,14 +115,13 @@ namespace Team7ADProject.Controllers
             PurchaseOrder newPO = new PurchaseOrder();
             TransactionDetail newTD = new TransactionDetail();
 
-            //newPO.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + DateTime.Now.Date.ToString("dd");
-            newPO.PONo = "PO19/01/03";
-            newPO.OrderedBy = "4e858936-0926-4bde-9a5f-76129ab96941";
+            newPO.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + GetSerialNumber();
+            newPO.OrderedBy = poModel.OrderedBy;
             newPO.ApprovedBy = poModel.ApprovedBy;
             newPO.SupplierId = poModel.SupplierId;     // from view
             newPO.Amount = (decimal)(poModel.Quantity * poModel.UnitPrice);
             newPO.Date = DateTime.Now;
-            newPO.Status = "Pending";
+            newPO.Status = "Pending Approval";
 
             newTD.TransactionDate = newPO.Date;
             newTD.Quantity = poModel.Quantity;          // from view
@@ -139,7 +129,7 @@ namespace Team7ADProject.Controllers
             newTD.TransactionRef = newPO.PONo;
             newTD.TransactionDate = newPO.Date;
             newTD.UnitPrice = poModel.UnitPrice;        // from view
-            newTD.ItemId = poModel.ItemId;              // from view
+            newTD.ItemId = "C001";// poModel.ItemId;              // from view
 
             newPO.TransactionDetail.Add(newTD);
             _context.PurchaseOrder.Add(newPO);
@@ -148,5 +138,25 @@ namespace Team7ADProject.Controllers
             //return View("Index");//check if naming is correct
             return "success";
         }
+
+        #region View Details of PO
+        // GET: RaiseOrder/Details/id
+        public ActionResult Details(string poNo)
+        {
+            if (poNo == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            PurchaseOrder purchaseOrder = _context.PurchaseOrder.SingleOrDefault(x => x.PONo == poNo);
+            List<TransactionDetail> transactionDetail = _context.TransactionDetail.Where(c => c.TransactionRef == poNo).ToList();
+            if (purchaseOrder == null)
+            { return HttpNotFound(); }
+            var poDetailsViewModel = new PoDetailsViewModel
+            { PurchaseOrder = purchaseOrder, PODetails = transactionDetail };
+            return View(poDetailsViewModel);
+        }
+        #endregion
+
     }
 }

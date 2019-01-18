@@ -53,6 +53,36 @@ namespace Team7ADProject.ViewModels
     {
         public string DepartmentId { get; set; }
         public string DepartmentName { get; set; }
+        public int CollectionPointId
+        {
+            get
+            {
+                if(DepartmentId != null)
+                {
+                    LogicDB context = new LogicDB();
+                    return context.Department.Where(x => x.DepartmentId == DepartmentId).FirstOrDefault().CollectionPointId;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+        public string CollectionDescription
+        {
+            get
+            {
+                if (DepartmentId != null)
+                {
+                    LogicDB context = new LogicDB();
+                    return context.Department.Where(x => x.DepartmentId == DepartmentId).FirstOrDefault().CollectionPoint.CollectionDescription;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
         public List<BreakdownByItemViewModel> requestList { get; set; }
 
     }
