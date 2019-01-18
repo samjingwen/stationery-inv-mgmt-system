@@ -1,6 +1,12 @@
-﻿@{
+﻿@model Team7ADProject.ViewModels.GenerateReport.GenerateReportViewModel
+
+@using Team7ADProject.ViewModels.GenerateReport
+
+@{
     ViewBag.Title = "GenerateDashboard";
+
 }
+
 
 <head>
 
@@ -10,7 +16,9 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
     <script>
+
         $(function () {
+
             $("#fromDateTP").datepicker({
                 altField: "#altfromDTP",
                 altFormat: "d MM yy",
@@ -42,9 +50,21 @@
 
 <h2>Store Dashboard</h2>
 <p>
+
     Dates selected: <input type="text" id="altfromDTP" disabled> to
-    <input type="text" id="alttoDTP" disabled>
+    <input type="text" id="alttoDTP" disabled value="today">
 </p>
+<table>
+    <tr>
+        <th>Period selected from</th>
+        <th>To</th>
+    </tr>
+    <tr>
+        <td>@Model.fDate</td>
+        <td>@Model.tDate</td>
+    </tr>
+
+</table>
 <div style="width:80%;">
     <div id="ReportFilters" style="width:20%; height:100%; border:groove; float:right;">
         <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post">

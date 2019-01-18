@@ -20,6 +20,11 @@ namespace Team7ADProject.Controllers
         {
             LogicDB context = new LogicDB();
 
+            var grvm = new GenerateReportViewModel {
+            fDate = string.Format("dd MMMM yyyy", new DateTime(2017, 1, 1)),
+            tDate = string.Format("dd MMMM yyyy", DateTime.Today)
+        };
+
             #region Disbursement by DeptID
             List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
 
@@ -68,7 +73,7 @@ namespace Team7ADProject.Controllers
             ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
             #endregion
 
-            return View();
+            return View(grvm);
         }
 
         [Authorize(Roles = "Store Manager, Store Supervisor")]
@@ -130,6 +135,7 @@ namespace Team7ADProject.Controllers
             return View();
         }
 
+     
 
         #endregion
     }
