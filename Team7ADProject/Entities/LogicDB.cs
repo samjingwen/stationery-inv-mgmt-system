@@ -34,11 +34,6 @@ namespace Team7ADProject.Entities
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AspNetRoles>()
-                .HasMany(e => e.AspNetUsers)
-                .WithMany(e => e.AspNetRoles)
-                .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
-
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.DelegationOfAuthority)
                 .WithRequired(e => e.AspNetUsers)
@@ -71,15 +66,13 @@ namespace Team7ADProject.Entities
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.Disbursement)
-                .WithRequired(e => e.AspNetUsers)
-                .HasForeignKey(e => e.DisbursedBy)
-                .WillCascadeOnDelete(false);
+                .WithOptional(e => e.AspNetUsers)
+                .HasForeignKey(e => e.DisbursedBy);
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.Disbursement1)
-                .WithRequired(e => e.AspNetUsers1)
-                .HasForeignKey(e => e.AcknowledgedBy)
-                .WillCascadeOnDelete(false);
+                .WithOptional(e => e.AspNetUsers1)
+                .HasForeignKey(e => e.AcknowledgedBy);
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.PurchaseOrder)

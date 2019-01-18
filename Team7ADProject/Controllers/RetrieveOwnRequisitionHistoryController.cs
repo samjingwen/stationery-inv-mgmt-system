@@ -14,9 +14,10 @@ using Team7ADProject.ViewModels;
 namespace Team7ADProject.Controllers
 {
     //For employee/department rep can view their own requisition histories
+    [Authorize(Roles ="Employee,Department Representative")]
     public class RequisitionHistoryController : Controller
     {
-        #region Lynn Lynn Oo        
+        #region Author:Lynn Lynn Oo        
         private LogicDB _context;
 
         public RequisitionHistoryController()
