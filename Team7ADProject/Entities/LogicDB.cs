@@ -4,6 +4,8 @@ namespace Team7ADProject.Entities
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using Team7ADProject.ViewModels;
+    using Team7ADProject.Models;
 
     public partial class LogicDB : DbContext
     {
@@ -28,8 +30,8 @@ namespace Team7ADProject.Entities
         public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<TransactionDetail> TransactionDetail { get; set; }
         public virtual DbSet<DisbByDept> DisbByDept { get; set; }
-        public virtual DbSet<RequestByDeptView> RequestByDeptView { get; set; }
-        public virtual DbSet<RequestByItemView> RequestByItemView { get; set; }
+      public virtual DbSet<RequestByDeptView> RequestByDeptView { get; set; }
+       public virtual DbSet<RequestByItemView> RequestByItemView { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
