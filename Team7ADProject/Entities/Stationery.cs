@@ -81,6 +81,9 @@ namespace Team7ADProject.Entities
         [Column(TypeName = "numeric")]
         [Display(Name = "#3 Price")]
         [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
+
+        public bool ActiveState { get; set; }
+
         public decimal ThirdSuppPrice { get; set; }
 
         public virtual Supplier Supplier { get; set; }
