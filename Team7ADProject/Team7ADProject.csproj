@@ -442,13 +442,13 @@
     <Content Include="Views\GenerateReport\_Charts.cshtml" />
     <Content Include="Views\ApproveAdjustment\Index.cshtml" />
     <Content Include="Views\ApproveAdjustment\AdjDetails.cshtml" />
+    <Content Include="Views\ManageRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
-    <Folder Include="Views\ManageRequest\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
     <Folder Include="Views\ReturnWarehouse\" />
