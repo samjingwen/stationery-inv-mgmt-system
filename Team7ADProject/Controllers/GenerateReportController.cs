@@ -23,7 +23,8 @@ namespace Team7ADProject.Controllers
             var grvm = new GenerateReportViewModel
             {
                 fDate = new DateTime(2017, 1, 1),
-                tDate = DateTime.Today
+                tDate = DateTime.Today,
+                module = ""
             };
 
             #region Disbursement by DeptID
@@ -79,16 +80,16 @@ namespace Team7ADProject.Controllers
 
         [Authorize(Roles = "Store Manager, Store Supervisor")]
         [HttpPost]
-        public ActionResult GenerateDashboard(DateTime? fromDateTP, DateTime? toDateTP)
+        public ActionResult GenerateDashboard(DateTime? fromDateTP, DateTime? toDateTP, string module)
         {
-            if (ModelState.IsValid)
-            {
+          
                 LogicDB context = new LogicDB();
 
                 var grvm = new GenerateReportViewModel
                 {
                     fDate = (DateTime)fromDateTP,
-                    tDate = (DateTime)toDateTP
+                    tDate = (DateTime)toDateTP,
+                    module = module
                 };
 
                 #region Disbursement by DeptId
@@ -141,12 +142,6 @@ namespace Team7ADProject.Controllers
 
                 #endregion
                 return View(grvm);
-            }
-            else
-            {
-                return Redirect("GenerateDashboard");
-            }
-            
             
         }
     }
