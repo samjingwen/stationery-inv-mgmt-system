@@ -19,7 +19,7 @@ namespace Team7ADProject.Controllers
         public ActionResult Index()
         {
 
-            List<RequestItemViewModel> modellist = new List<RequestItemViewModel>();
+            List<RequestedItemViewModel> modellist = new List<RequestedItemViewModel>();
 
             ViewBag.ShowItems = false;
             LogicDB context = new LogicDB();
@@ -36,7 +36,7 @@ namespace Team7ADProject.Controllers
 
                     foreach (var c in reqlist)
                     {
-                        RequestItemViewModel req_item = new RequestItemViewModel();
+                        RequestedItemViewModel req_item = new RequestedItemViewModel();
                         req_item.RequestDate = String.Format("{0:dd/MM/yyyy}", c.RequestDate);
                         AspNetUsers emp = context.AspNetUsers.Where(x => x.Id == c.RequestedBy).First();
                         req_item.Empname = emp.EmployeeName;

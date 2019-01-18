@@ -284,7 +284,7 @@
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestWrapperViewModel.cs" />
-    <Compile Include="ViewModels\RequestItemViewModel.cs" />
+    <Compile Include="ViewModels\RequestedItemViewModel.cs" />
     <Compile Include="ViewModels\StationeryDisbursementViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
