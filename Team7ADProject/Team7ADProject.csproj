@@ -246,14 +246,10 @@
     <Compile Include="Entities\DelegationOfAuthority.cs" />
     <Compile Include="Entities\DeliveryOrder.cs" />
     <Compile Include="Entities\Department.cs" />
-    <Compile Include="Entities\DisbByDept.cs" />
     <Compile Include="Entities\Disbursement.cs" />
     <Compile Include="Entities\Invoice.cs" />
-    <Compile Include="Entities\LogicDB.cs" />
+    <Compile Include="Entities\Model1.cs" />
     <Compile Include="Entities\PurchaseOrder.cs" />
-    <Compile Include="Entities\RequestByDeptView.cs" />
-    <Compile Include="Entities\RequestByItemView.cs" />
-    <Compile Include="Entities\RequestByReqIdView.cs" />
     <Compile Include="Entities\Stationery.cs" />
     <Compile Include="Entities\StationeryRequest.cs" />
     <Compile Include="Entities\StationeryRetrieval.cs" />

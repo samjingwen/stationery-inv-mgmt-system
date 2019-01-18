@@ -43,9 +43,11 @@ namespace Team7ADProject.Entities
         [Display(Name = "Unit of measure")]
         public string UnitOfMeasure { get; set; }
 
+        [Display(Name = "Quantity in transit")]
+        [RegularExpression(@"^\d+", ErrorMessage = "Please enter a valid quantity.")]
         public int QuantityTransit { get; set; }
 
-        [Display(Name = "Quantity at warehouse")]
+        [Display(Name = "Quantity in warehouse")]
         [RegularExpression(@"^\d+", ErrorMessage = "Please enter a valid quantity.")]
         public int QuantityWarehouse { get; set; }
 
@@ -81,10 +83,9 @@ namespace Team7ADProject.Entities
         [Column(TypeName = "numeric")]
         [Display(Name = "#3 Price")]
         [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
+        public decimal ThirdSuppPrice { get; set; }
 
         public bool ActiveState { get; set; }
-
-        public decimal ThirdSuppPrice { get; set; }
 
         public virtual Supplier Supplier { get; set; }
 
