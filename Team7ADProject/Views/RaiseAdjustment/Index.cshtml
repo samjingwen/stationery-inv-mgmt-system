@@ -12,6 +12,7 @@
 </head>
 <body>
     <h2>Stock Adjustment</h2>
+
     @using (Html.BeginForm("Confirm", "RaiseAdjustment"))
     {
         <div>
@@ -36,12 +37,12 @@
 
                 <tr>
                     <td>
-                        @Html.DropDownList(Team7ADProject.ViewModels.AdjustmentViewModel.Items.FirstOrDefault().Category,
+                        @Html.DropDownList("Category",
                        new SelectList(Team7ADProject.ViewModels.AdjustmentViewModel.Items.Select(x => x.Category).Distinct()),
                        "Select Category"  )
                     </td>
                     <td>
-                        @Html.DropDownListFor(model=>model.Detail.Last().ItemId,
+                        @Html.DropDownListFor(model=>model.Detail[Model.Detail.Count].ItemId,
                        new SelectList(Team7ADProject.ViewModels.AdjustmentViewModel.Items,"ItemId","description"),
                        "Select Item"  )
                     </td>
@@ -55,7 +56,7 @@
                 </tr>
             </table>
         </div>
-        <input type="submit" value="Confirm" />
+        <button type="submit" class="btn btn-primary">Confirm</button>
     }
 </body>
 </html>

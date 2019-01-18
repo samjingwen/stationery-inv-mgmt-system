@@ -15,13 +15,16 @@ namespace Team7ADProject.Controllers
         // GET: RaiseAdjustment
         public ActionResult Index()
         {
-
-            return View();
+            AdjustmentViewModel adjustment = new AdjustmentViewModel();
+            adjustment.Detail.Add(new TransactionDetail());
+            return View(adjustment);
         }
 
-        public ActionResult Confirm()
+        [HttpPost]
+        public ActionResult Confirm(AdjustmentViewModel adjustment)
         {
-            return View();
+            adjustment.ToString();
+            return View(adjustment);
         }
     }
 }

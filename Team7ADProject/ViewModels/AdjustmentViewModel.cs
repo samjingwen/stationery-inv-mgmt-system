@@ -8,16 +8,21 @@ namespace Team7ADProject.ViewModels
 {
     public class AdjustmentViewModel
     {
+        public int ItemId { get; set; }
         public StockAdjustment Adjustment;
 
         public List<TransactionDetail> Detail;
 
-        private static LogicDB context = new LogicDB();
-        public static List<Stationery> Items = context.Stationery.ToList();
+        public static List<Stationery> Items;
 
         public AdjustmentViewModel()
         {
-            
+            LogicDB context = new LogicDB();
+            Detail = new List<TransactionDetail>();
+            Items = context.Stationery.ToList();
+            Adjustment = new StockAdjustment();
+            Adjustment.TransactionDetail = Detail;
         }
     }
+    
 }
