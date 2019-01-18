@@ -41,37 +41,14 @@ namespace Team7ADProject.ViewModels
         public string Status { get; set; }
 
         public IEnumerable<Supplier> Suppliers { get; set; }
-
         public IEnumerable<PurchaseOrder> PurchaseOrders { get; set; }
-
         public IEnumerable<TransactionDetail> TransactionDetail { get; set; }
         public IEnumerable<Stationery> Stationeries { get; set; }
 
-        public List<Supplier> SupplierLists(string itemid)
-
-        {
-            LogicDB context = new LogicDB();
-            List<Supplier> supplierlist = new List<Supplier>();
-
-            var q = context.Stationery.SingleOrDefault(x => x.ItemId == itemid);
-            supplierlist.Add(q.Supplier);
-            supplierlist.Add(q.Supplier1);
-            supplierlist.Add(q.Supplier2);
-
-            return supplierlist;
-        }
-
+        public IEnumerable<String> SupplierAndPrice { get; set; }
 
         public RaisePOViewModel()
         {
-
-        }
-        
-
-        public RaisePOViewModel(Stationery stationery)
-        {
-            ItemId = stationery.ItemId;
-            Category = stationery.Category;
 
         }
 
@@ -92,6 +69,11 @@ namespace Team7ADProject.ViewModels
         public string Category { get; set; }
 
         [Required]
+        [StringLength(25)]
+        [Display(Name = "Unit of measure")]
+        public string UnitOfMeasure { get; set; }
+
+        [Required]
         [StringLength(10)]
         public string TransactionRef { get; set; }
 
@@ -105,6 +87,6 @@ namespace Team7ADProject.ViewModels
         [Display(Name = "Category")]
         public IEnumerable<String> Categories { get; set; }
 
-       
+
     }
 }

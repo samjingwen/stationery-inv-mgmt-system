@@ -16,14 +16,17 @@ namespace Team7ADProject.Controllers.Api
 {
     public class StationeriesController : ApiController
     {
-        //Author: Teh Li Heng 16/1/2019
+        //Author1: Teh Li Heng 16/1/2019  
         //Delete operation for stationeries, and loading of stationeries based on categories
+
+        //Author 2: Zan Tun Khine 17/1/2019
+        //Load top 3 suppliers and their respective prices based on the selected item
         #region Teh Li Heng
         private LogicDB _context;
 
         public StationeriesController()
         {
-            _context=new LogicDB();
+            _context = new LogicDB();
         }
 
 
@@ -59,8 +62,14 @@ namespace Team7ADProject.Controllers.Api
             {
                 collections.Add(current);
             }
-            
+
             return Ok(collections);
+            //List<String> collections = new List<String>();
+            //foreach (string current in categories)
+            //{
+            //    collections.Add(current);
+            //}
+            //return Ok(categories);
         }
 
         [Route("~/api/stationeries/categories/{category}")]
@@ -82,11 +91,61 @@ namespace Team7ADProject.Controllers.Api
         [Route("~/api/stationeries/item/{itemId}")]
         public IHttpActionResult GetUnitFromItem(string itemId)
         {
-            Stationery stationery = _context.Stationery.Single(m => m.ItemId==itemId);
+            Stationery stationery = _context.Stationery.Single(m => m.ItemId == itemId);
             string unit = stationery.UnitOfMeasure;
 
             return Ok(unit);
         }
+        #endregion
+
+        #region Zan Tun Khine
+
+        // To get the top 3 suppliers based on selected item
+        [Route("~/api/stationeries/supplier/{itemId}")]
+        public IHttpActionResult GetSupplierFromItem(string itemId)
+        {
+
+            List<String> supplierlist = new List<String>();
+
+            Stationery stationery = _context.Stationery.SingleOrDefault(x => x.ItemId == itemId);
+            supplierlist.Add(stationery.Supplier.SupplierName);
+            supplierlist.Add(stationery.Supplier1.SupplierName);
+            supplierlist.Add(stationery.Supplier2.SupplierName);
+            return Ok(supplierlist);
+        }
+
+        // To get the top 3 prices based on selected item
+        [Route("~/api/stationeries/price/{itemId}")]
+        public IHttpActionResult GetPriceFromItem(string itemId)
+        {
+
+            List<decimal> pricelist = new List<decimal>();
+
+            Stationery stationery = _context.Stationery.SingleOrDefault(x => x.ItemId == itemId);
+            pricelist.Add(stationery.FirstSuppPrice);
+            pricelist.Add(stationery.SecondSuppPrice);
+            pricelist.Add(stationery.ThirdSuppPrice);
+
+            return Ok(pricelist);
+        }
+
+        // To get the top 3 suppliers and their respective prices based on selected item
+        [Route("~/api/stationeries/supplierandprice/{itemId}")]
+        public IHttpActionResult GetSupplierAndPriceFromItem(string itemId)
+        {
+
+            List<String> supplierlist = new List<String>();
+
+            Stationery stationery = _context.Stationery.SingleOrDefault(x => x.ItemId == itemId);
+            supplierlist.Add(stationery.Supplier.SupplierName + stationery.FirstSuppPrice);
+            supplierlist.Add(stationery.Supplier1.SupplierName + stationery.SecondSuppPrice);
+            supplierlist.Add(stationery.Supplier2.SupplierName + stationery.ThirdSuppPrice);
+
+            return Ok(supplierlist);
+        }
+        #endregion
+
+        #region Teh Li Heng
 
         protected override void Dispose(bool disposing)
         {
@@ -99,5 +158,9 @@ namespace Team7ADProject.Controllers.Api
 
 
         #endregion
+
+
+
+
     }
 }

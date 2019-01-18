@@ -1,13 +1,17 @@
 ﻿@model Team7ADProject.ViewModels.PoDetailsViewModel
-@using Team7ADProject.Entities
+
 @{
-    ViewBag.Title = "PODetails";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Details";
 }
 
+<h2>  </h2>
 
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
 
-
+@using (Html.BeginForm("ApproveOrReject", "ApproveOrder"))
+{
     <div class="container">
         <div class="row">
             <div>
@@ -45,27 +49,15 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><strong>Total:</strong></td> 
+                            <td><strong>Total:</strong></td>
                             <td>
                                 <strong>$@Model.PurchaseOrder.Amount</strong>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                @if (@Model.PurchaseOrder.Status == "Pending Approval")
-                {@Html.ActionLink("Approve", "Approve", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "btn btn-primary", onclick = "ApproveAlert()" })
-                @Html.ActionLink("Reject", "Reject", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "btn btn-primary", onclick = "RejectAlert" })}
-                <br />
             </div>
         </div>
     </div>
-    <script>
-        function ApproveAlert() {
-            alert("Approved Successfully")
-        }
-        function RejectAlert() {
-            alert("Rejected Successfully")
-        }
-    </script>
 
-
+}

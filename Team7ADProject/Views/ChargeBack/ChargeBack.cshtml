@@ -21,14 +21,14 @@
                     $("#toDTP").datepicker("option", "minDate", $("#fromDTP").datepicker("getDate"));
                 }
             }
-            );
+            ).datepicker("setDate","1/1/2017");
             $("#toDTP").datepicker({
                 minDate: '-2y',
                 maxDate: '0',
                 changeMonth: true,
                 changeYear: true,
                 showOn: "both"
-            });
+            }).datepicker("setDate","0");
         });
         
     </script>

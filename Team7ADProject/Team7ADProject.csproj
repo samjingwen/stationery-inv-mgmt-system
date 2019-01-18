@@ -237,6 +237,7 @@
     <Compile Include="Controllers\ReturnWarehouseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UpdateWarehouseController.cs" />
+    <Compile Include="Controllers\ValidateInvoiceController.cs" />
     <Compile Include="Controllers\VoidDisbursementController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="Entities\PurchaseOrder.cs" />
     <Compile Include="Entities\RequestByDeptView.cs" />
     <Compile Include="Entities\RequestByItemView.cs" />
+    <Compile Include="Entities\RequestByReqIdView.cs" />
     <Compile Include="Entities\Stationery.cs" />
     <Compile Include="Entities\StationeryRequest.cs" />
     <Compile Include="Entities\StationeryRetrieval.cs" />
@@ -265,20 +267,22 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\Api\RaiseRequestDTO.cs" />
     <Compile Include="ViewModels\AdjustmentViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
     <Compile Include="ViewModels\GenerateReport\DoubleStrColDPViewModel.cs" />
+    <Compile Include="ViewModels\GenerateReport\EnumMonth.cs" />
     <Compile Include="ViewModels\GenerateReport\GenerateReportViewModel.cs" />
     <Compile Include="ViewModels\GenerateReport\StringDoubleDPViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
+    <Compile Include="ViewModels\InvoiceDetailsViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\RaisePOViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
-    <Compile Include="ViewModels\RequestItem_ByEmp.cs" />
     <Compile Include="ViewModels\StationeryDisbursementViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
@@ -288,7 +292,6 @@
   <ItemGroup>
     <Content Include="App_Data\useremails.txt" />
     <Content Include="App_Data\usernames.txt" />
-    <Content Include="Content\accordion.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -357,6 +360,8 @@
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.jeditable.datepicker.js" />
     <Content Include="Scripts\jquery.timepicker.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -428,15 +433,19 @@
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\GenerateDisbursement.cshtml" />
     <Content Include="Views\RaiseOrder\Index.cshtml" />
-    <Content Include="Views\RaiseRequest\ViewPo.cshtml" />
-    <Content Include="Views\ManageRequest\Index.cshtml" />
+    <Content Include="Views\RaiseOrder\ViewPo.cshtml" />
+    <Content Include="Views\ValidateInvoice\Index.cshtml" />
+    <Content Include="Views\RaiseOrder\Details.cshtml" />
+    <Content Include="Views\GenerateReport\_Charts.cshtml" />
+    <Content Include="Views\ApproveAdjustment\Index.cshtml" />
+    <Content Include="Views\ApproveAdjustment\AdjDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
-    <Folder Include="Views\ApproveAdjustment\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
+    <Folder Include="Views\ManageRequest\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
     <Folder Include="Views\ReturnWarehouse\" />

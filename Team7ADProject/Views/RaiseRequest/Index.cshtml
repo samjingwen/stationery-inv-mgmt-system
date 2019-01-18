@@ -1,110 +1,293 @@
-﻿@model Team7ADProject.ViewModels.RaiseRequestViewModel
+﻿@model Team7ADProject.ViewModels.RaiseRequestWrapperViewModel
 
 @{
     ViewBag.Title = "Raise Request";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Raise Request</h2>
 
-@using (Html.BeginForm("Add", "RaiseRequest"))
-{
-    @Html.ValidationSummary(true, "Please fix the following errors.")
-    <div class="form-group">
-        <table>
-            <tr>
-                <td>Category</td>
-                <td>
-                    @*@Html.DropDownList("category", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })*@
-                    @Html.DropDownListFor(m => m.Category, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", name = "category" })
-                    @Html.ValidationMessageFor(m => m.Category)
-                </td>
-            <tr>
-                <td>Description</td>
-                <td>
-                    @*@Html.DropDownList("description", Enumerable.Empty<SelectListItem>(), "Select Item", new { @class = "form-control table2" })*@
-                    @Html.DropDownListFor(m => m.Description, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "description" })
-                    @Html.ValidationMessageFor(m => m.Description)
-                </td>
-            <tr>
-                <td>Unit of measure</td>
-                <td>
-                    @Html.EditorFor(m => m.UnitOfMeasure, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", id="uom" } })
-                    @*@Html.LabelFor(m => m.UnitOfMeasure, new { id = "uom", @class = "form-control" })*@
-                </td>
-            <tr>
-                <td>Quantity</td>
-                <td>
-                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Quantity)
-                </td>
-            </tr>
+@{/*
+
+                                  @*adding items*@
+                                  @using (Html.BeginForm("Add", "RaiseRequest"))
+                                  {
+                                      @Html.ValidationSummary(true, "Please fix the following errors.")
+                                      <div class="form-group">
+                                          <table>
+                                              <tr>
+                                                  <td>Category</td>
+                                                  <td>
+                                                      @*@Html.DropDownList("category", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })*@
+                                                      @Html.DropDownListFor(m => m.Category, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", name = "category" })
+                                                      @Html.ValidationMessageFor(m => m.Category)
+                                                  </td>
+                                              <tr>
+                                                  <td>Description</td>
+                                                  <td>
+                                                      @*@Html.DropDownList("description", Enumerable.Empty<SelectListItem>(), "Select Item", new { @class = "form-control table2" })*@
+                                                      @Html.DropDownListFor(m => m.Description, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "description" })
+                                                      @Html.ValidationMessageFor(m => m.Description)
+                                                  </td>
+                                              <tr>
+                                                  <td>Unit of measure</td>
+                                                  <td>
+                                                      @Html.EditorFor(m => m.UnitOfMeasure, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", id = "uom" } })
+                                                      @*@Html.LabelFor(m => m.UnitOfMeasure, new { id = "uom", @class = "form-control" })*@
+                                                  </td>
+                                              <tr>
+                                                  <td>Quantity</td>
+                                                  <td>
+                                                      @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control" })
+                                                      @Html.ValidationMessageFor(m => m.Quantity)
+                                                  </td>
+                                              </tr>
+                                          </table>
+                                          @Html.AntiForgeryToken()
+                                          <button type="submit" class="btn btn-primary">Add</button>
+                                      </div>
+                                  }
+                                  */}
+<div class="modal fade" id="newOrderModal">
+    <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4>Add New Request</h4>
+            </div>
+            <form id="NewOrderForm">
+                <div class="modal-body">
+                    @*Request Details*@
+                    @*<h5 style="color:#ff6347">Request Details</h5>
+                        <hr />
+                        <div class="form-horizontal">
+                            <input type="hidden" id="CustomerId" />
+                            <div class="form-group">
+                                <label class="control-label col-md-2">
+                                    Customer Name
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" id="name" name="name" placeholder="Customer Name" class="form-control" />
+                                </div>
+                                <label class="control-label col-md-2">
+                                    Address
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" id="address" name="address" placeholder="Customer Address" class="form-control" />
+                                </div>
+                            </div>
+                        </div>*@
+
+                    @*Order Details*@
+                    <h5 style="margin-top:10px;color:#ff6347">Request Details</h5>
+                    <hr />
+                    <div class="form-horizontal">
+                        <input type="hidden" id="OrderId" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Product Category
+                            </label>
+                            <div class="col-md-4">
+                                @*<input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" />*@
+                                <select class="form-control" name="category" id="category"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Item Description
+                            </label>
+                            <div class="col-md-4">
+                                @*<input type="number" id="price" name="price" placeholder="Product Price" class="form-control" />*@
+                                <select class="form-control table2" name="description" id="description"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Unit of measure
+                            </label>
+                            <div class="col-md-4">
+                                @*<input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />*@
+                                <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Quantity
+                            </label>
+                            <div class="col-md-4">
+                                @*<input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />*@
+                                <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="1"/>
+                            </div>
+                            <div class="col-md-2 col-lg-offset-4">
+                                <a id="addToList" class="btn btn-primary">Add To List</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table id="detailsTable" class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:30%">Item Description</th>
+                                <th style="width:20%">Product Category</th>
+                                <th style="width:15%">Quantity</th>
+                                <th style="width:25%">Unit of measure</th>
+                                <th style="width:10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                @*</div>*@
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="saveRequest" type="submit" class="btn btn-danger">Save Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+@*Request List*@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <h2 class="panel-title pull-left" style="margin-left:10px;">
+                <strong>Order Details</strong>
+            </h2>
+            <button style="margin-right:10px" class="btn btn-primary pull-right" onclick="addNewOrder()">New Order</button>
+        </div>
+    </div>
+
+    @if (Model.Entries.Count != 0)
+    {
+        <div class="panel-body">
+            <table class="table table-striped table-responsive">
+                <tbody>
+                    <tr>
+                        <td>Request Date : @Model.RequestDate.ToShortDateString() </td>
+                        <td align="right">Status : @Model.Status </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Item Name</th>
+                                        <th>Quantity</th>
+                                        <th>Unit of measure</th>
+                                    </tr>
+                                    @{int i = 1;}
+                                    @foreach (var request in Model.Entries)
+                                    {
+                                        <tr>
+                                            <td>@(i++)</td>
+                                            <td>@request.Description</td>
+                                            <td>@request.Quantity</td>
+                                            <td>@request.UnitOfMeasure</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="panel-body">
+            <h3 style="color:red;">There are no request for today.</h3>
+        </div>
+
+    }
+</div>
+
+@***************************************@
+@*<div class="form-group">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td>No.</td>
+                    <td>Category</td>
+                    <td>Item name</td>
+                    <td>Unit of measure</td>
+                    <td>Quantity</td>
+                    <td>Status</td>
+                    <td>Delete</td>
+                </tr>
+            </thead>
+            @if (Model == null)
+            {
+                <p>We don't have any request yet.</p>
+            }
+            else
+            {
+                <tbody>
+                    @{ int i = 1; }
+                    @foreach (var current in Model.Models)
+                    {
+                        <tr>
+                            <td>@(i++)</td>
+                            <td>@current.Category</td>
+                            <td>@current.Description</td>
+                            <td>@current.UnitOfMeasure</td>
+                            <td>@current.Quantity</td>
+                            <td>Status</td>
+                            <td>
+                                <button data-stationery-id="@current.Description" class="btn-link js-delete">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            }
         </table>
         @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-primary">Add</button>
-    </div>
-}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>*@
 
-<h2>Request List</h2>
-<div class="form-group">
-    <table class="table table-bordered table-hover">
-        <thead>
-        <tr>
-            <td>No.</td>
-            <td>Category</td>
-            <td>Item name</td>
-            <td>Unit of measure</td>
-            <td>Quantity</td>
-            <td>Delete</td>
-        </tr>
-        </thead>
-        @if (Model==null)
-        {
-            <p>We don't have any request yet.</p>
-        }
-        else
-        {
-            <tbody>
-            @{ int i = 1; }
-            @foreach (var current in Model.Models)
-            {
-                <tr>
-                    <td>@(i++)</td>
-                    <td>@current.Category</td>
-                    <td>@current.Description</td>
-                    <td>@current.Quantity</td>
-                    <td>@current.UnitOfMeasure</td>
-                    <td>
-                        <button data-stationery-id="@current.Description" class="btn-link js-delete">Delete</button>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        }
-    </table>
-    @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Submit</button>
-</div>
 @section scripts
-{
+              {
     <script>
-        var $dropdown1 = $("select[name='Category']");
-        var $dropdown2 = $("select[name='Description']");
-        $dropdown1.append('<option>Select Category</option>');
-        $dropdown2.append('<option>Select Item</option>');
-        //First load of list
-        $.ajax({
-            url: '../api/stationeries/categories/',
-            type: 'GET',
-            //data: 'q=' + str,
-            dataType: 'json',
-            success: function (json) {
-                $.each(json, function (i, value) {
-                    $dropdown1.append($('<option>').text(value).attr('value', value));
-                    //$('#myselect').append($('<option>').text(value).attr('value', value));
-                });
-            }
-        });
+        var $dropdown1 = $("select[name='category']");
+        var $dropdown2 = $("select[name='description']");
+        loadItem();
+        //$dropdown1.append('<option>Select Category</option>');
+        //$dropdown2.append('<option>Select Item</option>');
+        ////First load of list
+        //$.ajax({
+        //    url: '../api/stationeries/categories/',
+        //    type: 'GET',
+        //    //data: 'q=' + str,
+        //    dataType: 'json',
+        //    success: function (json) {
+        //        $.each(json, function (i, value) {
+        //            $dropdown1.append($('<option>').text(value).attr('value', value));
+        //            //$('#myselect').append($('<option>').text(value).attr('value', value));
+        //        });
+        //    }
+        //});
+
+        function loadItem() {
+            $dropdown1.empty();
+            $dropdown2.empty();
+            $dropdown1.append('<option>Select Category</option>');
+            $dropdown2.append('<option>Select Item</option>');
+            $dropdown1.prop('selectedIndex', 0);
+            $dropdown2.prop('selectedIndex', 0);
+            $.ajax({
+                url: '../api/stationeries/categories/',
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown1.append($('<option>').text(value).attr('value', value));
+                        //$('#myselect').append($('<option>').text(value).attr('value', value));
+                    });
+                }
+            });
+        }
         //Load 2nd list
         $dropdown1.change(function () {
             $dropdown2.empty();
@@ -132,6 +315,106 @@
                 success: function (json) {
                     $("#uom").val(json);
                 }
+            });
+        });
+    </script>
+
+    @*script for popup*@
+    <script>
+        //Show Modal.
+        function addNewOrder() {
+            $("#newOrderModal").modal();
+        }
+        //Add Multiple Order.
+        $("#addToList").click(function (e) {
+            e.preventDefault();
+
+            if ($.trim($("#category").val()) == "" || $.trim($("#description").val()) == "" || $.trim($("#quantity").val()) == "") return;
+
+            var description = $("#description").val(),
+                category = $("#category").val(),
+                quantity = $("#quantity").val(),
+                unitOfMeasure = $("#uom").val(),
+                name = $("#description option:selected").text(),
+                detailsTableBody = $("#detailsTable tbody");
+
+            var requestItem = '<tr><td style="display:none;">' + description + '</td><td>' + name + '</td><td>' + category + '</td><td>' + quantity + '</td><td>' + unitOfMeasure + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+            detailsTableBody.append(requestItem);
+            clearItem();
+        });
+        //After Add A New Order In The List, Clear Clean The Form For Add More Order.
+        function clearItem() {
+            $dropdown1.empty();
+            $dropdown2.empty();
+            $dropdown1.append('<option>Select Category</option>');
+            $dropdown2.append('<option>Select Item</option>');
+            $dropdown1.prop('selectedIndex', 0);
+            $dropdown2.prop('selectedIndex', 0);
+            $.ajax({
+                url: '../api/stationeries/categories/',
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown1.append($('<option>').text(value).attr('value', value));
+                        //$('#myselect').append($('<option>').text(value).attr('value', value));
+                    });
+                }
+            });
+        }
+        // After Add A New Order In The List, If You Want, You Can Remove It.
+        $(document).on('click', 'a.deleteItem', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-itemId') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+        //After Click Save Button Pass All Data View To Controller For Save Database
+        function saveRequest(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "Save",
+                data: data,
+                success: function (result) {
+                    alert(result);
+                    location.reload();
+                },
+                error: function () {
+                    alert("Error!");
+                }
+            });
+        }
+        //Collect Multiple Order List For Pass To Controller
+        $("#saveRequest").click(function (e) {
+            e.preventDefault();
+
+            var requestArr = [];
+            requestArr.length = 0;
+
+            $.each($("#detailsTable tbody tr"), function () {
+                requestArr.push({
+                    description: $(this).find('td:eq(0)').html(),
+                    //category: $(this).find('td:eq(1)').html(),
+                    quantity: $(this).find('td:eq(3)').html(),
+                    unitOfMeasure: $(this).find('td:eq(4)').html()
+                });
+            });
+
+
+            var data = JSON.stringify({
+                requests: requestArr
+            });
+
+            $.when(saveRequest(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
             });
         });
     </script>
