@@ -71,6 +71,37 @@ namespace Team7ADProject.Controllers
             return View(modellist);
         }
 
+        [HttpPost]
+        public ActionResult Edit(StationeryRequest requests)
+        {
+            LogicDB _context = new LogicDB();
+            string result=null;
+            if (requests != null)
+            {
+                result = "data include";
+            }
+            var stationery = _context.StationeryRequest.Where(c => c.RequestId==requests.RequestId).First();
+
+            if (stationery == null)
+                return HttpNotFound();
+
+            else
+            {
+                stationery.Status = "Approved";
+                _context.StationeryRequest.Add(stationery);
+                _context.SaveChanges();
+            }
+            //var viewModel = new StationeryFormViewModel(stationery);
+            //viewModel.Suppliers = _context.Supplier.ToList();
+           // viewModel.Categories = _context.Stationery.Select(m => m.Category).Distinct().ToList();
+           // viewModel.Units = _context.Stationery.Select(m => m.UnitOfMeasure).Distinct().ToList();
+            //return View("StationeryForm", viewModel);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        
+    }
+
+
         #endregion
     }
 }

@@ -1,17 +1,10 @@
 ﻿@model IEnumerable<Team7ADProject.ViewModels.RequestedItemViewModel>
 @{
     ViewBag.Title = "Index";
+    var reqid = "t";
 }
 
 <h2>Index</h2>
-@*@{
-        foreach (var cp in Model.SRequest)
-        {
-            @cp.Status
-            <br />
-        }
-
-    }*@
 
 <div class="card-body">
     @if (ViewBag.ShowItems)
@@ -26,10 +19,18 @@
                         <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" class="trigger collapsed">
                             <span style="color:azure">Requisition Request by</span> @cp.Empname
 
+                           </a>
+                        <span style="display: block;float:right;margin-left:10px">
+                            <button data-stationery-id="@cp.RequestID" class="js-approve">Approve</button>
+                            <span id="rejectModal">
+                                <button data-stationery-id="@cp.RequestID" class="js-reject">Reject Request</button>
+                                @*<button id="@cp.RequestID" onClick="rejectRequest(this.id)">Reject</button>*@
+                            </span>
+                        </span>
+                        <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" >
                             <span style="color:azure ;display: block;float:right">Requested Date :@cp.RequestDate  </span>
 
                         </a>
-                        <button data-stationery-id="@cp.RequestID" class="js-approve">Delete</button>
                     </h4>
                 </div>
                 <div id="collapse_@j" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
@@ -53,9 +54,7 @@
                                     <td>@item.Description</td>
                                     <td>@item.Category</td>
                                     <td>@item.QuantityTransit</td>
-                                    @*<td>@item.UnitOfMeasure</td>
-                                        <td>@item.RequestDate</td>
-                                        <td>@item.Status</td>*@
+                                  
                                 </tr>
                             }
                         </table>
@@ -64,46 +63,167 @@
                 </div>
 
             </div>
-            j++;
-        }
+                                        j++;
+                                    }
 
-    }
+                                }
 
-    else
-    {
+                                else
+                                {
         <h5 class="text-center text-info">There is no requests yet!!!</h5>
 
-    }
+                                }
 </div>
 
-@section Scripts {
-    <link href="~/Content/accordion.css" rel="stylesheet" />
-}
+<div class="modal fade" id="reason">
+    <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4>Reason for reject</h4>
+            </div>
 
+            <form id="NewOrderForm">
+                <div class="modal-body">
+                 
+                    <div class="form-horizontal">
+                        <input type="hidden" id="RequestId" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Comment
+                            </label>
+                            <div>
+                                @*<input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" />*@
+                                @*<select class="form-control" name="category" id="category"></select>*@
+                         
+                                @Html.TextArea("comment", "Reason for reject", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        
+                </div>
+              </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="saveReject" type="submit" class="btn btn-danger">Reject Request</button>
+                </div>
+            </form>
 
+        </div>
+        </div>
+    </div>
 
-@section scripts
-{
-    <script>
-        $(document).ready(function() {
-            $("#station .js-delete").on("click",
-                function() {
-                    var button = $(this);
+            @section Scripts {
+                <link href="~/Content/accordion.css" rel="stylesheet" />
 
-                    bootbox.confirm("Are you sure you want to delete this stationery?",
-                        function(result) {
-                            if (result) {
-                                $.ajax({
-                                    url: "../api/stationeries/" + button.attr("data-stationery-id"),
-                                    method: "DELETE",
-                                    success: function() {
-                                        button.parents("tr").remove();
-                                    }
+                <script>
+                   
+                    $(document).ready(function () {
+                        $(".panel-title .js-approve").on("click",
+                            function () {
+                                var button = $(this);
+                                var requestArr = [];
+                                // requestArr.length = 0;
+                                //get parameter from button - button.attr("data-stationery-id")
+
+                                var value = $("#comment").val();
+
+                                // window.alert("The value is: " + value);
+
+                                //$.each($("#detailsTable tbody tr"), function () {
+                                //    requestArr.push({
+                                //        description: $(this).find('td:eq(0)').html(),
+                                //        //category: $(this).find('td:eq(1)').html(),
+                                //        quantity: $(this).find('td:eq(3)').html(),
+                                //        unitOfMeasure: $(this).find('td:eq(4)').html()
+                                //    });
+                                //});
+                                var myobj = {
+                                    RequestId: null,//button.attr("data-stationery-id"),
+                                    RequestedBy: null,
+                                    ApprovedBy: null,
+                                    DepartmentId: null,
+                                    Status: null,
+                                    Comment: value,
+                                    RequestDate: null,
+                                    CollectionDate: null
+                                }
+
+                                var data = JSON.stringify({
+                                    requests: myobj
                                 });
+
+                                $.when(editRequest(data)).then(function (response) {
+                                    console.log(response);
+                                }).fail(function (err) {
+                                    console.log(err);
+                                });
+                            });
+                    })
+
+                    //After Click Save Button Pass All Data View To Controller For Save Database
+                    function editRequest(data) {
+                        return $.ajax({
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            type: 'POST',
+                            url: "Edit",
+                            data: data,
+                            success: function (result) {
+                                alert(result);
+                                location.reload();
+                            },
+                            error: function () {
+                                alert("Error!");
                             }
                         });
-                });
-        })
-    </script>
-}
+                    }
+
+                    
+                    //Collect Multiple Order List For Pass To Controller
+                    $("#saveReject").click(function (e) {
+                        e.preventDefault();
+                       // rejectRequest();
+                        var requestArr = [];
+                      
+                        var value = $("#comment").val();
+
+                       // window.alert("para is :" + button.attr("data-stationery-id"));
+                        var myobj = {
+                            RequestId: attr,
+                            RequestedBy: null,
+                            ApprovedBy: null,
+                            DepartmentId: null,
+                            Status: null,
+                            Comment: value,
+                            RequestDate: null,
+                            CollectionDate: null
+                        }
+                      
+                        var data = JSON.stringify({
+                            requests: myobj
+                        });
+
+                        $.when(editRequest(data)).then(function (response) {
+                            console.log(response);
+                        }).fail(function (err) {
+                            console.log(err);
+                        });
+                    });
+
+
+                    var attr;
+                    ////////////////////////////////////////////
+
+                    $(document).ready(function () {
+                        $(".panel-title .js-reject").on("click",
+                            function () {
+                                var button = $(this);
+                               attr = button.attr("data-stationery-id");
+                               // window.alert(attr);
+                             $("#reason").modal();
+                               
+                            });
+                    })
+                </script>
+            }
 
