@@ -37,7 +37,7 @@ namespace Team7ADProject.Controllers
             List<RaiseRequestViewModel> viewResults = new List<RaiseRequestViewModel>();
 
             //if there are request today
-            if (stationeryRequests != null)
+            if (stationeryRequests.Count!=0)
             {
                 foreach (var currentStationeryRequest in stationeryRequests)
                 {
