@@ -46,15 +46,15 @@
     <input type="text" id="alttoDTP" disabled>
 </p>
 <div style="width:80%;">
-        <div id="ReportFilters" style="width:20%; height:100%; border:groove; float:right;">
-            <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post">
-                <p>Select period:</p>
-                <p><input type="text" name="fromDateTP" id="fromDateTP"></p>
-                <p><input type="text" name="toDateTP" id="toDateTP"></p>
-                <input type="submit" id="filterBtn" value="Filter" />
-            </form>
-</div>
-    
- <div id="charts">@Html.Partial("_Charts")</div>
+    <div id="ReportFilters" style="width:20%; height:100%; border:groove; float:right;">
+        <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post">
+            <p>Select period:</p>
+            <p><input type="text" name="fromDateTP" id="fromDateTP"></p>
+            <p><input type="text" name="toDateTP" id="toDateTP"></p>
+            <input type="submit" id="filterBtn" value="Filter" />
+        </form>
+    </div>
+
+    <div id="charts">@Html.Partial("_Charts")</div>
 
 </div>
