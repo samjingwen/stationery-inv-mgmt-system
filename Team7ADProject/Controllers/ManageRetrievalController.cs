@@ -140,7 +140,15 @@ namespace Team7ADProject.Controllers
             did = "DISB" + (Convert.ToInt32(disbursement.DisbursementId.Substring(4, 6)) + 1).ToString("000000");
             //dept id need to change
             dno = "D" + "FINC" + (Convert.ToInt32(disbursement.DisbursementNo.Substring(5, 5)) + 1).ToString("00000");
+            for (int i = 0; i < disbList.Count; i++)
+            {
 
+
+
+
+
+
+            }
 
 
 
