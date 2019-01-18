@@ -7,6 +7,7 @@ namespace Team7ADProject.ViewModels.PostponeCollectionDate
 {
     public class PostponeCollDateDetailsViewModel
     {
+        #region Author:Lynn Lynn Oo
         public string transactionID { get; set; }
         public string itemID { get; set; }
         public string itemName { get; set; }
@@ -14,5 +15,6 @@ namespace Team7ADProject.ViewModels.PostponeCollectionDate
         public string remarks { get; set; }
         public string transactionRef { get; set; }
         public DateTime Date { get; set; }
+        #endregion
     }
 }

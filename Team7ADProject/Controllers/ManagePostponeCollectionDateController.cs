@@ -7,7 +7,7 @@ using Team7ADProject.Entities;
 using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
-{
+{    //Author:Lynn Lynn Oo
     public class ManagePostponeCollectionDateController : Controller
     {
         #region Author:Lynn Lynn Oo
@@ -31,12 +31,21 @@ namespace Team7ADProject.Controllers
             foreach(StationeryRequest current in Stationeries)
             {
                 PostponeCollDateViewModel viewModeltwo = new PostponeCollDateViewModel();
+                viewModeltwo.RequestBy = current.AspNetUsers.EmployeeName;
                 viewModeltwo.RequestID = current.RequestId;
                 viewModeltwo.CollectionDate = (DateTime)current.CollectionDate;
                 viewModel.Add(viewModeltwo);
             }
                 return View(viewModel);
         }
+
+        //ManagePostponeCollectionDate/Details
+        public ActionResult Details(string id)
+        {
+            List<TransactionDetail> ItemsByID = _context.TransactionDetail.Where(x => x.TransactionRef == id).ToList();
+            return View(ItemsByID);
+        }
+        #endregion
     }
-    #endregion
+
 }
