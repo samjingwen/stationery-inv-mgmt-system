@@ -11,7 +11,7 @@
                 axisY: {valueFormatString: "#,###", prefix: "$"},
                 data: [{
                     type: "column",
-                    dataPoints: @Html.Raw(ViewBag.deptDataPoints)
+                    dataPoints: @Html.Raw(@ViewContext.Controller.ViewBag.deptDataPoints)
                 }]
             });
 
@@ -22,7 +22,7 @@
                 axisY: { valueFormatString: "#,###", prefix: "$" },
                 data: [{
                     type: "bar",
-                    dataPoints: @Html.Raw(ViewBag.statDataPoints)
+                    dataPoints: @Html.Raw(@ViewContext.Controller.ViewBag.statDataPoints)
                 }]
             });
 
@@ -33,7 +33,7 @@
                 },
                 data: [{
                     type: "line",
-                    dataPoints: @Html.Raw(ViewBag.timedataPoints)
+                    dataPoints: @Html.Raw(@ViewContext.Controller.ViewBag.timedataPoints)
                 }]
             });
 

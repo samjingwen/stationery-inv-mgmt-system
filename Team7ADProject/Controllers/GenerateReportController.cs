@@ -127,7 +127,7 @@ namespace Team7ADProject.Controllers
 
             #endregion
 
-            return PartialView("_Charts",ViewBag);
+            return PartialView("_Charts");
         }
 
 
