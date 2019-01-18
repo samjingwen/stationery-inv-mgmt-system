@@ -56,7 +56,7 @@
                             if (result) {
                                 $.ajax({
                                     url: "../api/stationeries/" + button.attr("data-stationery-id"),
-                                    method: "DELETE",
+                                    method: "PUT",
                                     success: function() {
                                         button.parents("tr").remove();
                                     }
