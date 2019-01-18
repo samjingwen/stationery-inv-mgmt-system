@@ -12,7 +12,7 @@ namespace Team7ADProject.Entities
         {
         }
 
-        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<CollectionPoint> CollectionPoint { get; set; }
         public virtual DbSet<DelegationOfAuthority> DelegationOfAuthority { get; set; }
@@ -34,10 +34,10 @@ namespace Team7ADProject.Entities
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AspNetRoles>()
-                .HasMany(e => e.AspNetUsers)
-                .WithMany(e => e.AspNetRoles)
-                .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.AspNetUserRoles)
+                .WithRequired(e => e.AspNetUsers)
+                .HasForeignKey(e => e.UserId);
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.DelegationOfAuthority)

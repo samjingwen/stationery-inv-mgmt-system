@@ -11,6 +11,7 @@ namespace Team7ADProject.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetUsers()
         {
+            AspNetUserRoles = new HashSet<AspNetUserRoles>();
             DelegationOfAuthority = new HashSet<DelegationOfAuthority>();
             DelegationOfAuthority1 = new HashSet<DelegationOfAuthority>();
             DeliveryOrder = new HashSet<DeliveryOrder>();
@@ -25,7 +26,6 @@ namespace Team7ADProject.Entities
             StationeryRetrieval = new HashSet<StationeryRetrieval>();
             StockAdjustment = new HashSet<StockAdjustment>();
             StockAdjustment1 = new HashSet<StockAdjustment>();
-            AspNetRoles = new HashSet<AspNetRoles>();
         }
 
         public string Id { get; set; }
@@ -62,6 +62,9 @@ namespace Team7ADProject.Entities
         [Required]
         [StringLength(4)]
         public string DepartmentId { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
 
         public virtual Department Department { get; set; }
 
@@ -106,8 +109,5 @@ namespace Team7ADProject.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockAdjustment> StockAdjustment1 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
     }
 }
