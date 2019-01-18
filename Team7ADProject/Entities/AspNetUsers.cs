@@ -25,7 +25,6 @@ namespace Team7ADProject.Entities
             StationeryRetrieval = new HashSet<StationeryRetrieval>();
             StockAdjustment = new HashSet<StockAdjustment>();
             StockAdjustment1 = new HashSet<StockAdjustment>();
-            AspNetRoles = new HashSet<AspNetRoles>();
         }
 
         public string Id { get; set; }
@@ -106,8 +105,5 @@ namespace Team7ADProject.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockAdjustment> StockAdjustment1 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Team7ADProject.ViewModels.GenerateReport
 {
@@ -12,9 +13,13 @@ namespace Team7ADProject.ViewModels.GenerateReport
 
     public class GenerateReportViewModel
     {
-        public List<StringDoubleDPViewModel> statdataPoints { get; set; }
-        public List<StringDoubleDPViewModel> timedataPoints { get; set; }
-        public List<StringDoubleDPViewModel> deptdataPoints { get; set; }
+        [Required]
+        public DateTime fDate { get; set; }
+        [Required]
+        public DateTime tDate { get; set; }
+
+        public string module { get; set; }
 
     }
+
 }
