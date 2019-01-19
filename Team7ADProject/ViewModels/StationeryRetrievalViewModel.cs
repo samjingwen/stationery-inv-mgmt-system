@@ -100,6 +100,12 @@ namespace Team7ADProject.ViewModels
         public List<BreakdownByItemViewModel> requestList { get; set; }
     }
 
+    public class RequestByIdViewModel
+    {
+        public string RequestId { get; set; }
+        public List<BreakdownByItemViewModel> ItemList { get; set; }
+    }
+
     public static class CreateDisbHelpers
     {
         public static String GetNewDisbId()
@@ -164,6 +170,25 @@ namespace Team7ADProject.ViewModels
             }
             return model;
         }
+
+        //public static List<RequestByIdViewModel> GetRequestByIdQuery()
+        //{
+        //    var model = GetRequestQuery();
+        //    var newList = new List<RequestByIdViewModel>();
+        //    foreach (var i in model)
+        //    {
+        //        var ele = newList.Where(x => x.RequestId == i.RequestId).FirstOrDefault();
+        //        if (ele != null)
+        //        {
+        //            var item = ele.ItemList.Where(x => x.ItemId == i.ItemId);
+
+        //        }
+        //    }
+
+
+
+        //}
+
     }
 
     
