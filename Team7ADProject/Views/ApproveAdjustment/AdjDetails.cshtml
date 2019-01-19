@@ -1,8 +1,10 @@
 ﻿@model Team7ADProject.ViewModels.AdjustmentDetailsViewModel
 @using Team7ADProject.Entities
 @{
-    ViewBag.Title = "Stock Adjustment Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "Stock Adjustment Details";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @using (Html.BeginForm("ApproveOrReject", "ApproveAdjustment"))
@@ -59,22 +61,34 @@
                             <td></td>
                             <td><strong>Total</strong></td>
                             <td><strong>$@amount</strong></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
-                @if (@Model.StockAdjustment.ApprovedBy == null)
-                {@Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "btn btn-primary", onclick = "ApproveAlert()" })
-                @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "btn btn-primary", onclick = "RejectAlert" })}
+                @{
+                    if ((@Model.StockAdjustment.ApprovedBy == null) && (amount <= 250) && (User.IsInRole("Store Supervisor")))
+                    {
+                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "btn btn-primary", onclick = "ApproveAlert()" })
+                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "btn btn-primary", onclick = "RejectAlert" })
+                    }
+
+                    if ((@Model.StockAdjustment.ApprovedBy == null) && (User.IsInRole("Store Manager")))
+                    {
+                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "btn btn-primary", onclick = "ApproveAlert()" })
+                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "btn btn-primary", onclick = "RejectAlert" })
+                    }
+                }
+
                 <br />
             </div>
         </div>
     </div>
     <script>
-        function ApproveAlert() {
-            alert("Approved Successfully")
-        }
-        function RejectAlert() {
-            alert("Rejected Successfully")
-        }
+            function ApproveAlert() {
+                alert("Approved Successfully")
+            }
+            function RejectAlert() {
+                alert("Rejected Successfully")
+            }
     </script>
 }
