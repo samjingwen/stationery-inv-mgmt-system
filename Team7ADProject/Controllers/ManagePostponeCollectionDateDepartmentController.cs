@@ -8,10 +8,13 @@ namespace Team7ADProject.Controllers
 {
     public class ManagePostponeCollectionDateDepartmentController : Controller
     {
+        #region Author:Lynn Lynn Oo
         // GET: ManagePostponeCollectionDateDepartment
         public ActionResult Index()
         {
+            
             return View();
         }
+        #endregion
     }
 }

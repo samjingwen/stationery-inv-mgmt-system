@@ -17,6 +17,7 @@ namespace Team7ADProject.Controllers
         {
             _context = new LogicDB();
         }
+        //Store's Postpone Collection Date 
         // GET: ManagePostponeCollectionDate
         public ActionResult Index()
         {
