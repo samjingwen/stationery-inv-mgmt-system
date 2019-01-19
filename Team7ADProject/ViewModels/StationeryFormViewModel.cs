@@ -50,30 +50,30 @@ namespace Team7ADProject.ViewModels
 
         [Required]
         [StringLength(4)]
-        [Display(Name = "#1 Supplier")]
+        [Display(Name = "First Supplier")]
         public string FirstSupplierId { get; set; }
 
         [Column(TypeName = "numeric")]
-        [Display(Name = "#1 Price")]
+        [Display(Name = "Price")]
         [Range(0.0, Double.MaxValue,ErrorMessage = "Please enter a valid price.")]
         public decimal FirstSuppPrice { get; set; }
 
         [Required]
         [StringLength(4)]
-        [Display(Name = "#2 Supplier")]
+        [Display(Name = "Second Supplier")]
         public string SecondSupplierId { get; set; }
 
         [Column(TypeName = "numeric")]
-        [Display(Name = "#2 Price")]
+        [Display(Name = "Price")]
         [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
         public decimal SecondSuppPrice { get; set; }
 
         [Required]
         [StringLength(4)]
-        [Display(Name = "#3 Supplier")]
+        [Display(Name = "Third Supplier")]
         public string ThirdSupplierId { get; set; }
 
-        [Display(Name = "#3 Price")]
+        [Display(Name = "Price")]
         [Column(TypeName = "numeric")]
         [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
         public decimal ThirdSuppPrice { get; set; }

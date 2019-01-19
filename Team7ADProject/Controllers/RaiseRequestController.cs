@@ -111,6 +111,7 @@ namespace Team7ADProject.Controllers
 
                     foreach (var item in requests)
                     {
+                        decimal itemPrice = _context.Stationery.Single(m => m.ItemId == item.Description).FirstSuppPrice;
                         TransactionDetail transactionDetailInDb = new TransactionDetail
                         {
                             TransactionId = GenerateTransactionDetailId(),
@@ -119,7 +120,7 @@ namespace Team7ADProject.Controllers
                             Remarks = "Pending Approval",
                             TransactionRef = newStationeryRequestId,
                             TransactionDate = DateTime.Today,
-                            UnitPrice = 1 //to be changed tomorrow
+                            UnitPrice = itemPrice
                         };
                         _context.TransactionDetail.Add(transactionDetailInDb);
                     }
