@@ -57,44 +57,44 @@ namespace Team7ADProject.Controllers
         {
             //Create new Retrieval
 
-            //string rid;
+            string rid;
             LogicDB context = new LogicDB();
-            //var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).FirstOrDefault();
-            //if (ret.Date.Year == DateTime.Now.Year)
-            //{
-            //    rid = "R" + DateTime.Now.Year.ToString() + "-" + (Convert.ToInt32(ret.RetrievalId.Substring(6, 4)) + 1).ToString("0000");
-            //}
-            //else
-            //{
-            //    rid = "R" + DateTime.Now.Year.ToString() + "-" + "0001";
-            //}
+            var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).FirstOrDefault();
+            if (ret.Date.Year == DateTime.Now.Year)
+            {
+                rid = "R" + DateTime.Now.Year.ToString() + "-" + (Convert.ToInt32(ret.RetrievalId.Substring(6, 4)) + 1).ToString("0000");
+            }
+            else
+            {
+                rid = "R" + DateTime.Now.Year.ToString() + "-" + "0001";
+            }
 
-            //StationeryRetrieval retrieval = new StationeryRetrieval();
-            //retrieval.RetrievalId = rid;
-            //retrieval.RetrievedBy = User.Identity.GetUserId();
-            //retrieval.Date = DateTime.Now;
+            StationeryRetrieval retrieval = new StationeryRetrieval();
+            retrieval.RetrievalId = rid;
+            retrieval.RetrievedBy = User.Identity.GetUserId();
+            retrieval.Date = DateTime.Now;
 
-            ////Save to database
-            //foreach (var sr in model)
-            //{
-            //    if (sr.requestList.Sum(x => x.RetrievedQty) > 0)
-            //    {
-            //        TransactionDetail detail = new TransactionDetail();
-            //        detail.ItemId = sr.ItemId;
-            //        detail.Quantity = sr.requestList.Sum(x => x.RetrievedQty);
-            //        detail.TransactionDate = DateTime.Now;
-            //        detail.Remarks = "Retrieved";
-            //        detail.TransactionRef = rid;
-            //        retrieval.TransactionDetail.Add(detail);
-            //    }
-            //    else
-            //    {
-            //        model.Remove(sr);
-            //    }
-            //}
+            //Save to database
+            foreach (var sr in model)
+            {
+                if (sr.requestList.Sum(x => x.RetrievedQty) > 0)
+                {
+                    TransactionDetail detail = new TransactionDetail();
+                    detail.ItemId = sr.ItemId;
+                    detail.Quantity = sr.requestList.Sum(x => x.RetrievedQty);
+                    detail.TransactionDate = DateTime.Now;
+                    detail.Remarks = "Retrieved";
+                    detail.TransactionRef = rid;
+                    retrieval.TransactionDetail.Add(detail);
+                }
+                else
+                {
+                    model.Remove(sr);
+                }
+            }
 
-            //context.StationeryRetrieval.Add(retrieval);
-            //context.SaveChanges();
+            context.StationeryRetrieval.Add(retrieval);
+            context.SaveChanges();
 
             //Generate Disbursement
 
