@@ -18,6 +18,8 @@ namespace Team7ADProject.ViewModels.GenerateReport
         [Required]
         public DateTime tDate { get; set; }
 
+        public string module { get; set; }
+
     }
 
 }

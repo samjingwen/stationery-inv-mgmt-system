@@ -23,6 +23,19 @@ namespace Team7ADProject.ViewModels
         public string Description { get; set; }
         public int Quantity { get; set; }
         public int RetrievedQty { get; set; }
+        public decimal UnitPrice
+        {
+            get
+            {
+                if (ItemId != null)
+                {
+                    LogicDB context = new LogicDB();
+                    return context.Stationery.Where(x => x.ItemId == ItemId).FirstOrDefault().FirstSuppPrice;
+                }
+                else
+                    return 0;
+            }
+        }
     }
 
     public class RequestByItemViewModel
@@ -104,6 +117,55 @@ namespace Team7ADProject.ViewModels
             string dno = "D" + DepartmentId + (Convert.ToInt32(disbursement.DisbursementNo.Substring(5, 5)) + 1).ToString("00000");
             return dno;
         }
+
+        public static List<RequestByReqIdView> GetRequestQuery()
+        {
+            LogicDB context = new LogicDB();
+            List<RequestByReqIdView> model = context.RequestByReqIdView.ToList();
+            var query = context.DisbByDept.ToList();
+            foreach(var i in query)
+            {
+                var reqt = model.Where(x => x.DepartmentId == i.DepartmentId && x.ItemId == i.ItemId).FirstOrDefault();
+                if (reqt != null)
+                {
+                    if (reqt.Quantity > i.Quantity)
+                    {
+                        reqt.Quantity = reqt.Quantity - (int)i.Quantity;
+                    }
+                    else if (reqt.Quantity == i.Quantity)
+                    {
+                        model.Remove(reqt);
+                    }
+                    else
+                    {
+                        i.Quantity -= reqt.Quantity;
+                        while (i.Quantity > 0)
+                        {
+                            model.Remove(reqt);
+                            reqt = model.Where(x => x.DepartmentId == i.DepartmentId && x.ItemId == i.ItemId).FirstOrDefault();
+                            if (reqt != null)
+                            {
+                                if (reqt.Quantity > i.Quantity)
+                                {
+                                    reqt.Quantity = reqt.Quantity - (int)i.Quantity;
+                                }
+                                else if (reqt.Quantity == i.Quantity)
+                                {
+                                    model.Remove(reqt);
+                                }
+                                else
+                                {
+                                    i.Quantity -= reqt.Quantity;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return model;
+        }
     }
+
+    
 
 }

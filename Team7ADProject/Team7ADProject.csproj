@@ -217,7 +217,6 @@
     <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\DelegateHeadController.cs" />
-    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\GenerateReportController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -248,6 +247,7 @@
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\DisbByDept.cs" />
     <Compile Include="Entities\Disbursement.cs" />
+    <Compile Include="Entities\Email.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\LogicDB.cs" />
     <Compile Include="Entities\PurchaseOrder.cs" />
@@ -281,6 +281,8 @@
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
     <Compile Include="ViewModels\InvoiceDetailsViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
+    <Compile Include="ViewModels\PostponeCollectionDate\PostponeCollDateDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PostponeCollectionDate\PostponeCollDateViewModel.cs" />
     <Compile Include="ViewModels\RaisePOViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
@@ -295,6 +297,7 @@
   <ItemGroup>
     <Content Include="App_Data\useremails.txt" />
     <Content Include="App_Data\usernames.txt" />
+    <Content Include="Content\accordion.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -435,7 +438,6 @@
     <Content Include="Views\DelegateHead\index.cshtml" />
     <Content Include="Views\History\Detail.cshtml" />
     <Content Include="Views\GenerateReport\GenerateDashboard.cshtml" />
-    <Content Include="Views\RequisitionHistory\Details.cshtml" />
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\GenerateDisbursement.cshtml" />
     <Content Include="Views\RaiseOrder\Index.cshtml" />
@@ -447,6 +449,7 @@
     <Content Include="Views\ApproveAdjustment\AdjDetails.cshtml" />
     <Content Include="Views\ManageRequest\Index.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
+    <Content Include="Views\ManagePostponeCollectionDate\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />

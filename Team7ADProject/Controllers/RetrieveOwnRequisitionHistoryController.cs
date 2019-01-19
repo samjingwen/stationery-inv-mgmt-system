@@ -10,7 +10,7 @@ using Team7ADProject.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using Team7ADProject.ViewModels;
-//Authors:Lynn Lynn Oo
+//Author:Lynn Lynn Oo
 namespace Team7ADProject.Controllers
 {
     //For employee/department rep can view their own requisition histories
