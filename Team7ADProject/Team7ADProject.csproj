@@ -283,8 +283,6 @@
     <Compile Include="ViewModels\InvoiceDetailsViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\PostponeCollectionDate%28Department%29\PostponeCollectionDateDepartmentViewModel.cs" />
-    <Compile Include="ViewModels\PostponeCollectionDate%28Store%29\PostponeCollDateDetailsViewModel.cs" />
-    <Compile Include="ViewModels\PostponeCollectionDate%28Store%29\PostponeCollDateViewModel.cs" />
     <Compile Include="ViewModels\RaisePOViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
@@ -456,6 +454,7 @@
     <Content Include="Views\ManagePostponeCollectionDateDepartment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ViewModels\PostponeCollectionDate%28Store%29\" />
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
