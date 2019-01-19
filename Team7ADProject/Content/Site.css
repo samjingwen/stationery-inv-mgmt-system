@@ -26,7 +26,19 @@ textarea {
     max-width: 280px;
 }
 
-img.logo {
+
+
+img.loginlogo {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    height:10%;
+    width: 28%;
+}
+
+
+
+img.sidelogo {
     width : 200px; 
     height : 150px; 
     background-color:#f1f1f1; 
@@ -34,6 +46,21 @@ img.logo {
     top: 50px;
     left: 0;
 }
+
+.logincontainer {
+    height: 300px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.loginsection {
+    margin: 0 auto;
+    float: none;
+}
+
+
 
 /* The side navigation menu */
 .sidebar {
