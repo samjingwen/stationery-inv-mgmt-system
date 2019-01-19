@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
 using Team7ADProject.ViewModels;
-using static System.Collections.Generic.Dictionary<TKey, TValue>;
 
 namespace Team7ADProject.Controllers
 {
@@ -21,7 +20,7 @@ namespace Team7ADProject.Controllers
             List<RequestByItemViewModel> model = new List<RequestByItemViewModel>();
             LogicDB context = new LogicDB();
             var query = context.RequestByItemView.OrderBy(x => x.ItemId).ToList();
-            foreach (var i in query)
+            foreach(var i in query)
             {
                 var item = model.Find(x => x.ItemId == i.ItemId);
                 var disb = context.DisbByDept.Where(x => x.ItemId == i.ItemId && x.DepartmentId == i.DepartmentId).FirstOrDefault();
@@ -58,40 +57,44 @@ namespace Team7ADProject.Controllers
         {
             //Create new Retrieval
 
-            //string rid;
+            string rid;
             LogicDB context = new LogicDB();
-            //var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).FirstOrDefault();
-            //if (ret.Date.Year == DateTime.Now.Year)
-            //{
-            //    rid = "R" + DateTime.Now.Year.ToString() + "-" + (Convert.ToInt32(ret.RetrievalId.Substring(6, 4)) + 1).ToString("0000");
-            //}
-            //else
-            //{
-            //    rid = "R" + DateTime.Now.Year.ToString() + "-" + "0001";
-            //}
+            var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).FirstOrDefault();
+            if (ret.Date.Year == DateTime.Now.Year)
+            {
+                rid = "R" + DateTime.Now.Year.ToString() + "-" + (Convert.ToInt32(ret.RetrievalId.Substring(6, 4)) + 1).ToString("0000");
+            }
+            else
+            {
+                rid = "R" + DateTime.Now.Year.ToString() + "-" + "0001";
+            }
 
-            //StationeryRetrieval retrieval = new StationeryRetrieval();
-            //retrieval.RetrievalId = rid;
-            //retrieval.RetrievedBy = User.Identity.GetUserId();
-            //retrieval.Date = DateTime.Now;
+            StationeryRetrieval retrieval = new StationeryRetrieval();
+            retrieval.RetrievalId = rid;
+            retrieval.RetrievedBy = User.Identity.GetUserId();
+            retrieval.Date = DateTime.Now;
 
-            ////Save to database
-            //foreach (var sr in model)
-            //{
-            //    if (sr.requestList.Sum(x => x.RetrievedQty) > 0)
-            //    {
-            //        TransactionDetail detail = new TransactionDetail();
-            //        detail.ItemId = sr.ItemId;
-            //        detail.Quantity = sr.requestList.Sum(x => x.RetrievedQty);
-            //        detail.TransactionDate = DateTime.Now;
-            //        detail.Remarks = "Retrieved";
-            //        detail.TransactionRef = rid;
-            //        retrieval.TransactionDetail.Add(detail);
-            //    }
-            //}
+            //Save to database
+            foreach (var sr in model)
+            {
+                if (sr.requestList.Sum(x => x.RetrievedQty) > 0)
+                {
+                    TransactionDetail detail = new TransactionDetail();
+                    detail.ItemId = sr.ItemId;
+                    detail.Quantity = sr.requestList.Sum(x => x.RetrievedQty);
+                    detail.TransactionDate = DateTime.Now;
+                    detail.Remarks = "Retrieved";
+                    detail.TransactionRef = rid;
+                    retrieval.TransactionDetail.Add(detail);
+                }
+                else
+                {
+                    model.Remove(sr);
+                }
+            }
 
-            //context.StationeryRetrieval.Add(retrieval);
-            //context.SaveChanges();
+            context.StationeryRetrieval.Add(retrieval);
+            context.SaveChanges();
 
             //Generate Disbursement
 
@@ -134,76 +137,193 @@ namespace Team7ADProject.Controllers
                 }
             }
 
-            List<DisbursementByDeptViewModel> modDisbList = new List<DisbursementByDeptViewModel>(disbList);
 
             //Create new disbursement
-            var query = context.RequestByReqIdView.OrderBy(x => x.RequestId).ToList();
 
-            IEnumerator<DisbursementByDeptViewModel> iter = modDisbList.GetEnumerator();
+            List<DisbursementByDeptViewModel> modDisbList = new List<DisbursementByDeptViewModel>(disbList);
 
-            for (int i = 0; i < query.Count; i++)
+            var query = CreateDisbHelpers.GetRequestQuery();
+
+            for(int i = 0; i < disbList.Count; i++)
             {
-                string currentReqId = query[i].RequestId;
-                string
-                var getDeptDisb = modDisbList.Where(x => x.DepartmentId == query[i].DepartmentId).FirstOrDefault();
-                var getItem = getDeptDisb.requestList.Where(x => x.ItemId == query[i].ItemId).FirstOrDefault();
-
-                Disbursement newDisb = new Disbursement();
-                newDisb.DisbursementId = CreateDisbHelpers.GetNewDisbId();
-                newDisb.DisbursementNo = CreateDisbHelpers.GetNewDisbNo(;
-                if (getItem.Quantity > query[i].Quantity)
+                string currentDeptId = disbList[i].DepartmentId;
+                string disbNo = CreateDisbHelpers.GetNewDisbNo(currentDeptId);
+                string OTP;
+                do
                 {
-                    Disbursement newDisb = new Disbursement();
-                    newDisb.DisbursementId = did;
-                    newDisb.DisbursementNo = dno;
-                    TransactionDetail newDetail = new TransactionDetail();
-                    newDetail.ItemId = getItem.ItemId;
+                    Random rand = new Random();
+                    OTP = rand.Next(10000).ToString("0000");
+                } while (context.Disbursement.Where(x => x.OTP == OTP).FirstOrDefault() != null);
+                
+                for(int j = 0; j < disbList[i].requestList.Count; j++)
+                {
+                    var currentItem = disbList[i].requestList[j];
+                    var reqt = query.OrderBy(x => x.RequestId)
+                                    .Where(x => x.DepartmentId == currentDeptId 
+                                    && x.ItemId == currentItem.ItemId).FirstOrDefault();
+                    if (reqt != null)
+                    {
+                        if (currentItem.RetrievedQty < reqt.Quantity)
+                        {
+                            Disbursement newDisb = new Disbursement();
+                            TransactionDetail newDetail = new TransactionDetail();
+                            newDisb.DisbursementId = CreateDisbHelpers.GetNewDisbId();
+                            newDisb.DisbursementNo = disbNo;
+                            newDisb.DepartmentId = currentDeptId;
+                            newDisb.DisbursedBy = User.Identity.GetUserId();
+                            newDisb.Date = DateTime.Now;
+                            newDisb.RequestId = reqt.RequestId;
+                            newDisb.Status = "In Transit";
+                            newDisb.OTP = OTP;
+                            newDetail.ItemId = currentItem.ItemId;
+                            newDetail.Quantity = currentItem.RetrievedQty;
+                            newDetail.TransactionRef = newDisb.DisbursementId;
+                            newDetail.TransactionDate = DateTime.Now;
+                            newDetail.UnitPrice = currentItem.UnitPrice;
+                            newDisb.TransactionDetail.Add(newDetail);
+                            var statReq = context.StationeryRequest.Where(x => x.RequestId == reqt.RequestId).FirstOrDefault();
+                            if (statReq != null)
+                            {
+                                statReq.Status = "Partially Fulfilled";
+                            }
+                            reqt.Quantity -= currentItem.RetrievedQty;
+                            context.Disbursement.Add(newDisb);
+                            context.SaveChanges();
+                        }
+                        else if (currentItem.RetrievedQty == reqt.Quantity)
+                        {
+                            Disbursement newDisb = new Disbursement();
+                            TransactionDetail newDetail = new TransactionDetail();
+                            newDisb.DisbursementId = CreateDisbHelpers.GetNewDisbId();
+                            newDisb.DisbursementNo = disbNo;
+                            newDisb.DepartmentId = currentDeptId;
+                            newDisb.DisbursedBy = User.Identity.GetUserId();
+                            newDisb.Date = DateTime.Now;
+                            newDisb.RequestId = reqt.RequestId;
+                            newDisb.Status = "In Transit";
+                            newDisb.OTP = OTP;
+                            newDetail.ItemId = currentItem.ItemId;
+                            newDetail.Quantity = currentItem.RetrievedQty;
+                            newDetail.TransactionRef = newDisb.DisbursementId;
+                            newDetail.TransactionDate = DateTime.Now;
+                            newDetail.UnitPrice = currentItem.UnitPrice;
+                            newDisb.TransactionDetail.Add(newDetail);
+                            var reqCheck = query.Where(x => x.RequestId == reqt.RequestId).ToList();
+                            if (reqCheck.Count > 1)
+                            {
+                                var statReq = context.StationeryRequest.Where(x => x.RequestId == reqt.RequestId).FirstOrDefault();
+                                if (statReq != null)
+                                {
+                                    statReq.Status = "Partially Fulfilled";
+                                }
+                            }
+                            else
+                            {
+                                var statReq = context.StationeryRequest.Where(x => x.RequestId == reqt.RequestId).FirstOrDefault();
+                                if (statReq != null)
+                                {
+                                    statReq.Status = "Completed";
+                                }
+                            }
+                            query.Remove(reqt);
+                            context.Disbursement.Add(newDisb);
+                            context.SaveChanges();
 
-                    getDeptDisb.requestList.Remove(getItem);
+
+
+                        }
+                        else
+                        {
+                            Disbursement newDisb = new Disbursement();
+                            TransactionDetail newDetail = new TransactionDetail();
+                            newDisb.DisbursementId = CreateDisbHelpers.GetNewDisbId();
+                            newDisb.DisbursementNo = disbNo;
+                            newDisb.DepartmentId = currentDeptId;
+                            newDisb.DisbursedBy = User.Identity.GetUserId();
+                            newDisb.Date = DateTime.Now;
+                            newDisb.RequestId = reqt.RequestId;
+                            newDisb.Status = "In Transit";
+                            newDisb.OTP = OTP;
+                            newDetail.ItemId = currentItem.ItemId;
+                            newDetail.Quantity = reqt.Quantity;
+                            newDetail.TransactionRef = newDisb.DisbursementId;
+                            newDetail.TransactionDate = DateTime.Now;
+                            newDetail.UnitPrice = currentItem.UnitPrice;
+                            newDisb.TransactionDetail.Add(newDetail);
+                            context.Disbursement.Add(newDisb);
+                            context.SaveChanges();
+                            currentItem.RetrievedQty -= reqt.Quantity;
+                            query.Remove(reqt);
+                            while (currentItem.RetrievedQty > 0)
+                            {
+                                reqt = query.OrderBy(x => x.RequestId)
+                                            .Where(x => x.DepartmentId == currentDeptId
+                                            && x.ItemId == currentItem.ItemId).FirstOrDefault();
+                                if (reqt != null)
+                                {
+                                    newDisb = new Disbursement();
+                                    newDetail = new TransactionDetail();
+                                    newDisb.DisbursementId = CreateDisbHelpers.GetNewDisbId();
+                                    newDisb.DisbursementNo = disbNo;
+                                    newDisb.DepartmentId = currentDeptId;
+                                    newDisb.DisbursedBy = User.Identity.GetUserId();
+                                    newDisb.Date = DateTime.Now;
+                                    newDisb.RequestId = reqt.RequestId;
+                                    newDisb.Status = "In Transit";
+                                    newDisb.OTP = OTP;
+                                    newDetail.ItemId = currentItem.ItemId;
+                                    newDetail.Quantity = currentItem.RetrievedQty > reqt.Quantity ? reqt.Quantity : currentItem.RetrievedQty;
+                                    newDetail.TransactionRef = newDisb.DisbursementId;
+                                    newDetail.TransactionDate = DateTime.Now;
+                                    newDetail.UnitPrice = currentItem.UnitPrice;
+                                    newDisb.TransactionDetail.Add(newDetail);
+                                    context.Disbursement.Add(newDisb);
+                                    context.SaveChanges();
+                                    if (currentItem.RetrievedQty < reqt.Quantity)
+                                    {
+                                        reqt.Quantity -= currentItem.RetrievedQty;
+                                        break;
+                                    }
+                                    currentItem.RetrievedQty -= reqt.Quantity;
+
+                                }
+                                else
+                                {
+                                    throw new Exception("Something went wrong");
+                                }
+
+
+
+                            }
+                        }
+
+
+
+
+
+
+
+
+
+                    }
+
+
+
+
 
                 }
-                else
-                {
-                    getItem.Quantity -= query[i].Quantity;
-
-
-
-                }
-                query[0].DepartmentId
 
 
 
             }
 
-
-
-            for (int i = 0; i < disbList.Count; i++)
-            {
-
-
-                Disbursement newDisb = new Disbursement();
-                newDisb.DisbursementId = did;
-                newDisb.DisbursementNo = dno;
-                newDisb.DepartmentId = deptId;
-                bool isCompleted = true;
-
-
-
-
-
-
-
-
-
-
-            }
 
 
 
 
             return View(disbList);
         }
-
+        
 
 
     }

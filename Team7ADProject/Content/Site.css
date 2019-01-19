@@ -28,13 +28,47 @@ textarea {
 
 
 
+img.loginlogo {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    height:10%;
+    width: 28%;
+}
+
+
+
+img.sidelogo {
+    width : 200px; 
+    height : 150px; 
+    background-color:#f1f1f1; 
+    position: fixed;
+    top: 50px;
+    left: 0;
+}
+
+.logincontainer {
+    height: 300px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.loginsection {
+    margin: 0 auto;
+    float: none;
+}
+
+
+
 /* The side navigation menu */
 .sidebar {
     margin: 0;
-    padding: 0;
     width: 200px;
     background-color: #f1f1f1;
     position: fixed;
+    top:200px;
     height: 100%;
     overflow: auto;
 }
@@ -100,11 +134,7 @@ td {
 
 /*ViewPORecord:To show different status of PO*/
 
-    body
 
-{
-    padding: 50px;
-}
 
 .animate {
     transition: all 0.1s;
