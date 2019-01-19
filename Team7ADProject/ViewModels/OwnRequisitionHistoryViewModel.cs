@@ -9,7 +9,9 @@ namespace Team7ADProject.ViewModels
     
     public class OwnRequisitionHistoryViewModel
     {
-        #region Author:Lynn Lynn Oo
+        #region Author:Lynn Lynn Oo||Teh Li Heng
+        public string RequestId { get; set; }
+        public string ItemId { get; set; }
         public string ItemDescription { get; set; }
         public int ItemQuantity { get; set; }
         public string UnitOfMeasure { get; set; }

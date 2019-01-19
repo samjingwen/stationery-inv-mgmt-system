@@ -9,7 +9,9 @@ using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
-    
+    //Author: Teh Li Heng 17/1/2019
+    //Raise new requests into a list of editable object and save all at once (implemented js and ajax)
+
     public class RaiseRequestController : Controller
     {
         #region Teh Li Heng
@@ -75,6 +77,8 @@ namespace Team7ADProject.Controllers
             for (int i = 0; i < requests.Length; i++)
             {
                 validQuantity = requests[i].Quantity > 0;
+                if (validQuantity != true)
+                    break;
             }
             if (!validQuantity)
             {

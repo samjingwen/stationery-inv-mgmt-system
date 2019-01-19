@@ -247,7 +247,9 @@
     </div>*@
 
 @section scripts
-              {
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    
     <script>
         var $dropdown1 = $("select[name='category']");
         var $dropdown2 = $("select[name='description']");
