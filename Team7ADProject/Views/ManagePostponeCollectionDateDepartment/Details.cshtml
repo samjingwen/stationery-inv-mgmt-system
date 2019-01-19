@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Team7ADProject.Entities.TransactionDetail>
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<center><h2><b>Details</b></h2></center>
+
+@*Author:Lynn Lynn Oo*@
+@* Design *@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 80%;
+    }
+
+    td, th {
+        border: 1px solid #000000;
+        text-align: center;
+        padding: 10px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #5b94d1;
+    }
+</style>
+@*Design*@
+
+
+<table border="1" width="50" class="table breadcrumb table-bordered table-striped table-hover">
+    <col style="width:8%">
+    <col style="width:10%">
+    <col style="width:10%">
+    <col style="width:8%">
+    <col style="width:10%">
+    <col style="width:10%">
+    <tr>
+        <th>No.</th>
+        <th>Item Name</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Unit of Measure</th>
+        <th>Transaction Date</th>
+    </tr>
+
+
+
+    @{ int i = 1;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @(i++)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stationery.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stationery.Category)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stationery.UnitOfMeasure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionDate)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -10,6 +10,7 @@ namespace Team7ADProject.ViewModels
     {
         #region Author:Lynn Lynn Oo
         public string RequestBy { get; set; }
+        public string DepartmentID { get; set; }
         public string RequestID { get; set; }
         public DateTime CollectionDate { get; set; }
 

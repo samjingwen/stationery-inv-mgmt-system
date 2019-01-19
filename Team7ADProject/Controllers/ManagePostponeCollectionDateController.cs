@@ -33,6 +33,7 @@ namespace Team7ADProject.Controllers
             {
                 PostponeCollDateViewModel viewModeltwo = new PostponeCollDateViewModel();
                 viewModeltwo.RequestBy = current.AspNetUsers.EmployeeName;
+                viewModeltwo.DepartmentID = current.DepartmentId;
                 viewModeltwo.RequestID = current.RequestId;
                 viewModeltwo.CollectionDate = (DateTime)current.CollectionDate;
                 viewModel.Add(viewModeltwo);

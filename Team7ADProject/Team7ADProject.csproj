@@ -454,6 +454,7 @@
     <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDate\Details.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDateDepartment\Index.cshtml" />
+    <Content Include="Views\ManagePostponeCollectionDateDepartment\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
