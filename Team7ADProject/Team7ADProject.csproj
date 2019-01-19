@@ -295,6 +295,7 @@
     <Compile Include="ViewModels\StationeryRetrievalViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\logo.png" />
     <Content Include="App_Data\useremails.txt" />
     <Content Include="App_Data\usernames.txt" />
     <Content Include="Content\accordion.css" />
