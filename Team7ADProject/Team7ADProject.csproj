@@ -223,6 +223,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagePointController.cs" />
     <Compile Include="Controllers\ManagePostponeCollectionDateController.cs" />
+    <Compile Include="Controllers\ManagePostponeCollectionDateDepartmentController.cs" />
     <Compile Include="Controllers\ManageRepController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
     <Compile Include="Controllers\ManageRetrievalController.cs" />
@@ -281,8 +282,9 @@
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
     <Compile Include="ViewModels\InvoiceDetailsViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
-    <Compile Include="ViewModels\PostponeCollectionDate\PostponeCollDateDetailsViewModel.cs" />
-    <Compile Include="ViewModels\PostponeCollectionDate\PostponeCollDateViewModel.cs" />
+    <Compile Include="ViewModels\PostponeCollectionDate%28Department%29\PostponeCollectionDateDepartmentViewModel.cs" />
+    <Compile Include="ViewModels\PostponeCollectionDate%28Store%29\PostponeCollDateDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PostponeCollectionDate%28Store%29\PostponeCollDateViewModel.cs" />
     <Compile Include="ViewModels\RaisePOViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
@@ -451,12 +453,14 @@
     <Content Include="Views\ManageRequest\Index.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDate\Details.cshtml" />
+    <Content Include="Views\ManagePostponeCollectionDateDepartment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
+    <Folder Include="Views\PostponeCollectionDateDepartment\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
     <Folder Include="Views\ReturnWarehouse\" />
