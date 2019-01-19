@@ -247,7 +247,9 @@
     </div>*@
 
 @section scripts
-              {
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    
     <script>
         var $dropdown1 = $("select[name='category']");
         var $dropdown2 = $("select[name='description']");
@@ -385,11 +387,16 @@
                 url: "Save",
                 data: data,
                 success: function (result) {
-                    alert(result);
-                    location.reload();
+                    bootbox.dialog({
+                        message: result,
+                        size: 'small',
+                        onEscape: function () {
+                            location.reload();
+                        }
+                    });
                 },
                 error: function () {
-                    alert("Error! Invalid items in list.");
+                    bootbox.alert("Error! Invalid items in list.");
                 }
             });
         }

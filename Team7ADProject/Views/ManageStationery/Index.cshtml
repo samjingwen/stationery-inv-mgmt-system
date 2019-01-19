@@ -45,19 +45,21 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/jqueryval")
+
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#station .js-delete").on("click",
-                function() {
+                function () {
                     var button = $(this);
 
                     bootbox.confirm("Are you sure you want to delete this stationery?",
-                        function(result) {
+                        function (result) {
                             if (result) {
                                 $.ajax({
                                     url: "../api/stationeries/" + button.attr("data-stationery-id"),
                                     method: "PUT",
-                                    success: function() {
+                                    success: function () {
                                         button.parents("tr").remove();
                                     }
                                 });
