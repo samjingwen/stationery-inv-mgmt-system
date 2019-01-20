@@ -1,0 +1,307 @@
+﻿@model Team7ADProject.ViewModels.RaisePOViewModel
+@*@model Team7ADProject.ViewModels.RaisePOCustomViewModel*@
+
+@{
+    /**/
+
+    ViewBag.Title = "Raise PO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <h2 class="panel-title pull-left" style="margin-left:10px;">
+                <strong>Raise Purchase Order</strong> <br /><br />
+                <strong>PO Number : @ViewBag.PoNo</strong>
+            </h2>
+        </div>
+    </div>
+</div>
+
+<form id="NewPurchaseOrderForm">
+
+    <table>
+        <tr>
+            <td width="9%">Category</td>
+            <td width="40%">
+                @*@Html.DropDownListFor(model => model.Category, new SelectList(Model.Categories, "Category"), "Select Category", new { @class = "form-control", name = "Category" })*@
+                @*@Html.DropDownListFor(model => model.Category, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "Category", id = "Category" })*@
+
+                <select class="form-control" name="category" id="category"></select>
+            </td>
+            <td></td>
+            <td width="9%">Price</td>
+            <td width="30%">
+                @*@Html.EditorFor(model => model.SupplierPrice, new { htmlAttributes = new { @class = "form-control", @min = 0, id = "unitprice" } })*@
+                <input type="text" id="unitprice" class="form-control" name="unitprice">
+            </td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>Item</td>
+            <td>
+                @*@Html.DropDownListFor(model => model.Description, new SelectList("", "ItemId", "Description"), "Select Item", new { @class = "form-control", name = "Description" })*@
+                @*@Html.DropDownListFor(model => model.Description, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "Description" })*@
+
+                <select class="form-control table2" name="description" id="description"></select>
+            </td>
+            <td></td>
+            <td>Quantity</td>
+            <td>
+                <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="1" />
+
+                @*@Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @min = 0, id = "Quantity" } })*@
+                @*@Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })*@
+            </td>
+            <td>
+                @*@Html.EditorFor(model => model.UnitOfMeasure, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", id = "uom" } })*@
+
+                <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
+            </td>
+        </tr>
+
+        <tr>
+            <td>Supplier</td>
+            <td>
+                @*@Html.DropDownListFor(model => model.SupplierName, new SelectList("", "SupplierId", "SupplierName"), "Select Supplier", new { @class = "form-control", name = "SupplierName" })*@
+                @*@Html.DropDownListFor(model => model.SupplierName, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "SupplierName" })*@
+
+                <select class="form-control" name="suppliername" id="suppliername"></select>
+
+            </td>
+            <td></td>
+            <td></td>
+            <td><a id="addToList" class="btn btn-primary">Add To List</a> </td>
+
+        </tr>
+    </table>
+
+    <div>
+        <table id="detailsTable" class="table">
+            <thead>
+                <tr>
+                    <th style="width:20%">Product</th>
+                    <th style="width:20%">Supplier</th>
+                    <th style="width:15%">Quantity</th>
+                    <th style="width:15%">Amount</th>
+                    <th style="width:10%"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="reset" class="btn btn-default" data-dismiss="modal">Reset</button>
+        <button id="saveOrder" type="submit" class="btn btn-danger">Save Order</button>
+    </div>
+
+</form>
+
+
+@section scripts
+{
+    <script>
+
+        var $dropdown1 = $("select[name='category']");
+        var $dropdown2 = $("select[name='description']");
+        var $dropdown3 = $("select[name='suppliername']");
+        var $textboxquantity = $("select[name='quantity']");
+        var $priceInput = $("input[name='unitprice']");
+        loadItem();
+
+        function loadItem() {
+            $dropdown1.empty();
+            $dropdown2.empty();
+            $dropdown3.empty();
+            $dropdown1.append('<option>Select Category</option>');
+            $dropdown2.append('<option>Select Item</option>');
+            $dropdown3.append('<option>Select Supplier</option>');
+            $dropdown1.prop('selectedIndex', 0);
+            $dropdown2.prop('selectedIndex', 0);
+            $dropdown3.prop('selectedIndex', 0);
+
+            $.ajax({
+                url: '../api/stationeries/categories/',
+                type: 'GET',
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown1.append($('<option>').text(value).attr('value', value));
+                    });
+                }
+            });
+        }
+        //Load 2nd list
+        $dropdown1.change(function () {
+            $dropdown2.empty();
+            $dropdown2.append('<option>Select Item</option>');
+            $.ajax({
+                url: '../api/stationeries/categories/' + $dropdown1.val(),
+                type: 'GET',
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
+                    });
+                }
+            });
+        });
+
+        //Load suppliers and price
+        $dropdown2.change(function () {
+            $dropdown3.empty();
+            $dropdown3.append('<option>Select Supplier</option>');
+            $.ajax({
+                url: '../api/stationeries/categories/items/' + $dropdown2.val(),
+                type: 'GET',
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown3.append('<option data-price="' + value.Price + '" value="' + value.Id + '">' + value.Supplier + " (S$ " + value.Price + ")" + '</option>');
+                    });
+                }
+            });
+        });
+
+        //Load unit of measure
+        $dropdown2.change(function () {
+            $.ajax({
+                url: '../api/stationeries/item/' + $dropdown2.val(),
+                type: 'GET',
+                dataType: 'json',
+                success: function (json) {
+                    $("#uom").val(json);
+                }
+            });
+        });
+
+        // Load price in unit price box
+        $dropdown3.change(function () {
+            var selectedOption = $dropdown3.find(':selected');
+            if (selectedOption.length) {
+                var price = selectedOption.data('price');
+                $priceInput.val(price);
+            }
+        });
+
+
+        //add item to the detailsTable
+
+        $("#addToList").click(function (e) {
+            e.preventDefault();
+
+            if ($.trim($("#unitprice").val()) == "" || $.trim($("#quantity").val()) == "" ||
+                $.trim($("#category").val()) == "Select Category" || $.trim($dropdown2.val()) == "Select Item" ||
+                $.trim($dropdown3.val()) == "Select Supplier" || $.trim($dropdown3.val()) == "") return;
+
+            var category = $("#category").val(),
+                description = $("#description").val(),
+                supplier = $("#suppliername").val(),
+                price = $("#unitprice").val(),
+                quantity = $("#quantity").val(),
+                itemname = $("#description option:selected").text(),
+                suppliername = $("#suppliername option:selected").text(),
+                amount = (parseFloat(price) * parseInt(quantity)).toFixed(2),
+                detailsTableBody = $("#detailsTable tbody");
+
+            var productItem = '<tr><td style="display: none;">' + description + '</td><td>' + itemname + '</td><td style="display: none;">' + supplier + '</td><td>' + suppliername +
+                '</td><td style="display: none;">' + price + '</td><td>' + quantity + '</td><td>' + amount + " SGD"+
+                '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+            detailsTableBody.append(productItem);
+            clearItem();
+        });
+
+        //Reset
+        function clearItem() {
+
+            $dropdown1.empty();
+            $dropdown2.empty();
+            $dropdown3.empty();
+            $('#quantity').val('1');
+            $dropdown1.append('<option>Select Category</option>');
+            $dropdown2.append('<option>Select Item</option>');
+            $dropdown2.append('<option>Select Supplier</option>');
+            $dropdown1.prop('selectedIndex', 0);
+            $dropdown2.prop('selectedIndex', 0);
+            $dropdown3.prop('selectedIndex', 0)
+            $.ajax({
+                url: '../api/stationeries/categories/',
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown1.append($('<option>').text(value).attr('value', value));
+                        //$('#myselect').append($('<option>').text(value).attr('value', value));
+                    });
+                }
+            });
+        }
+
+        // Remove an item from the table
+        $(document).on('click', 'a.deleteItem', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-itemId') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+
+        // Pass data to controller
+        function saveOrder(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "Save",
+                data: data,
+                success: function (result) {
+                    alert(result);
+                    location.reload();
+                },
+                error: function () {
+                    bootbox.alert("Error! Please check the items!");
+                }
+            });
+        }
+
+        $("#saveOrder").click(function (e) {
+            e.preventDefault();
+
+            var orderArr = [];
+            orderArr.length = 0;
+
+            $.each($("#detailsTable tbody tr"), function () {
+                orderArr.push({
+                    description: $(this).find('td:eq(0)').html(),
+                    itemname: $(this).find('td:eq(1)').html(),
+                    supplier: $(this).find('td:eq(2)').html(),
+                    suppliername: $(this).find('td:eq(3)').html(),
+                    price: $(this).find('td:eq(4)').html(),
+                    quantity: $(this).find('td:eq(5)').html(),
+                    amount: $(this).find('td:eq(6)').html()
+                });
+            });
+
+
+            var data = JSON.stringify({
+                //name: $("#name").val(),
+                //address: $("#address").val(),
+                poModel: orderArr
+            });
+
+            $.when(saveOrder(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+
+    </script>
+}
+
