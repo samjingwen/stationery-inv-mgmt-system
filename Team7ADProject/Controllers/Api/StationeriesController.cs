@@ -57,13 +57,13 @@ namespace Team7ADProject.Controllers.Api
                 return NotFound();
             }
 
-            List<String> collections = new List<String>();
-            foreach (string current in categories)
-            {
-                collections.Add(current);
-            }
+            //List<String> collections = new List<String>();
+            //foreach (string current in categories)
+            //{
+            //    collections.Add(current);
+            //}
 
-            return Ok(collections);
+            return Ok(categories);
             //List<String> collections = new List<String>();
             //foreach (string current in categories)
             //{

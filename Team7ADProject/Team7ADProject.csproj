@@ -224,7 +224,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagePointController.cs" />
     <Compile Include="Controllers\ManageRepController.cs" />
-    <Compile Include="Controllers\ManageRequestController.cs" />
     <Compile Include="Controllers\ManageRetrievalController.cs" />
     <Compile Include="Controllers\ManageStationeryController.cs" />
     <Compile Include="Controllers\ManageSupplierController.cs" />
@@ -284,8 +283,6 @@
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestWrapperViewModel.cs" />
-    <Compile Include="ViewModels\RequestedItemViewModel.cs" />
-    <Compile Include="ViewModels\StationeryDisbursementViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
