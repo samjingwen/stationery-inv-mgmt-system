@@ -25,6 +25,20 @@ select,
 textarea {
     max-width: 280px;
 }
+/*Sam Jing Wen Start*/
+
+ul.nav.nav-tabs {
+    margin: 10px 0px;
+}
+
+    ul.nav.nav-tabs li:not(.active) a {
+        background-color: #eeeeee;
+        color: grey;
+    }
+
+    ul.nav.nav-tabs li.active a {
+        border-top: 3px solid #16a765;
+    }
 
 img.cpimg {
     position: relative;
@@ -132,6 +146,8 @@ img.sidelogo {
     }
 }
 
+/*Sam Jing Wen End*/
+
 .field-validation-error {
     color: red;
 }
@@ -143,6 +159,8 @@ img.sidelogo {
 td {
     line-height: 40px;
 }
+
+
 
 /*ViewPORecord:To show different status of PO*/
 

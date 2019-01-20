@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -23,30 +24,51 @@ namespace Team7ADProject.Controllers
         // GET: ManagePoint
         public ActionResult Index()
         {
-            return View(db.CollectionPoint.ToList());
-        }
-
-        // GET: ManagePoint/Create
-        public ActionResult Create()
-        {
             return View();
         }
 
+        public ActionResult ViewAll()
+        {
+            return View(db.CollectionPoint.ToList());
+        }
+
+        public ActionResult AddOrEdit(int id = 0)
+        {
+            ManagePointViewModel model = new ManagePointViewModel();
+            return View(model);
+        }
+
+        
         // POST: ManagePoint/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CollectionPointId,CollectionDescription,Time")] CollectionPoint collectionPoint)
+        public ActionResult AddOrEdit(ManagePointViewModel collectionPoint)
         {
-            if (ModelState.IsValid)
+            CollectionPoint cp = new CollectionPoint();
+            if (collectionPoint.ImageUpload != null)
             {
-                db.CollectionPoint.Add(collectionPoint);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                string fileName = Path.GetFileNameWithoutExtension(collectionPoint.ImageUpload.FileName);
+                string extension = Path.GetExtension(collectionPoint.ImageUpload.FileName);
+                fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                string date = DateTime.Now.ToString("yyyy/M/dd ");
+                cp = new CollectionPoint()
+                {
+                    CollectionPointId = collectionPoint.CollectionPointId,
+                    CollectionDescription = collectionPoint.CollectionDescription,
+                    CPImagePath = "/Content/images/CollPoint/" + fileName,
+                    Time = DateTime.ParseExact(date + collectionPoint.Time, "yyyy/M/dd hh:mm tt", null)
+                };
+                collectionPoint.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/CollPoint/"), fileName));
             }
 
-            return View(collectionPoint);
+
+            db.CollectionPoint.Add(cp);
+            db.SaveChanges();
+
+
+            return RedirectToAction("ViewAll");
         }
 
         // GET: ManagePoint/Edit/5

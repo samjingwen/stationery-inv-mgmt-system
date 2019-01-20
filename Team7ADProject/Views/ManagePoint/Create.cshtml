@@ -5,35 +5,56 @@
 }
 
 <h2>Create</h2>
-
-@using (Html.BeginForm())
+<h4>CollectionPoint</h4>
+<hr />
+@using (Html.BeginForm("Create", "ManagePoint", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return jQueryAjaxPost(this);" }))
 {
-    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-5">
+            @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>CollectionPoint</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.CollectionDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CollectionDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CollectionDescription, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CollectionDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CollectionDescription, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CollectionDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "timepicker form-control" } })
+                        @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="col-md-7">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CPImagePath, htmlAttributes: new { @class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    <img src="@Url.Content(Model.CPImagePath)" style="margin:10px" id="imagePreview" height="400" width="500"/>
+                    <input type="file" name="ImageUpload" accept="image/jpeg, image/png" onchange="ShowImagePreview(this, document.getElementById('imagePreview'))" />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "timepicker form-control" } })
-                @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+
+
+                </div>
+
             </div>
+
+
+
         </div>
     </div>
 }
@@ -46,6 +67,46 @@
 @section scripts{
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <script>
+        function ShowImagePreview(imageUploader, previewImage) {
+            if (imageUploader.files && imageUploader.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(previewImage).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(imageUploader.files[0]);
+            }
+        }
+
+        function jQueryAjaxPost(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                var ajaxConfig = {
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    success: function (response) {
+                        if (response.success) {
+                            $("#firstTab").html(response.html);
+                            refreshAddNewTab($(form).attr('data-restUrl'), true);
+                            $.notify(response.message, "success");
+                            if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable))
+                                activatejQueryTable();
+                        }
+                        else {
+                            $.notify(response.message, "error");
+                        }
+                    }
+                }
+                if ($(form).attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false;
+                    ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+
+            }
+            return false;
+        }
+
         $(document).ready(function () {
             $('.timepicker').timepicker({
                 timeFormat: 'h:mm p',
@@ -57,7 +118,13 @@
                 dropdown: true,
                 scrollbar: true
             });
+
+            
+
         });
+
+        
+        
 
     </script>
 }
