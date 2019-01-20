@@ -28,7 +28,10 @@ namespace Team7ADProject.Controllers
                 statcategory = new List<string>(),
                 entcategory = new List<string>(),
                 selectentcategory = new List<string>(),
-                selectstatcategory = new List<string>()
+                selectstatcategory = new List<string>(),
+                stattimeDP = new ChartViewModel("Breakdown by Stationery over Time"),
+                statDP = new ChartViewModel("Breakdown by Stationery Category"),
+                deptDP = new ChartViewModel("Breakdown by Entity")
 
             };
             var slist = context.Stationery.GroupBy(x => x.Category).Select(y => y.Key);
@@ -46,7 +49,6 @@ namespace Team7ADProject.Controllers
             grvm.selectentcategory = grvm.entcategory;
 
             #region Disbursement by DeptID
-            List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
 
             var gendeptRpt = context.TransactionDetail.Where(x=> x.Disbursement.AcknowledgedBy != null).
                 GroupBy(x => new { x.Disbursement.DepartmentId }).
@@ -54,32 +56,25 @@ namespace Team7ADProject.Controllers
 
             foreach (var i in gendeptRpt)
             {
-                deptdataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
             }
-
-            ViewBag.deptDataPoints = JsonConvert.SerializeObject(deptdataPoints);
+            
             #endregion
 
             #region Disbursement by Stationery Category
-
-            List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
-
+            
             var genstatRpt = context.TransactionDetail.Where(x => x.Disbursement.AcknowledgedBy != null).
                     GroupBy(y => new { y.Stationery.Category }).
                     Select(z => new { itemCat = z.Key.Category, totalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
             foreach (var i in genstatRpt)
             {
-                statdataPoints.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
             }
-
-            ViewBag.statDataPoints = JsonConvert.SerializeObject(statdataPoints);
-
+            
             #endregion
 
             #region Disbursements over time
-
-            List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
 
             var timeRpt = context.TransactionDetail.Where(x => x.Disbursement.AcknowledgedBy != null).
                 OrderBy(x => x.TransactionDate).
@@ -89,10 +84,9 @@ namespace Team7ADProject.Controllers
 
             foreach (var i in timeRpt)
             {
-                timedataPoints.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
             }
-
-            ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
+            
             #endregion
 
             return View(grvm);
@@ -114,7 +108,10 @@ namespace Team7ADProject.Controllers
                 statcategory = new List<string>(),
                 entcategory = new List<string>(),
                 selectentcategory = new List<string>(),
-                selectstatcategory = new List<string>()
+                selectstatcategory = new List<string>(),
+                stattimeDP = new ChartViewModel("Breakdown by Stationery over Time"),
+                statDP = new ChartViewModel("Breakdown by Stationery Category"),
+                deptDP = new ChartViewModel("Breakdown by Entity")
 
             };
             var slist = context.Stationery.GroupBy(x => x.Category).Select(y => y.Key);
@@ -161,8 +158,6 @@ namespace Team7ADProject.Controllers
 
                 #region Disbursement by DeptId
                 
-                List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
-
                         var gendeptRpt = context.TransactionDetail.
                             Where(x => x.Disbursement.AcknowledgedBy != null && 
                             grvm.selectstatcategory.Any(id=>id==x.Stationery.Category) && 
@@ -173,16 +168,13 @@ namespace Team7ADProject.Controllers
 
                         foreach (var i in gendeptRpt)
                         {
-                            deptdataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                            grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
                         }
 
-                ViewBag.deptDataPoints = JsonConvert.SerializeObject(deptdataPoints);
                 #endregion
 
                 #region Disbursement by Stationery Category
-
-                List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
-
+                        
                         var genstatRpt = context.TransactionDetail.
                             Where(x => x.Disbursement.AcknowledgedBy != null &&
                             grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
@@ -193,16 +185,12 @@ namespace Team7ADProject.Controllers
 
                         foreach (var i in genstatRpt)
                         {
-                            statdataPoints.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                            grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
                         }
-
-                ViewBag.statDataPoints = JsonConvert.SerializeObject(statdataPoints);
-
+                        
                 #endregion
 
                 #region Disbursements over time
-
-                List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
 
                         var timeRpt = context.TransactionDetail.Where(x => x.Disbursement.AcknowledgedBy != null &&
                             grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
@@ -214,18 +202,16 @@ namespace Team7ADProject.Controllers
 
                         foreach (var i in timeRpt)
                         {
-                            timedataPoints.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                            grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
                         }
-
-                ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
-
+                        
                 #endregion
             }
 
             if (module == "Requests")
             {
                 #region Requests by Dept
-                List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
+
                 var gendeptRpt = context.TransactionDetail.
                     Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
                             grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
@@ -234,15 +220,13 @@ namespace Team7ADProject.Controllers
                     Select(z => new { DeptID = z.Key.DepartmentId, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
                 foreach (var i in gendeptRpt)
                 {
-                    deptdataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                    grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
                 }
 
-                ViewBag.deptDataPoints = JsonConvert.SerializeObject(deptdataPoints);
                 #endregion
 
                 #region Requests by Stationery Category
 
-                List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
                 var genstatRpt = context.TransactionDetail.
                     Where(x => x.StationeryRequest.Status == "Completed" && 
                     x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
@@ -253,17 +237,13 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in genstatRpt)
                 {
-                    statdataPoints.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                    grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
                 }
-
-                ViewBag.statDataPoints = JsonConvert.SerializeObject(statdataPoints);
-
+                
                 #endregion
 
                 #region Requests over time
-
-                List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
-
+                
                 var timeRpt = context.TransactionDetail.Where(x => x.StationeryRequest.Status == "Completed" 
                 && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
                             grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
@@ -274,11 +254,9 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in timeRpt)
                 {
-                    timedataPoints.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                    grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
                 }
-
-                ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
-
+                
                 #endregion
 
             }
@@ -286,7 +264,7 @@ namespace Team7ADProject.Controllers
             if(module == "ChargeBack")
             {
                 #region Charge back by DeptId
-                List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
+
                 var gendeptRpt = context.TransactionDetail.
                     Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
                             grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
@@ -296,15 +274,13 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in gendeptRpt)
                 {
-                    deptdataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                    grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
                 }
 
-                ViewBag.deptDataPoints = JsonConvert.SerializeObject(deptdataPoints);
                 #endregion
 
                 #region Charge back by Stationery Category
 
-                List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
                 var genstatRpt = context.TransactionDetail.
                     Where(x => x.Disbursement.DepartmentId != null && x.TransactionDate >= fromDateTP && 
                     x.TransactionDate <= toDateTP &&
@@ -315,17 +291,13 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in genstatRpt)
                 {
-                    statdataPoints.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                    grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
                 }
-
-                ViewBag.statDataPoints = JsonConvert.SerializeObject(statdataPoints);
-
+                
                 #endregion
 
                 #region Charge back over time
-
-                List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
-
+                
                 var timeRpt = context.TransactionDetail.Where(x => x.Disbursement.DepartmentId != null && 
                 x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
                             grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
@@ -336,18 +308,16 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in timeRpt)
                 {
-                    timedataPoints.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                    grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
                 }
-
-                ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
-
+                
                 #endregion
             }
 
             if (module == "Purchases")
             {
                 #region Purchases by SupplierID
-                List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
+
                 var gendeptRpt = context.TransactionDetail.
                     Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
                     GroupBy(y => new { y.PurchaseOrder.SupplierId }).
@@ -355,15 +325,13 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in gendeptRpt)
                 {
-                    deptdataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                    grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
                 }
 
-                ViewBag.deptDataPoints = JsonConvert.SerializeObject(deptdataPoints);
                 #endregion
 
                 #region Purchases by Stationery Category
 
-                List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
                 var genstatRpt = context.TransactionDetail.
                     Where(x => x.PurchaseOrder.Status =="Completed" && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
                         GroupBy(y => new { y.Stationery.Category }).
@@ -371,16 +339,12 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in genstatRpt)
                 {
-                    statdataPoints.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                    grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
                 }
-
-                ViewBag.statDataPoints = JsonConvert.SerializeObject(statdataPoints);
-
+                
                 #endregion
 
                 #region Purchases over time
-
-                List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
 
                 var timeRpt = context.TransactionDetail.Where(x => x.PurchaseOrder.Status == "Completed" && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
                     OrderBy(x => x.TransactionDate).
@@ -389,18 +353,16 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in timeRpt)
                 {
-                    timedataPoints.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                    grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
                 }
-
-                ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
-
+                
                 #endregion
             }
 
             if (module == "Retrieval")
             {
                 #region Retrieval by Employee
-                List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
+
                 var gendeptRpt = context.TransactionDetail.
                     Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
                     GroupBy(y => new { y.StationeryRetrieval.AspNetUsers.EmployeeName }).
@@ -408,15 +370,13 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in gendeptRpt)
                 {
-                    deptdataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                    grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
                 }
 
-                ViewBag.deptDataPoints = JsonConvert.SerializeObject(deptdataPoints);
                 #endregion
 
                 #region Retrieval by Stationery Category
 
-                List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
                 var genstatRpt = context.TransactionDetail.
                     Where(x => x.StationeryRetrieval.RetrievalId != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
                         GroupBy(y => new { y.Stationery.Category }).
@@ -424,16 +384,12 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in genstatRpt)
                 {
-                    statdataPoints.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                    grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
                 }
-
-                ViewBag.statDataPoints = JsonConvert.SerializeObject(statdataPoints);
-
+                
                 #endregion
 
                 #region Retrieval over time
-
-                List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
 
                 var timeRpt = context.TransactionDetail.Where(x => x.StationeryRetrieval.RetrievalId != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
                     OrderBy(x => x.TransactionDate).
@@ -442,10 +398,9 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in timeRpt)
                 {
-                    timedataPoints.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                    grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
                 }
 
-                ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
             }
                 #endregion
                 return View(grvm);
