@@ -32,9 +32,11 @@
         <col style="width:8%">
         <col style="width:10%">
         <col style="width:10%">
+        <col style="width:10%">
         <tr>
             <th>No.</th>
             <th>Request By</th>
+            <th>Department ID</th>
             <th>Request ID</th>
             <th>Details</th>
             <th>Collection Date</th>
@@ -52,13 +54,16 @@
                     @item.RequestBy
                 </td>
                 <td>
+                    @item.DepartmentID
+                </td>
+                <td>
                     @item.RequestID
                 </td>
                 <td>
                     @Html.ActionLink("Details", "Details", new { id = item.RequestID })
                 </td>
                 <td>
-                    @item.CollectionDate    
+                    @item.CollectionDate
                 </td>
 
                 <td>

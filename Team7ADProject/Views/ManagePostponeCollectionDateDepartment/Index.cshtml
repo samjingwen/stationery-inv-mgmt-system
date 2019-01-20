@@ -1,69 +1,73 @@
-﻿@model IEnumerable<Team7ADProject.Entities.StationeryRequest>
+﻿@model IEnumerable<Team7ADProject.ViewModels.PostponeCollectionDateDepartmentViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Department";
 }
 
-<h2>Index</h2>
+@*Author:Lynn Lynn Oo*@
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AspNetUsers1.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Department.DepartmentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comment)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RequestDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CollectionDate)
-        </th>
-        <th></th>
-    </tr>
+<div class="container">
+    <center><h1><b>Postpone Collection Date</b></h1></center>
+    @* Design *@
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers1.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Department.DepartmentName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comment)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RequestDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CollectionDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RequestId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RequestId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RequestId })
-        </td>
-    </tr>
-}
+        td, th {
+            border: 1px solid #000000;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+    @*Design*@
+    <br />
 
-</table>
+
+    <table class="table table-bordered table-striped table-hover">
+        <col style="width:8%">
+        <col style="width:10%">
+        <col style="width:10%">
+        <col style="width:8%">
+        <col style="width:10%">
+        <col style="width:10%">
+        <col style="width:10%">
+        <tr>
+            <th>No.</th>
+            <th>Department ID</th>
+            <th>Request By</th>
+            <th>Request ID</th>
+            <th>Details</th>
+            <th>Status</th>
+            <th>Collection Date</th>
+
+        </tr>
+        @{ int i = 1;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(i++)</td>
+                <td>
+                    @item.DepartmentID
+                </td>
+                <td>
+                    @item.RequestBy
+                </td>
+                <td>
+                    @item.RequestID
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.RequestID })
+                </td>
+                <td>
+                    @item.Status
+                </td>
+                <td>
+                    @item.CollectionDate
+                </td>
+
+            </tr>
+        }
+
+    </table>

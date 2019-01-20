@@ -15,50 +15,8 @@
     <div>
         <img class="sidelogo" src="~/Content/images/logo.png" />
     </div>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            
-            <div class="navbar-collapse collapse">
-
-                <ul class="nav navbar-nav">
-
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @using Microsoft.AspNet.Identity
-                @if (Request.IsAuthenticated)
-                {
-                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                    {
-                        @Html.AntiForgeryToken()
-
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                @Html.ActionLink("Hello " + User.Identity.GetUserName().Split('@')[0].Replace('-', ' ') + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                            </li>
-                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                        </ul>
-                    }
-                }
-                else
-                {
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-                    </ul>
-                }
-
-            </div>
-        </div>
-    </div>
-
-    <div class="sidebar">
-        <a href="#home">Home</a>
-        <a href="#news">News</a>
-        <a href="@Url.Action("Contact", "Home")">Contact</a>
-        <a href="@Url.Action("About", "Home")">About</a>
-    </div>
+    @Html.Partial("_NavBar")
+    @Html.Partial("_SideBar")
     <div class="container body-content">
         @RenderBody()
         <hr />
