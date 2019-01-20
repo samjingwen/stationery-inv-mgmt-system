@@ -1,4 +1,5 @@
-﻿
+﻿@model Team7ADProject.ViewModels.GenerateReport.GenerateReportViewModel
+
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
 
@@ -6,33 +7,33 @@
             var disbChart = new CanvasJS.Chart("DisbChart", {
                 animationEnabled: true,
                 theme: "light1",
-                title: { text: "View by Entity" },
+                title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.title)) },
                 axisY: {valueFormatString: "#,###", prefix: "$"},
                 data: [{
                     type: "column",
-                    dataPoints: @Html.Raw(@ViewContext.Controller.ViewBag.deptDataPoints)
+                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.datapoint))
                 }]
             });
 
             var disbStatChart = new CanvasJS.Chart("DisbStat", {
                 animationEnabled: true,
                 theme: "light1",
-                title: { text: "View by Stationery type" },
+                title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.title)) },
                 axisY: { valueFormatString: "#,###", prefix: "$" },
                 data: [{
                     type: "bar",
-                    dataPoints: @Html.Raw(@ViewContext.Controller.ViewBag.statDataPoints)
+                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.datapoint))
                 }]
             });
 
             var disbTimeChart = new CanvasJS.Chart("DisbTime", {
                 animationEnabled: true,
                 title: {
-                    text: "View Over Time"
+                    text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.stattimeDP.title))
                 },
                 data: [{
                     type: "line",
-                    dataPoints: @Html.Raw(@ViewContext.Controller.ViewBag.timedataPoints)
+                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.stattimeDP.datapoint))
                 }]
             });
 

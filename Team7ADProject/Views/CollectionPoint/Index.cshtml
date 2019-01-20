@@ -4,25 +4,65 @@
     ViewBag.Title = "Index";
 }
 
-
-@using (Html.BeginForm("UpdateCollectionPoint", "CollectionPoint", FormMethod.Post))
-{
-    <h2>Current Collection Point: @ViewBag.cpName</h2>
-
-  
-    foreach (var cp in Model.CollectionPoints)
+<h2>Current Collection Point: @ViewBag.cpName</h2>
+<div>
+    <img class="cplogo" src="~/Content/images/cplogo.png" />
+</div>
+<div class="row">
+    @using (Html.BeginForm("UpdateCollectionPoint", "CollectionPoint", FormMethod.Post))
     {
-        @Html.RadioButtonFor(m => m.SelectedCP, cp.CollectionPointId, (cp.CollectionPointId.Equals(1) ? new { @checked = "checked" } : null)) 
-        @cp.CollectionDescription
-        <br />
-        @cp.Time.ToShortTimeString();
-        <br />
-        <br />
-    }
-    <br />
-    <br />
 
-    <input type="submit" value="Submit" />
+
+        <div class="col-md-3">
+            @foreach (var cp in Model.CollectionPoints)
+            {
+      
+
+
+            <label for="@cp.CollectionPointId" class="form-check-label">
+                <input type="radio" id="@cp.CollectionPointId" name="selectedCP"
+                       value="@cp.CollectionPointId" class="">
+                <span style="padding-left:5px; width:100px; display:inline-block">@cp.CollectionDescription</span>
+                <span style="width:100px; display:inline">@cp.Time.ToShortTimeString()</span>
+            </label>
+            <br />
+
+            }
+
+            <input type="submit" value="Submit" class="btn btn-default" style="display: inline; float:left; margin-top:20px;" />
+
+        </div>
+        <div class="col-md-9">
+            <img id="cpImage" class="cpimg" src="~/Content/images/CollPoint/cpImage_1.png" />
+        </div>
+
+    }
+
+
+
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var cpImg = document.getElementById('cpImage')
+
+            $('input[type=radio][name=selectedCP]').change(function () {
+                if (this.value == 1) {
+                    cpImg.src = "/Content/images/CollPoint/cpImage_1.png";
+                }
+                else if (this.value == '2') {
+                    cpImg.src = "/Content/images/CollPoint/cpImage_2.png";
+                }
+            });
+        });
+
+
+
+
+
+    </script>
+
+
 
 
 }

@@ -20,6 +20,17 @@ namespace Team7ADProject.ViewModels.GenerateReport
 
         public string module { get; set; }
 
+        public List<string> statcategory { get; set; }
+        public List<string> entcategory { get; set; }
+        public List<string> selectstatcategory { get; set; }
+        public List<string> selectentcategory { get; set; }
+        public List<string> supplier { get; set; }
+        public List<string> employee { get; set; }
+
+        public ChartViewModel stattimeDP { get; set; }
+        public ChartViewModel statDP { get; set; }
+        public ChartViewModel deptDP { get; set; }
+
     }
 
 }

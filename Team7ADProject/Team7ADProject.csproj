@@ -264,6 +264,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalClass.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -276,6 +277,7 @@
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
+    <Compile Include="ViewModels\GenerateReport\ChartViewModel.cs" />
     <Compile Include="ViewModels\GenerateReport\EnumMonth.cs" />
     <Compile Include="ViewModels\GenerateReport\GenerateReportViewModel.cs" />
     <Compile Include="ViewModels\GenerateReport\StringDoubleDPViewModel.cs" />
@@ -297,6 +299,14 @@
     <Compile Include="ViewModels\StationeryRetrievalViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\CollPoint\cpImage_1.png" />
+    <Content Include="Content\images\CollPoint\cpImage_2.png" />
+    <Content Include="Content\images\CollPoint\cpImage_3.png" />
+    <Content Include="Content\images\CollPoint\cpImage_4.png" />
+    <Content Include="Content\images\CollPoint\cpImage_5.png" />
+    <Content Include="Content\images\CollPoint\cpImage_6.png" />
+    <Content Include="Content\images\cplogo.png" />
+    <Content Include="Content\images\imageupload.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="App_Data\useremails.txt" />
     <Content Include="App_Data\usernames.txt" />
@@ -556,10 +566,6 @@
     <Content Include="Views\ChargeBack\ChargeBack.cshtml" />
     <Content Include="Views\ApproveOrder\ViewPORecord.cshtml" />
     <Content Include="Views\ApproveOrder\PODetails.cshtml" />
-    <Content Include="Views\ManagePoint\Create.cshtml" />
-    <Content Include="Views\ManagePoint\Delete.cshtml" />
-    <Content Include="Views\ManagePoint\Edit.cshtml" />
-    <Content Include="Views\ManagePoint\Index.cshtml" />
     <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
@@ -582,6 +588,9 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Shared\_SideBar.cshtml" />
+    <Content Include="Views\ManagePoint\ViewAll.cshtml" />
+    <Content Include="Views\ManagePoint\Index.cshtml" />
+    <Content Include="Views\ManagePoint\AddOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
