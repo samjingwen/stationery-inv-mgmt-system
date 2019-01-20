@@ -18,7 +18,6 @@
 
 
     <script>
-      
         $(function () {
 
             $("#fromDateTP").datepicker({
@@ -113,13 +112,14 @@
                 }
             </p>
             <p>
-                Select Department:
+                Select Entity:
             </p>
             <p>
                 @foreach (var item in Model.entcategory)
                 {
-                    <input type="checkbox" name="seldeptcat" value="@item" id="seldeptcat" /><label for="@item">@item</label><br />
+                    <input type="checkbox" name="seldeptcat" value="@item" id="selectdeptcat" /><label for="@item">@item</label><br />
                 }
+
             </p>
             <input type="submit" id="filterBtn" value="Filter" />
         </form>

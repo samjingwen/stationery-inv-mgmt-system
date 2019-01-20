@@ -27,6 +27,8 @@ namespace Team7ADProject.Controllers
                 module = "Disbursements",
                 statcategory = new List<string>(),
                 entcategory = new List<string>(),
+                employee = new List<string>(),
+                supplier = new List<string>(),
                 selectentcategory = new List<string>(),
                 selectstatcategory = new List<string>(),
                 stattimeDP = new ChartViewModel("Breakdown by Stationery over Time","", new List<StringDoubleDPViewModel>()),
@@ -39,6 +41,11 @@ namespace Team7ADProject.Controllers
             {
                 grvm.statcategory.Add(l);
             }
+            var sslist = context.PurchaseOrder.GroupBy(x => x.SupplierId).Select(y => y.Key);
+            foreach (var l in sslist) { grvm.supplier.Add(l); }
+
+            var eelist = context.StationeryRetrieval.GroupBy(x => x.AspNetUsers.EmployeeName).Select(y => y.Key);
+            foreach (var l in eelist) { grvm.employee.Add(l); } 
 
             grvm.selectstatcategory = grvm.statcategory;
             var elist = context.Department.GroupBy(x => x.DepartmentId).Select(y => y.Key);
@@ -107,6 +114,8 @@ namespace Team7ADProject.Controllers
                 module = module,
                 statcategory = new List<string>(),
                 entcategory = new List<string>(),
+                employee = new List<string>(),
+                supplier = new List<string>(),
                 selectentcategory = new List<string>(),
                 selectstatcategory = new List<string>(),
                 stattimeDP = new ChartViewModel("Breakdown by Stationery over Time","", new List<StringDoubleDPViewModel>()),
@@ -119,8 +128,13 @@ namespace Team7ADProject.Controllers
             {
                 grvm.statcategory.Add(l);
             }
+            var sslist = context.PurchaseOrder.GroupBy(x => x.SupplierId).Select(y => y.Key);
+            foreach (var l in sslist) { grvm.supplier.Add(l); }
 
-            if(selstatcat == null)
+            var eelist = context.StationeryRetrieval.GroupBy(x => x.AspNetUsers.EmployeeName).Select(y => y.Key);
+            foreach (var l in eelist) { grvm.employee.Add(l); }
+
+            if (selstatcat == null)
             {
                 foreach (var l in grvm.statcategory) { 
                 grvm.selectstatcategory.Add(l);
