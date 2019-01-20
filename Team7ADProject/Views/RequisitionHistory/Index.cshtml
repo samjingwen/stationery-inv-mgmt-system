@@ -1,13 +1,17 @@
 ﻿@model IEnumerable<Team7ADProject.ViewModels.OwnRequisitionHistoryViewModel>
 
 @{
-    ViewBag.Title = "Requisition History";
+    ViewBag.Title = "Own Requisition History";
 }
+
+@*Author:Lynn Lynn Oo for display | Teh Li Heng for Inline Edit and Save function*@
+
 
 <div class="container">
 
-    <h2><b>Requisition History</b></h2>
+    <h2><b>Own Requisition History</b></h2>
     <br />
+
     <table class="table table-bordered table-hover">
 
 
@@ -28,20 +32,112 @@
             <tr>
                 <td>@(i++)</td>
                 <td>@item.ItemDescription</td>
-                <td>@item.ItemQuantity</td>
+                <td>
+                    @if (@item.Status == "Pending Approval")
+                    {
+                        <input id="requestId" name="itemId" type="hidden" value="@item.RequestId">
+                        <input id="itemId" name="itemQuantity" type="hidden" value="@item.ItemId">
+                        <input id="itemQuantity" name="itemQuantity" type="hidden" value="@item.ItemQuantity">
+                        <div class="inline-view">
+                            @item.ItemQuantity
+                        </div>
+                        <div class='inline-edit' style="display: none">
+                            @Html.EditorFor(modelItem => item.ItemQuantity, new { htmlAttributes = new { @type = "number", @min = "1", style = "width: 50px", @class = "edit" } })
+                        </div>
+                    }
+                    else
+                    {
+                        @item.ItemQuantity
+                    }
+                </td>
                 <td>@item.UnitOfMeasure</td>
-                <td>@item.RequestDate</td>
+                <td>@item.RequestDate.ToShortDateString()</td>
                 <td>@item.Status</td>
+                @if (@item.Status == "Pending Approval")
+                {
+                    <td>
+                        <div class='inline-view'>
+                            <a href='#' class="edit" onclick='startEdit();return false;'>Edit</a>
+                        </div>
+                        <div class='inline-edit' style='display:none;'>
+                            <a href='#' onclick='saveEdit();return false;'>Save</a>
+                        </div>
+                        <div class='inline-edit' style='display:none;'>
+                            <a href='#' onclick='cancelEdit();return false;'>Cancel</a>
+                        </div>
+                    </td>
+                }
             </tr>
         }
-
     </table>
+    <div style="float: right; margin-right: 65px">
+        @Html.ActionLink("Back", "Index", "RequisitionHistory", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
 
-    <table>
-        <tr>
-            <td>
-                @Html.ActionLink("Back", "Index", "RequisitionHistory", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
-            </td>
-        </tr>
-    </table>
 </div>
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+        function startEdit() {
+            $(".inline-view").hide();
+            $(".inline-edit").show();
+        }
+
+        function cancelEdit() {
+            $(".inline-edit").hide();
+            $(".inline-view").show();
+        }
+
+        function saveEdit() {
+            var requestId = $("#requestId").val();
+            var itemId = $("#itemId").val();
+            var oldItemQuantity = $("#itemQuantity").val();
+            var newItemQuantity = $(".edit").val();
+
+            var data = JSON.stringify({
+                requestId: requestId,
+                itemId: itemId,
+                oldItemQuantity: oldItemQuantity,
+                newItemQuantity: newItemQuantity
+            });
+
+            $.when(saveRequest(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        }
+
+        function saveRequest(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "Requisitionhistory/Save",
+                data: data,
+                success: function(result) {
+                    bootbox.dialog({
+                        message: result,
+                        size: 'small',
+                        onEscape: function() {
+                            location.reload();
+                        }
+                    });
+                },
+
+                error: function () {
+                    bootbox.dialog({
+                        message: 'Error! Invalid data.',
+                        size: 'small',
+                        onEscape: function() {
+                            location.reload();
+                        }
+                    }); 
+                }
+            });
+        }
+    </script>
+}

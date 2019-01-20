@@ -10,11 +10,6 @@ namespace Team7ADProject.Controllers
     {
         public ActionResult Index()
         {
-            //Something one
-            //something two
-            //Something Added Additional Something
-            //Something three
-            
             return View();
         }
 

@@ -6,7 +6,7 @@
             var disbChart = new CanvasJS.Chart("DisbChart", {
                 animationEnabled: true,
                 theme: "light1",
-                title: { text: "Disbursements by Department" },
+                title: { text: "View by Entity" },
                 axisY: {valueFormatString: "#,###", prefix: "$"},
                 data: [{
                     type: "column",
@@ -17,7 +17,7 @@
             var disbStatChart = new CanvasJS.Chart("DisbStat", {
                 animationEnabled: true,
                 theme: "light1",
-                title: { text: "Disbursement by Stationery type" },
+                title: { text: "View by Stationery type" },
                 axisY: { valueFormatString: "#,###", prefix: "$" },
                 data: [{
                     type: "bar",
@@ -28,7 +28,7 @@
             var disbTimeChart = new CanvasJS.Chart("DisbTime", {
                 animationEnabled: true,
                 title: {
-                    text: "Disbursement over time"
+                    text: "View Over Time"
                 },
                 data: [{
                     type: "line",

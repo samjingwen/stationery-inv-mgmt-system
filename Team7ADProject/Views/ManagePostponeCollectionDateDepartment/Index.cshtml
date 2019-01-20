@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Team7ADProject.ViewModels.PostponeCollectionDateDepartmentViewModel>
+
+@{
+    ViewBag.Title = "Department";
+}
+
+@*Author:Lynn Lynn Oo*@
+
+<div class="container">
+    <center><h1><b>Postpone Collection Date</b></h1></center>
+    @* Design *@
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        td, th {
+            border: 1px solid #000000;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+    @*Design*@
+    <br />
+
+
+    <table class="table table-bordered table-striped table-hover">
+        <col style="width:8%">
+        <col style="width:10%">
+        <col style="width:10%">
+        <col style="width:8%">
+        <col style="width:10%">
+        <col style="width:10%">
+        <col style="width:10%">
+        <tr>
+            <th>No.</th>
+            <th>Department ID</th>
+            <th>Request By</th>
+            <th>Request ID</th>
+            <th>Details</th>
+            <th>Status</th>
+            <th>Collection Date</th>
+
+        </tr>
+        @{ int i = 1;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(i++)</td>
+                <td>
+                    @item.DepartmentID
+                </td>
+                <td>
+                    @item.RequestBy
+                </td>
+                <td>
+                    @item.RequestID
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.RequestID })
+                </td>
+                <td>
+                    @item.Status
+                </td>
+                <td>
+                    @item.CollectionDate
+                </td>
+
+            </tr>
+        }
+
+    </table>

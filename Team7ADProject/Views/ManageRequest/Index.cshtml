@@ -1,79 +1,262 @@
 ﻿@model IEnumerable<Team7ADProject.ViewModels.RequestedItemViewModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Requisition Requests";
+    
 }
 
 <h2>Index</h2>
-@*@{
-        foreach (var cp in Model.SRequest)
-        {
-            @cp.Status
-            <br />
-        }
-
-    }*@
 
 <div class="card-body">
     @if (ViewBag.ShowItems)
     {
         <p>true</p>
-       int j = 0; int i = 0;
+        int j = 0; int i = 0;
         foreach (var cp in Model)
         {
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne" style="background-color:darkgreen;">
-                <h4 class="panel-title">
-                    <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" class="trigger collapsed">
-                        <span style="color:azure">Requisition Request by</span> @cp.Empname
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne" style="background-color: navy;height:50px;display:block;padding-top:14px;">
+                  
+                    <h4 class="panel-title">
 
-                        <span style="color:azure ;display: block;float:right">Requested Date :@cp.RequestDate</span>
-                    </a>
-                </h4>
-            </div>
-            <div id="collapse_@j" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
+                        <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" class="trigger collapsed">
+                            <span style="color:azure">Raised by</span> @cp.Empname
+                        </a>
 
-                    <table class="table table-bordered table-hover">
-                        <tr>
-                            <th>No.</th>
-                            <th>Item Description</th>
-                            <th>Category</th>
-                            <th>Quantity</th>
-                           
-                        </tr>
-                        @{ int ii = 1;}
+                        <span style="display: block;float:right;margin-left:10px">
+                            <button data-stationery-id="@cp.RequestID" style="margin-top:-7px" class="js-approve btn btn-primary">Approve</button>
+                            <span id="rejectModal">
+                                <button data-stationery-id="@cp.RequestID" style="margin-top:-7px" class="js-reject btn btn-primary">Reject Request</button>
+                            </span>
+                        </span>
+                        <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" >
 
-                        @foreach (var item in cp.Itemlist)
-                        {
+                            <span style="color:azure ;float:right;text-decoration:underline;margin-left:15px">   View Requested Items</span>
+                        </a>
+                            <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j">
+                                <span style="color:azure ;float:right">Requested Date :@cp.RequestDate  </span>
 
-                        <tr>
-                            <td>@(ii++)</td>
-                            <td>@item.Description</td>
-                            <td>@item.Category</td>
-                            <td>@item.QuantityTransit</td>
-                            @*<td>@item.UnitOfMeasure</td>
-        <td>@item.RequestDate</td>
-        <td>@item.Status</td>*@
-                        </tr>
+                            </a>
+                    </h4>
+                </div>
+                <div id="collapse_@j" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th>No.</th>
+                                <th>Item Description</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+
+                            </tr>
+                            @{ int ii = 1;}
+
+                            @foreach (var item in cp.Itemlist)
+                            {
+
+                                <tr>
+                                    <td>@(ii++)</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.Category</td>
+                                    <td>@item.QuantityTransit</td>
+                                  
+                                </tr>
                             }
                         </table>
 
                     </div>
                 </div>
 
-                </div>
-                    j++;
-                }
+            </div>
+                                        j++;
+                                    }
 
-            }
+                                }
 
-            else
-            {
+                                else
+                                {
         <h5 class="text-center text-info">There is no requests yet!!!</h5>
 
-    }
+                                }
+</div>
+
+<div class="modal fade" id="reason">
+    <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4>Reason for reject</h4>
+            </div>
+
+            <form id="NewOrderForm">
+                <div class="modal-body">
+                 
+                    <div class="form-horizontal">
+                        <input type="hidden" id="RequestId" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Comment
+                            </label>
+                            <div>
+                              @Html.TextArea("comment", "Reason for reject", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        
+                </div>
+              </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="saveReject" type="submit" class="btn btn-danger">Reject Request</button>
+                </div>
+            </form>
+
+        </div>
+        </div>
+    </div>
+<div class="modal fade" id="reason1">
+    <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4>Reason for Approve</h4>
+            </div>
+
+            <form id="NewOrderForm">
+                <div class="modal-body">
+
+                    <div class="form-horizontal">
+                        <input type="hidden" id="RequestId" />
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Comment
+                            </label>
+                            <div>
+                                @Html.TextArea("commentapp", "Reason for approve", new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="saveAprove" type="submit" class="btn btn-danger">Approve Request</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 </div>
 
             @section Scripts {
-    <link href="~/Content/accordion.css" rel="stylesheet" />
-}
+                <link href="~/Content/accordion.css" rel="stylesheet" />
+
+                <script>
+                   
+                   
+
+                    //After Click Save Button Pass All Data View To Controller For Edit Database
+                    function editRequest(data) {
+                        return $.ajax({
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            type: 'POST',
+                            url: "Edit",
+                            data: data,
+                            success: function (result) {
+                                //alert(result);
+                                location.reload();
+                            },
+                            error: function () {
+                                alert("Error!");
+                            }
+                        });
+                    }
+
+                    
+                    //Collect Multiple Order List For Pass To Controller
+                    $("#saveReject").click(function (e) {
+                        e.preventDefault();
+                       // rejectRequest();
+                        var requestArr = [];
+                      
+                        var value = $("#comment").val();
+
+                       // window.alert("para is :" + button.attr("data-stationery-id"));
+                        var myobj = {
+                            RequestId: attr,
+                            RequestedBy: null,
+                            ApprovedBy: null,
+                            DepartmentId: null,
+                            Status: "Rejected",
+                            Comment: value,
+                            RequestDate: null,
+                            CollectionDate: null
+                        }
+                      
+                        var data = JSON.stringify({
+                            requests: myobj
+                        });
+
+                        $.when(editRequest(data)).then(function (response) {
+                            console.log(response);
+                        }).fail(function (err) {
+                            console.log(err);
+                        });
+                    });
+                    $("#saveAprove").click(function (e) {
+                        e.preventDefault();
+                        // rejectRequest();
+                        var requestArr = [];
+
+                        var value = $("#commentapp").val();
+                        
+                        var myobj = {
+                            RequestId: attr,
+                            RequestedBy: null,
+                            ApprovedBy: null,
+                            DepartmentId: null,
+                            Status: "Pending Disbursement",
+                            Comment: value,
+                            RequestDate: null,
+                            CollectionDate: null
+                        }
+
+                        var data = JSON.stringify({
+                            requests: myobj
+                        });
+
+                        $.when(editRequest(data)).then(function (response) {
+                            console.log(response);
+                        }).fail(function (err) {
+                            console.log(err);
+                        });
+                    });
+
+
+                    var attr;
+                    ////////////////////////////////////////////
+
+                    $(document).ready(function () {
+                        $(".panel-title .js-reject").on("click",
+                            function () {
+                                var button = $(this);
+                               attr = button.attr("data-stationery-id");
+                               // window.alert(attr);
+                             $("#reason").modal();
+                               
+                            });
+                    })
+                    $(document).ready(function () {
+                        $(".panel-title .js-approve").on("click",
+                            function () {
+                                var button = $(this);
+                                attr = button.attr("data-stationery-id");
+                                // window.alert(attr);
+                                $("#reason1").modal();
+
+                            });
+                    })
+                    
+                </script>
+            }
+

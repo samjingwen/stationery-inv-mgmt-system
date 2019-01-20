@@ -5,6 +5,7 @@
 #ah:hover, #ah:visited, #ah:link, #ah:active {
     text-decoration: none;
     color:cornsilk;
+    
 }
 
 .controls {
@@ -15,10 +16,9 @@
 .panel-title .trigger:before {
     content: '\e082';
     font-family: 'Glyphicons Halflings';
-    vertical-align: text-bottom;
+   
 }
 
 .panel-title .trigger.collapsed:before {
-   
     content: '\e081';
 }
