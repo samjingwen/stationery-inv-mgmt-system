@@ -6,19 +6,21 @@
 <h2>Collection Point Management</h2>
 
 <ul class="nav nav-tabs">
-    <li><a data-toggle="tab" href="#firstTab">View All</a></li>
-    <li class="active"><a data-toggle="tab" href="#secondTab">Add New</a></li>
+    <li class="active"><a data-toggle="tab" href="#firstTab">View All</a></li>
+    <li><a data-toggle="tab" href="#secondTab">Add New</a></li>
 </ul>
 <div class="tab-content">
-    <div id="firstTab" class="tab-pane fade in">@Html.Action("ViewAll")</div>
-    <div id="secondTab" class="tab-pane fade in active">@Html.Action("AddOrEdit")</div>
+    <div id="firstTab" class="tab-pane fade in active">@Html.Action("ViewAll")</div>
+    <div id="secondTab" class="tab-pane fade in">@Html.Action("AddOrEdit")</div>
 </div>
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
 
 
 @section scripts{
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-    <script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
+    <script>
         $(document).ready(function () {
             $('.timepicker').timepicker({
                 timeFormat: 'h:mm p',
@@ -53,12 +55,18 @@
                         if (response.success) {
                             $("#firstTab").html(response.html);
                             refreshAddNewTab($(form).attr('data-restUrl'), true);
-                            $.notify(response.message, "success");
+                            $.notify(response.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
                             if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable))
                                 activatejQueryTable();
                         }
                         else {
-                            $.notify(response.message, "error");
+                            $.notify(response.message, {
+                                globalPosition: "top center",
+                                className: "error"
+                            })
                         }
                     }
                 }
@@ -78,13 +86,85 @@
                 url: resetUrl,
                 success: function (response) {
                     $("#secondTab").html(response);
+                    $('.timepicker').timepicker({
+                        timeFormat: 'h:mm p',
+                        interval: 60,
+                        minTime: '10',
+                        maxTime: '5:00pm',
+                        startTime: '10:00',
+                        dynamic: false,
+                        dropdown: true,
+                        scrollbar: true
+                    });
                     $('ul.nav.nav-tabs a:eq(1)').html('Add New');
-                    if (showViewTab)
+                    if (showViewTab) {
                         $('ul.nav.nav-tabs a:eq(0)').tab('show');
+                        
+                    }
                 }
 
             });
         }
+
+
+        function Edit(url) {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (response) {
+                    $("#secondTab").html(response);
+                    $('ul.nav.nav-tabs a:eq(1)').html('Edit');
+                    $('ul.nav.nav-tabs a:eq(1)').tab('show');
+                    $('.timepicker').timepicker({
+                        timeFormat: 'h:mm p',
+                        interval: 60,
+                        minTime: '10',
+                        maxTime: '5:00pm',
+                        startTime: '10:00',
+                        dynamic: false,
+                        dropdown: true,
+                        scrollbar: true
+                    });
+                }
+
+            });
+        }
+
+        function Delete(url) {
+            if (confirm('Are you sure to delete this record ?') == true) {
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    success: function (response) {
+                        if (response.success) {
+                            $("#firstTab").html(response.html);
+                            $.notify(response.message, {
+                                globalPosition: "top center",
+                                className: "warn"
+                            })
+                            if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable))
+                                activatejQueryTable();
+                        }
+                        else {
+                            $.notify(response.message, {
+                                globalPosition: "top center",
+                                className: "error"
+                            })
+                        }
+                    }
+
+                });
+
+            }
+        }
+
+        function activatejQueryTable() {
+            $("#CPTable").DataTable();
+        }
+
+        $(function () {
+            activatejQueryTable();
+        });
 
     </script>
 

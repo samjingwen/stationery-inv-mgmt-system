@@ -263,6 +263,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalClass.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -562,10 +563,6 @@
     <Content Include="Views\ChargeBack\ChargeBack.cshtml" />
     <Content Include="Views\ApproveOrder\ViewPORecord.cshtml" />
     <Content Include="Views\ApproveOrder\PODetails.cshtml" />
-    <Content Include="Views\ManagePoint\Create.cshtml" />
-    <Content Include="Views\ManagePoint\Delete.cshtml" />
-    <Content Include="Views\ManagePoint\Edit.cshtml" />
-    <Content Include="Views\ManagePoint\Index2.cshtml" />
     <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />

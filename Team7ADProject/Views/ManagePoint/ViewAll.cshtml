@@ -6,33 +6,35 @@
 }
 
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.Label("Description")
-        </th>
-        <th>
-            @Html.Label("Time")
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table id="CPTable" class="table">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CollectionDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CollectionPointId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.CollectionPointId })
-            </td>
+            <th>
+                @Html.Label("Description")
+            </th>
+            <th>
+                @Html.Label("Time")
+            </th>
+            <th></th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CollectionDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" onclick="Edit('@Url.Action("AddOrEdit", "ManagePoint", new { id=@item.CollectionPointId})')"><i class="fa fa-pencil fa-lg"></i></a>
+                    <a class="btn btn-danger btn-sm" onclick="Delete('@Url.Action("Delete", "ManagePoint", new { id=@item.CollectionPointId})')"><i class="fa fa-trash fa-lg"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 
