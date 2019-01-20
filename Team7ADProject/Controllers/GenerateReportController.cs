@@ -84,7 +84,8 @@ namespace Team7ADProject.Controllers
             var timeRpt = context.TransactionDetail.Where(x => x.Disbursement.AcknowledgedBy != null).
                 OrderBy(x => x.TransactionDate).
                 GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month }).ToArray().
-                Select(y => new { dateval = string.Format("{0} {1}", Enum.Parse(typeof(EnumMonth), y.Key.Month.ToString()), y.Key.Year), totalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
+                Select(y => new { dateval = string.Format("{0} {1}", Enum.Parse(typeof(EnumMonth), y.Key.Month.ToString()), y.Key.Year),
+                    totalAmt = y.Sum(z => (z.Quantity * z.UnitPrice))});
 
             foreach (var i in timeRpt)
             {
@@ -122,9 +123,11 @@ namespace Team7ADProject.Controllers
                 grvm.statcategory.Add(l);
             }
 
-            if(selstatcat.Count ==0)
+            if(selstatcat == null)
             {
-                grvm.selectstatcategory = grvm.statcategory;
+                foreach (var l in grvm.statcategory) { 
+                grvm.selectstatcategory.Add(l);
+                }
             }
             else
             {
@@ -139,15 +142,17 @@ namespace Team7ADProject.Controllers
             {
                 grvm.entcategory.Add(l);
             }
-            if (seldeptcat.Count == 0) {
+            if (seldeptcat == null) {
 
-                grvm.selectentcategory = grvm.entcategory;
-            }
-            else { 
-            foreach (var l in seldeptcat)
-            {
+                foreach(var l in grvm.entcategory) { 
                 grvm.selectentcategory.Add(l);
+                }
             }
+            else {
+                foreach (var l in seldeptcat)
+                {
+                    grvm.selectentcategory.Add(l);
+                }
             }
             #endregion
 
@@ -155,16 +160,21 @@ namespace Team7ADProject.Controllers
             { 
 
                 #region Disbursement by DeptId
+                
                 List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
-                var gendeptRpt = context.TransactionDetail.
-                    Where(x => x.Disbursement.AcknowledgedBy != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
-                    GroupBy(y => new { y.Disbursement.DepartmentId }).
-                    Select(z => new { DeptID = z.Key.DepartmentId, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
-                foreach (var i in gendeptRpt)
-                {
-                    deptdataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
-                }
+                        var gendeptRpt = context.TransactionDetail.
+                            Where(x => x.Disbursement.AcknowledgedBy != null && 
+                            grvm.selectstatcategory.Any(id=>id==x.Stationery.Category) && 
+                            grvm.selectentcategory.Any(id=>id==x.Disbursement.DepartmentId) && 
+                            x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                            GroupBy(y => new { y.Disbursement.DepartmentId }).
+                            Select(z => new { DeptID = z.Key.DepartmentId, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
+
+                        foreach (var i in gendeptRpt)
+                        {
+                            deptdataPoints.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                        }
 
                 ViewBag.deptDataPoints = JsonConvert.SerializeObject(deptdataPoints);
                 #endregion
@@ -172,15 +182,19 @@ namespace Team7ADProject.Controllers
                 #region Disbursement by Stationery Category
 
                 List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
-                var genstatRpt = context.TransactionDetail.
-                    Where(x => x.Disbursement.AcknowledgedBy != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
-                        GroupBy(y => new { y.Stationery.Category }).
-                        Select(z => new { itemCat = z.Key.Category, totalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
-                foreach (var i in genstatRpt)
-                {
-                    statdataPoints.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
-                }
+                        var genstatRpt = context.TransactionDetail.
+                            Where(x => x.Disbursement.AcknowledgedBy != null &&
+                            grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.Disbursement.DepartmentId) && 
+                            x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                                GroupBy(y => new { y.Stationery.Category }).
+                                Select(z => new { itemCat = z.Key.Category, totalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
+
+                        foreach (var i in genstatRpt)
+                        {
+                            statdataPoints.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                        }
 
                 ViewBag.statDataPoints = JsonConvert.SerializeObject(statdataPoints);
 
@@ -190,15 +204,18 @@ namespace Team7ADProject.Controllers
 
                 List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
 
-                var timeRpt = context.TransactionDetail.Where(x => x.Disbursement.AcknowledgedBy != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
-                    OrderBy(x => x.TransactionDate).
-                    GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month }).ToArray().
-                    Select(y => new { dateval = string.Format("{0} {1}", Enum.Parse(typeof(EnumMonth), y.Key.Month.ToString()), y.Key.Year), totalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
+                        var timeRpt = context.TransactionDetail.Where(x => x.Disbursement.AcknowledgedBy != null &&
+                            grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.Disbursement.DepartmentId) &&
+                            x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                                            OrderBy(x => x.TransactionDate).
+                                            GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month }).ToArray().
+                                            Select(y => new { dateval = string.Format("{0} {1}", Enum.Parse(typeof(EnumMonth), y.Key.Month.ToString()), y.Key.Year), totalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
 
-                foreach (var i in timeRpt)
-                {
-                    timedataPoints.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
-                }
+                        foreach (var i in timeRpt)
+                        {
+                            timedataPoints.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                        }
 
                 ViewBag.timedataPoints = JsonConvert.SerializeObject(timedataPoints);
 
@@ -210,7 +227,9 @@ namespace Team7ADProject.Controllers
                 #region Requests by Dept
                 List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
                 var gendeptRpt = context.TransactionDetail.
-                    Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                    Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                            grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.StationeryRequest.DepartmentId)).
                     GroupBy(y=> new { y.StationeryRequest.DepartmentId}).
                     Select(z => new { DeptID = z.Key.DepartmentId, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
                 foreach (var i in gendeptRpt)
@@ -225,7 +244,10 @@ namespace Team7ADProject.Controllers
 
                 List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
                 var genstatRpt = context.TransactionDetail.
-                    Where(x => x.StationeryRequest.Status == "Completed" && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                    Where(x => x.StationeryRequest.Status == "Completed" && 
+                    x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                            grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.StationeryRequest.DepartmentId)).
                         GroupBy(y => new { y.Stationery.Category }).
                         Select(z => new { itemCat = z.Key.Category, totalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
@@ -242,7 +264,10 @@ namespace Team7ADProject.Controllers
 
                 List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
 
-                var timeRpt = context.TransactionDetail.Where(x => x.StationeryRequest.Status == "Completed" && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                var timeRpt = context.TransactionDetail.Where(x => x.StationeryRequest.Status == "Completed" 
+                && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                            grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.StationeryRequest.DepartmentId)).
                     OrderBy(x => x.TransactionDate).
                     GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month }).ToArray().
                     Select(y => new { dateval = string.Format("{0} {1}", Enum.Parse(typeof(EnumMonth), y.Key.Month.ToString()), y.Key.Year), totalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
@@ -263,7 +288,9 @@ namespace Team7ADProject.Controllers
                 #region Charge back by DeptId
                 List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
                 var gendeptRpt = context.TransactionDetail.
-                    Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                    Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                            grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.Disbursement.DepartmentId)).
                     GroupBy(y => new { y.Disbursement.DepartmentId }).
                     Select(z => new { DeptID = z.Key.DepartmentId, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
@@ -279,7 +306,10 @@ namespace Team7ADProject.Controllers
 
                 List<StringDoubleDPViewModel> statdataPoints = new List<StringDoubleDPViewModel>();
                 var genstatRpt = context.TransactionDetail.
-                    Where(x => x.Disbursement.DepartmentId != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                    Where(x => x.Disbursement.DepartmentId != null && x.TransactionDate >= fromDateTP && 
+                    x.TransactionDate <= toDateTP &&
+                            grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.Disbursement.DepartmentId)).
                         GroupBy(y => new { y.Stationery.Category }).
                         Select(z => new { itemCat = z.Key.Category, totalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
@@ -296,7 +326,10 @@ namespace Team7ADProject.Controllers
 
                 List<StringDoubleDPViewModel> timedataPoints = new List<StringDoubleDPViewModel>();
 
-                var timeRpt = context.TransactionDetail.Where(x => x.Disbursement.DepartmentId != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                var timeRpt = context.TransactionDetail.Where(x => x.Disbursement.DepartmentId != null && 
+                x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                            grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.Disbursement.DepartmentId)).
                     OrderBy(x => x.TransactionDate).
                     GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month }).ToArray().
                     Select(y => new { dateval = string.Format("{0} {1}", Enum.Parse(typeof(EnumMonth), y.Key.Month.ToString()), y.Key.Year), totalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
