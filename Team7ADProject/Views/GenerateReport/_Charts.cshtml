@@ -1,12 +1,12 @@
 ﻿
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
 
         window.onload = function () {
             var disbChart = new CanvasJS.Chart("DisbChart", {
                 animationEnabled: true,
                 theme: "light1",
-                title: { text: "Disbursements by Department" },
+                title: { text: "View by Entity" },
                 axisY: {valueFormatString: "#,###", prefix: "$"},
                 data: [{
                     type: "column",
@@ -17,7 +17,7 @@
             var disbStatChart = new CanvasJS.Chart("DisbStat", {
                 animationEnabled: true,
                 theme: "light1",
-                title: { text: "Disbursement by Stationery type" },
+                title: { text: "View by Stationery type" },
                 axisY: { valueFormatString: "#,###", prefix: "$" },
                 data: [{
                     type: "bar",
@@ -28,7 +28,7 @@
             var disbTimeChart = new CanvasJS.Chart("DisbTime", {
                 animationEnabled: true,
                 title: {
-                    text: "Disbursement over time"
+                    text: "View Over Time"
                 },
                 data: [{
                     type: "line",
@@ -40,12 +40,12 @@
             disbStatChart.render();
             disbTimeChart.render();
         }
-    </script>
-    <div style="width:80%;">
-        <div id="DisbChart" style="height: 250px; width:49%; float:left; padding-right:10px;">
-        </div>
-        <div id="DisbStat" style="height: 250px; width:49%; float:left; padding-left:10px;">
-        </div>
+</script>
+<div style="width:80%;">
+    <div id="DisbChart" style="height: 250px; width:49%; float:left; padding-right:10px;">
     </div>
-    <div id="DisbTime" style="height: 300px; width: 80%; float:left; padding-top:40px;">
+    <div id="DisbStat" style="height: 250px; width:49%; float:left; padding-left:10px;">
     </div>
+</div>
+<div id="DisbTime" style="height: 300px; width: 80%; float:left; padding-top:40px;">
+</div>

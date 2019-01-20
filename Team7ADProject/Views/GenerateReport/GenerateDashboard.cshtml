@@ -65,11 +65,19 @@
 <table>
     <tr>
         <th>Module selected:</th>
-        <td>@Model.module</td>
+        <td>@String.Format("{0}", @Model.module)</td>
     </tr>
     <tr>
         <th>Period selected from: </th>
         <td>@String.Format("{0:dd MMM yyyy}", @Model.fDate) to @String.Format("{0:dd MMM yyyy}", @Model.tDate)</td>     
+    </tr>
+    <tr>
+        <th>Stationery categories:  </th>
+        <td>@foreach (var item in @Model.selectstatcategory) {@String.Format(" {0} ",item)} </td>
+    </tr>
+    <tr>
+        <th>Entities selected:</th>
+        <td>@foreach (var item in @Model.selectentcategory) {@String.Format(" {0} ", item)} </td>
     </tr>
 
 
@@ -78,16 +86,40 @@
     <div id="ReportFilters" style="width:20%; height:100%; border:groove; float:right;">
         <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post">
             <p>Select module:</p>
-            <p><select>
-    <option value="Disbursement">Disbursement</option>
-    <option value="Purchases">Purchases</option>
-</select></p>
+            <p>
+                <select id="module" name="module">
+                    <option value="Disbursements">Disbursements</option>
+                    <option value="Requests">Stationery Requests</option>
+                    <option value="ChargeBack">Charge Backs</option>
+                    <option value="Purchases">Purchases</option>
+                    <option value="Retrieval">Retrieval</option>
+                </select>
+            </p>
+
             <p>Select period:</p>
             <p>
                 <input type="text" required name="fromDateTP" id="fromDateTP" onkeypress="return false;">
             </p>
             <p>
                 <input type="text" required name="toDateTP" id="toDateTP" onkeypress="return false;">
+            </p>
+            <p>
+                Select Stationery Categories:
+            </p>
+            <p>
+                @foreach (var item in Model.statcategory)
+                {
+                    <input type="checkbox" name="selstatcat" value="@item" id="selstatcat" /><label for="@item">@item</label><br />
+                }
+            </p>
+            <p>
+                Select Department:
+            </p>
+            <p>
+                @foreach (var item in Model.entcategory)
+                {
+                    <input type="checkbox" name="seldeptcat" value="@item" id="seldeptcat" /><label for="@item">@item</label><br />
+                }
             </p>
             <input type="submit" id="filterBtn" value="Filter" />
         </form>
