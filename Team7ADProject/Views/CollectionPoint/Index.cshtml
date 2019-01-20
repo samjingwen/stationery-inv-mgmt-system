@@ -16,17 +16,7 @@
         <div class="col-md-3">
             @foreach (var cp in Model.CollectionPoints)
             {
-            @*<tr>
-                    <td>
-                        @Html.RadioButtonFor(m => m.SelectedCP, cp.CollectionPointId, (cp.CollectionPointId.Equals(1) ? new { @checked = "checked" } : null))
-                    </td>
-                    <td>
-                        @cp.CollectionDescription
-                    </td>
-                    <td>
-                        @cp.Time.ToShortTimeString();
-                    </td>
-                </tr>*@
+      
 
 
             <label for="@cp.CollectionPointId" class="form-check-label">
