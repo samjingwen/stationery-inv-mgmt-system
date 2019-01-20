@@ -29,9 +29,9 @@ namespace Team7ADProject.Controllers
                 entcategory = new List<string>(),
                 selectentcategory = new List<string>(),
                 selectstatcategory = new List<string>(),
-                stattimeDP = new List<StringDoubleDPViewModel>(),
-                statDP = new List<StringDoubleDPViewModel>(),
-                deptDP = new List<StringDoubleDPViewModel>()
+                stattimeDP = new ChartViewModel("Breakdown by Stationery over Time"),
+                statDP = new ChartViewModel("Breakdown by Stationery Category"),
+                deptDP = new ChartViewModel("Breakdown by Entity")
 
             };
             var slist = context.Stationery.GroupBy(x => x.Category).Select(y => y.Key);
@@ -56,7 +56,7 @@ namespace Team7ADProject.Controllers
 
             foreach (var i in gendeptRpt)
             {
-                grvm.deptDP.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
             }
             
             #endregion
@@ -69,7 +69,7 @@ namespace Team7ADProject.Controllers
 
             foreach (var i in genstatRpt)
             {
-                grvm.statDP.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
             }
             
             #endregion
@@ -84,7 +84,7 @@ namespace Team7ADProject.Controllers
 
             foreach (var i in timeRpt)
             {
-                grvm.stattimeDP.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
             }
             
             #endregion
@@ -109,9 +109,9 @@ namespace Team7ADProject.Controllers
                 entcategory = new List<string>(),
                 selectentcategory = new List<string>(),
                 selectstatcategory = new List<string>(),
-                stattimeDP = new List<StringDoubleDPViewModel>(),
-                statDP = new List<StringDoubleDPViewModel>(),
-                deptDP = new List<StringDoubleDPViewModel>()
+                stattimeDP = new ChartViewModel("Breakdown by Stationery over Time"),
+                statDP = new ChartViewModel("Breakdown by Stationery Category"),
+                deptDP = new ChartViewModel("Breakdown by Entity")
 
             };
             var slist = context.Stationery.GroupBy(x => x.Category).Select(y => y.Key);
@@ -168,7 +168,7 @@ namespace Team7ADProject.Controllers
 
                         foreach (var i in gendeptRpt)
                         {
-                            grvm.deptDP.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                            grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
                         }
 
                 #endregion
@@ -185,7 +185,7 @@ namespace Team7ADProject.Controllers
 
                         foreach (var i in genstatRpt)
                         {
-                            grvm.statDP.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                            grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
                         }
                         
                 #endregion
@@ -202,7 +202,7 @@ namespace Team7ADProject.Controllers
 
                         foreach (var i in timeRpt)
                         {
-                            grvm.stattimeDP.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                            grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
                         }
                         
                 #endregion
@@ -220,7 +220,7 @@ namespace Team7ADProject.Controllers
                     Select(z => new { DeptID = z.Key.DepartmentId, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
                 foreach (var i in gendeptRpt)
                 {
-                    grvm.deptDP.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                    grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
                 }
 
                 #endregion
@@ -237,7 +237,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in genstatRpt)
                 {
-                    grvm.statDP.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                    grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
                 }
                 
                 #endregion
@@ -254,7 +254,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in timeRpt)
                 {
-                    grvm.stattimeDP.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                    grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
                 }
                 
                 #endregion
@@ -274,7 +274,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in gendeptRpt)
                 {
-                    grvm.deptDP.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                    grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
                 }
 
                 #endregion
@@ -291,7 +291,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in genstatRpt)
                 {
-                    grvm.statDP.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                    grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
                 }
                 
                 #endregion
@@ -308,7 +308,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in timeRpt)
                 {
-                    grvm.stattimeDP.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                    grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
                 }
                 
                 #endregion
@@ -325,7 +325,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in gendeptRpt)
                 {
-                    grvm.deptDP.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                    grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
                 }
 
                 #endregion
@@ -339,7 +339,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in genstatRpt)
                 {
-                    grvm.statDP.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                    grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
                 }
                 
                 #endregion
@@ -353,7 +353,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in timeRpt)
                 {
-                    grvm.stattimeDP.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                    grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
                 }
                 
                 #endregion
@@ -370,7 +370,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in gendeptRpt)
                 {
-                    grvm.deptDP.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
+                    grvm.deptDP.datapoint.Add(new StringDoubleDPViewModel(i.DeptID, (double)i.TotalAmt));
                 }
 
                 #endregion
@@ -384,7 +384,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in genstatRpt)
                 {
-                    grvm.statDP.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
+                    grvm.statDP.datapoint.Add(new StringDoubleDPViewModel(i.itemCat, (double)i.totalAmt));
                 }
                 
                 #endregion
@@ -398,7 +398,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var i in timeRpt)
                 {
-                    grvm.stattimeDP.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
+                    grvm.stattimeDP.datapoint.Add(new StringDoubleDPViewModel(i.dateval, (double)i.totalAmt));
                 }
 
             }
