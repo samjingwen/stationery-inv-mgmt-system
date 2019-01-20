@@ -7,7 +7,7 @@
             var disbChart = new CanvasJS.Chart("DisbChart", {
                 animationEnabled: true,
                 theme: "light1",
-                title: { text: @Html.Raw(@Model.deptDP.title) },
+                title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.title)) },
                 axisY: {valueFormatString: "#,###", prefix: "$"},
                 data: [{
                     type: "column",
@@ -18,7 +18,7 @@
             var disbStatChart = new CanvasJS.Chart("DisbStat", {
                 animationEnabled: true,
                 theme: "light1",
-                title: { text: @Html.Raw(@Model.statDP.title) },
+                title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.title)) },
                 axisY: { valueFormatString: "#,###", prefix: "$" },
                 data: [{
                     type: "bar",
@@ -29,7 +29,7 @@
             var disbTimeChart = new CanvasJS.Chart("DisbTime", {
                 animationEnabled: true,
                 title: {
-                    text: @Html.Raw(@Model.stattimeDP.title)
+                    text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.stattimeDP.title))
                 },
                 data: [{
                     type: "line",

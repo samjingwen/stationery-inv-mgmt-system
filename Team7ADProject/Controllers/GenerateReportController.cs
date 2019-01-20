@@ -29,9 +29,9 @@ namespace Team7ADProject.Controllers
                 entcategory = new List<string>(),
                 selectentcategory = new List<string>(),
                 selectstatcategory = new List<string>(),
-                stattimeDP = new ChartViewModel("Breakdown by Stationery over Time"),
-                statDP = new ChartViewModel("Breakdown by Stationery Category"),
-                deptDP = new ChartViewModel("Breakdown by Entity")
+                stattimeDP = new ChartViewModel("Breakdown by Stationery over Time","", new List<StringDoubleDPViewModel>()),
+                statDP = new ChartViewModel("Breakdown by Stationery Category","", new List<StringDoubleDPViewModel>()),
+                deptDP = new ChartViewModel("Breakdown by Entity","", new List<StringDoubleDPViewModel>())
 
             };
             var slist = context.Stationery.GroupBy(x => x.Category).Select(y => y.Key);
@@ -109,9 +109,9 @@ namespace Team7ADProject.Controllers
                 entcategory = new List<string>(),
                 selectentcategory = new List<string>(),
                 selectstatcategory = new List<string>(),
-                stattimeDP = new ChartViewModel("Breakdown by Stationery over Time"),
-                statDP = new ChartViewModel("Breakdown by Stationery Category"),
-                deptDP = new ChartViewModel("Breakdown by Entity")
+                stattimeDP = new ChartViewModel("Breakdown by Stationery over Time","", new List<StringDoubleDPViewModel>()),
+                statDP = new ChartViewModel("Breakdown by Stationery Category","", new List<StringDoubleDPViewModel>()),
+                deptDP = new ChartViewModel("Breakdown by Entity","", new List<StringDoubleDPViewModel>())
 
             };
             var slist = context.Stationery.GroupBy(x => x.Category).Select(y => y.Key);

@@ -11,9 +11,11 @@ namespace Team7ADProject.ViewModels.GenerateReport
         public string title { get; set; }
         public string label { get; set; }
 
-        public ChartViewModel(string title)
+        public ChartViewModel(string title, string label, List<StringDoubleDPViewModel> datapoint)
         {
             this.title = title;
+            this.label = label;
+            this.datapoint = datapoint;
         }
     }
 }
