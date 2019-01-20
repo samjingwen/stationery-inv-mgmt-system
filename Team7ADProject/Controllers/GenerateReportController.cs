@@ -20,6 +20,7 @@ namespace Team7ADProject.Controllers
         {
             LogicDB context = new LogicDB();
 
+            #region Build VM
             var grvm = new GenerateReportViewModel
             {
                 fDate = new DateTime(2017, 1, 1),
@@ -54,6 +55,8 @@ namespace Team7ADProject.Controllers
                 grvm.entcategory.Add(l);
             }
             grvm.selectentcategory = grvm.entcategory;
+
+            #endregion
 
             #region Disbursement by DeptID
 
