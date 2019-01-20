@@ -54,6 +54,25 @@
                     $(this).valid();
                 }
             });
+
+            if ($('#module').change(function () {
+                if ($(this).val() == 'Retrieval') {
+                    $('#deptselect').hide();
+                    $('#supplierselect').hide();
+                    $('#employeeselect').show();
+                }
+            
+                else if ($(this).val() == 'Purchases') {
+                    $('#deptselect').hide();
+                    $('#supplierselect').show();
+                    $('#employeeselect').hide();
+                }
+                else {
+                    $('#deptselect').show();
+                    $('#supplierselect').hide();
+                    $('#employeeselect').hide();
+                }
+            }));
         });
     </script>
 
@@ -115,11 +134,24 @@
                 Select Entity:
             </p>
             <p>
-                @foreach (var item in Model.entcategory)
-                {
-                    <input type="checkbox" name="seldeptcat" value="@item" id="selectdeptcat" /><label for="@item">@item</label><br />
-                }
-
+                <div id="deptselect" >
+                    @foreach (var item in Model.entcategory)
+                    {
+                        <input type="checkbox" name="seldeptcat" value="@item" id="selectdeptcat" /><label for="@item">@item</label><br />
+                    }
+                </div>
+                <div id="employeeselect" hidden>
+                    @foreach (var item in Model.employee)
+                    {
+                        <input type="checkbox" name="seleecat" value="@item" id="selectemployee" /><label for="@item">@item</label><br />
+                    }
+                </div>
+                <div id="supplierselect" hidden>
+                    @foreach (var item in Model.supplier)
+                    {
+                        <input type="checkbox" name="selsscat" value="@item" id="selectsupplier" /><label for="@item">@item</label><br />
+                    }
+                </div>
             </p>
             <input type="submit" id="filterBtn" value="Filter" />
         </form>
