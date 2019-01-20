@@ -160,7 +160,18 @@ namespace Team7ADProject.Controllers.Api
         #endregion
 
 
-
+        #region Cheng Zong Pei
+        [Route("~/api/stationeries/adjustment/{itemId}")]
+        public IHttpActionResult GetAdjustmentInfo(string itemId)
+        {
+            Stationery stationery = _context.Stationery.Single(x => x.ItemId == itemId);
+            AdjustmentApiViewModel adjustment = new AdjustmentApiViewModel();
+            adjustment.UnitOfMeasure = stationery.UnitOfMeasure;
+            adjustment.QuantityWareHouse = stationery.QuantityWarehouse;
+            adjustment.Price = stationery.FirstSuppPrice;
+            return Ok(adjustment);
+        }
+        #endregion
 
     }
 }

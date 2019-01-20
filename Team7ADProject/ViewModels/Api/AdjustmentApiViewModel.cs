@@ -7,7 +7,7 @@ namespace Team7ADProject.ViewModels.Api
 {
     public class AdjustmentApiViewModel
     {
-        public string UnitOfMeature;
+        public string UnitOfMeasure;
 
         public int QuantityWareHouse;
 
