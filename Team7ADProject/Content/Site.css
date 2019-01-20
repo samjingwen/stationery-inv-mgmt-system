@@ -26,7 +26,21 @@ textarea {
     max-width: 280px;
 }
 
+img.cpimg {
+    position: relative;
+    top: -161px;
+    height: 70%;
+    width: 70%;
+    left: 200px;
+}
 
+img.cplogo {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    height: 15%;
+    width: 15%;
+}
 
 img.loginlogo {
     display: block;

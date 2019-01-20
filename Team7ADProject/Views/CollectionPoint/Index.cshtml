@@ -4,25 +4,69 @@
     ViewBag.Title = "Index";
 }
 
+<h2>Current Collection Point: @ViewBag.cpName</h2>
+<div>
+    <img class="cplogo" src="~/Content/images/cplogo.png" />
+</div>
 
 @using (Html.BeginForm("UpdateCollectionPoint", "CollectionPoint", FormMethod.Post))
 {
-    <h2>Current Collection Point: @ViewBag.cpName</h2>
 
-  
+
+
     foreach (var cp in Model.CollectionPoints)
     {
-        @Html.RadioButtonFor(m => m.SelectedCP, cp.CollectionPointId, (cp.CollectionPointId.Equals(1) ? new { @checked = "checked" } : null)) 
-        @cp.CollectionDescription
+        @*<tr>
+                <td>
+                    @Html.RadioButtonFor(m => m.SelectedCP, cp.CollectionPointId, (cp.CollectionPointId.Equals(1) ? new { @checked = "checked" } : null))
+                </td>
+                <td>
+                    @cp.CollectionDescription
+                </td>
+                <td>
+                    @cp.Time.ToShortTimeString();
+                </td>
+            </tr>*@
+
+
+        <label for="@cp.CollectionPointId" class="form-check-label">
+            <input type="radio" id="@cp.CollectionPointId" name="selectedCP"
+                   value="@cp.CollectionPointId" class="">
+            <span style="padding-left:5px; width:100px; display:inline-block">@cp.CollectionDescription</span>
+            <span style="width:100px; display:inline">@cp.Time.ToShortTimeString()</span>
+        </label>
         <br />
-        @cp.Time.ToShortTimeString();
-        <br />
-        <br />
+
+
+
     }
+
+    <img id="cpImage" class="cpimg" src="~/Content/images/CollPoint/cpImage_1.png" />
     <br />
     <br />
 
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Submit" class="btn btn-default" style="display: inline;" />
+
+
+}
+@section scripts{
+    <script>
+        var cpImg = document.getElementById('cpImage')
+
+        $('input[type=radio][name=selectedCP]').change(function () {
+            if (this.value == 1) {
+                alert("1 selected");
+            }
+            else if (this.value == '2') {
+                alert("2 selected");
+            }
+        });
+
+
+
+    </script>
+
+
 
 
 }
