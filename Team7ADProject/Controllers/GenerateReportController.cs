@@ -24,9 +24,26 @@ namespace Team7ADProject.Controllers
             {
                 fDate = new DateTime(2017, 1, 1),
                 tDate = DateTime.Today,
-                module = "Disbursements"
+                module = "Disbursements",
+                statcategory = new List<string>(),
+                entcategory = new List<string>(),
+                selectentcategory = new List<string>(),
+                selectstatcategory = new List<string>()
+
             };
-            ViewBag.title = grvm.module;
+            var slist = context.Stationery.GroupBy(x => x.Category).Select(y => y.Key);
+            foreach (var l in slist)
+            {
+                grvm.statcategory.Add(l);
+            }
+
+            grvm.selectstatcategory = grvm.statcategory;
+            var elist = context.Department.GroupBy(x => x.DepartmentId).Select(y => y.Key);
+            foreach (var l in elist)
+            {
+                grvm.entcategory.Add(l);
+            }
+            grvm.selectentcategory = grvm.entcategory;
 
             #region Disbursement by DeptID
             List<StringDoubleDPViewModel> deptdataPoints = new List<StringDoubleDPViewModel>();
@@ -82,19 +99,59 @@ namespace Team7ADProject.Controllers
 
         [Authorize(Roles = "Store Manager, Store Supervisor")]
         [HttpPost]
-        public ActionResult GenerateDashboard(DateTime? fromDateTP, DateTime? toDateTP, string module)
+        public ActionResult GenerateDashboard(DateTime? fromDateTP, DateTime? toDateTP, string module, List<string> selstatcat, List<string> seldeptcat)
         {
           
                 LogicDB context = new LogicDB();
 
-                var grvm = new GenerateReportViewModel
-                {
-                    fDate = (DateTime)fromDateTP,
-                    tDate = (DateTime)toDateTP,
-                    module = module
-                };
+            #region Build VM
+            var grvm = new GenerateReportViewModel
+            {
+                fDate = (DateTime)fromDateTP,
+                tDate = (DateTime)toDateTP,
+                module = module,
+                statcategory = new List<string>(),
+                entcategory = new List<string>(),
+                selectentcategory = new List<string>(),
+                selectstatcategory = new List<string>()
 
-            if(module =="Disbursements")
+            };
+            var slist = context.Stationery.GroupBy(x => x.Category).Select(y => y.Key);
+            foreach (var l in slist)
+            {
+                grvm.statcategory.Add(l);
+            }
+
+            if(selstatcat.Count ==0)
+            {
+                grvm.selectstatcategory = grvm.statcategory;
+            }
+            else
+            {
+                foreach (var l in selstatcat)
+                {
+                    grvm.selectstatcategory.Add(l);
+                }
+            }
+           
+            var elist = context.Department.GroupBy(x => x.DepartmentId).Select(y => y.Key);
+            foreach (var l in elist)
+            {
+                grvm.entcategory.Add(l);
+            }
+            if (seldeptcat.Count == 0) {
+
+                grvm.selectentcategory = grvm.entcategory;
+            }
+            else { 
+            foreach (var l in seldeptcat)
+            {
+                grvm.selectentcategory.Add(l);
+            }
+            }
+            #endregion
+
+            if (module =="Disbursements")
             { 
 
                 #region Disbursement by DeptId
