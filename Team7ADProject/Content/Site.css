@@ -28,10 +28,8 @@ textarea {
 
 img.cpimg {
     position: relative;
-    top: -161px;
-    height: 70%;
-    width: 70%;
-    left: 200px;
+    height: 400px;
+    width: 900px;
 }
 
 img.cplogo {
