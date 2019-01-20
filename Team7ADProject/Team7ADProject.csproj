@@ -220,7 +220,6 @@
     <Compile Include="Controllers\GenerateReportController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagePointController.cs" />
     <Compile Include="Controllers\ManagePostponeCollectionDateController.cs" />
@@ -273,7 +272,6 @@
     <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\Api\RaiseRequestDTO.cs" />
     <Compile Include="ViewModels\AdjustmentViewModel.cs" />
-    <Compile Include="ViewModels\Api\UserDTO.cs" />
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
@@ -580,9 +578,10 @@
     <Content Include="Views\ManagePostponeCollectionDate\Details.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDateDepartment\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Shared\_NavBar.cshtml" />
+    <Content Include="Views\Shared\_SideBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\PostponeCollectionDate%28Store%29\" />
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
