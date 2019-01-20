@@ -1,4 +1,5 @@
-﻿
+﻿@model Team7ADProject.ViewModels.GenerateReport.GenerateReportViewModel
+
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
 
@@ -10,7 +11,7 @@
                 axisY: {valueFormatString: "#,###", prefix: "$"},
                 data: [{
                     type: "column",
-                    dataPoints: @Html.Raw(@ViewContext.Controller.ViewBag.deptDataPoints)
+                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP))
                 }]
             });
 
@@ -21,7 +22,7 @@
                 axisY: { valueFormatString: "#,###", prefix: "$" },
                 data: [{
                     type: "bar",
-                    dataPoints: @Html.Raw(@ViewContext.Controller.ViewBag.statDataPoints)
+                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP))
                 }]
             });
 
@@ -32,7 +33,7 @@
                 },
                 data: [{
                     type: "line",
-                    dataPoints: @Html.Raw(@ViewContext.Controller.ViewBag.timedataPoints)
+                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.stattimeDP))
                 }]
             });
 

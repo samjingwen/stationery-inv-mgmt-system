@@ -25,6 +25,10 @@ namespace Team7ADProject.ViewModels.GenerateReport
         public List<string> selectstatcategory { get; set; }
         public List<string> selectentcategory { get; set; }
 
+        public List<StringDoubleDPViewModel> stattimeDP { get; set; }
+        public List<StringDoubleDPViewModel> statDP { get; set; }
+        public List<StringDoubleDPViewModel> deptDP { get; set; }
+
     }
 
 }
