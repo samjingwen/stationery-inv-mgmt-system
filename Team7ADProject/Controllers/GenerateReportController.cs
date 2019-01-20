@@ -20,6 +20,7 @@ namespace Team7ADProject.Controllers
         {
             LogicDB context = new LogicDB();
 
+            #region Build VM
             var grvm = new GenerateReportViewModel
             {
                 fDate = new DateTime(2017, 1, 1),
@@ -27,6 +28,8 @@ namespace Team7ADProject.Controllers
                 module = "Disbursements",
                 statcategory = new List<string>(),
                 entcategory = new List<string>(),
+                employee = new List<string>(),
+                supplier = new List<string>(),
                 selectentcategory = new List<string>(),
                 selectstatcategory = new List<string>(),
                 stattimeDP = new ChartViewModel("Breakdown by Stationery over Time","", new List<StringDoubleDPViewModel>()),
@@ -39,6 +42,11 @@ namespace Team7ADProject.Controllers
             {
                 grvm.statcategory.Add(l);
             }
+            var sslist = context.PurchaseOrder.GroupBy(x => x.SupplierId).Select(y => y.Key);
+            foreach (var l in sslist) { grvm.supplier.Add(l); }
+
+            var eelist = context.StationeryRetrieval.GroupBy(x => x.AspNetUsers.EmployeeName).Select(y => y.Key);
+            foreach (var l in eelist) { grvm.employee.Add(l); } 
 
             grvm.selectstatcategory = grvm.statcategory;
             var elist = context.Department.GroupBy(x => x.DepartmentId).Select(y => y.Key);
@@ -47,6 +55,8 @@ namespace Team7ADProject.Controllers
                 grvm.entcategory.Add(l);
             }
             grvm.selectentcategory = grvm.entcategory;
+
+            #endregion
 
             #region Disbursement by DeptID
 
@@ -94,7 +104,7 @@ namespace Team7ADProject.Controllers
 
         [Authorize(Roles = "Store Manager, Store Supervisor")]
         [HttpPost]
-        public ActionResult GenerateDashboard(DateTime? fromDateTP, DateTime? toDateTP, string module, List<string> selstatcat, List<string> seldeptcat)
+        public ActionResult GenerateDashboard(DateTime? fromDateTP, DateTime? toDateTP, string module, List<string> selstatcat, List<string> seldeptcat, List<string> seleecat, List<string> selsscat)
         {
           
                 LogicDB context = new LogicDB();
@@ -107,6 +117,8 @@ namespace Team7ADProject.Controllers
                 module = module,
                 statcategory = new List<string>(),
                 entcategory = new List<string>(),
+                employee = new List<string>(),
+                supplier = new List<string>(),
                 selectentcategory = new List<string>(),
                 selectstatcategory = new List<string>(),
                 stattimeDP = new ChartViewModel("Breakdown by Stationery over Time","", new List<StringDoubleDPViewModel>()),
@@ -120,10 +132,11 @@ namespace Team7ADProject.Controllers
                 grvm.statcategory.Add(l);
             }
 
-            if(selstatcat == null)
+            if (selstatcat == null)
             {
-                foreach (var l in grvm.statcategory) { 
-                grvm.selectstatcategory.Add(l);
+                foreach (var l in grvm.statcategory)
+                {
+                    grvm.selectstatcategory.Add(l);
                 }
             }
             else
@@ -133,24 +146,50 @@ namespace Team7ADProject.Controllers
                     grvm.selectstatcategory.Add(l);
                 }
             }
-           
-            var elist = context.Department.GroupBy(x => x.DepartmentId).Select(y => y.Key);
-            foreach (var l in elist)
+
+            var sslist = context.PurchaseOrder.GroupBy(x => x.SupplierId).Select(y => y.Key);
+            
+            foreach (var l in sslist) { grvm.supplier.Add(l); }
+
+            var eelist = context.StationeryRetrieval.GroupBy(x => x.AspNetUsers.EmployeeName).Select(y => y.Key);
+            foreach (var l in eelist) { grvm.employee.Add(l); }
+
+            var entlist = context.Department.GroupBy(x => x.DepartmentId).Select(y => y.Key);
+            foreach (var l in entlist)
             {
                 grvm.entcategory.Add(l);
             }
-            if (seldeptcat == null) {
 
-                foreach(var l in grvm.entcategory) { 
-                grvm.selectentcategory.Add(l);
-                }
+            if (module == "Purchases")
+            {
+                if (selsscat == null)
+                    foreach(var l in sslist)
+                { grvm.selectentcategory.Add(l); }
+                else { foreach(var l in selsscat) { grvm.selectentcategory.Add(l); } }
             }
-            else {
-                foreach (var l in seldeptcat)
+            
+            if(module == "Retrieval")
+            {
+                if (seleecat == null)
+                    foreach (var l in eelist)
+                    { grvm.selectentcategory.Add(l); }
+                else { foreach (var l in seleecat) { grvm.selectentcategory.Add(l); } }
+            }
+            else
+            {
+                if (seldeptcat == null)
                 {
-                    grvm.selectentcategory.Add(l);
+                    foreach (var l in grvm.entcategory) { grvm.selectentcategory.Add(l); }
+                }
+                else
+                {
+                    foreach (var l in seldeptcat)
+                    {
+                        grvm.selectentcategory.Add(l);
+                    }
                 }
             }
+
             #endregion
 
             if (module =="Disbursements")
@@ -319,7 +358,9 @@ namespace Team7ADProject.Controllers
                 #region Purchases by SupplierID
 
                 var gendeptRpt = context.TransactionDetail.
-                    Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                    Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                    grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.PurchaseOrder.SupplierId)).
                     GroupBy(y => new { y.PurchaseOrder.SupplierId }).
                     Select(z => new { DeptID = z.Key.SupplierId, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
@@ -333,7 +374,10 @@ namespace Team7ADProject.Controllers
                 #region Purchases by Stationery Category
 
                 var genstatRpt = context.TransactionDetail.
-                    Where(x => x.PurchaseOrder.Status =="Completed" && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                    Where(x => x.PurchaseOrder.Status =="Completed" && x.TransactionDate >= fromDateTP && 
+                    x.TransactionDate <= toDateTP &&
+                    grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.PurchaseOrder.SupplierId)).
                         GroupBy(y => new { y.Stationery.Category }).
                         Select(z => new { itemCat = z.Key.Category, totalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
@@ -346,7 +390,10 @@ namespace Team7ADProject.Controllers
 
                 #region Purchases over time
 
-                var timeRpt = context.TransactionDetail.Where(x => x.PurchaseOrder.Status == "Completed" && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                var timeRpt = context.TransactionDetail.Where(x => x.PurchaseOrder.Status == "Completed" && 
+                x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                    grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.PurchaseOrder.SupplierId)).
                     OrderBy(x => x.TransactionDate).
                     GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month }).ToArray().
                     Select(y => new { dateval = string.Format("{0} {1}", Enum.Parse(typeof(EnumMonth), y.Key.Month.ToString()), y.Key.Year), totalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
@@ -364,7 +411,9 @@ namespace Team7ADProject.Controllers
                 #region Retrieval by Employee
 
                 var gendeptRpt = context.TransactionDetail.
-                    Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                    Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                    grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.StationeryRetrieval.AspNetUsers.EmployeeName)).
                     GroupBy(y => new { y.StationeryRetrieval.AspNetUsers.EmployeeName }).
                     Select(z => new { DeptID = z.Key.EmployeeName, TotalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
@@ -378,7 +427,10 @@ namespace Team7ADProject.Controllers
                 #region Retrieval by Stationery Category
 
                 var genstatRpt = context.TransactionDetail.
-                    Where(x => x.StationeryRetrieval.RetrievalId != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                    Where(x => x.StationeryRetrieval.RetrievalId != null && x.TransactionDate >= fromDateTP && 
+                    x.TransactionDate <= toDateTP &&
+                    grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.StationeryRetrieval.AspNetUsers.EmployeeName)).
                         GroupBy(y => new { y.Stationery.Category }).
                         Select(z => new { itemCat = z.Key.Category, totalAmt = z.Sum(a => (a.Quantity * a.UnitPrice)) });
 
@@ -391,7 +443,10 @@ namespace Team7ADProject.Controllers
 
                 #region Retrieval over time
 
-                var timeRpt = context.TransactionDetail.Where(x => x.StationeryRetrieval.RetrievalId != null && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP).
+                var timeRpt = context.TransactionDetail.Where(x => x.StationeryRetrieval.RetrievalId != null && 
+                x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                    grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
+                            grvm.selectentcategory.Any(id => id == x.StationeryRetrieval.AspNetUsers.EmployeeName)).
                     OrderBy(x => x.TransactionDate).
                     GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month }).ToArray().
                     Select(y => new { dateval = string.Format("{0} {1}", Enum.Parse(typeof(EnumMonth), y.Key.Month.ToString()), y.Key.Year), totalAmt = y.Sum(z => (z.Quantity * z.UnitPrice)) });
