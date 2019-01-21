@@ -125,36 +125,38 @@
 @section scripts
               {
     @*@*invoice validation*@
-    @*<script>
-        $("#saveInvoice").click(function (e) {
-            e.preventDefault();
+     <script>
+            $("#saveInvoice").click(function (e) {
+                e.preventDefault();
 
-            var InvoiceNo = document.forms["invoiceForm"]["InvoiceNo"];
-            if (InvoiceNo.value == "") {
-                alert("Invoice No must be filled out");
-                InvoiceNo.focus();
-                return false;
-            }
-            var SupplierId = document.forms["invoiceForm"]["SupplierId"];
-            if (SupplierId.value == "Select Supplier") {
-                alert("SupplierId must be filled out");
-                SupplierId.focus();
-                return false;
-            }
-            var InvoiceAmount = document.forms["invoiceForm"]["InvoiceAmount"];
-            if (InvoiceAmount.value == "") {
-                alert("Invoice Amount must be filled out");
-                InvoiceAmount.focus();
-                return false;
-            }
-            var DelOrderId = document.forms["invoiceForm"]["DelOrderId"];
-            if (DelOrderId.value == "") {
-                alert("DelOrder Id must be filled out");
-                DelOrderId.focus();
-                return false;
-            }
-        });
-    </script>*@
+                var InvoiceNo = document.forms["invoiceForm"]["InvoiceNo"];
+                if (InvoiceNo.value == "") {
+                  $("#InvoiceNo").css("borderColor","red");
+                    InvoiceNo.focus();
+                    return false;
+                }
+                var SupplierId = document.forms["invoiceForm"]["SupplierId"];
+                if (SupplierId.value == "Select Supplier") {
+                    $("#SupplierId").css("borderColor", "red");
+                    SupplierId.focus();
+                    return false;
+                }
+                var InvoiceAmount = document.forms["invoiceForm"]["InvoiceAmount"];
+                if (InvoiceAmount.value == "") {
+                    $("#InvoiceAmount").css("borderColor", "red");
+                    InvoiceAmount.focus();
+                    return false;
+                }
+                var DelOrderId = document.forms["invoiceForm"]["DelOrderId"];
+                if (DelOrderId.value == "") {
+                    //alert("DelOrder Id must be filled out");
+                    $("#DelOrderId").css("borderColor", "red");
+                    DelOrderId.focus();
+                    return false;
+                }
+                return true;
+            });
+        </script>
 
     @*load suppilerlist*@
     <script>
@@ -237,7 +239,20 @@
         $("#addToList").click(function (e) {
             e.preventDefault();
 
-            if ($.trim($("#category").val()) == "Select Category" || $.trim($("#description").val()) == "Select Item" || $.trim($("#quantity").val()) == "") return;
+            if ($.trim($("#category").val()) == "Select Category") {
+                $("#category").css("borderColor", "red");
+                return;
+            }
+           if ($.trim($("#description").val()) == "Select Item")
+        {
+               $("#description").css("borderColor", "red");
+                return;
+        }
+            if ($.trim($("#quantity").val()) == "")
+            {
+                $("#quantity").css("borderColor", "red");
+                return;
+            }
             var itemid = $dropdown2.val(),
                 description = $("#description").val(),
                 category = $("#category").val(),
@@ -297,7 +312,10 @@
                     data: data,
                     success: function (result) {
                         alert(result);
-                        location.reload();
+                        if (result == "Success! Invoice Is Complete!")
+                        {
+                            location.reload();
+                        }
                     },
                     error: function () {
                         alert("Can not Create!Please check");
