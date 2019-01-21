@@ -1,5 +1,4 @@
 ﻿@model Team7ADProject.ViewModels.RaisePOViewModel
-@*@model Team7ADProject.ViewModels.RaisePOCustomViewModel*@
 
 @{
     /**/
@@ -18,7 +17,7 @@
         </div>
     </div>
 </div>
-
+<p> @Html.ActionLink("Back to List", "Index")</p>
 <form id="NewPurchaseOrderForm">
 
     <table>
@@ -30,7 +29,7 @@
             <td></td>
             <td width="9%">Price</td>
             <td width="30%">
-                <input type="text" id="unitprice" class="form-control" name="unitprice">
+                <input type="text" id="unitprice" readonly="readonly" class="form-control" name="unitprice">
             </td>
             <td></td>
         </tr>
@@ -43,7 +42,11 @@
             <td></td>
             <td>Quantity</td>
             <td>
-                <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="1" />
+                <input type="number" id="quantity" name="quantity" data-val="true" placeholder="quantity" class="form-control" min="1" re />
+                @*@Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @type = "number", @min = "1", @max = Int32.MaxValue, @step = "1", @value = "0", @id = "quantity", @name = "quantity" })*@
+                @*<input class="form-control input-validation-error" data-val="true" data-val-number="The field Quantity must be a number." data-val-regex="Please enter a valid quantity." data-val-regex-pattern="^\d+" data-val-required="The Quantity field is required." id="quantity" min="1" name="Quantity" step="1" type="number" value="0" aria-describedby="quantity-error" aria-invalid="true">*@
+
+                @Html.ValidationMessageFor(m => m.Quantity)
             </td>
             <td>
                 <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
@@ -77,8 +80,8 @@
     </div>
 
     <div class="modal-footer">
-        <button type="reset" class="btn btn-default" data-dismiss="modal">Reset</button>
-        <button id="saveOrder" type="submit" class="btn btn-danger">Save Order</button>
+        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Reset</button>
+        <button id="saveOrder" type="submit" class="btn btn-primary">Save Order</button>
     </div>
 </form>
 
@@ -176,7 +179,15 @@
 
             if ($.trim($("#unitprice").val()) == "" || $.trim($("#quantity").val()) == "" ||
                 $.trim($("#category").val()) == "Select Category" || $.trim($dropdown2.val()) == "Select Item" ||
-                $.trim($dropdown3.val()) == "Select Supplier" || $.trim($dropdown3.val()) == "") return;
+                $.trim($dropdown3.val()) == "Select Supplier" || $.trim($dropdown3.val()) == "") {
+                bootbox.alert("Error! Please confirm the selections!");
+                return;
+            }
+
+            if ($.trim($("#quantity").val()) < 0) {
+                bootbox.alert("Error! Please select the valid quantity!");
+                return;
+            }
 
             var category = $("#category").val(),
                 description = $("#description").val(),
@@ -216,7 +227,7 @@
                 success: function (json) {
                     $.each(json, function (i, value) {
                         $dropdown1.append($('<option>').text(value).attr('value', value));
-                        //$('#myselect').append($('<option>').text(value).attr('value', value));
+
                     });
                 }
             });
