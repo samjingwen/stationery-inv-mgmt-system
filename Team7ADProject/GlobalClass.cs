@@ -23,4 +23,17 @@ namespace Team7ADProject
             }
         }
     }
+
+    public class RoleAuthorizeAttribute : AuthorizeAttribute
+    {
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            filterContext.Result = new ViewResult
+            {
+                ViewName = "~/Views/Shared/Error401.cshtml"
+            };
+        }
+    }
+
+
 }
