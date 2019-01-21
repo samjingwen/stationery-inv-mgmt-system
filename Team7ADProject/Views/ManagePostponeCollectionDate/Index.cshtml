@@ -67,7 +67,8 @@
                 </td>
 
                 <td>
-                    @using (Html.BeginForm("Postpone", "Postpone", FormMethod.Get))
+                    @Html.ActionLink("Postpone", "Postpone", new { coldate = item.CollectionDate })
+                    @*@using (Html.BeginForm("Postpone", "Postpone", FormMethod.Get))
                     {
                         <button type="submit"
                                 width="5"
@@ -75,7 +76,7 @@
                                 title="Action description">
                             POSTPONE
                         </button>
-                    }
+                    }*@
                 </td>
             </tr>
         }

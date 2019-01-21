@@ -592,6 +592,7 @@
     <Content Include="Views\ManagePoint\ViewAll.cshtml" />
     <Content Include="Views\ManagePoint\Index.cshtml" />
     <Content Include="Views\ManagePoint\AddOrEdit.cshtml" />
+    <Content Include="Views\ManagePostponeCollectionDateDepartment\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
