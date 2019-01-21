@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
+using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
@@ -33,13 +34,28 @@ namespace Team7ADProject.Controllers
             return View(ItemsByID);
         }
 
-        public ActionResult Postpone(string id)
+        public ActionResult Postpone(string id, PostponeCollDateViewModel model)
         {
+            string i = id;
+            LogicDB context = new LogicDB();
+            StationeryRequest dd = new StationeryRequest();
+            dd.CollectionDate = model.CollectionDate;//new DateTime(2017,3,5)
             StationeryRequest current = _context.StationeryRequest.First(m => m.RequestId == id);
             current.CollectionDate = current.CollectionDate.Value.AddDays(7);
             _context.SaveChanges();
-            return View();   
+            return View();
         }
     }
+
+//    public string ChangeDate(PostponeCollDateViewModel model)
+//    {
+
+//        LogicDB context = new LogicDB();
+//        StationeryRequest dd = new StationeryRequest();       
+//        dd.CollectionDate = model.CollectionDate;//new DateTime(2017,3,5)
+//        return "success";
+
+//    }
+//}
 }
 
