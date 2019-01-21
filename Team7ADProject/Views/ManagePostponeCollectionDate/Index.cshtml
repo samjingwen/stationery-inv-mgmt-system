@@ -60,34 +60,14 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.TextBoxFor(model => item.CollectionDate, new { @class = "date-picker", @readonly = "readonly" })
+                @Html.DisplayFor(modelItem=> item.CollectionDate)
             </td>
             <td>
-                @Html.ActionLink("POSTPONE", "Index", new { id = item.RequestId })
+                @*@Html.ActionLink("POSTPONE", "Index", new { id = item.RequestId })*@
+                @Html.ActionLink("POSTPONE", "Postpone", "Postpone", new { @class = "btn btn-primary" })
             </td>
         </tr>
     }
 
 </table>
 
-@section Scripts {
-    <!-- jQuery UI CSS Reference -->
-    <link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" />
-    <!-- Required jQuery and jQuery UI Javascript references -->
-    <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery-ui-1.10.4.min.js")"></script>
-
-
-    <!-- Code to wire up your DatePicker -->
-    <script type="text/javascript">
-        $(function () {
-            // This will make every element with the class "date-picker" into a DatePicker element
-            $('.date-picker').datepicker({
-                dateFormat: 'dd-mm-yy',
-                showAnim: 'clip'
-
-
-            });
-        })
-    </script>
-}

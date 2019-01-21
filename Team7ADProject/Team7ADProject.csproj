@@ -225,6 +225,7 @@
     <Compile Include="Controllers\ManagePostponeCollectionDateController.cs" />
     <Compile Include="Controllers\ManagePostponeCollectionDateDepartmentController.cs" />
     <Compile Include="Controllers\ManageRepController.cs" />
+    <Compile Include="Controllers\ManageRequestController.cs" />
     <Compile Include="Controllers\ManageRetrievalController.cs" />
     <Compile Include="Controllers\ManageStationeryController.cs" />
     <Compile Include="Controllers\ManageSupplierController.cs" />
@@ -596,7 +597,6 @@
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
-    <Folder Include="Views\PostponeCollectionDateDepartment\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
     <Folder Include="Views\ReturnWarehouse\" />
