@@ -1,4 +1,4 @@
-﻿
+﻿@model Team7ADProject.ViewModels.AdjustmentViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -59,7 +59,7 @@
                                     Quantity
                                 </label>
                                 <div class="col-md-4">
-                                    <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />
+                                    <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control"/>
                                 </div>
                             </div>
                         </div>
@@ -77,26 +77,35 @@
 
     <form id="raiseAdjustmentForm">
         <table id="adjustmentTable" class="table">
-            <tr>
-                <th>
-                    Category
-                </th>
-                <th>
-                    Item Description
-                </th>
-                <th>
-                    Quantity
-                </th>
-                <th>
-                    Current Stock
-                </th>
-                <th>
-                    Amount
-                </th>
-                <th></th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Item Description
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Current Stock
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
         </table>
-        <button id="saveAdjustment" type="submit" class="btn btn-primary pull-right">Save Adjustment</button>
+        <div class="form-group pull-right">
+            <div class="form-horizontal" id="remarkDiv">
+                <label id="remarkLabel">Remark</label>
+                <input id="remark" />
+            </div>
+            <button id="saveAdjustment" type="submit" class="btn btn-primary pull-right">Save Adjustment</button>
+        </div>
     </form>
 </body>
 </html>
@@ -131,6 +140,7 @@
         $dropdown1.change(function () {
             $dropdown2.empty();
             $dropdown2.append('<option>Select Item</option>');
+            $dropdown1.css("borderColor", "");
             //$('#myselect').append($('<option>').text(value).attr('value', value));
             $.ajax({
                 url: '../api/stationeries/categories/' + $dropdown1.val(),
@@ -146,6 +156,7 @@
         });
         //Load unit of measure
         $dropdown2.change(function () {
+            $dropdown2.css("borderColor", "");
             $.ajax({
                 url: '../api/stationeries/adjustment/' + $dropdown2.val(),
                 type: 'GET',
@@ -159,6 +170,15 @@
             });
         });
 
+        $("#quantity").change(function() {
+            $("#quantity").css("borderColor", "");
+        });
+
+        $("#remark").change(function () {
+            $("#remark").css("borderColor", "");
+            $("#remarkLabel").css("color", "");
+        });
+
         //Start Modal
         function addNewItem() {
             $("#newItemModal").modal();
@@ -168,7 +188,19 @@
         $("#addToList").click(function (e) {
             e.preventDefault();
 
-            if ($.trim($("#category").val()) == "" || $.trim($("#description").val()) == "" || $.trim($("#quantity").val()) == "") return;
+            if ($.trim($("#category").val()) == "Select Category") {
+                $("#category").css("borderColor", "red");
+                return;
+            }
+            if ($.trim($("#description").val()) == "Select Item") {
+                $("#description").css("borderColor", "red");
+                return;
+            }
+            if ($.trim($("#quantity").val()) == "" || $.trim($("#quantity").val()) == '0') {
+                $("#quantity").css("borderColor", "red");
+                return;
+            }
+                
 
             var id = $("#description").val(),
                 category = $("#category").val(),
@@ -176,10 +208,11 @@
                 stockQuantity = $("#stockQuantity").val(),
                 price = $("#price").val(),
                 name = $("#description option:selected").text(),
-                detailsTableBody = $("#adjustmentTable tbody");
+                detailsTableBody = $("#adjustmentTable tbody")
+                amount = (quantity * price).toFixed(2);
             
 
-            var requestItem = '<tr><td style="display:none;">' + id + '</td><td>' + category + '</td><td>' + name + '</td><td>' + quantity + '</td><td>' + stockQuantity + '</td><td>$'+ quantity*price + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+            var requestItem = '<tr><td style="display:none;">' + id + '</td><td>' + category + '</td><td>' + name + '</td><td>' + quantity + '</td><td>' + stockQuantity + '</td><td>$'+ amount + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
             detailsTableBody.append(requestItem);
             clearItem();
             $("#newItemModal").modal("hide");
@@ -188,8 +221,14 @@
         function clearItem() {
             $dropdown1.empty();
             $dropdown2.empty();
-            $('#quantity').val('0');
+            $dropdown1.css("borderColor", "");
+            $dropdown2.css("borderColor", "");
+            $("#quantity").css("borderColor", "");
+            $dropdown1.val('');
+            $dropdown2.val('');
+            $('#quantity').val('');
             $('#uom').val('');
+            $("#stockQuantity").val('');
             $dropdown1.append('<option>Select Category</option>');
             $dropdown2.append('<option>Select Item</option>');
             $dropdown1.prop('selectedIndex', 0);
@@ -222,7 +261,7 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: 'POST',
-                url: "Save",
+                url: "../RaiseAdjustment/Save",
                 data: data,
                 success: function (result) {
                     bootbox.dialog({
@@ -230,6 +269,7 @@
                         size: 'small',
                         onEscape: function () {
                             location.reload();
+                            $("#remark").val('');
                         }
                     });
                 },
@@ -242,6 +282,11 @@
         $("#saveAdjustment").click(function (e) {
             e.preventDefault();
 
+            if ($("#remark").val() == "") {
+                $("#remarkLabel").css("color", "red");
+                $("#remark").css("borderColor", "red");
+                return;
+            }
             var requestArr = [];
             requestArr.length = 0;
 
@@ -255,7 +300,8 @@
 
 
             var data = JSON.stringify({
-                requests: requestArr
+                requests: requestArr,
+                remark: $("#remark").val()
             });
 
             $.when(saveRequest(data)).then(function (response) {
