@@ -29,5 +29,30 @@ namespace Team7ADProjectApi
         }
 
 
+
+
+        #region Author : Kay Thi Swe Tun
+        public List<DepEmp> ListEmp(string id)
+        {
+            var query = from y in context.AspNetUsers
+                        where y.DepartmentId == id
+                        select new DepEmp
+                        {
+                             String name;
+            String empid;
+            String email;
+            String phone;
+
+            DepartmentId = x.DepartmentId,
+                            DepartmentName = x.DepartmentName,
+                            DepartmentRepName = y.EmployeeName,
+                            DepartmentRepId = x.DepartmentRepId
+
+                        };
+            return query.ToList();
+        }
+
+        #endregion
+
     }
 }
