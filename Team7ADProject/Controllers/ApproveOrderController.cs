@@ -10,6 +10,7 @@ using Team7ADProject.ViewModels;
 namespace Team7ADProject.Controllers
 {
     #region Gao Jiaxue
+   
     public class ApproveOrderController : Controller
     {   //get Data
         private LogicDB _context;
@@ -62,6 +63,11 @@ namespace Team7ADProject.Controllers
             {
                 Console.WriteLine(e);
             }
+            string recipientEmail, subject, content;
+            recipientEmail = thisPo.AspNetUsers1.Email;
+            subject = " PO approved!";
+            content = "I am very happy to inform you, your PO has been approved ";
+            Email.Send( recipientEmail,  subject,  content);
             return RedirectToAction("ViewPORecord", "ApproveOrder");
 
         }
@@ -78,6 +84,12 @@ namespace Team7ADProject.Controllers
             {
                 Console.WriteLine(e);
             }
+            string recipientEmail, subject, content;
+            //recipientEmail = thisPo.AspNetUsers1.Email;
+            recipientEmail = "gaojiaxue@outlook.com";
+            subject = " PO rejected!";
+            content = "Unfortunately, your PO was rejected";
+            Email.Send(recipientEmail, subject, content);
             return RedirectToAction("ViewPORecord", "ApproveOrder");
         }
         #endregion
