@@ -14,7 +14,6 @@
         <div class="row">
             <h2 class="panel-title pull-left" style="margin-left:10px;">
                 <strong>Raise Purchase Order</strong> <br /><br />
-                <strong>PO Number : @ViewBag.PoNo</strong>
             </h2>
         </div>
     </div>
@@ -26,15 +25,11 @@
         <tr>
             <td width="9%">Category</td>
             <td width="40%">
-                @*@Html.DropDownListFor(model => model.Category, new SelectList(Model.Categories, "Category"), "Select Category", new { @class = "form-control", name = "Category" })*@
-                @*@Html.DropDownListFor(model => model.Category, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "Category", id = "Category" })*@
-
                 <select class="form-control" name="category" id="category"></select>
             </td>
             <td></td>
             <td width="9%">Price</td>
             <td width="30%">
-                @*@Html.EditorFor(model => model.SupplierPrice, new { htmlAttributes = new { @class = "form-control", @min = 0, id = "unitprice" } })*@
                 <input type="text" id="unitprice" class="form-control" name="unitprice">
             </td>
             <td></td>
@@ -43,22 +38,14 @@
         <tr>
             <td>Item</td>
             <td>
-                @*@Html.DropDownListFor(model => model.Description, new SelectList("", "ItemId", "Description"), "Select Item", new { @class = "form-control", name = "Description" })*@
-                @*@Html.DropDownListFor(model => model.Description, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "Description" })*@
-
                 <select class="form-control table2" name="description" id="description"></select>
             </td>
             <td></td>
             <td>Quantity</td>
             <td>
                 <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="1" />
-
-                @*@Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @min = 0, id = "Quantity" } })*@
-                @*@Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })*@
             </td>
             <td>
-                @*@Html.EditorFor(model => model.UnitOfMeasure, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", id = "uom" } })*@
-
                 <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
             </td>
         </tr>
@@ -66,16 +53,11 @@
         <tr>
             <td>Supplier</td>
             <td>
-                @*@Html.DropDownListFor(model => model.SupplierName, new SelectList("", "SupplierId", "SupplierName"), "Select Supplier", new { @class = "form-control", name = "SupplierName" })*@
-                @*@Html.DropDownListFor(model => model.SupplierName, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "SupplierName" })*@
-
                 <select class="form-control" name="suppliername" id="suppliername"></select>
-
             </td>
             <td></td>
             <td></td>
             <td><a id="addToList" class="btn btn-primary">Add To List</a> </td>
-
         </tr>
     </table>
 
@@ -93,18 +75,16 @@
             <tbody></tbody>
         </table>
     </div>
+
     <div class="modal-footer">
         <button type="reset" class="btn btn-default" data-dismiss="modal">Reset</button>
         <button id="saveOrder" type="submit" class="btn btn-danger">Save Order</button>
     </div>
-
 </form>
-
 
 @section scripts
 {
     <script>
-
         var $dropdown1 = $("select[name='category']");
         var $dropdown2 = $("select[name='description']");
         var $dropdown3 = $("select[name='suppliername']");
@@ -134,7 +114,8 @@
                 }
             });
         }
-        //Load 2nd list
+
+        //load 2nd list
         $dropdown1.change(function () {
             $dropdown2.empty();
             $dropdown2.append('<option>Select Item</option>');
@@ -150,7 +131,7 @@
             });
         });
 
-        //Load suppliers and price
+        //load suppliers and price
         $dropdown2.change(function () {
             $dropdown3.empty();
             $dropdown3.append('<option>Select Supplier</option>');
@@ -166,7 +147,7 @@
             });
         });
 
-        //Load unit of measure
+        //load unit of measure
         $dropdown2.change(function () {
             $.ajax({
                 url: '../api/stationeries/item/' + $dropdown2.val(),
@@ -178,7 +159,7 @@
             });
         });
 
-        // Load price in unit price box
+        // load price in unit price box
         $dropdown3.change(function () {
             var selectedOption = $dropdown3.find(':selected');
             if (selectedOption.length) {
@@ -188,7 +169,7 @@
         });
 
 
-        //add item to the detailsTable
+        //add items to the details table
 
         $("#addToList").click(function (e) {
             e.preventDefault();
@@ -208,7 +189,7 @@
                 detailsTableBody = $("#detailsTable tbody");
 
             var productItem = '<tr><td style="display: none;">' + description + '</td><td>' + itemname + '</td><td style="display: none;">' + supplier + '</td><td>' + suppliername +
-                '</td><td style="display: none;">' + price + '</td><td>' + quantity + '</td><td>' + amount + " SGD"+
+                '</td><td style="display: none;">' + price + '</td><td>' + quantity + '</td><td>' + amount + " SGD" +
                 '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
             detailsTableBody.append(productItem);
             clearItem();
@@ -279,19 +260,15 @@
             $.each($("#detailsTable tbody tr"), function () {
                 orderArr.push({
                     description: $(this).find('td:eq(0)').html(),
-                    itemname: $(this).find('td:eq(1)').html(),
-                    supplier: $(this).find('td:eq(2)').html(),
-                    suppliername: $(this).find('td:eq(3)').html(),
-                    price: $(this).find('td:eq(4)').html(),
-                    quantity: $(this).find('td:eq(5)').html(),
-                    amount: $(this).find('td:eq(6)').html()
+                    supplierid: $(this).find('td:eq(2)').html(),
+                    unitprice: $(this).find('td:eq(4)').html(),
+                    quantity: $(this).find('td:eq(5)').html()
+
                 });
             });
 
 
             var data = JSON.stringify({
-                //name: $("#name").val(),
-                //address: $("#address").val(),
                 poModel: orderArr
             });
 

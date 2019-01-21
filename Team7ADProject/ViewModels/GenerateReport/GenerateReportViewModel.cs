@@ -30,6 +30,7 @@ namespace Team7ADProject.ViewModels.GenerateReport
         public ChartViewModel stattimeDP { get; set; }
         public ChartViewModel statDP { get; set; }
         public ChartViewModel deptDP { get; set; }
+        public List<ChartViewModel> data { get; set; }
 
     }
 

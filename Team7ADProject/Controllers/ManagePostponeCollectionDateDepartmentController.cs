@@ -48,6 +48,8 @@ namespace Team7ADProject.Controllers
             List<TransactionDetail> ItemsByID = _context.TransactionDetail.Where(x => x.TransactionRef == id).ToList();
             return View(ItemsByID);
         }
+
+        
     }
     #endregion
 }

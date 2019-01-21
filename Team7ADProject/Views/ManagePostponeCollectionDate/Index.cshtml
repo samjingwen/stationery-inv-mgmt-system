@@ -1,86 +1,93 @@
-﻿@model  IEnumerable<Team7ADProject.ViewModels.PostponeCollDateViewModel>
+﻿@model IEnumerable<Team7ADProject.Entities.StationeryRequest>
 
 @{
-    ViewBag.Title = "Postpone Collection Date";
+    ViewBag.Title = "Index";
 }
 
+<center><h2><b>Postpone Collection Date</b></h2></center>
+
 @*Author:Lynn Lynn Oo*@
+@* Design *@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 80%;
+    }
 
-<div class="container">
-    <center><h1><b>Postpone Collection Date</b></h1></center>
-    @* Design *@
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 80%;
-        }
+    td, th {
+        border: 1px solid #000000;
+        text-align: center;
+        padding: 10px;
+    }
 
-        td, th {
-            border: 1px solid #000000;
-            text-align: center;
-            padding: 10px;
-        }
-    </style>
-    @*Design*@
-    <br />
+    tr:nth-child(even) {
+        background-color: #5b94d1;
+    }
+</style>
+@*Design*@
 
 
-    <table class="table table-bordered table-striped table-hover">
-        <col style="width:8%">
-        <col style="width:10%">
-        <col style="width:10%">
-        <col style="width:8%">
-        <col style="width:10%">
-        <col style="width:10%">
-        <col style="width:10%">
+<table border="1" width="50" class="table breadcrumb table-bordered table-striped table-hover">
+  
+    <tr>
+        <th>No.</th>
+        <th>Request By</th>
+        <th>Department ID</th>
+        <th>Request ID</th>
+        <th>Details</th>
+        <th>Status</th>
+        <th>Collection Date</th>
+        <th>Postpone</th>
+    </tr>
+    @{ int i = 1;}
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>No.</th>
-            <th>Request By</th>
-            <th>Department ID</th>
-            <th>Request ID</th>
-            <th>Details</th>
-            <th>Collection Date</th>
-            <th>Postpone</th>
+            <td>@(i++)</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AspNetUsers1.EmployeeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestId)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.RequestId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.TextBoxFor(model => item.CollectionDate, new { @class = "date-picker", @readonly = "readonly" })
+            </td>
+            <td>
+                @Html.ActionLink("POSTPONE", "Index", new { id = item.RequestId })
+            </td>
         </tr>
+    }
 
-        @{ int i = 1;}
-        @foreach (var item in Model)
-        {
-            <tr>
+</table>
+
+@section Scripts {
+    <!-- jQuery UI CSS Reference -->
+    <link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" />
+    <!-- Required jQuery and jQuery UI Javascript references -->
+    <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.10.4.min.js")"></script>
 
 
-                <td>@(i++)</td>
-                <td>
-                    @item.RequestBy
-                </td>
-                <td>
-                    @item.DepartmentID
-                </td>
-                <td>
-                    @item.RequestID
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.RequestID })
-                </td>
-                <td>
-                    @item.CollectionDate
-                </td>
+    <!-- Code to wire up your DatePicker -->
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker({
+                dateFormat: 'dd-mm-yy',
+                showAnim: 'clip'
 
-                <td>
-                    @using (Html.BeginForm("Postpone", "Postpone", FormMethod.Get))
-                    {
-                        <button type="submit"
-                                width="5"
-                                class="btn btn-primary"
-                                title="Action description">
-                            POSTPONE
-                        </button>
-                    }
-                </td>
-            </tr>
-        }
 
-    </table>
-</div>
-    
-
+            });
+        })
+    </script>
+}
