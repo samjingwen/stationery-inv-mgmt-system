@@ -11,6 +11,8 @@ namespace Team7ADProjectApi
     {
         LogicDB context = new LogicDB();
 
+        #region Author: Sam Jing Wen
+
         public List<BriefDepartment> ListDepartment(string id)
         {
             var query = from x in context.Department
@@ -28,29 +30,41 @@ namespace Team7ADProjectApi
             return query.ToList();
         }
 
+        public List<RequestItems> ListRequestByItem()
+        {
+            var query = (from x in context.RequestByItemView select new RequestItems
+                            {
+                               ItemId = x.ItemId,
+                               Description = x.Description
+                            }).Distinct().ToList();
+            return query;
+        }
+
+        #endregion
+
 
 
 
         #region Author : Kay Thi Swe Tun
-        public List<DepEmp> ListEmp(string id)
-        {
-            var query = from y in context.AspNetUsers
-                        where y.DepartmentId == id
-                        select new DepEmp
-                        {
-                             String name;
-            String empid;
-            String email;
-            String phone;
+        //public List<DepEmp> ListEmp(string id)
+        //{
+        //    var query = from y in context.AspNetUsers
+        //                where y.DepartmentId == id
+        //                select new DepEmp
+        //                {
+        //                     String name;
+        //    String empid;
+        //    String email;
+        //    String phone;
 
-            DepartmentId = x.DepartmentId,
-                            DepartmentName = x.DepartmentName,
-                            DepartmentRepName = y.EmployeeName,
-                            DepartmentRepId = x.DepartmentRepId
+        //    DepartmentId = x.DepartmentId,
+        //                    DepartmentName = x.DepartmentName,
+        //                    DepartmentRepName = y.EmployeeName,
+        //                    DepartmentRepId = x.DepartmentRepId
 
-                        };
-            return query.ToList();
-        }
+        //                };
+        //    return query.ToList();
+        //}
 
         #endregion
 

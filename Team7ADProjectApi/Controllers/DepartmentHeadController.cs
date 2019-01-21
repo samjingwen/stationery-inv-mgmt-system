@@ -14,7 +14,7 @@ namespace Team7ADProjectApi.Controllers
         [Authorize(Roles = "Department Head")]
         [HttpGet]
         [Route("api/managedepartmentRep/{id}")]
-        public IEnumerable<BriefDepartment> GetDepartments()
+        public IEnumerable<BriefDepartment> GetDepartments(string id)
         {
             GlobalClass gc = new GlobalClass();
             return gc.ListDepartment(id);
