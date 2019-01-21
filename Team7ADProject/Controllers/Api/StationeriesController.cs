@@ -159,7 +159,22 @@ namespace Team7ADProject.Controllers.Api
 
         #endregion
 
+        #region Gao Jiaxue
+        //For loading suppliers
+        [Route("~/api/stationeries/suppliers")]
+        public IHttpActionResult GetSuppliers()
+        {
+            IEnumerable<String> suppliers = _context.Supplier.Select(m => m.SupplierId).Distinct().ToList();
 
+            if (suppliers == null)
+            {
+                return NotFound();
+            }
+
+
+            return Ok(suppliers);
+        }
+        #endregion
 
 
     }
