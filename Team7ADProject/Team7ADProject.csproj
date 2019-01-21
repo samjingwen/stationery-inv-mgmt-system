@@ -292,14 +292,13 @@
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestWrapperViewModel.cs" />
-    <Compile Include="ViewModels\RequestedItemViewModel.cs" />
-    <Compile Include="ViewModels\StationeryDisbursementViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
     <Compile Include="ViewModels\StationeryRetrievalViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Error.css" />
     <Content Include="Content\images\CollPoint\cpImage_1.png" />
     <Content Include="Content\images\CollPoint\cpImage_2.png" />
     <Content Include="Content\images\CollPoint\cpImage_3.png" />
@@ -316,6 +315,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\text.png" />
     <Content Include="Content\login\css\main.css" />
     <Content Include="Content\login\css\util.css" />
     <Content Include="Content\login\fonts\font-awesome-4.7.0\css\font-awesome.css" />
@@ -583,7 +583,6 @@
     <Content Include="Views\ApproveAdjustment\Index.cshtml" />
     <Content Include="Views\ApproveAdjustment\AdjDetails.cshtml" />
     <Content Include="Views\ManageRequest\Index.cshtml" />
-    <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDate\Details.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDateDepartment\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -592,13 +591,14 @@
     <Content Include="Views\ManagePoint\ViewAll.cshtml" />
     <Content Include="Views\ManagePoint\Index.cshtml" />
     <Content Include="Views\ManagePoint\AddOrEdit.cshtml" />
+    <Content Include="Views\ManagePostponeCollectionDateDepartment\Details.cshtml" />
+    <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
-    <Folder Include="Views\PostponeCollectionDateDepartment\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
     <Folder Include="Views\ReturnWarehouse\" />

@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace Team7ADProjectAPI
+namespace Team7ADProjectApi
 {
     public class FilterConfig
     {

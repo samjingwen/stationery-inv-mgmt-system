@@ -3,44 +3,79 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
 
-        window.onload = function () {
-            var disbChart = new CanvasJS.Chart("DisbChart", {
-                animationEnabled: true,
-                theme: "light1",
-                title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.title)) },
-                axisY: {valueFormatString: "#,###", prefix: "$"},
-                data: [{
-                    type: "column",
-                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.datapoint))
-                }]
-            });
+    window.onload = function () {
 
-            var disbStatChart = new CanvasJS.Chart("DisbStat", {
-                animationEnabled: true,
-                theme: "light1",
-                title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.title)) },
-                axisY: { valueFormatString: "#,###", prefix: "$" },
-                data: [{
-                    type: "bar",
-                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.datapoint))
+        var disbChart = new CanvasJS.Chart("DisbChart", {
+            animationEnabled: true,
+            theme: "light1",
+            exportEnabled: true,
+            title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.title)) },
+            axisY: { valueFormatString: "#,###", prefix: "$" },
+            data: [{
+                type: "column",
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.datapoint))
                 }]
-            });
+        });
 
-            var disbTimeChart = new CanvasJS.Chart("DisbTime", {
-                animationEnabled: true,
-                title: {
-                    text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.stattimeDP.title))
+        var disbStatChart = new CanvasJS.Chart("DisbStat", {
+            animationEnabled: true,
+            theme: "light1",
+            exportEnabled: true,
+            title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.title)) },
+            axisY: { valueFormatString: "#,###", prefix: "$" },
+            data: [{
+                type: "bar",
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.datapoint))
+                }]
+        });
+
+        var disbTimeChart = new CanvasJS.Chart("DisbTime", {
+            animationEnabled: true,
+            exportEnabled: true,
+            zoomEnabled: true,
+            title: {
+                text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.stattimeDP.title))
                 },
-                data: [{
+            data: [
+                {
                     type: "line",
-                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.stattimeDP.datapoint))
-                }]
-            });
+                    showInLegend: true,
+                    name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[0].label)),
+                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[0].datapoint))
+                }@*, {type: "line",
+                    showInLegend: true,
+                    name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[1].label)),
+                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[1].datapoint))
+                    }*@]
+        });
 
-            disbChart.render();
-            disbStatChart.render();
-            disbTimeChart.render();
+        var namearr = new Array();
+        var dxparr = new Array();
+
+        @foreach(var i in Model.data)
+        {
+            @:namearr.push("@i.label");
+            var pt = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(i.datapoint));
+            @:dxparr.push(@pt);
+            
         }
+
+        for (i = 1; i < namearr.length; i++) {
+            var newSeries = {
+                name: namearr[i],
+                showInLegend: true,
+                type: "line",
+                dataPoints: dxparr[i]             
+             };
+        
+            disbTimeChart.options.data.push(newSeries);
+        }
+
+        disbChart.render();
+        disbStatChart.render();
+        disbTimeChart.render();
+
+    };
 </script>
 <div style="width:80%;">
     <div id="DisbChart" style="height: 250px; width:49%; float:left; padding-right:10px;">

@@ -4,89 +4,349 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@*Select Items*@
+<div class="modal fade" id="newItemModal">
+    <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4>Add New Item</h4>
+            </div>
+            <form id="NewItemForm">
+                <div class="modal-body">
+                    @*Item Details*@
+                    <h5 style="margin-top:10px;color:#ff6347">Item Details</h5>
+                    <hr />
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Product Category
+                            </label>
+                            <div class="col-md-4">
+                                <select class="form-control" name="category" id="category"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Item Description
+                            </label>
+                            <div class="col-md-4">
+                                <select class="form-control table2" name="description" id="description"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Unit of measure
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">
+                                Quantity
+                            </label>
+                            <div class="col-md-4">
+                                <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="1" />
+                            </div>
+                            <div class="col-md-2 col-lg-offset-4">
+                                <a id="addToList" class="btn btn-primary">Add To List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-@using (Html.BeginForm("Save", "ValidateInvoice"))
-{
-    @Html.ValidationSummary(true, "Please fix the following errors.")
-    <div class="form-group">
+
+@*Invoice Information*@
+<div class="form-group">
+    <form name="invoiceForm">
         <table>
             <tr>
-                <td>@Html.Label("No Of DeliveryOrder")</td>
-                @*<td>
-                    <button id="decrease" onclick="decreaseValue()">-</button>
-                    <input type="number" id="number" value="0" />
-                    <button id="increase" onclick="increaseValue()" value="Increase Value">+</button>
-                </td>*@
-                <td>  @Html.DropDownListFor(m => m.Invoice.SupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Supplier", null)</td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Invoice.InvoiceId)</td>
                 <td>
-                    @Html.EditorFor(m => m.Invoice.InvoiceId, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => m.Invoice.InvoiceId)
+                    <label class="control-label col-md-2">Invoice No</label>
                 </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Invoice.InvoiceNo)</td>
                 <td>
-                    @Html.EditorFor(m => m.Invoice.InvoiceNo, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => m.Invoice.InvoiceNo)
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Invoice.InvoiceDate)</td>
-                <td>
-                    @Html.EditorFor(m => m.Invoice.InvoiceDate)
-                    @Html.ValidationMessageFor(m => m.Invoice.InvoiceDate)
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Invoice.SupplierId)</td>
-                <td>
-                    @Html.DropDownListFor(m => m.Invoice.SupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Supplier", null)
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Invoice.InvoiceAmount)</td>
-                <td>
-                    @Html.EditorFor(m => m.Invoice.InvoiceAmount, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => m.Invoice.InvoiceAmount)
+                    <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo">
                 </td>
             </tr>
             <tr>
                 <td>
-                    @Html.Label("Item")
-                    <button  type="button" onclick="create(1)">+</button>
+                    <label class="control-label col-md-2">SupplierId</label>
                 </td>
-                <td> <div id="screens"></div></td>
+                <td>
+                    <select class="form-control" name="SupplierId" id="SupplierId"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="control-label col-md-2">InvoiceAmount</label>
+                </td>
+                <td>
+                    <input type="text" id="InvoiceAmount" class="form-control" name="InvoiceAmount">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="control-label col-md-2">DelOrderId</label>
+                </td>
+                <td>
+                    <input type="text" id="DelOrderId" class="form-control" name="DelOrderId">
+                </td>
             </tr>
         </table>
-    </div>
-    @Html.AntiForgeryToken()
-    <button type="submit" onclick="" class="btn btn-primary">Save</button>
-}
 
-<script>
-    function increaseValue() {
-        var value = parseInt(document.getElementById('number').value, 10);
-        value = isNaN(value) ? 0 : value;
-        value++;
-        document.getElementById('number').value = value;
-    }
-    function create(param) {
-        var s = ""; 
-        for (var i = 0; i < param; i++) {
-            s += '<input type="text" name="Fname">'; //Create one textbox as HTML
+
+        <table id="detailsTable" class="table">
+            <thead>
+                <tr>
+                    <th style="width:30%">Item ID</th>
+                    <th style="width:30%">Item Description</th>
+                    <th style="width:20%">Product Category</th>
+                    <th style="width:15%">Quantity</th>
+                    <th style="width:25%">Unit of measure</th>
+                    <th style="width:10%"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </form>
+</div>
+@Html.AntiForgeryToken()
+<button style="margin-right:10px" class="btn btn-primary pull-right" onclick="addNewItem()">Add Item</button>
+<button style="margin-right:10px" id="saveInvoice" class="btn btn-primary pull-right">  Save  </button>
+
+
+
+
+@section scripts
+              {
+    @*@*invoice validation*@
+     <script>
+            $("#saveInvoice").click(function (e) {
+                e.preventDefault();
+
+                var InvoiceNo = document.forms["invoiceForm"]["InvoiceNo"];
+                if (InvoiceNo.value == "") {
+                  $("#InvoiceNo").css("borderColor","red");
+                    InvoiceNo.focus();
+                    return false;
+                }
+                var SupplierId = document.forms["invoiceForm"]["SupplierId"];
+                if (SupplierId.value == "Select Supplier") {
+                    $("#SupplierId").css("borderColor", "red");
+                    SupplierId.focus();
+                    return false;
+                }
+                var InvoiceAmount = document.forms["invoiceForm"]["InvoiceAmount"];
+                if (InvoiceAmount.value == "") {
+                    $("#InvoiceAmount").css("borderColor", "red");
+                    InvoiceAmount.focus();
+                    return false;
+                }
+                var DelOrderId = document.forms["invoiceForm"]["DelOrderId"];
+                if (DelOrderId.value == "") {
+                    //alert("DelOrder Id must be filled out");
+                    $("#DelOrderId").css("borderColor", "red");
+                    DelOrderId.focus();
+                    return false;
+                }
+                return true;
+         });
+
+         $("#InvoiceNo").change(function () {
+             $("#InvoiceNo").css("borderColor","")
+         });
+         $("#SupplierId").change(function () {
+         
+             $("#SupplierId").css("borderColor", "")
+         });
+         $("#InvoiceAmount").change(function () {
+        
+             $("#InvoiceAmount").css("borderColor", "")
+         });
+         $("#DelOrderId").change(function () {
+         
+             $("#DelOrderId").css("borderColor", "")
+         });
+
+        </script>
+
+    @*load suppilerlist*@
+    <script>
+        var $dropdown0 = $("select[name='SupplierId']");
+        loadSupplierId();
+        function loadSupplierId() {
+            $dropdown0.empty();
+            $dropdown0.append('<option>Select Supplier</option>');
+            $dropdown0.prop('selectedIndex', 0);
+            $.ajax({
+                url: '../api/stationeries/suppliers/',
+                type: 'GET',
+                dataType: 'json',
+                success: function (j) {
+                    $.each(j, function (i, value) {
+                        $dropdown0.append($('<option>').text(value).attr('value', value));
+                    });
+                }
+            });
         }
-        document.getElementById("screens").innerHTML = s;
-    }
+    </script>
+    @*load dropdown list*@
+    <script>
+        var $dropdown1 = $("select[name='category']");
+        var $dropdown2 = $("select[name='description']");
+        loadItem();
+        function loadItem() {
+            $dropdown1.empty();
+            $dropdown2.empty();
+            $('#quantity').val("");
+            $dropdown1.append('<option>Select Category</option>');
+            $dropdown2.append('<option>Select Item</option>');
+            $dropdown1.prop('selectedIndex', 0);
+            $dropdown2.prop('selectedIndex', 0);
+            $.ajax({
+                url: '../api/stationeries/categories/',
+                type: 'GET',
+                dataType: 'json',
+                success: function (j) {
+                    $.each(j, function (i, value) {
+                        $dropdown1.append($('<option>').text(value).attr('value', value));
+                    });
+                }
+            });
+        }
+        //Load 2nd list
+        $dropdown1.change(function () {
+            $dropdown2.empty();
+            $dropdown2.append('<option>Select Item</option>');
+            $.ajax({
+                url: '../api/stationeries/categories/' + $dropdown1.val(),
+                type: 'GET',
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
+                    });
+                }
+            });
+        });
+        //Load unit of measure
+        $dropdown2.change(function () {
+            $.ajax({
+                url: '../api/stationeries/item/' + $dropdown2.val(),
+                type: 'GET',
+                dataType: 'json',
+                success: function (json) {
+                    $("#uom").val(json);
+                }
+            });
+        });
+    </script>
+    @*script for popup*@
+    <script>
+        //Show Modal.
+        function addNewItem() {
+            $("#newItemModal").modal();
+        }
+        //Add Multiple Order.
+        $("#addToList").click(function (e) {
+            e.preventDefault();
 
-    function decreaseValue() {
-        var value = parseInt(document.getElementById('number').value, 10);
-        value = isNaN(value) ? 0 : value;
-        value < 1 ? value = 1 : '';
-        value--;
-        document.getElementById('number').value = value;
-    }</script>
+            if ($.trim($("#category").val()) == "Select Category") {
+                $("#category").css("borderColor", "red");
+                return;
+            }
+           if ($.trim($("#description").val()) == "Select Item")
+        {
+               $("#description").css("borderColor", "red");
+                return;
+        }
+            if ($.trim($("#quantity").val()) == "")
+            {
+                $("#quantity").css("borderColor", "red");
+                return;
+            }
+            var itemid = $dropdown2.val(),
+                description = $("#description").val(),
+                category = $("#category").val(),
+                quantity = $("#quantity").val(),
+                unitOfMeasure = $("#uom").val(),
+                name = $("#description option:selected").text(),
+                detailsTableBody = $("#detailsTable tbody");
+
+            var requestItem = '<tr><td style="display:none;">' + itemid + '</td><td>' + description + '</td><td>' + name + '</td><td>' + category + '</td><td>' + quantity + '</td><td>' + unitOfMeasure + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+            detailsTableBody.append(requestItem);
+            loadItem();
+        });
+        // After Add A New Order In The List, If You Want, You Can Remove It.
+        $(document).on('click', 'a.deleteItem', function (e) {
+            e.preventDefault();
+            $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800);
+        });
+        //
+        ///
+        /////
+        //Collect Multiple TD For Pass To Controller
+        $("#saveInvoice").click(function (e) {
+            e.preventDefault();
+            //
+            var requestArr = [];
+            requestArr.length = 0;
+            var invoiceArr = [];
+            invoiceArr.length = 0;
+            invoiceArr.push({
+                invoiceno: $("#InvoiceNo").val(),
+                supplierid: $("#SupplierId").val(),
+                invoiceamount: $("#InvoiceAmount").val(),
+                delorderid: $("#DelOrderId").val()
+            });
+            $.each($("#detailsTable tbody tr"), function () {
+                requestArr.push({
+                    itemid: $(this).find('td:eq(0)').html(),
+                    quantity: $(this).find('td:eq(4)').html(),
+                    transactionref: $("#InvoiceId").val(),
+                });
+            });
 
 
+            var data = JSON.stringify({
+                invoice: invoiceArr,
+                requests: requestArr
+            });
+
+            //After Click Save Button Pass All Data View To Controller For Save Database
+            //
+            function saveInvoice(data) {
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: "../ValidateInvoice/Create",
+                    data: data,
+                    success: function (result) {
+                        alert(result);
+                        if (result == "Success! Invoice Is Complete!")
+                        {
+                            location.reload();
+                        }
+                    },
+                    error: function () {
+                        alert("Can not Create!Please check");
+                    }
+                });
+            }
+            //
+            $.when(saveInvoice(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+    </script>
+
+
+}

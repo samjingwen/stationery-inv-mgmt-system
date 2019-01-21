@@ -6,7 +6,7 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 
-namespace Team7ADProjectAPI
+namespace Team7ADProjectApi
 {
     public static class WebApiConfig
     {
@@ -25,7 +25,6 @@ namespace Team7ADProjectAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
         }
     }
 }

@@ -3,9 +3,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using Team7ADProjectAPI.Models;
+using Team7ADProjectApi.Models;
 
-namespace Team7ADProjectAPI
+namespace Team7ADProjectApi
 {
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
 
