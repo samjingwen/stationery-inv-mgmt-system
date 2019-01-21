@@ -290,6 +290,12 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\CommonService.cs" />
+    <Compile Include="Service\DisbursementService.cs" />
+    <Compile Include="Service\GeneralMgmtService.cs" />
+    <Compile Include="Service\InventoryMgmtService.cs" />
+    <Compile Include="Service\ProcurementService.cs" />
+    <Compile Include="Service\StationeryRequestService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\Api\AdjustmentApiViewModel.cs" />

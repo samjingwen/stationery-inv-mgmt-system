@@ -18,6 +18,7 @@ namespace Team7ADProjectApi.Controllers
         //    GlobalClass gc = new GlobalClass();
         //    return gc.ListDepartment(id);
         //}
+
         GlobalClass gc = new GlobalClass();
 
         [HttpGet]
