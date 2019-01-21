@@ -4,9 +4,9 @@ using System.Linq;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(Team7ADProjectAPI.Startup))]
+[assembly: OwinStartup(typeof(Team7ADProjectApi.Startup))]
 
-namespace Team7ADProjectAPI
+namespace Team7ADProjectApi
 {
     public partial class Startup
     {

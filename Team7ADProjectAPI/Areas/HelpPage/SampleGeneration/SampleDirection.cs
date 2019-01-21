@@ -1,4 +1,4 @@
-namespace Team7ADProjectAPI.Areas.HelpPage
+namespace Team7ADProjectApi.Areas.HelpPage
 {
     /// <summary>
     /// Indicates whether the sample is used for request or response

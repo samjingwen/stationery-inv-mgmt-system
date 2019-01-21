@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Team7ADProjectAPI
+namespace Team7ADProjectApi
 {
     public class RouteConfig
     {
