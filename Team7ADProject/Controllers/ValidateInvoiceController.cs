@@ -24,6 +24,7 @@ namespace Team7ADProject.Controllers
             _context.Dispose();
         }
         // GET: ValidateInvoice
+        [Authorize(Roles = "Store Clerk")]
         public ActionResult Index()
         {
             var suppliers = _context.Supplier.Distinct().ToList();
@@ -37,6 +38,7 @@ namespace Team7ADProject.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Store Clerk")]
         public ActionResult Create(Invoice[] invoice, TransactionDetail[] requests)
         {
             string result = "Error! Invoice is not complete.";
