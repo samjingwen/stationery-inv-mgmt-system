@@ -237,7 +237,7 @@
         $("#addToList").click(function (e) {
             e.preventDefault();
 
-            if ($.trim($("#category").val()) == "" || $.trim($("#description").val()) == "" || $.trim($("#quantity").val()) == "") return;
+            if ($.trim($("#category").val()) == "Select Category" || $.trim($("#description").val()) == "Select Item" || $.trim($("#quantity").val()) == "") return;
             var itemid = $dropdown2.val(),
                 description = $("#description").val(),
                 category = $("#category").val(),
