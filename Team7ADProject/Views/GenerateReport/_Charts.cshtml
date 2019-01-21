@@ -3,39 +3,148 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
 
-        window.onload = function () {
-            var disbChart = new CanvasJS.Chart("DisbChart", {
-                animationEnabled: true,
-                theme: "light1",
-                title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.title)) },
-                axisY: {valueFormatString: "#,###", prefix: "$"},
-                data: [{
-                    type: "column",
-                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.datapoint))
+    window.onload = function () {
+        var disbChart = new CanvasJS.Chart("DisbChart", {
+            animationEnabled: true,
+            theme: "light1",
+            exportEnabled: true,
+            title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.title)) },
+            axisY: { valueFormatString: "#,###", prefix: "$" },
+            data: [{
+                type: "column",
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.deptDP.datapoint))
                 }]
-            });
+        });
 
-            var disbStatChart = new CanvasJS.Chart("DisbStat", {
-                animationEnabled: true,
-                theme: "light1",
-                title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.title)) },
-                axisY: { valueFormatString: "#,###", prefix: "$" },
-                data: [{
-                    type: "bar",
-                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.datapoint))
+        var disbStatChart = new CanvasJS.Chart("DisbStat", {
+            animationEnabled: true,
+            theme: "light1",
+            exportEnabled: true,
+            title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.title)) },
+            axisY: { valueFormatString: "#,###", prefix: "$" },
+            data: [{
+                type: "bar",
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.datapoint))
                 }]
-            });
+        });
 
-            var disbTimeChart = new CanvasJS.Chart("DisbTime", {
-                animationEnabled: true,
-                title: {
-                    text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.stattimeDP.title))
+        var disbTimeChart = new CanvasJS.Chart("DisbTime", {
+            animationEnabled: true,
+            exportEnabled: true,
+            zoomEnabled: true,
+            title: {
+                text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.stattimeDP.title))
                 },
-                data: [{
-                    type: "line",
-                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.stattimeDP.datapoint))
-                }]
-            });
+            data: [{
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[0].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[0].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[1].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[1].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[2].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[2].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[3].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[3].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[4].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[4].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[5].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[5].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[6].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[6].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[7].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[7].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[8].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[8].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[9].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[9].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[10].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[10].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[11].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[11].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[12].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[12].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[13].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[13].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[14].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[14].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[15].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[15].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[16].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[16].datapoint))
+                },
+                {
+                type: "line",
+                showInLegend: true,
+                name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[17].label)),
+                dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[17].datapoint))
+                }
+            ]
+        });
 
             disbChart.render();
             disbStatChart.render();

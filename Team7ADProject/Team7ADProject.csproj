@@ -225,7 +225,6 @@
     <Compile Include="Controllers\ManagePostponeCollectionDateController.cs" />
     <Compile Include="Controllers\ManagePostponeCollectionDateDepartmentController.cs" />
     <Compile Include="Controllers\ManageRepController.cs" />
-    <Compile Include="Controllers\ManageRequestController.cs" />
     <Compile Include="Controllers\ManageRetrievalController.cs" />
     <Compile Include="Controllers\ManageStationeryController.cs" />
     <Compile Include="Controllers\ManageSupplierController.cs" />
@@ -292,8 +291,6 @@
     <Compile Include="ViewModels\RaiseRequestViewModel.cs" />
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestWrapperViewModel.cs" />
-    <Compile Include="ViewModels\RequestedItemViewModel.cs" />
-    <Compile Include="ViewModels\StationeryDisbursementViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
@@ -583,7 +580,6 @@
     <Content Include="Views\ApproveAdjustment\Index.cshtml" />
     <Content Include="Views\ApproveAdjustment\AdjDetails.cshtml" />
     <Content Include="Views\ManageRequest\Index.cshtml" />
-    <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDate\Details.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDateDepartment\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -592,6 +588,8 @@
     <Content Include="Views\ManagePoint\ViewAll.cshtml" />
     <Content Include="Views\ManagePoint\Index.cshtml" />
     <Content Include="Views\ManagePoint\AddOrEdit.cshtml" />
+    <Content Include="Views\ManagePostponeCollectionDateDepartment\Details.cshtml" />
+    <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
