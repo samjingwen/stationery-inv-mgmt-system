@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Xml.XPath;
-using Team7ADProjectAPI.Areas.HelpPage.ModelDescriptions;
+using Team7ADProjectApi.Areas.HelpPage.ModelDescriptions;
 
-namespace Team7ADProjectAPI.Areas.HelpPage
+namespace Team7ADProjectApi.Areas.HelpPage
 {
     /// <summary>
     /// A custom <see cref="IDocumentationProvider"/> that reads the API documentation from an XML documentation file.

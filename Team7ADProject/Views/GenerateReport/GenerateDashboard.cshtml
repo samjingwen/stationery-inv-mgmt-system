@@ -18,7 +18,6 @@
 
 
     <script>
-      
         $(function () {
 
             $("#fromDateTP").datepicker({
@@ -55,6 +54,25 @@
                     $(this).valid();
                 }
             });
+
+            if ($('#module').change(function () {
+                if ($(this).val() == 'Retrieval') {
+                    $('#deptselect').hide();
+                    $('#supplierselect').hide();
+                    $('#employeeselect').show();
+                }
+            
+                else if ($(this).val() == 'Purchases') {
+                    $('#deptselect').hide();
+                    $('#supplierselect').show();
+                    $('#employeeselect').hide();
+                }
+                else {
+                    $('#deptselect').show();
+                    $('#supplierselect').hide();
+                    $('#employeeselect').hide();
+                }
+            }));
         });
     </script>
 
@@ -103,24 +121,47 @@
             <p>
                 <input type="text" required name="toDateTP" id="toDateTP" onkeypress="return false;">
             </p>
-            <p>
-                Select Stationery Categories:
-            </p>
-            <p>
-                @foreach (var item in Model.statcategory)
-                {
-                    <input type="checkbox" name="selstatcat" value="@item" id="selstatcat" /><label for="@item">@item</label><br />
-                }
-            </p>
-            <p>
-                Select Department:
-            </p>
-            <p>
-                @foreach (var item in Model.entcategory)
-                {
-                    <input type="checkbox" name="seldeptcat" value="@item" id="seldeptcat" /><label for="@item">@item</label><br />
-                }
-            </p>
+            <details>
+                <summary style="background-color:#788F9E; color:snow">
+                    <p>
+                        <b>Stationery Categories:</b>
+                    </p>
+                </summary>
+                <div></div>
+                <p>
+                    @foreach (var item in Model.statcategory)
+                    {
+                        <input type="checkbox" name="selstatcat" value="@item" id="selstatcat" /><label for="@item">@item</label><br />
+                    }
+                </p>
+            </details>
+            <details>
+                <summary style="background-color:#788F9E; color:snow">
+                    <p>
+                        <b>Select Entity:</b>
+                    </p>
+                </summary>
+                <p>
+                    <div id="deptselect">
+                        @foreach (var item in Model.entcategory)
+                        {
+                            <input type="checkbox" name="seldeptcat" value="@item" id="selectdeptcat" /><label for="@item">@item</label><br />
+                        }
+                    </div>
+                    <div id="employeeselect" hidden>
+                        @foreach (var item in Model.employee)
+                        {
+                            <input type="checkbox" name="seleecat" value="@item" id="selectemployee" /><label for="@item">@item</label><br />
+                        }
+                    </div>
+                    <div id="supplierselect" hidden>
+                        @foreach (var item in Model.supplier)
+                        {
+                            <input type="checkbox" name="selsscat" value="@item" id="selectsupplier" /><label for="@item">@item</label><br />
+                        }
+                    </div>
+                </p>
+            </details>
             <input type="submit" id="filterBtn" value="Filter" />
         </form>
     </div>

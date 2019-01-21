@@ -9,64 +9,136 @@ using Microsoft.AspNet.Identity;
 using System.Net;
 using System.Text;
 
+
+//Authors Zan Tun Khine
 namespace Team7ADProject.Controllers
 {
     //For SC to raise PO
     public class RaiseOrderController : Controller
     {
 
-        private LogicDB _context;
+        private LogicDB _context = new LogicDB();
 
-        public RaiseOrderController()
-        {
-            _context = new LogicDB();
-        }
+        #region Zan Tun Khine
 
-        //[Authorize(Roles = "Store Supervisor")]
-        // GET: RaiseOrder
+        [Authorize(Roles = "Store Clerk")]
+        #region For the Store Staff To View His/Her Own POs
         public ActionResult Index()
         {
+            string userId = User.Identity.GetUserId();
+            var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
+            ViewBag.CurrentUser = query.EmployeeName;
+            List<PurchaseOrder> purchaseOrder = _context.PurchaseOrder.Where(x => x.OrderedBy == userId).ToList();
+            if (purchaseOrder.Count() == 0)
+            {
+                ViewBag.error = "No Records Found!";
+
+            }
+            return View(purchaseOrder);
+
+        }
+        #endregion
+
+        #region For the Store Staff To Raise PO
+        public ActionResult RaisePo()
+        {
+
             //load supplier
             var suppliers = _context.Supplier.ToList();
             var stationeries = _context.Stationery.ToList();
-
             RaisePOViewModel viewModel = new RaisePOViewModel();
             viewModel.Suppliers = suppliers;
             viewModel.Stationeries = stationeries;
-
             viewModel.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + GetSerialNumber();
-            //viewModel.PONo = GetSerialNumber().ToString();
             ViewBag.PoNo = viewModel.PONo;
             viewModel.Categories = _context.Stationery.Select(m => m.Category).Distinct().ToList();
-
-            //ViewBag.Cate = _context.Stationery.Select(m => m.Category).Distinct().ToList();
-
-
             return View(viewModel);
         }
 
-        #region // For the Store Staff To View His/Her Own POs
-        public ActionResult ViewPo()
-        {
-            // to get the user ID of the current user
-            string userId = "5042e8ca-ef83-4458-a78c-07e4f6ba0d1d";// User.Identity.GetUserId();
-            // var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
-            //ViewBag.UserName = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId).UserName;
-            var po = _context.PurchaseOrder.Where(x => x.OrderedBy == userId).ToList().
-                Select(x => new RaisePOViewModel()
-                {
-                    PONo = x.PONo,
-                    SupplierId = x.SupplierId,
-                    ApprovedBy = x.ApprovedBy,
-                    Amount = x.Amount,
-                    Date = x.Date,
-                    Status = x.Status
-                }
-                );
+        #region Save POs
+        //add transaction details input by clerk
 
-            return View(po);
+        [HttpPost]
+        public ActionResult Save(RaisePOViewModel[] poModel)
+        {
+            //Validation
+            string result = "Error! Request Failed!";
+
+            bool validQuantity = false;
+            for (int i = 0; i < poModel.Length; i++)
+            {
+                validQuantity = poModel[i].Quantity > 0;
+                if (validQuantity != true)
+                    break;
+            }
+            if (!validQuantity)
+            {
+                result = "Invalid input! Kindly raise a valid request!";
+            }
+
+
+            //Creating new entries
+            else
+            {
+
+                // to get the user ID of the current user
+                string userId = User.Identity.GetUserId();
+                var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
+
+                // to get the list of suppliers
+                List<String> uniqueSupplier = poModel.Select(m => m.SupplierId).Distinct().ToList();
+
+                foreach (String current in uniqueSupplier)
+                {
+                    string newPOnum = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + GetSerialNumber();
+
+                    // List<RaisePOViewModel> raisePOs = new List<RaisePOViewModel>();
+                    decimal? amount = 0;
+                    foreach (var po in poModel)
+                    {
+                        if (po.SupplierId == current)
+                        {
+                            decimal? total = (po.Quantity * po.UnitPrice);
+
+                            amount = amount + total;
+                            TransactionDetail newTD = new TransactionDetail
+                            {
+                                //TransactionId = 12312,
+                                ItemId = po.Description,
+                                Quantity = po.Quantity,
+                                Remarks = "Pending Approval",
+                                TransactionRef = newPOnum,
+                                TransactionDate = DateTime.Today,
+                                UnitPrice = po.UnitPrice
+                            };
+                            _context.TransactionDetail.Add(newTD);
+                            _context.SaveChanges();
+                            //raisePOs.Add(po);
+                        }
+                    }
+                    PurchaseOrder newPO = new PurchaseOrder()
+                    {
+                        PONo = newPOnum,
+                        SupplierId = current,
+                        OrderedBy = query.Id,
+                        ApprovedBy = null,
+                        Amount = Convert.ToDecimal(amount),
+                        Date = DateTime.Today,
+                        Status = "Pending Approval"
+                    };
+
+                    _context.PurchaseOrder.Add(newPO);
+                    _context.SaveChanges();
+
+                }
+                result = "success";
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+
+        #endregion
         #endregion
 
         #region Generate Running Number
@@ -83,79 +155,34 @@ namespace Team7ADProject.Controllers
 
         #endregion
 
-
-        //[HttpGet]
-        //public JsonResult GetStatList(string category)
-        //{
-        //    _context.Configuration.ProxyCreationEnabled = false;
-        //    var stationeries = _context.Stationery.Where(x => x.Category == category).ToList();
-
-        //    List<String> itemlist = new List<string>();
-        //    foreach (Stationery stat in stationeries)
-        //    {
-        //        itemlist.Add(stat.Description);
-        //    }
-
-        //    return Json(itemlist, JsonRequestBehavior.AllowGet);
-
-        //}
-
-        [HttpPost]
-        public string Save(RaisePOViewModel poModel)
-        {
-            // to get the user ID of the current user
-            string userId = User.Identity.GetUserId();
-            var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
-
-            poModel.OrderedBy = query.Id; //logic to get from login user
-            poModel.ApprovedBy = null;
-
-            //add transaction details input by clerk
-
-            PurchaseOrder newPO = new PurchaseOrder();
-            TransactionDetail newTD = new TransactionDetail();
-
-            newPO.PONo = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + GetSerialNumber();
-            newPO.OrderedBy = poModel.OrderedBy;
-            newPO.ApprovedBy = poModel.ApprovedBy;
-            newPO.SupplierId = poModel.SupplierId;     // from view
-            newPO.Amount = (decimal)(poModel.Quantity * poModel.UnitPrice);
-            newPO.Date = DateTime.Now;
-            newPO.Status = "Pending Approval";
-
-            newTD.TransactionDate = newPO.Date;
-            newTD.Quantity = poModel.Quantity;          // from view
-            newTD.Remarks = poModel.Remarks;            // from view
-            newTD.TransactionRef = newPO.PONo;
-            newTD.TransactionDate = newPO.Date;
-            newTD.UnitPrice = poModel.UnitPrice;        // from view
-            newTD.ItemId = "C001";// poModel.ItemId;              // from view
-
-            newPO.TransactionDetail.Add(newTD);
-            _context.PurchaseOrder.Add(newPO);
-
-            _context.SaveChanges();
-            //return View("Index");//check if naming is correct
-            return "success";
-        }
-
         #region View Details of PO
         // GET: RaiseOrder/Details/id
+        [HttpGet]
         public ActionResult Details(string poNo)
         {
+            PurchaseOrder purchaseOrder = _context.PurchaseOrder.SingleOrDefault(x => x.PONo == poNo);
+            List<TransactionDetail> transactionDetail = _context.TransactionDetail.Where(c => c.TransactionRef == poNo).ToList();
+
             if (poNo == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            PurchaseOrder purchaseOrder = _context.PurchaseOrder.SingleOrDefault(x => x.PONo == poNo);
-            List<TransactionDetail> transactionDetail = _context.TransactionDetail.Where(c => c.TransactionRef == poNo).ToList();
             if (purchaseOrder == null)
-            { return HttpNotFound(); }
-            var poDetailsViewModel = new PoDetailsViewModel
-            { PurchaseOrder = purchaseOrder, PODetails = transactionDetail };
+
+            {
+                return HttpNotFound();
+            }
+
+            var poDetailsViewModel = new RaisePOViewModel
+            {
+                PurchaseOrder = purchaseOrder,
+                PODetails = transactionDetail
+            };
             return View(poDetailsViewModel);
         }
+        #endregion
+
         #endregion
 
     }

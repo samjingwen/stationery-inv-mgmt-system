@@ -29,11 +29,25 @@ namespace Team7ADProject.ViewModels
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "Description")]
         public string CollectionDescription { get; set; }
 
         [Required]
         [RegularExpression(pattern:"\\d{1,2}:\\d{2}\\s*(AM|PM)",ErrorMessage = "Please enter a valid time.")]
         public string Time { get; set; }
+
+        [StringLength(256)]
+        [Display(Name = "Image")]
+        public string CPImagePath { get; set; }
+
+        public HttpPostedFileBase ImageUpload { get; set; }
+
+        public ManagePointViewModel()
+        {
+            CPImagePath = "~/Content/images/imageupload.png";
+        }
+
+
     }
     #endregion
 

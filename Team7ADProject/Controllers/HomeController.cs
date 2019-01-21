@@ -25,5 +25,11 @@ namespace Team7ADProject.Controllers
 
             return View();
         }
+
+        [HandleError]
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }

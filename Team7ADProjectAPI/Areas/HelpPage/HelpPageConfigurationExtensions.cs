@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using Team7ADProjectAPI.Areas.HelpPage.ModelDescriptions;
-using Team7ADProjectAPI.Areas.HelpPage.Models;
+using Team7ADProjectApi.Areas.HelpPage.ModelDescriptions;
+using Team7ADProjectApi.Areas.HelpPage.Models;
 
-namespace Team7ADProjectAPI.Areas.HelpPage
+namespace Team7ADProjectApi.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

@@ -9,6 +9,7 @@ namespace Team7ADProject.ViewModels.GenerateReport
     [DataContract]
     public class StringDoubleDPViewModel
     {
+
         public StringDoubleDPViewModel(string label, double y)
         {
             this.Label = label;

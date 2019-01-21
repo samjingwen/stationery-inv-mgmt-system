@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using Team7ADProjectAPI.Areas.HelpPage.ModelDescriptions;
-using Team7ADProjectAPI.Areas.HelpPage.Models;
+using Team7ADProjectApi.Areas.HelpPage.ModelDescriptions;
+using Team7ADProjectApi.Areas.HelpPage.Models;
 
-namespace Team7ADProjectAPI.Areas.HelpPage.Controllers
+namespace Team7ADProjectApi.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

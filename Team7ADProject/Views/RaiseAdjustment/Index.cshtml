@@ -1,4 +1,4 @@
-﻿@model Team7ADProject.ViewModels.AdjustmentViewModel
+﻿
 @{
     ViewBag.Title = "Index";
 }
@@ -13,50 +13,256 @@
 <body>
     <h2>Stock Adjustment</h2>
 
-    @using (Html.BeginForm("Confirm", "RaiseAdjustment"))
-    {
-        <div>
-            <table class="table">
-                <tr>
-                    <th>
-                        Category
-                    </th>
-                    <th>
-                        Item Description
-                    </th>
-                    <th>
-                        Quantity
-                    </th>
-                    <th>
-                        Current Stock
-                    </th>
-                    <th>
-                        Amount
-                    </th>
-                </tr>
-
-                <tr>
-                    <td>
-                        @Html.DropDownList("Category",
-                       new SelectList(Team7ADProject.ViewModels.AdjustmentViewModel.Items.Select(x => x.Category).Distinct()),
-                       "Select Category"  )
-                    </td>
-                    <td>
-                        @Html.DropDownListFor(model=>model.Detail[Model.Detail.Count].ItemId,
-                       new SelectList(Team7ADProject.ViewModels.AdjustmentViewModel.Items,"ItemId","description"),
-                       "Select Item"  )
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(model => model.Detail.Last().Quantity)
-                    </td>
-                    <td>
-                        @Html.DisplayTextFor(model => model.Detail.Last().Stationery.QuantityWarehouse)
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
+    <div class="modal fade" id="newItemModal">
+        <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4>Add Item</h4>
+                </div>
+                <form id="NewItemForm">
+                    <div class="modal-body">
+                        <h5 style="margin-top:10px;color:#ff6347">Item Details</h5>
+                        <hr />
+                        <div class="form-horizontal">
+                            <input type="hidden" id="ItemId" />
+                            <div class="form-group">
+                                <label class="control-label col-md-2">
+                                    Product Category
+                                </label>
+                                <div class="col-md-4">
+                                    <select class="form-control" name="category" id="category"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">
+                                    Item Description
+                                </label>
+                                <div class="col-md-4">
+                                    <select class="form-control table2" name="description" id="description"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">
+                                    Unit of measure
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
+                                </div>
+                                <div hidden="hidden">
+                                    <input type="text" id="stockQuantity" readonly="readonly" hidden ="hidden"/>
+                                    <input type="text" id="price" readonly="readonly" hidden="hidden" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">
+                                    Quantity
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="addToList" class="btn btn-primary">Add To List</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Confirm</button>
-    }
+    </div>
+
+    <button id="addItem" onclick="addNewItem()" class="btn btn-secondary pull-right">Add Item</button>
+
+    <form id="raiseAdjustmentForm">
+        <table id="adjustmentTable" class="table">
+            <tr>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Item Description
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Current Stock
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th></th>
+            </tr>
+        </table>
+        <button id="saveAdjustment" type="submit" class="btn btn-primary pull-right">Save Adjustment</button>
+    </form>
 </body>
 </html>
+
+@section scripts{
+    <script>
+        var $dropdown1 = $("select[name='category']");
+        var $dropdown2 = $("select[name='description']");
+        var $textboxquantity = $("select[name='quantity']");
+        loadItem();
+        function loadItem() {
+            $dropdown1.empty();
+            $dropdown2.empty();
+            $dropdown1.append('<option>Select Category</option>');
+            $dropdown2.append('<option>Select Item</option>');
+            $dropdown1.prop('selectedIndex', 0);
+            $dropdown2.prop('selectedIndex', 0);
+            $.ajax({
+                url: '../api/stationeries/categories/',
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown1.append($('<option>').text(value).attr('value', value));
+                        //$('#myselect').append($('<option>').text(value).attr('value', value));
+                    });
+                }
+            });
+        }
+        //Load 2nd list
+        $dropdown1.change(function () {
+            $dropdown2.empty();
+            $dropdown2.append('<option>Select Item</option>');
+            //$('#myselect').append($('<option>').text(value).attr('value', value));
+            $.ajax({
+                url: '../api/stationeries/categories/' + $dropdown1.val(),
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
+                    });
+                }
+            });
+        });
+        //Load unit of measure
+        $dropdown2.change(function () {
+            $.ajax({
+                url: '../api/stationeries/adjustment/' + $dropdown2.val(),
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $("#uom").val(json.UnitOfMeasure);
+                    $("#stockQuantity").val(json.QuantityWareHouse);
+                    $("#price").val(json.Price);
+                }
+            });
+        });
+
+        //Start Modal
+        function addNewItem() {
+            $("#newItemModal").modal();
+            loadItem();
+        }
+        //Add Item to List
+        $("#addToList").click(function (e) {
+            e.preventDefault();
+
+            if ($.trim($("#category").val()) == "" || $.trim($("#description").val()) == "" || $.trim($("#quantity").val()) == "") return;
+
+            var id = $("#description").val(),
+                category = $("#category").val(),
+                quantity = $("#quantity").val(),
+                stockQuantity = $("#stockQuantity").val(),
+                price = $("#price").val(),
+                name = $("#description option:selected").text(),
+                detailsTableBody = $("#adjustmentTable tbody");
+            
+
+            var requestItem = '<tr><td style="display:none;">' + id + '</td><td>' + category + '</td><td>' + name + '</td><td>' + quantity + '</td><td>' + stockQuantity + '</td><td>$'+ quantity*price + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+            detailsTableBody.append(requestItem);
+            clearItem();
+            $("#newItemModal").modal("hide");
+        });
+
+        function clearItem() {
+            $dropdown1.empty();
+            $dropdown2.empty();
+            $('#quantity').val('0');
+            $('#uom').val('');
+            $dropdown1.append('<option>Select Category</option>');
+            $dropdown2.append('<option>Select Item</option>');
+            $dropdown1.prop('selectedIndex', 0);
+            $dropdown2.prop('selectedIndex', 0);
+            $.ajax({
+                url: '../api/stationeries/categories/',
+                type: 'GET',
+                //data: 'q=' + str,
+                dataType: 'json',
+                success: function (json) {
+                    $.each(json, function (i, value) {
+                        $dropdown1.append($('<option>').text(value).attr('value', value));
+                        //$('#myselect').append($('<option>').text(value).attr('value', value));
+                    });
+                }
+            });
+        }
+        // Add a new request in the list with remove option
+        $(document).on('click', 'a.deleteItem', function (e) {
+            e.preventDefault();
+            if ($(this).attr('data-itemId') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+        //After Click Save Button Pass All Data View To Controller For Save Database
+        function saveRequest(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "Save",
+                data: data,
+                success: function (result) {
+                    bootbox.dialog({
+                        message: result,
+                        size: 'small',
+                        onEscape: function () {
+                            location.reload();
+                        }
+                    });
+                },
+                error: function () {
+                    bootbox.alert("Error! Invalid items in list.");
+                }
+            });
+        }
+        //Collect Multiple Order List For Pass To Controller
+        $("#saveAdjustment").click(function (e) {
+            e.preventDefault();
+
+            var requestArr = [];
+            requestArr.length = 0;
+
+            $.each($("#adjustmentTable tbody tr"), function () {
+                requestArr.push({
+                    ItemId: $(this).find('td:eq(0)').html(),
+                    //category: $(this).find('td:eq(1)').html(),
+                    Quantity: $(this).find('td:eq(3)').html(),
+                });
+            });
+
+
+            var data = JSON.stringify({
+                requests: requestArr
+            });
+
+            $.when(saveRequest(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+    </script>
+    }
