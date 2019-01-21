@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Error";
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -18,7 +19,7 @@
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:700,900" rel="stylesheet">
-
+    <link href="~/Content/Error.css" rel="stylesheet" />
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 
@@ -40,7 +41,7 @@
             </div>
             <h2>Oops! This Page Could Not Be Found</h2>
             <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable</p>
-            <a href="#">Go To Homepage</a>
+            <a href="/Home/Index">Go To Homepage</a>
         </div>
     </div>
 
