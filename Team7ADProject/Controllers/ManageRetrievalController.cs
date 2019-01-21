@@ -12,7 +12,7 @@ namespace Team7ADProject.Controllers
     #region Sam Jing Wen
 
     //For SC to generate retrieval and make amendments
-    [Authorize(Roles = "Store Clerk")]
+    //[Authorize(Roles = "Store Clerk")]
     public class ManageRetrievalController : Controller
     {
         // GET: ManageRetrieval

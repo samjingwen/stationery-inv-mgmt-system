@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,47 +8,45 @@ using Team7ADProject.Entities;
 using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
-{    //Author:Lynn Lynn Oo
+{
     public class ManagePostponeCollectionDateController : Controller
     {
-        #region Author:Lynn Lynn Oo
-
         LogicDB _context;
+        #region Author:Lynn Lynn Oo
         public ManagePostponeCollectionDateController()
         {
             _context = new LogicDB();
         }
-        //Store's Postpone Collection Date 
         // GET: ManagePostponeCollectionDate
+        [Authorize(Roles = "Store Supervisor")]
         public ActionResult Index()
         {
-            List<string> pendingDisbureID = _context.StationeryRequest.Where(x => x.Status == "Pending Disbursement").Select(x => x.RequestId).ToList();
-            List<StationeryRequest> Stationeries = new List<StationeryRequest>();
-            foreach(string current in pendingDisbureID)
-            {
-                List<StationeryRequest> itemsineachreq = _context.StationeryRequest.Where(v => v.RequestId == current).ToList();
-                Stationeries.AddRange(itemsineachreq);
-            }
-            List<PostponeCollDateViewModel> viewModel = new List<PostponeCollDateViewModel>();
-            foreach(StationeryRequest current in Stationeries)
-            {
-                PostponeCollDateViewModel viewModeltwo = new PostponeCollDateViewModel();
-                viewModeltwo.RequestBy = current.AspNetUsers.EmployeeName;
-                viewModeltwo.DepartmentID = current.DepartmentId;
-                viewModeltwo.RequestID = current.RequestId;
-                viewModeltwo.CollectionDate = (DateTime)current.CollectionDate;
-                viewModel.Add(viewModeltwo);
-            }
-                return View(viewModel);
+            //string userid = User.Identity.GetUserId();
+            //string depId = _context.AspNetUsers.Where(x => x.Id == userid).Select(x => x.DepartmentId).First();
+            //Store Supervisor can see all the Pending Disbursement of all depts
+            List<StationeryRequest> pendingDisbursements = _context.StationeryRequest.Where(x => x.Status == "Pending Disbursement" /*&& x.DepartmentId==depId*/).ToList();
+            return View(pendingDisbursements);
+
         }
 
-        //ManagePostponeCollectionDate/Details
+        //GET: ManagePostponeCollectionDate/Details
+       
         public ActionResult Details(string id)
         {
             List<TransactionDetail> ItemsByID = _context.TransactionDetail.Where(x => x.TransactionRef == id).ToList();
             return View(ItemsByID);
         }
+
+        public ActionResult Postpone(string id)
+        {
+            StationeryRequest current = _context.StationeryRequest.First(m => m.RequestId == id);
+            current.CollectionDate = current.CollectionDate.Value.AddDays(7);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
         #endregion
     }
-
 }
+
+
+
