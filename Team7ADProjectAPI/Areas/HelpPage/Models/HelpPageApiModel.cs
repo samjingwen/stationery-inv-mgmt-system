@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
-using Team7ADProjectAPI.Areas.HelpPage.ModelDescriptions;
+using Team7ADProjectApi.Areas.HelpPage.ModelDescriptions;
 
-namespace Team7ADProjectAPI.Areas.HelpPage.Models
+namespace Team7ADProjectApi.Areas.HelpPage.Models
 {
     /// <summary>
     /// The model that represents an API displayed on the help page.

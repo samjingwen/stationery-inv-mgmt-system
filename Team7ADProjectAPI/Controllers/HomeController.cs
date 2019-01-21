@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Team7ADProjectAPI.Controllers
+namespace Team7ADProjectApi.Controllers
 {
     public class HomeController : Controller
     {

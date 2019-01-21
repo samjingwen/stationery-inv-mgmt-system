@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Team7ADProjectAPI.Models
+namespace Team7ADProjectApi.Models
 {
     // Models returned by AccountController actions.
 

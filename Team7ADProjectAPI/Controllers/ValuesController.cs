@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Team7ADProjectAPI.Controllers
+namespace Team7ADProjectApi.Controllers
 {
     [Authorize]
     public class ValuesController : ApiController

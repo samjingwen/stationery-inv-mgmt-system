@@ -8,10 +8,10 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using Team7ADProjectAPI.Providers;
-using Team7ADProjectAPI.Models;
+using Team7ADProjectApi.Providers;
+using Team7ADProjectApi.Models;
 
-namespace Team7ADProjectAPI
+namespace Team7ADProjectApi
 {
     public partial class Startup
     {

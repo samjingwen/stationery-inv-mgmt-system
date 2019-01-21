@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace Team7ADProjectAPI
+namespace Team7ADProjectApi
 {
     public class BundleConfig
     {

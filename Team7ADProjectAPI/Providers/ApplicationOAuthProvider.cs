@@ -9,9 +9,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using Team7ADProjectAPI.Models;
+using Team7ADProjectApi.Models;
 
-namespace Team7ADProjectAPI.Providers
+namespace Team7ADProjectApi.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {

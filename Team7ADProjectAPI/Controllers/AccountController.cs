@@ -13,11 +13,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using Team7ADProjectAPI.Models;
-using Team7ADProjectAPI.Providers;
-using Team7ADProjectAPI.Results;
+using Team7ADProjectApi.Models;
+using Team7ADProjectApi.Providers;
+using Team7ADProjectApi.Results;
 
-namespace Team7ADProjectAPI.Controllers
+namespace Team7ADProjectApi.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
