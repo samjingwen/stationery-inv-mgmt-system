@@ -130,18 +130,34 @@ namespace Team7ADProject.Controllers.Api
         }
 
         // To get the top 3 suppliers and their respective prices based on selected item
-        [Route("~/api/stationeries/supplierandprice/{itemId}")]
+        [Route("~/api/stationeries/categories/items/{itemId}")]
         public IHttpActionResult GetSupplierAndPriceFromItem(string itemId)
         {
 
-            List<String> supplierlist = new List<String>();
+            List<TopSupplierAndPriceDTO> spObj = new List<TopSupplierAndPriceDTO>();
 
-            Stationery stationery = _context.Stationery.SingleOrDefault(x => x.ItemId == itemId);
-            supplierlist.Add(stationery.Supplier.SupplierName + stationery.FirstSuppPrice);
-            supplierlist.Add(stationery.Supplier1.SupplierName + stationery.SecondSuppPrice);
-            supplierlist.Add(stationery.Supplier2.SupplierName + stationery.ThirdSuppPrice);
+            Stationery stationery = _context.Stationery.FirstOrDefault(x => x.ItemId == itemId);
 
-            return Ok(supplierlist);
+            TopSupplierAndPriceDTO firstSup = new TopSupplierAndPriceDTO();
+            firstSup.Id = stationery.FirstSupplierId;
+            firstSup.Price = stationery.FirstSuppPrice;
+            firstSup.Supplier = stationery.Supplier.SupplierName;
+            spObj.Add(firstSup);
+
+            TopSupplierAndPriceDTO secondSup = new TopSupplierAndPriceDTO();
+            secondSup.Id = stationery.SecondSupplierId;
+            secondSup.Price = stationery.SecondSuppPrice;
+            secondSup.Supplier = stationery.Supplier1.SupplierName;
+            spObj.Add(secondSup);
+
+            TopSupplierAndPriceDTO thirdSup = new TopSupplierAndPriceDTO();
+            thirdSup.Id = stationery.ThirdSupplierId;
+            thirdSup.Price = stationery.ThirdSuppPrice;
+            thirdSup.Supplier = stationery.Supplier2.SupplierName;
+            spObj.Add(thirdSup);
+
+
+            return Ok(spObj);
         }
         #endregion
 

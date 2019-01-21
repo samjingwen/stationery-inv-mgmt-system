@@ -264,7 +264,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="GlobalClass.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -274,6 +273,7 @@
     <Compile Include="ViewModels\Api\AdjustmentApiViewModel.cs" />
     <Compile Include="ViewModels\Api\RaiseRequestDTO.cs" />
     <Compile Include="ViewModels\AdjustmentViewModel.cs" />
+    <Compile Include="ViewModels\Api\TopSupplierAndPriceDTO.cs" />
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
     <Compile Include="ViewModels\DelegateHeadViewModel.cs" />
@@ -575,7 +575,7 @@
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\GenerateDisbursement.cshtml" />
     <Content Include="Views\RaiseOrder\Index.cshtml" />
-    <Content Include="Views\RaiseOrder\ViewPo.cshtml" />
+    <Content Include="Views\RaiseOrder\RaisePO.cshtml" />
     <Content Include="Views\ValidateInvoice\Index.cshtml" />
     <Content Include="Views\RaiseOrder\Details.cshtml" />
     <Content Include="Views\GenerateReport\_Charts.cshtml" />
