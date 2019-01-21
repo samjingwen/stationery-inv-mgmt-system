@@ -61,10 +61,13 @@
 
 <div>
     <form id="rangeDTP" name="rangeDTP" action='@Url.Action("ChargeBack","ChargeBack")' method="post">
-        <p>View charge back from <input type="text" name="fromDTP" id="fromDTP" placeholder="Please select a date" onkeypress="return false;"> to 
-        <input type="text" name="toDTP" id="toDTP" placeholder="Please select a date" onkeypress="return false;">.</p>
+        <p>
+            View charge back from <input type="text" name="fromDTP" id="fromDTP" placeholder="Please select a date" onkeypress="return false;"> to
+            <input type="text" name="toDTP" id="toDTP" placeholder="Please select a date" onkeypress="return false;">.
+        </p>
         <p><input type="submit" id="submitBtn" value="View" /></p>
     </form>
+    <form id="rangeDTP" name="rangeDTP" action='@Url.Action("ExportRpt","ChargeBack")' method="post"><input type="submit" /></form>
 </div>
 
 

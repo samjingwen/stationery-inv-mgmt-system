@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*Select Items*@
+@*Select Items(modal for items)*@
 <div class="modal fade" id="newItemModal">
     <div class="modal-dialog modal-lg" style=" width: 900px !important;">
         <div class="modal-content">
@@ -67,7 +67,7 @@
         <table>
             <tr>
                 <td>
-                    <label class="control-label col-md-2">Invoice No</label>
+                    <label class="control-label col-md-2">InvoiceNo</label>
                 </td>
                 <td>
                     <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo">
@@ -98,21 +98,19 @@
                 </td>
             </tr>
         </table>
-
-
-        <table id="detailsTable" class="table">
-            <thead>
-                <tr>
-                    <th style="width:30%">Item ID</th>
-                    <th style="width:30%">Item Description</th>
-                    <th style="width:20%">Product Category</th>
-                    <th style="width:15%">Quantity</th>
-                    <th style="width:25%">Unit of measure</th>
-                    <th style="width:10%"></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+       
+            <table id="detailsTable" class="table">
+                <thead>
+                    <tr>
+                        <th style="width:30%">Item ID</th>
+                        <th style="width:30%">Item Description</th>
+                        <th style="width:20%">Product Category</th>
+                        <th style="width:15%">Quantity</th>
+                        <th style="width:10%"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
     </form>
 </div>
 @Html.AntiForgeryToken()
@@ -125,57 +123,57 @@
 @section scripts
               {
     @*@*invoice validation*@
-     <script>
-            $("#saveInvoice").click(function (e) {
-                e.preventDefault();
+    <script>
+        $("#saveInvoice").click(function (e) {
+            e.preventDefault();
 
-                var InvoiceNo = document.forms["invoiceForm"]["InvoiceNo"];
-                if (InvoiceNo.value == "") {
-                  $("#InvoiceNo").css("borderColor","red");
-                    InvoiceNo.focus();
-                    return false;
-                }
-                var SupplierId = document.forms["invoiceForm"]["SupplierId"];
-                if (SupplierId.value == "Select Supplier") {
-                    $("#SupplierId").css("borderColor", "red");
-                    SupplierId.focus();
-                    return false;
-                }
-                var InvoiceAmount = document.forms["invoiceForm"]["InvoiceAmount"];
-                if (InvoiceAmount.value == "") {
-                    $("#InvoiceAmount").css("borderColor", "red");
-                    InvoiceAmount.focus();
-                    return false;
-                }
-                var DelOrderId = document.forms["invoiceForm"]["DelOrderId"];
-                if (DelOrderId.value == "") {
-                    //alert("DelOrder Id must be filled out");
-                    $("#DelOrderId").css("borderColor", "red");
-                    DelOrderId.focus();
-                    return false;
-                }
-                return true;
-         });
+            var InvoiceNo = document.forms["invoiceForm"]["InvoiceNo"];
+            if (InvoiceNo.value == "") {
+                $("#InvoiceNo").css("borderColor", "red");
+                InvoiceNo.focus();
+                return false;
+            }
+            var SupplierId = document.forms["invoiceForm"]["SupplierId"];
+            if (SupplierId.value == "Select Supplier") {
+                $("#SupplierId").css("borderColor", "red");
+                SupplierId.focus();
+                return false;
+            }
+            var InvoiceAmount = document.forms["invoiceForm"]["InvoiceAmount"];
+            if (InvoiceAmount.value == "") {
+                $("#InvoiceAmount").css("borderColor", "red");
+                InvoiceAmount.focus();
+                return false;
+            }
+            var DelOrderId = document.forms["invoiceForm"]["DelOrderId"];
+            if (DelOrderId.value == "") {
+                //alert("DelOrder Id must be filled out");
+                $("#DelOrderId").css("borderColor", "red");
+                DelOrderId.focus();
+                return false;
+            }
+            return true;
+        });
 
-         $("#InvoiceNo").change(function () {
-             $("#InvoiceNo").css("borderColor","")
-         });
-         $("#SupplierId").change(function () {
-         
-             $("#SupplierId").css("borderColor", "")
-         });
-         $("#InvoiceAmount").change(function () {
-        
-             $("#InvoiceAmount").css("borderColor", "")
-         });
-         $("#DelOrderId").change(function () {
-         
-             $("#DelOrderId").css("borderColor", "")
-         });
+        $("#InvoiceNo").change(function () {
+            $("#InvoiceNo").css("borderColor", "")
+        });
+        $("#SupplierId").change(function () {
 
-        </script>
+            $("#SupplierId").css("borderColor", "")
+        });
+        $("#InvoiceAmount").change(function () {
 
-    @*load suppilerlist*@
+            $("#InvoiceAmount").css("borderColor", "")
+        });
+        $("#DelOrderId").change(function () {
+
+            $("#DelOrderId").css("borderColor", "")
+        });
+
+    </script>
+
+    @*load suppilerlist for invoice*@
     <script>
         var $dropdown0 = $("select[name='SupplierId']");
         loadSupplierId();
@@ -195,7 +193,7 @@
             });
         }
     </script>
-    @*load dropdown list*@
+    @*load dropdown list in modal*@
     <script>
         var $dropdown1 = $("select[name='category']");
         var $dropdown2 = $("select[name='description']");
@@ -223,6 +221,7 @@
         $dropdown1.change(function () {
             $dropdown2.empty();
             $dropdown2.append('<option>Select Item</option>');
+            $("#category").css("borderColor", "")
             $.ajax({
                 url: '../api/stationeries/categories/' + $dropdown1.val(),
                 type: 'GET',
@@ -236,6 +235,7 @@
         });
         //Load unit of measure
         $dropdown2.change(function () {
+            $("#description").css("borderColor", "")
             $.ajax({
                 url: '../api/stationeries/item/' + $dropdown2.val(),
                 type: 'GET',
@@ -252,7 +252,11 @@
         function addNewItem() {
             $("#newItemModal").modal();
         }
-        //Add Multiple Order.
+        //Validation for modal quantity
+        $("#quantity").change(function () {
+            $("#quantity").css("borderColor", "")
+        });
+        //Add Multiple Items.
         $("#addToList").click(function (e) {
             e.preventDefault();
 
@@ -260,13 +264,11 @@
                 $("#category").css("borderColor", "red");
                 return;
             }
-           if ($.trim($("#description").val()) == "Select Item")
-        {
-               $("#description").css("borderColor", "red");
+            if ($.trim($("#description").val()) == "Select Item") {
+                $("#description").css("borderColor", "red");
                 return;
-        }
-            if ($.trim($("#quantity").val()) == "")
-            {
+            }
+            if ($.trim($("#quantity").val()) == "") {
                 $("#quantity").css("borderColor", "red");
                 return;
             }
@@ -278,7 +280,7 @@
                 name = $("#description option:selected").text(),
                 detailsTableBody = $("#detailsTable tbody");
 
-            var requestItem = '<tr><td style="display:none;">' + itemid + '</td><td>' + description + '</td><td>' + name + '</td><td>' + category + '</td><td>' + quantity + '</td><td>' + unitOfMeasure + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+            var requestItem = '<tr><td style="display:none;">' + itemid + '</td><td>' + description + '</td><td>' + name + '</td><td>' + category + '</td><td>' + quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
             detailsTableBody.append(requestItem);
             loadItem();
         });
@@ -329,8 +331,7 @@
                     data: data,
                     success: function (result) {
                         alert(result);
-                        if (result == "Success! Invoice Is Complete!")
-                        {
+                        if (result == "Success! Invoice Is Complete!") {
                             location.reload();
                         }
                     },
