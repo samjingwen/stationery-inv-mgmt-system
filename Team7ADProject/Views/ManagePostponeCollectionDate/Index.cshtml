@@ -28,7 +28,7 @@
 
 
 <table border="1" width="50" class="table breadcrumb table-bordered table-striped table-hover">
-  
+
     <tr>
         <th>No.</th>
         <th>Request By</th>
@@ -60,11 +60,14 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem=> item.CollectionDate)
+                @Html.DisplayFor(modelItem => item.CollectionDate)
             </td>
             <td>
-                @*@Html.ActionLink("POSTPONE", "Index", new { id = item.RequestId })*@
-                @Html.ActionLink("POSTPONE", "Postpone", "Postpone", new { @class = "btn btn-primary" })
+                @*@Html.ActionLink("POSTPONE", "Postpone", new { @class = "btn btn-primary" }, new { id = item.RequestId })*@
+                @{
+                    string url = Url.Action("Postpone",new { id=item.RequestId});
+                }
+                <input type="button" value="POSTPONE" onclick="window.location.href('@url')" />
             </td>
         </tr>
     }
