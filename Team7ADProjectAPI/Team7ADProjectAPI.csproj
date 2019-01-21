@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -233,11 +234,33 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClerkController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Entities\AspNetRoles.cs" />
+    <Compile Include="Entities\AspNetUsers.cs" />
+    <Compile Include="Entities\CollectionPoint.cs" />
+    <Compile Include="Entities\DelegationOfAuthority.cs" />
+    <Compile Include="Entities\DeliveryOrder.cs" />
+    <Compile Include="Entities\Department.cs" />
+    <Compile Include="Entities\DisbByDept.cs" />
+    <Compile Include="Entities\Disbursement.cs" />
+    <Compile Include="Entities\Invoice.cs" />
+    <Compile Include="Entities\LogicDB.cs" />
+    <Compile Include="Entities\PurchaseOrder.cs" />
+    <Compile Include="Entities\RequestByDeptView.cs" />
+    <Compile Include="Entities\RequestByItemView.cs" />
+    <Compile Include="Entities\RequestByReqIdView.cs" />
+    <Compile Include="Entities\Stationery.cs" />
+    <Compile Include="Entities\StationeryRequest.cs" />
+    <Compile Include="Entities\StationeryRetrieval.cs" />
+    <Compile Include="Entities\StockAdjustment.cs" />
+    <Compile Include="Entities\Supplier.cs" />
+    <Compile Include="Entities\TransactionDetail.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalClass.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -245,6 +268,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BriefDepartment.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -279,6 +303,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
