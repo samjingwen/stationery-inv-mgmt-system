@@ -11,7 +11,7 @@ namespace Team7ADProjectApi.Controllers
     public class DepartmentHeadController : ApiController
     {
 
-        [Authorize(Roles = "Department Head")]
+        //[Authorize(Roles = "Department Head")]
         [HttpGet]
         [Route("api/managedepartmentRep/{id}")]
         public BriefManageDepRep GetDepartments(string id)//username
