@@ -31,21 +31,21 @@ namespace Team7ADProjectApi.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "Department Head")]
-        [HttpGet]
-        [Route("api/managedepartmentRep/{id}")]
-        public BriefManageDepRep GetDepartments(string id)//username
-        {
-            GlobalClass gc = new GlobalClass();
+        //[Authorize(Roles = "Department Head")]
+        //[HttpGet]
+        //[Route("api/managedepartmentRep/{id}")]
+        //public BriefManageDepRep GetDepartments(string id)//username
+        //{
+        //    GlobalClass gc = new GlobalClass();
 
-            BriefDepartment depinfo = gc.DepInfo(id);
-            List<DepEmp> emplist = gc.ListEmp(id);
-            BriefManageDepRep brief = new BriefManageDepRep();
-            brief.depEmps = emplist;
-          brief.depinfo = depinfo;
+        //    BriefDepartment depinfo = gc.DepInfo(id);
+        //    List<DepEmp> emplist = gc.ListEmp(id);
+        //    BriefManageDepRep brief = new BriefManageDepRep();
+        //    brief.depEmps = emplist;
+        //  brief.depinfo = depinfo;
            
-            return brief;
-        }
+        //    return brief;
+        //}
         //[HttpGet]
         //[Route("api/managedepartmentRep/{id}")]
         //public BriefManageDepRep GetDepartmentsTest(string id)//username
