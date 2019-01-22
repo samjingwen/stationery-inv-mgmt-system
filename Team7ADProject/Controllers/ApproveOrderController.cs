@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -62,8 +63,16 @@ namespace Team7ADProject.Controllers
         [Authorize(Roles = "Acting Department Head")]
         public ActionResult Approve(string poNo)
         {
+            string userId = User.Identity.GetUserId();
+            var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
             var thisPo = _context.PurchaseOrder.SingleOrDefault(c => c.PONo == poNo);
+            if (query == null || thisPo == null)
+            {
+                HttpNotFound();
+            }
             thisPo.Status = "Pending Delivery";
+            thisPo.ApprovedBy = query.UserName;
+
             try
             {
                 _context.SaveChanges();
@@ -87,8 +96,15 @@ namespace Team7ADProject.Controllers
         [Authorize(Roles = "Acting Department Head")]
         public ActionResult Reject(string poNo)
         {
+            string userId = User.Identity.GetUserId();
+            var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
             var thisPo = _context.PurchaseOrder.SingleOrDefault(c => c.PONo == poNo);
-            _context.PurchaseOrder.Remove(thisPo);
+            if (query == null || thisPo== null)
+            {
+                HttpNotFound();
+            }
+            thisPo.Status = "Rejected";
+            thisPo.ApprovedBy = query.UserName;
             try
             {
                 _context.SaveChanges();
