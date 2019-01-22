@@ -55,22 +55,11 @@ namespace Team7ADProject.Controllers
         #region Approve Stock Adjustment Request
         public ActionResult Approve(string stockAdjId)
         {
-
             // to get the user ID of the current user
             string userId = User.Identity.GetUserId();
-            var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
-            var thisAdj = _context.StockAdjustment.SingleOrDefault(x => x.StockAdjId == stockAdjId);
-            var remarks = _context.TransactionDetail.Where(x => x.TransactionRef == stockAdjId).ToList();
 
-            thisAdj.ApprovedBy = query.Id;
-            //thisAdj.Remarks = "Approved";
-            foreach (var item in remarks)
-            {
-                var items = _context.Stationery.Where(x => x.ItemId == item.ItemId).FirstOrDefault();
-                item.Remarks = "Approved";
-                items.QuantityWarehouse += item.Quantity;
-            }
-            _context.SaveChanges();
+            imService.UpdateAdjustment(stockAdjId, userId, "Approved");
+
             return RedirectToAction("Index", "ApproveAdjustment");
 
         }
@@ -81,17 +70,9 @@ namespace Team7ADProject.Controllers
         {
             // to get the user ID of the current user
             string userId = User.Identity.GetUserId();
-            var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
-            var thisAdj = _context.StockAdjustment.SingleOrDefault(x => x.StockAdjId == stockAdjId);
-            var remarks = _context.TransactionDetail.Where(x => x.TransactionRef == stockAdjId).ToList();
-            thisAdj.ApprovedBy = query.Id;
-            foreach (var item in remarks)
-            {
-                var items = _context.Stationery.Where(x => x.ItemId == item.ItemId).FirstOrDefault();
-                item.Remarks = "Rejected";
-            }
-            //_context.StockAdjustment.Remove(thisAdj);
-            _context.SaveChanges();
+
+            imService.UpdateAdjustment(stockAdjId, userId, "Rejected");
+
             return RedirectToAction("Index", "ApproveAdjustment");
         }
         #endregion

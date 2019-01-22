@@ -53,11 +53,26 @@ namespace Team7ADProject.Service
                 AdjustmentDetails = transactionDetail
             };
             return stockAdjViewModel;
-
-
-
-
         }
+
+        public void UpdateAdjustment(string stockAdjId, string userId, string status)
+        {
+            var thisAdj = context.StockAdjustment.FirstOrDefault(x => x.StockAdjId == stockAdjId);
+            var remarks = context.TransactionDetail.Where(x => x.TransactionRef == stockAdjId).ToList();
+
+            thisAdj.ApprovedBy = userId;
+            foreach (var item in remarks)
+            {
+                var items = context.Stationery.Where(x => x.ItemId == item.ItemId).FirstOrDefault();
+                item.Remarks = status;
+                if (status == "Approved")
+                {
+                    items.QuantityWarehouse += item.Quantity;
+                }
+            }
+            context.SaveChanges();
+        }
+
 
     }
 }
