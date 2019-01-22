@@ -22,8 +22,8 @@ namespace Team7ADProjectApi.Controllers
         GlobalClass gc = new GlobalClass();
 
         [HttpGet]
-        [Route("api/Request/Items")]
-        public IEnumerable<RequestItems> ListRequestByItem()
+        //[Route("api/Request/Items")]
+        public IEnumerable<RequestItems> ListRequestByItem(int id = 0)
         {
             return gc.ListRequestByItem();
         }

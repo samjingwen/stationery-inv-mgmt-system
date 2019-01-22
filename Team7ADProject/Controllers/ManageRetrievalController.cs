@@ -12,8 +12,9 @@ namespace Team7ADProject.Controllers
 {
     #region Sam Jing Wen
 
+
     //For SC to generate retrieval and make amendments
-    //[Authorize(Roles = "Store Clerk")]
+    [Authorize(Roles = "Store Clerk")]
     public class ManageRetrievalController : Controller
     {
         StationeryRequestService srService = StationeryRequestService.Instance;
@@ -25,94 +26,20 @@ namespace Team7ADProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerateDisbursement(List<RequestByItemViewModel> model)
+        public ActionResult GenerateDisbursement(List<RequestByItemViewModel> model, string RetrievedBy)
         {
             //Create new Retrieval
+            string retrievedBy = User.Identity.GetUserId();
+            List<RequestByItemViewModel> modModel = srService.SaveRetrieval(model, retrievedBy);
 
-            string rid;
+            //****
             LogicDB context = new LogicDB();
-            var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).FirstOrDefault();
-            if (ret.Date.Year == DateTime.Now.Year)
-            {
-                rid = "R" + DateTime.Now.Year.ToString() + "-" + (Convert.ToInt32(ret.RetrievalId.Substring(6, 4)) + 1).ToString("0000");
-            }
-            else
-            {
-                rid = "R" + DateTime.Now.Year.ToString() + "-" + "0001";
-            }
-
-            StationeryRetrieval retrieval = new StationeryRetrieval();
-            retrieval.RetrievalId = rid;
-            retrieval.RetrievedBy = User.Identity.GetUserId();
-            retrieval.Date = DateTime.Now;
-
-            //Save to database
-            List<RequestByItemViewModel> modModel = new List<RequestByItemViewModel>(model);
-            foreach (var sr in model)
-            {
-                if (sr.requestList.Sum(x => x.RetrievedQty) > 0)
-                {
-                    TransactionDetail detail = new TransactionDetail();
-                    detail.ItemId = sr.ItemId;
-                    detail.Quantity = sr.requestList.Sum(x => x.RetrievedQty);
-                    detail.TransactionDate = DateTime.Now;
-                    detail.Remarks = "Retrieved";
-                    detail.TransactionRef = rid;
-                    retrieval.TransactionDetail.Add(detail);
-                }
-                else
-                {
-                    modModel.Remove(sr);
-                }
-            }
-
-            context.StationeryRetrieval.Add(retrieval);
-            context.SaveChanges();
 
             //Generate Disbursement
-
-            List<DisbursementByDeptViewModel> disbList = new List<DisbursementByDeptViewModel>();
-
-            for (int i = 0; i < modModel.Count; i++)
-            {
-                for (int j = 0; j < modModel[i].requestList.Count; j++)
-                {
-                    var disb = disbList.Find(x => x.DepartmentId == modModel[i].requestList[j].DepartmentId);
-                    if (disb != null)
-                    {
-                        var item = disb.requestList.Find(x => x.ItemId == modModel[i].ItemId);
-                        if (item != null)
-                        {
-                            item.Quantity += modModel[i].requestList[j].Quantity;
-                        }
-                        else
-                        {
-                            BreakdownByItemViewModel breakdown = new BreakdownByItemViewModel();
-                            breakdown.ItemId = modModel[i].ItemId;
-                            breakdown.Description = modModel[i].Description;
-                            breakdown.RetrievedQty = modModel[i].requestList[j].RetrievedQty;
-                            disb.requestList.Add(breakdown);
-                        }
-                    }
-                    else
-                    {
-                        DisbursementByDeptViewModel disbModel = new DisbursementByDeptViewModel();
-                        disbModel.DepartmentId = modModel[i].requestList[j].DepartmentId;
-                        disbModel.DepartmentName = modModel[i].requestList[j].DepartmentName;
-                        BreakdownByItemViewModel breakdown = new BreakdownByItemViewModel();
-                        breakdown.RetrievedQty = modModel[i].requestList[j].RetrievedQty;
-                        breakdown.ItemId = modModel[i].ItemId;
-                        breakdown.Description = modModel[i].Description;
-                        disbModel.requestList = new List<BreakdownByItemViewModel>();
-                        disbModel.requestList.Add(breakdown);
-                        disbList.Add(disbModel);
-                    }
-                }
-            }
+            List<DisbursementByDeptViewModel> disbList = srService.GenerateDisbursement(modModel);
 
 
             //Create new disbursement
-
             List<DisbursementByDeptViewModel> modDisbList = new List<DisbursementByDeptViewModel>(disbList);
 
             var query = CreateDisbHelpers.GetRequestQuery();
