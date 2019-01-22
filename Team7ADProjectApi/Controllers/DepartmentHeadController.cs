@@ -14,11 +14,32 @@ namespace Team7ADProjectApi.Controllers
         [Authorize(Roles = "Department Head")]
         [HttpGet]
         [Route("api/managedepartmentRep/{id}")]
-        public IEnumerable<BriefDepartment> GetDepartments()
+        public BriefManageDepRep GetDepartments(string id)//username
         {
             GlobalClass gc = new GlobalClass();
-            return gc.ListDepartment(id);
+
+            BriefDepartment depinfo = gc.DepInfo(id);
+            List<DepEmp> emplist = gc.ListEmp(id);
+            BriefManageDepRep brief = new BriefManageDepRep();
+            brief.depEmps = emplist;
+          brief.depinfo = depinfo;
+           
+            return brief;
         }
+        //[HttpGet]
+        //[Route("api/managedepartmentRep/{id}")]
+        //public BriefManageDepRep GetDepartmentsTest(string id)//username
+        //{
+        //    GlobalClass gc = new GlobalClass();
+
+        //    BriefDepartment depinfo = gc.DepInfo(id);
+        //    List<DepEmp> emplist = gc.ListEmp(id);
+        //    BriefManageDepRep brief = new BriefManageDepRep();
+        //    brief.depEmps = emplist;
+        //    brief.depinfo = depinfo;
+
+        //    return brief;
+        //}
 
     }
 }
