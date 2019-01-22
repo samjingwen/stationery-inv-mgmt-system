@@ -18,7 +18,7 @@ namespace Team7ADProject.Controllers
 
     //For SS or SM to approve adjustment
 
-    [RoleAuthorize(Roles = RoleName.StoreManager + ", " + RoleName.StoreSupervisor)]
+    [RoleAuthorize(Roles = "Store Manager, Store Supervisor")]
     public class ApproveAdjustmentController : Controller
     {
         InventoryMgmtService imService = InventoryMgmtService.Instance;

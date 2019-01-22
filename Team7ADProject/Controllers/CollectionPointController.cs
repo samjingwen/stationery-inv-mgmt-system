@@ -23,26 +23,27 @@ namespace Team7ADProject.Controllers
         {
             LogicDB context = new LogicDB();
             CollectionPointViewModel model = new CollectionPointViewModel();
+
             string userId = User.Identity.GetUserId();
-            int cpId = context.AspNetUsers.FirstOrDefault(x => x.Id == userId).Department.CollectionPointId;
-            string cpName = context.AspNetUsers.FirstOrDefault(x => x.Id == userId).Department.CollectionPoint.CollectionDescription;
+
+            int cpId = disbursementService.GetDeptCpId(userId);
+            string cpName = disbursementService.GetDeptCpName(userId);
+
             ViewBag.cpId = cpId;
             ViewBag.cpName = cpName;
             return View(model);
         }
 
         [HttpPost]
-        public string UpdateCollectionPoint(CollectionPointViewModel model)
+        public ActionResult UpdateCollectionPoint(CollectionPointViewModel model)
         {
-            LogicDB context = new LogicDB();
             string userId = User.Identity.GetUserId();
-            var query = context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
-            var dept = query.Department;
+
             int cpId = Convert.ToInt32(model.SelectedCP);
-            var collPoint = context.CollectionPoint.FirstOrDefault(x => x.CollectionPointId == cpId);
-            dept.CollectionPoint = collPoint;
-            context.SaveChanges();
-            return "Update Successful";
+
+            disbursementService.UpdateCollectionPoint(userId, cpId);
+
+            return RedirectToAction("Index");
         }
 
 

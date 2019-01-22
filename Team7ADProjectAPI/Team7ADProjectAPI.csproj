@@ -293,8 +293,9 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BriefDepartment.cs" />
-    <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
     <Compile Include="ViewModels\DepEmp.cs" />
+    <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
+    <Compile Include="ViewModels\EmployeeDto.cs" />
     <Compile Include="ViewModels\PendingPO.cs" />
     <Compile Include="ViewModels\PendingPODetails.cs" />
     <Compile Include="ViewModels\RequestItems.cs" />
