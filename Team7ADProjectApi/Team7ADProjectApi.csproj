@@ -259,7 +259,7 @@
     <Compile Include="Controllers\DepartmentHeadController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
-    <Compile Include="Controllers\PurchaseOrderController.cs" />
+
     <Compile Include="Controllers\VoidDisbursementListController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
