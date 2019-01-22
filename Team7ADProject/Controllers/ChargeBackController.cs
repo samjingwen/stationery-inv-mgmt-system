@@ -21,7 +21,7 @@ namespace Team7ADProject.Controllers
         LogicDB context = new LogicDB();
 
         // GET: ChargeBack
-        [Authorize(Roles = "Department Head")]
+        [RoleAuthorize(Roles = "Department Head")]
         public ActionResult ChargeBack()
         {             
                 LogicDB context = new LogicDB();
@@ -54,7 +54,7 @@ namespace Team7ADProject.Controllers
 
         }
 
-        [Authorize(Roles = "Department Head")]
+        [RoleAuthorize(Roles = "Department Head")]
         [HttpPost]
         public ActionResult ChargeBack(DateTime? fromDTP, DateTime? toDTP)
         {if ((fromDTP== null) || (toDTP == null))
@@ -93,7 +93,7 @@ namespace Team7ADProject.Controllers
             }
         }
 
-        [Authorize(Roles = "Department Head")]
+        [RoleAuthorize(Roles = "Department Head")]
         public ActionResult ChargeBackDetails(String id)
         {
             LogicDB context = new LogicDB();
@@ -132,6 +132,7 @@ namespace Team7ADProject.Controllers
         }
         
         [HttpPost]
+        [RoleAuthorize(Roles = "Department Head")]
         public FileResult ExportRpt(DateTime? fromDTP, DateTime? toDTP)
         {
             LogicDB context = new LogicDB();
@@ -154,7 +155,7 @@ namespace Team7ADProject.Controllers
                 new DataColumn("Status")});
 
             var chargeback = context.Disbursement.Where(x => x.DepartmentId == DID && x.Date >= fromDTP && x.Date <= toDTP).ToList().
-                Select(y => new { y.DisbursementId, y.AspNetUsers.EmployeeName, y.Date, y.RequestId, y.Status });
+                Select(y => new { y.DisbursementId, y.AspNetUsers1.EmployeeName, y.Date, y.RequestId, y.Status });
 
             foreach (var i in chargeback)
             {
