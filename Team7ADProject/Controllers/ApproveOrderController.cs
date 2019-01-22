@@ -26,6 +26,7 @@ namespace Team7ADProject.Controllers
         }
         // GET: ApproveOrder
         [Authorize(Roles = "Store Manager")]
+        [Authorize(Roles = "Acting Department Head")]
         public ActionResult Index()
         {
             return View();
@@ -35,6 +36,7 @@ namespace Team7ADProject.Controllers
 
         //Retrieve All  PO
         [Authorize(Roles = "Store Manager")]
+        [Authorize(Roles = "Acting Department Head")]
         public ActionResult ViewPORecord()
         {
            List<PurchaseOrder> poList = _context.PurchaseOrder.ToList();
@@ -43,6 +45,7 @@ namespace Team7ADProject.Controllers
         //Get PoDetails
         [HttpGet]
         [Authorize(Roles = "Store Manager")]
+        [Authorize(Roles = "Acting Department Head")]
         public ActionResult PODetails(string  poNo)
         {
            PurchaseOrder purchaseOrder = _context.PurchaseOrder.SingleOrDefault(c => c.PONo == poNo);
@@ -56,6 +59,7 @@ namespace Team7ADProject.Controllers
 
         //Approve Po
         [Authorize(Roles = "Store Manager")]
+        [Authorize(Roles = "Acting Department Head")]
         public ActionResult Approve(string poNo)
         {
             var thisPo = _context.PurchaseOrder.SingleOrDefault(c => c.PONo == poNo);
@@ -80,6 +84,7 @@ namespace Team7ADProject.Controllers
 
         //Reject PO
         [Authorize(Roles = "Store Manager")]
+        [Authorize(Roles = "Acting Department Head")]
         public ActionResult Reject(string poNo)
         {
             var thisPo = _context.PurchaseOrder.SingleOrDefault(c => c.PONo == poNo);
