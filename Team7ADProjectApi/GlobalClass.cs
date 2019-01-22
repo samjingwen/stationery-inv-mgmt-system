@@ -160,6 +160,41 @@ namespace Team7ADProjectApi
             return result.ToList();
         }
 
+        public PurchaseOrder RetrievePO(string poNum)
+        {
+            return context.PurchaseOrder.Where(x => x.PONo == poNum).FirstOrDefault();
+        }
+
+
+        //Approve PO
+        public bool ApprovePO(PurchaseOrder po)
+        {
+            PurchaseOrder purchaseorder = RetrievePO(po.PONo);
+            if (purchaseorder != null)
+            {
+                purchaseorder.ApprovedBy = po.ApprovedBy;
+                purchaseorder.Status = "Pending Delivery";
+                context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        //Reject PO
+        public bool RejectPO(PurchaseOrder po)
+        {
+            PurchaseOrder purchaseorder = RetrievePO(po.PONo);
+            if (purchaseorder != null)
+            {
+                purchaseorder.ApprovedBy = po.ApprovedBy;
+                purchaseorder.Status = "Rejected";
+                context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
         #endregion
 
 
