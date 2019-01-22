@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
+using Team7ADProject.Models;
+using Team7ADProject.Service;
 using Team7ADProject.ViewModels;
 
 //Author Zan Tun Khine
@@ -16,9 +18,11 @@ namespace Team7ADProject.Controllers
 
     //For SS or SM to approve adjustment
 
-    [Authorize(Roles = "Store Manager , Store Supervisor")]
+    [RoleAuthorize(Roles = RoleName.StoreManager + ", " + RoleName.StoreSupervisor)]
     public class ApproveAdjustmentController : Controller
     {
+        InventoryMgmtService imService = InventoryMgmtService.Instance;
+
         private LogicDB _context = new LogicDB();
 
         #region pending Stock Adjustment Requests
@@ -26,8 +30,7 @@ namespace Team7ADProject.Controllers
         // GET: ApproveAdjustment
         public ActionResult Index()
         {
-            //List<StockAdjustment> adjList = _context.StockAdjustment.ToList();
-            List<StockAdjustment> adjList = _context.StockAdjustment.Where(x => x.ApprovedBy == null).ToList();
+            List<StockAdjustment> adjList = imService.GetListStockAdjustment();
             if (adjList.Count() == 0)
             {
                 ViewBag.error = "There is no pending request!";
@@ -40,15 +43,11 @@ namespace Team7ADProject.Controllers
         [HttpGet]
         public ActionResult AdjDetails(string stockAdjId)
         {
-            StockAdjustment stockAdjustment = _context.StockAdjustment.SingleOrDefault(x => x.StockAdjId == stockAdjId);
-            List<TransactionDetail> transactionDetail = _context.TransactionDetail.Where(c => c.TransactionRef == stockAdjId).ToList();
-            if (stockAdjustment == null)
-            { return HttpNotFound(); }
-            var stockAdjViewModel = new AdjustmentDetailsViewModel
+            AdjustmentDetailsViewModel stockAdjViewModel = imService.GetAdjustmentViewModel(stockAdjId);
+            if (stockAdjViewModel == null)
             {
-                StockAdjustment = stockAdjustment,
-                AdjustmentDetails = transactionDetail
-            };
+                return HttpNotFound();
+            }
             return View(stockAdjViewModel);
         }
         #endregion
