@@ -14,64 +14,63 @@ namespace Team7ADProject.Controllers
     //For DH to delegate ADH
     public class DelegateHeadController : Controller
     {
+        private LogicDB _context;
+
+        public DelegateHeadController()
+        {
+            _context = new LogicDB();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
         #region Author: Kay Thi Swe Tun
         // GET: DelegateHead
-        [Authorize(Roles = "Department Head")]
+        [Authorize(Roles = RoleName.DepartmentHead)]
         public ActionResult Index()
         {
-            LogicDB context = new LogicDB();
             string userId = User.Identity.GetUserId();
-            DelegateHeadViewModel vmodel = new DelegateHeadViewModel(userId);
+            DelegateHeadViewModel viewModel = new DelegateHeadViewModel(userId);
 
-           List<AspNetUsers> ll= vmodel.DelegateHead;
-            ViewBag.DepName = vmodel.DepartmentName;
-            return View(vmodel);
-           
+            ViewBag.DepName = viewModel.DepartmentName;
+            return View(viewModel);
         }
 
         [HttpPost]
-        [Authorize(Roles = "Department Head")]
+        [Authorize(Roles = RoleName.DepartmentHead)]
         public string Delegate(DelegateHeadViewModel model)
         {
-            string userId = User.Identity.GetUserId();
-            // the value is received in the controller.
-            var selectedGEmployee = model.SelectedUser;
-     
-            LogicDB context = new LogicDB();
-            DelegationOfAuthority dd = new DelegationOfAuthority();
-
-            dd.DelegatedBy = userId;
-            dd.DelegatedTo = selectedGEmployee;//"b36a58f3-51f9-47eb-8601-bcc757a8cadb";//selected Employee ID;
-            dd.StartDate = model.StartDate;//new DateTime(2017,3,5);
-            dd.EndDate = model.EndDate;//new DateTime(2017, 5, 5);
-
-            model.CurrentUser = userId;
-
-            dd.DepartmentId = model.DepartmentID;
-
-            ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-
-            manager.RemoveFromRole(dd.DelegatedTo, "Employee");
-            manager.AddToRole(dd.DelegatedTo, "Acting Department Head");
-
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                context.DelegationOfAuthority.Add(dd);
-                context.SaveChanges();
-               return "success";
+                return "fail";
             }
-            return "success";
 
+            else
+            {
+                string userId = User.Identity.GetUserId();
+                var selectedEmployee = model.SelectedUser;
+                DelegationOfAuthority doaInDb = new DelegationOfAuthority
+                {
+                    DelegatedBy = userId,//"b36a58f3-51f9-47eb-8601-bcc757a8cadb";//selected Employee ID;
+                    DelegatedTo = selectedEmployee,
+                    StartDate = model.StartDate,//new DateTime(2017,3,5);
+                    EndDate = model.EndDate,//new DateTime(2017, 5, 5);
+                    DepartmentId = model.DepartmentID
+                };
+
+                //model.CurrentUser = userId;
+
+                ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+                userManager.RemoveFromRole(doaInDb.DelegatedTo, RoleName.Employee);
+                userManager.AddToRole(doaInDb.DelegatedTo, RoleName.ActingDepartmentHead);
+                _context.DelegationOfAuthority.Add(doaInDb);
+                _context.SaveChanges();
+                return "success";
+            }
         }
     }
-
-    
-
-
-
-
-
-
     #endregion
 }
