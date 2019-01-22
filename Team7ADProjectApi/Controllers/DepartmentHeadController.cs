@@ -63,26 +63,28 @@ namespace Team7ADProjectApi.Controllers
 
         #region Teh Li Heng
 
-        [System.Web.Http.Authorize(Roles = RoleName.DepartmentHead)]
-        [System.Web.Http.HttpGet]
-        //[Route("api/departmenthead/getdepartmenthead/{id}")]
+        [Authorize(Roles = RoleName.DepartmentHead)]
+        [HttpGet]
+        [Route("api/departmenthead/getdepartmenthead/{*id}")]
         public IHttpActionResult GetDepartmentHead(string id)
         {
             AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == id);
-            //AspNetRoles depHeadRoleList = _context.AspNetRoles.FirstOrDefault(m => m.Name == RoleName.ActingDepartmentHead);
-            //AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.First();
-            //DelegateDepHeadApiModel apiModel = new DelegateDepHeadApiModel();
-            //apiModel.DepartmentName = user.Department.DepartmentName;
+            AspNetRoles depHeadRoleList = _context.AspNetRoles.FirstOrDefault(m => m.Name == RoleName.ActingDepartmentHead);
+            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.First();
+            DelegateDepHeadApiModel apiModel = new DelegateDepHeadApiModel();
+            apiModel.DepartmentName = user.Department.DepartmentName;
 
-            //if (delegatedDepHead != null)
-            //{
-            //    apiModel.DelegatedDepartmentHeadName = delegatedDepHead.EmployeeName;
-            //}
+            if (delegatedDepHead != null)
+            {
+                apiModel.DelegatedDepartmentHeadName = delegatedDepHead.EmployeeName;
+            }
+
+            apiModel.DepartmentName = "TEST";
             return Ok(user);
         }
 
-        [System.Web.Http.Authorize(Roles = RoleName.DepartmentHead)]
-        [System.Web.Http.HttpPost]
+        [Authorize(Roles = RoleName.DepartmentHead)]
+        [HttpPost]
         public IHttpActionResult DelegateDepartmentHead(string userId, string delegatedDepId, DateTime startDate, DateTime endDate)
         {
             AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == userId);
