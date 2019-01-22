@@ -12,5 +12,6 @@ namespace Team7ADProjectApi.ViewModels
         public string UserId { get; set; }
         public string DelegatedDepartmentHeadName { get; set; }
         public string DepartmentName { get; set; }
+        public List<EmployeeDto> Employees { get; set; }
     }
 }

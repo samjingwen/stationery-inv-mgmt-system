@@ -294,6 +294,9 @@
     <Compile Include="ViewModels\DepEmp.cs" />
     <Compile Include="ViewModels\BriefManageDepRep.cs" />
     <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
+    <Compile Include="ViewModels\EmployeeDto.cs" />
+    <Compile Include="ViewModels\PendingPO.cs" />
+    <Compile Include="ViewModels\PendingPODetails.cs" />
     <Compile Include="ViewModels\RequestItems.cs" />
   </ItemGroup>
   <ItemGroup>

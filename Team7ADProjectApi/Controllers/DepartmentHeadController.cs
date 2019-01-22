@@ -66,21 +66,40 @@ namespace Team7ADProjectApi.Controllers
         [Authorize(Roles = RoleName.DepartmentHead)]
         [HttpGet]
         [Route("api/departmenthead/getdepartmenthead/{*id}")]
-        public IHttpActionResult GetDepartmentHead(string id)
+        public IHttpActionResult GetDepartmentHeadListEmployees(string id)
         {
             AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == id);
             AspNetRoles depHeadRoleList = _context.AspNetRoles.FirstOrDefault(m => m.Name == RoleName.ActingDepartmentHead);
-            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.First();
+            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.FirstOrDefault();
             DelegateDepHeadApiModel apiModel = new DelegateDepHeadApiModel();
-            apiModel.DepartmentName = user.Department.DepartmentName;
 
+            apiModel.DepartmentName = user.Department.DepartmentName;
+            IEnumerable<AspNetRoles> employeesInDepartment = _context.AspNetRoles.Where(m => m.Name == RoleName.ActingDepartmentHead || m.Name==RoleName.Employee).ToList();
+            List<AspNetUsers> employeesForDelegate = new List<AspNetUsers>();
+            foreach (var currentRole in employeesInDepartment)
+            {
+                employeesForDelegate.AddRange(currentRole.AspNetUsers.ToList());
+            }
+
+            List<AspNetUsers> employeesForDelegateFilterDepartment =
+                employeesForDelegate.Where(m => m.DepartmentId == user.DepartmentId).ToList();
+            List<EmployeeDto> employeeDtos = new List<EmployeeDto>();
+            foreach (AspNetUsers current in employeesForDelegateFilterDepartment)
+            {
+                EmployeeDto tempEmployeeDto = new EmployeeDto
+                {
+                    Name = current.EmployeeName,
+                    Id = current.Id
+                };
+                employeeDtos.Add(tempEmployeeDto);
+                apiModel.Employees = employeeDtos;
+            }
+            
             if (delegatedDepHead != null)
             {
                 apiModel.DelegatedDepartmentHeadName = delegatedDepHead.EmployeeName;
             }
-
-            apiModel.DepartmentName = "TEST";
-            return Ok(user);
+            return Ok(apiModel);
         }
 
         [Authorize(Roles = RoleName.DepartmentHead)]
