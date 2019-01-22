@@ -83,9 +83,81 @@ namespace Team7ADProjectApi
                         };
             return query.First();
         }
-       
 
-    #endregion
 
-}
+        #endregion
+
+        #region Author : Zan Tun Khine
+
+        //retrieve all the POs
+        public List<PendingPO> AllPOList()
+        {
+            var result = from x in context.PurchaseOrder
+                         join y in context.AspNetUsers
+                         on x.OrderedBy equals y.Id
+                         join z in context.Supplier
+                         on x.SupplierId equals z.SupplierId
+                         select new PendingPO
+                         {
+                             PONo = x.PONo,
+                             SupplierId = z.SupplierName,
+                             Status = x.Status,
+                             OrderedBy = y.EmployeeName,
+                             Date = x.Date,
+                             Amount = x.Amount
+                         };
+            return result.ToList();
+        }
+
+        //retrieve all the pending POs
+        public List<PendingPO> PendingPOList()
+        {
+            var result = from x in context.PurchaseOrder
+                         join y in context.AspNetUsers
+                         on x.OrderedBy equals y.Id
+                         join z in context.Supplier
+                         on x.SupplierId equals z.SupplierId
+                         where x.Status == "Pending Approval"
+                         select new PendingPO
+                         {
+                             PONo = x.PONo,
+                             SupplierId = z.SupplierName,
+                             Status = x.Status,
+                             OrderedBy = y.EmployeeName,
+                             Date = x.Date,
+                             Amount = x.Amount
+                         };
+            return result.ToList();
+        }
+
+        //retrieve all the pending PO details
+        public List<PendingPODetails> SelectedPODetails(String poNo)
+        {
+            var result = from x in context.TransactionDetail         // TransactionDetail ==> x
+                         join y in context.PurchaseOrder             // PurchaseOrder ==> y
+                         on x.TransactionRef equals y.PONo
+                         join z in context.Supplier                  // Supplier ==> z
+                         on y.SupplierId equals z.SupplierId
+                         join w in context.AspNetUsers               // AspNetUsers ==> w
+                         on y.OrderedBy equals w.Id
+                         where x.TransactionRef == poNo
+                         select new PendingPODetails
+                         {
+                             ItemId = x.ItemId,
+                             PONo = y.PONo,
+                             TransactionRef = x.TransactionRef,
+                             SupplierId = z.SupplierName,
+                             Status = y.Status,
+                             OrderedBy = w.EmployeeName,
+                             Quantity = x.Quantity,
+                             UnitPrice = x.UnitPrice,
+                             Remarks = x.Remarks,
+                             Amount = y.Amount,
+                             UnitAmount = x.UnitPrice * x.Quantity
+                         };
+            return result.ToList();
+        }
+
+        #endregion
+    }
 }
