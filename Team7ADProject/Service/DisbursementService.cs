@@ -39,6 +39,26 @@ namespace Team7ADProject.Service
 
         LogicDB context = new LogicDB();
 
+        public int GetDeptCpId(string userId)
+        {
+            return context.AspNetUsers.FirstOrDefault(x => x.Id == userId).Department.CollectionPointId;
+        }
+
+        public string GetDeptCpName(string userId)
+        {
+            return context.AspNetUsers.FirstOrDefault(x => x.Id == userId).Department.CollectionPoint.CollectionDescription;
+        }
+
+        public void UpdateCollectionPoint(string userId, int cpId)
+        {
+            var query = context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
+            var dept = query.Department;
+            var collPoint = context.CollectionPoint.FirstOrDefault(x => x.CollectionPointId == cpId);
+            dept.CollectionPoint = collPoint;
+            context.SaveChanges();
+        }
+
+
         public IEnumerable<DepartmentChargeBackViewModel> GetDepartmentChargeBackViewModels(string userId)
         {
             String DID = context.Department.
