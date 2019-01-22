@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Team7ADProject.Entities;
+using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Service
 {
@@ -29,5 +31,48 @@ namespace Team7ADProject.Service
             }
         }
         #endregion
+
+        LogicDB context = new LogicDB();
+
+        public List<StockAdjustment> GetListStockAdjustment()
+        {
+            List<StockAdjustment> adjList = context.StockAdjustment.Where(x => x.ApprovedBy == null).ToList();
+            return adjList;
+        }
+
+
+        public AdjustmentDetailsViewModel GetAdjustmentViewModel(string stockAdjId)
+        {
+            StockAdjustment stockAdjustment = context.StockAdjustment.FirstOrDefault(x => x.StockAdjId == stockAdjId);
+            List<TransactionDetail> transactionDetail = context.TransactionDetail.Where(x => x.TransactionRef == stockAdjId).ToList();
+            if (stockAdjustment == null)
+            { return null; }
+            var stockAdjViewModel = new AdjustmentDetailsViewModel
+            {
+                StockAdjustment = stockAdjustment,
+                AdjustmentDetails = transactionDetail
+            };
+            return stockAdjViewModel;
+        }
+
+        public void UpdateAdjustment(string stockAdjId, string userId, string status)
+        {
+            var thisAdj = context.StockAdjustment.FirstOrDefault(x => x.StockAdjId == stockAdjId);
+            var remarks = context.TransactionDetail.Where(x => x.TransactionRef == stockAdjId).ToList();
+
+            thisAdj.ApprovedBy = userId;
+            foreach (var item in remarks)
+            {
+                var items = context.Stationery.Where(x => x.ItemId == item.ItemId).FirstOrDefault();
+                item.Remarks = status;
+                if (status == "Approved")
+                {
+                    items.QuantityWarehouse += item.Quantity;
+                }
+            }
+            context.SaveChanges();
+        }
+
+
     }
 }
