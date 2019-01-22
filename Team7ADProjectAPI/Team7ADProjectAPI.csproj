@@ -258,7 +258,6 @@
     <Compile Include="Controllers\ClerkController.cs" />
     <Compile Include="Controllers\DepartmentHeadController.cs" />
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
-
     <Compile Include="Controllers\VoidDisbursementListController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
@@ -295,8 +294,6 @@
     <Compile Include="ViewModels\BriefDepartment.cs" />
     <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
     <Compile Include="ViewModels\DepEmp.cs" />
-    <Compile Include="ViewModels\BriefManageDepRep.cs" />
-    <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
     <Compile Include="ViewModels\EmployeeDto.cs" />
     <Compile Include="ViewModels\PendingPO.cs" />
     <Compile Include="ViewModels\PendingPODetails.cs" />
