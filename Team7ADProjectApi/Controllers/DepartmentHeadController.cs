@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Team7ADProjectApi.Entities;
 using Team7ADProjectApi.ViewModels;
