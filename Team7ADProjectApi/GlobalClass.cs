@@ -44,29 +44,48 @@ namespace Team7ADProjectApi
 
 
 
-
         #region Author : Kay Thi Swe Tun
-        //public List<DepEmp> ListEmp(string id)
-        //{
-        //    var query = from y in context.AspNetUsers
-        //                where y.DepartmentId == id
-        //                select new DepEmp
-        //                {
-        //                     String name;
-        //    String empid;
-        //    String email;
-        //    String phone;
+        public List<DepEmp> ListEmp(string id)
+        {
+            var depid = getDepId(id);
+            var query = from y in context.AspNetUsers
+                        where y.DepartmentId == depid
+                        select new DepEmp
+                        {
+                          EName=y.EmployeeName,
+                          Empid=y.Id,
+                          Email=y.Email,
+                          phone=y.PhoneNumber
+                         };
+            return query.ToList();
+        }
+        public string getDepId(string eid)
+        {
+            return context.AspNetUsers.Where(x => x.Id == eid).Select(x=>x.DepartmentId).First();
+            
 
-        //    DepartmentId = x.DepartmentId,
-        //                    DepartmentName = x.DepartmentName,
-        //                    DepartmentRepName = y.EmployeeName,
-        //                    DepartmentRepId = x.DepartmentRepId
+        }
+        public BriefDepartment DepInfo(string id)
+        {
+            var depid = getDepId(id);
+        
+            var query = from x in context.Department
+                        join y in context.AspNetUsers
+                        on x.DepartmentRepId equals y.Id
+                        where x.DepartmentId == depid
+                        select new BriefDepartment
+                        {
+                            DepartmentId = x.DepartmentId,
+                            DepartmentName = x.DepartmentName,
+                            DepartmentRepName = y.EmployeeName,
+                            DepartmentRepId = x.DepartmentRepId
 
-        //                };
-        //    return query.ToList();
-        //}
+                        };
+            return query.First();
+        }
+       
 
-        #endregion
+    #endregion
 
-    }
+}
 }

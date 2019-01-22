@@ -39,7 +39,7 @@
                 required: true,
                 showOn: "both",
                 message: "This is a required field",
-                minDate: '-2y',
+                minDate: "01 January 2017",
                 maxDate: '0',
                 changeMonth: true,
                 changeYear: true,
@@ -116,10 +116,10 @@
 
             <p>Select period:</p>
             <p>
-                <input type="text" required name="fromDateTP" id="fromDateTP" onkeypress="return false;">
+                <input type="text" required name="fromDateTP" id="fromDateTP" placeholder="Please select a date" onkeypress="return false;">
             </p>
             <p>
-                <input type="text" required name="toDateTP" id="toDateTP" onkeypress="return false;">
+                <input type="text" required name="toDateTP" id="toDateTP" placeholder="Please select a date" onkeypress="return false;">
             </p>
             <details>
                 <summary style="background-color:#788F9E; color:snow">
