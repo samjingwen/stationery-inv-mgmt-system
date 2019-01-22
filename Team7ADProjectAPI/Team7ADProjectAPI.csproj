@@ -257,7 +257,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClerkController.cs" />
     <Compile Include="Controllers\DepartmentHeadController.cs" />
-    <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\VoidDisbursementListController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
@@ -295,9 +294,6 @@
     <Compile Include="ViewModels\DepEmp.cs" />
     <Compile Include="ViewModels\BriefManageDepRep.cs" />
     <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
-    <Compile Include="ViewModels\DepEmp.cs" />
-    <Compile Include="ViewModels\PendingPO.cs" />
-    <Compile Include="ViewModels\PendingPODetails.cs" />
     <Compile Include="ViewModels\RequestItems.cs" />
   </ItemGroup>
   <ItemGroup>
