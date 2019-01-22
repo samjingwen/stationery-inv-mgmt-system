@@ -10,13 +10,22 @@ namespace Team7ADProjectApi.Controllers
 {
     public class ClerkController : ApiController
     {
-        [Authorize(Roles = "Department Head")]
+        //[Authorize(Roles = "Department Head")]
+        //[HttpGet]
+        //[Route("api/department/{id}")]
+        //public IEnumerable<BriefDepartment> GetDepartments(string id)
+        //{
+        //    GlobalClass gc = new GlobalClass();
+        //    return gc.ListDepartment(id);
+        //}
+
+        GlobalClass gc = new GlobalClass();
+
         [HttpGet]
-        [Route("api/department/{id}")]
-        public IEnumerable<BriefDepartment> GetDepartments(string id)
+        [Route("api/Request/Items")]
+        public IEnumerable<RequestItems> ListRequestByItem()
         {
-            GlobalClass gc = new GlobalClass();
-            return gc.ListDepartment(id);
+            return gc.ListRequestByItem();
         }
 
     }

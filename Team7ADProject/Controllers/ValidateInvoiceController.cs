@@ -8,7 +8,7 @@ using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
-    #region Gao Jiaxue
+    #region Author:Gao Jiaxue
     public class ValidateInvoiceController : Controller
     {
         //get Data
@@ -24,6 +24,7 @@ namespace Team7ADProject.Controllers
             _context.Dispose();
         }
         // GET: ValidateInvoice
+        [Authorize(Roles = "Store Clerk")]
         public ActionResult Index()
         {
             var suppliers = _context.Supplier.Distinct().ToList();
@@ -36,7 +37,9 @@ namespace Team7ADProject.Controllers
             return View(invoiceDetailsViewModel);
         }
 
+        //Create new Invoice and TransactionDetails
         [HttpPost]
+        [Authorize(Roles = "Store Clerk")]
         public ActionResult Create(Invoice[] invoice, TransactionDetail[] requests)
         {
             string result = "Error! Invoice is not complete.";
@@ -46,6 +49,7 @@ namespace Team7ADProject.Controllers
             { result = "Your DelOrder No is wrong!"; }
             if (invoice != null && requests != null&&delID)
             {
+                //Create Invoice
                 Invoice newInvoice = new Invoice();
                 newInvoice.InvoiceId = invoiceID;
                 newInvoice.InvoiceNo = invoice[0].InvoiceNo;

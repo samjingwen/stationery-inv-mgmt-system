@@ -16,11 +16,14 @@ namespace Team7ADProject.Controllers
     {
         LogicDB context = new LogicDB();
         // GET: RaiseAdjustment
+
+        [Authorize(Roles = "Store Clerk")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "Store Clerk")]
         [HttpPost]
         public ActionResult Save(AdjustmentViewModel[] requests,string remark)
         {

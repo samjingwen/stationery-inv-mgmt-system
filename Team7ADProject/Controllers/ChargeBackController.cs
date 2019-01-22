@@ -6,7 +6,10 @@ using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
 using Team7ADProject.ViewModels;
+using ClosedXML.Excel;
 using Team7ADProject.ViewModels.ChargeBack;
+using System.Data;
+using System.IO;
 
 namespace Team7ADProject.Controllers
 {
@@ -18,7 +21,7 @@ namespace Team7ADProject.Controllers
         LogicDB context = new LogicDB();
 
         // GET: ChargeBack
-        [Authorize(Roles = "Department Head")]
+        [RoleAuthorize(Roles = "Department Head")]
         public ActionResult ChargeBack()
         {             
                 LogicDB context = new LogicDB();
@@ -51,7 +54,7 @@ namespace Team7ADProject.Controllers
 
         }
 
-        [Authorize(Roles = "Department Head")]
+        [RoleAuthorize(Roles = "Department Head")]
         [HttpPost]
         public ActionResult ChargeBack(DateTime? fromDTP, DateTime? toDTP)
         {if ((fromDTP== null) || (toDTP == null))
@@ -90,7 +93,7 @@ namespace Team7ADProject.Controllers
             }
         }
 
-        [Authorize(Roles = "Department Head")]
+        [RoleAuthorize(Roles = "Department Head")]
         public ActionResult ChargeBackDetails(String id)
         {
             LogicDB context = new LogicDB();
@@ -127,6 +130,50 @@ namespace Team7ADProject.Controllers
             }
             else { return HttpNotFound(); }
         }
+        
+        [HttpPost]
+        [RoleAuthorize(Roles = "Department Head")]
+        public FileResult ExportRpt(DateTime? fromDTP, DateTime? toDTP)
+        {
+            LogicDB context = new LogicDB();
+            String UID = User.Identity.GetUserId();
+            String DID = context.Department.
+            Where(x => x.DepartmentHeadId == UID).
+            First().DepartmentId;
+
+            if ((fromDTP == null) || (toDTP == null))
+            {
+                fromDTP = new DateTime(2017, 1, 1);
+                toDTP = DateTime.Today; 
+            }
+
+            DataTable dt = new DataTable("Report");
+            dt.Columns.AddRange(new DataColumn[5] { new DataColumn("ChargeBack ID"),
+            new DataColumn("Acknowledged By"),
+                new DataColumn("Disbursement Date"),
+                new DataColumn("RequestID"),
+                new DataColumn("Status")});
+
+            var chargeback = context.Disbursement.Where(x => x.DepartmentId == DID && x.Date >= fromDTP && x.Date <= toDTP).ToList().
+                Select(y => new { y.DisbursementId, y.AspNetUsers1.EmployeeName, y.Date, y.RequestId, y.Status });
+
+            foreach (var i in chargeback)
+            {
+                dt.Rows.Add(i.DisbursementId, i.EmployeeName, i.Date, i.RequestId, i.Status);
+            }
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream st = new MemoryStream())
+                {
+                    wb.SaveAs(st);
+                    return File(st.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Chargeback_Report.xlsx");
+                }
+            }
+
+        }
+
         #endregion
 
     }

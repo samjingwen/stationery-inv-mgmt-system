@@ -13,12 +13,14 @@ namespace Team7ADProject.Controllers
             return View();
         }
 
+        [RoleAuthorize]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -27,9 +29,17 @@ namespace Team7ADProject.Controllers
         }
 
         [HandleError]
-        public ActionResult Error()
+        public ActionResult Error401()
         {
             return View();
         }
+
+        [HandleError]
+        public ActionResult Error404()
+        {
+            return View();
+        }
+
+
     }
 }

@@ -14,18 +14,19 @@ using System.Text;
 namespace Team7ADProject.Controllers
 {
     //For SC to raise PO
+    [Authorize(Roles = "Store Clerk")]
     public class RaiseOrderController : Controller
     {
 
         private LogicDB _context = new LogicDB();
-
+        static string currentUserId = "";
         #region Zan Tun Khine
 
-        [Authorize(Roles = "Store Clerk")]
         #region For the Store Staff To View His/Her Own POs
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
+            currentUserId = userId;
             var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
             ViewBag.CurrentUser = query.EmployeeName;
             List<PurchaseOrder> purchaseOrder = _context.PurchaseOrder.Where(x => x.OrderedBy == userId).ToList();
@@ -80,7 +81,6 @@ namespace Team7ADProject.Controllers
             //Creating new entries
             else
             {
-
                 // to get the user ID of the current user
                 string userId = User.Identity.GetUserId();
                 var query = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
@@ -91,19 +91,16 @@ namespace Team7ADProject.Controllers
                 foreach (String current in uniqueSupplier)
                 {
                     string newPOnum = "PO" + DateTime.Now.Date.ToString("yy") + "/" + DateTime.Now.Date.ToString("MM") + "/" + GetSerialNumber();
-
-                    // List<RaisePOViewModel> raisePOs = new List<RaisePOViewModel>();
+   
                     decimal? amount = 0;
                     foreach (var po in poModel)
                     {
                         if (po.SupplierId == current)
                         {
                             decimal? total = (po.Quantity * po.UnitPrice);
-
                             amount = amount + total;
                             TransactionDetail newTD = new TransactionDetail
-                            {
-                                //TransactionId = 12312,
+                            {                             
                                 ItemId = po.Description,
                                 Quantity = po.Quantity,
                                 Remarks = "Pending Approval",
@@ -112,8 +109,7 @@ namespace Team7ADProject.Controllers
                                 UnitPrice = po.UnitPrice
                             };
                             _context.TransactionDetail.Add(newTD);
-                            _context.SaveChanges();
-                            //raisePOs.Add(po);
+                            _context.SaveChanges();                         
                         }
                     }
                     PurchaseOrder newPO = new PurchaseOrder()
@@ -126,19 +122,37 @@ namespace Team7ADProject.Controllers
                         Date = DateTime.Today,
                         Status = "Pending Approval"
                     };
-
                     _context.PurchaseOrder.Add(newPO);
                     _context.SaveChanges();
-
                 }
-                result = "success";
+                SendEmail();
+                result = "A PO has been raised successfully!";
             }
-
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
 
         #endregion
+
+        #endregion
+
+
+
+        #region Email
+
+        public void SendEmail()
+        {
+            
+            LogicDB context = new LogicDB();
+            // to get the user ID of the current user
+            string userId = User.Identity.GetUserId();
+            string sender = context.AspNetUsers.FirstOrDefault(x => x.Id == userId).EmployeeName;   
+            string receipient = "zantunkhine@googlemail.com";
+            string subject = "New Pending PO";
+            string content = String.Format("Dear {0},{1}You have new Purchase Orders pending for approval.{2}{3} Regards,{4}{5}", "Manager", Environment.NewLine, Environment.NewLine, Environment.NewLine, Environment.NewLine, sender);
+            Email.Send(receipient,subject, content);
+        }
+
         #endregion
 
         #region Generate Running Number

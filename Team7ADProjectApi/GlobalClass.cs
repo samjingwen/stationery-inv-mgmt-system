@@ -11,6 +11,8 @@ namespace Team7ADProjectApi
     {
         LogicDB context = new LogicDB();
 
+        #region Author: Sam Jing Wen
+
         public List<BriefDepartment> ListDepartment(string id)
         {
             var query = from x in context.Department
@@ -28,7 +30,17 @@ namespace Team7ADProjectApi
             return query.ToList();
         }
 
+        public List<RequestItems> ListRequestByItem()
+        {
+            var query = (from x in context.RequestByItemView select new RequestItems
+                            {
+                               ItemId = x.ItemId,
+                               Description = x.Description
+                            }).Distinct().ToList();
+            return query;
+        }
 
+        #endregion
 
 
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
+using Team7ADProject.Service;
 using Team7ADProject.ViewModels;
 
 //Author: Sam Jing Wen
@@ -16,6 +17,7 @@ namespace Team7ADProject.Controllers
     public class CollectionPointController : Controller
     {
         #region Author: Sam Jing Wen
+        DisbursementService disbursementService = DisbursementService.Instance;
         
         public ActionResult Index()
         {
