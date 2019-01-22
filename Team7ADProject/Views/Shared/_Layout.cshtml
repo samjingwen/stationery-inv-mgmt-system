@@ -17,7 +17,7 @@
         <img class="sidelogo" src="~/Content/images/logo.png" />
     </div>
     @Html.Partial("_NavBar")
-    @Html.Partial("_SideBar")
+    @Html.Action("SideBar", "Navi")
     <div class="container body-content">
         @RenderBody()
         <hr />

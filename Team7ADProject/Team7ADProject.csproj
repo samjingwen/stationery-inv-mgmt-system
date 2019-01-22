@@ -250,6 +250,7 @@
     <Compile Include="Controllers\ManageRetrievalController.cs" />
     <Compile Include="Controllers\ManageStationeryController.cs" />
     <Compile Include="Controllers\ManageSupplierController.cs" />
+    <Compile Include="Controllers\NaviController.cs" />
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
     <Compile Include="Controllers\RaiseOrderController.cs" />
     <Compile Include="Controllers\RaiseRequestController.cs" />
@@ -289,6 +290,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\CommonService.cs" />
     <Compile Include="Service\DisbursementService.cs" />
@@ -320,6 +322,7 @@
     <Compile Include="ViewModels\OwnRequisitionHistoryViewModel.cs" />
     <Compile Include="ViewModels\RaiseRequestWrapperViewModel.cs" />
     <Compile Include="ViewModels\RequestedItemViewModel.cs" />
+    <Compile Include="ViewModels\SideBarViewModel.cs" />
     <Compile Include="ViewModels\StationeryFormViewModel.cs" />
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
@@ -545,7 +548,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\notify.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -628,6 +633,7 @@
     <Folder Include="Views\Common\" />
     <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
+    <Folder Include="Views\Navi\" />
     <Folder Include="Views\ReceiveGoods\" />
     <Folder Include="Views\ReceiveOrder\" />
     <Folder Include="Views\ReturnWarehouse\" />

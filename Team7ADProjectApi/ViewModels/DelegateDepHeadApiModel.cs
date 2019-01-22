@@ -10,6 +10,7 @@ namespace Team7ADProjectApi.ViewModels
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string UserId { get; set; }
-        public string DepartmentHeadName { get; set; }
+        public string DelegatedDepartmentHeadName { get; set; }
+        public string DepartmentName { get; set; }
     }
 }
