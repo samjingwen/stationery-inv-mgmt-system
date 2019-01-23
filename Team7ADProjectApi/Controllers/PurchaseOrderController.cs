@@ -51,9 +51,26 @@ namespace Team7ADProjectApi.Controllers
 
         #endregion
 
+        #region Approve PO
+        [HttpPost]
+        [Route("api/pendingpo/approve")]
+        public bool ApprovePO([FromBody] PurchaseOrder po)
+        {
+            GlobalClass gc = new GlobalClass();
+            return gc.ApprovePO(po);
+        }
+        #endregion
+
+        #region Reject PO
+        [HttpPost]
+        [Route("api/pendingpo/reject")]
+        public bool RejectPO([FromBody] PurchaseOrder po)
+        {
+            GlobalClass gc = new GlobalClass();
+            return gc.RejectPO(po);
+        }
+        #endregion
+
         #endregion
     }
-
-
-
 }
