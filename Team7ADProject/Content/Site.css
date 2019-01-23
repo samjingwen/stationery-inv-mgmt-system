@@ -68,11 +68,12 @@ img.loginlogo {
 
 
 img.sidelogo {
-    width: 200px;
+    width: 233px;
     height: 150px;
     background-color: #222c49;
     position: fixed;
     top: 0;
+    padding:30px;
     left: 0;
 }
 
@@ -94,7 +95,7 @@ img.sidelogo {
 /* The side navigation menu */
 .sidebar {
     margin: 0;
-    width: 200px;
+    width: 250px;
     background-color: #222c49;
     position: fixed;
     top: 150px;
@@ -277,8 +278,9 @@ tr:hover {
 /*custcontainer*/
 .custcontainer{
     height: 100%;
-    width:80%;
+    width:70%;
     margin: 15px;
+    margin-left:75px;
 }
 
 /*green button*/

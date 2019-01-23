@@ -4,16 +4,17 @@
 }
 
 <h2>Collection Point Management</h2>
-
-<ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#firstTab">View All</a></li>
-    <li><a data-toggle="tab" href="#secondTab">Add New</a></li>
-</ul>
-<div class="tab-content">
-    <div id="firstTab" class="tab-pane fade in active">@Html.Action("ViewAll")</div>
-    <div id="secondTab" class="tab-pane fade in">@Html.Action("AddOrEdit")</div>
+<div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#firstTab">View All</a></li>
+        <li><a data-toggle="tab" href="#secondTab">Add New</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="firstTab" class="tab-pane fade in active">@Html.Action("ViewAll")</div>
+        <div id="secondTab" class="tab-pane fade in">@Html.Action("AddOrEdit")</div>
+    </div>
 </div>
-<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
 
 
 @section scripts{
