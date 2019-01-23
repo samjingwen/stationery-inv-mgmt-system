@@ -52,79 +52,80 @@
 
     </script>
 </head>
-
-<h2>Department Charge Back</h2>
-<p></p>
-<hr />
-@{decimal total = 0;
-    foreach (var item in Model.Select(x => x.TransactionDetail))
-    {
-        var q = item.Where(x => x.Disbursement.DisbursementId == x.TransactionRef).
-             Sum(x => x.Quantity * x.UnitPrice);
-        total = total + (decimal)q;
+<div class="custcontainer">
+    <h2>Department Charge Back</h2>
+    <p></p>
+    <hr />
+    @{decimal total = 0;
+        foreach (var item in Model.Select(x => x.TransactionDetail))
+        {
+            var q = item.Where(x => x.Disbursement.DisbursementId == x.TransactionRef).
+                 Sum(x => x.Quantity * x.UnitPrice);
+            total = total + (decimal)q;
+        }
     }
-}
 
-<div>
-    <form id="rangeDTP" name="rangeDTP" action='@Url.Action("ChargeBack","ChargeBack")' method="post">
-        <p>
-            View charge back from <input type="text" name="fromDTP" id="fromDTP" required placeholder="Please select a date" onkeypress="return false;"> to
-            <input type="text" name="toDTP" id="toDTP" required placeholder="Please select a date" onkeypress="return false;">.
-        </p>
-        <p><input type="submit" id="submitBtn" value="View" /></p>
-        <p><button type="submit" id="exportBtn" formaction='@Url.Action("ExportRpt","ChargeBack")' formmethod="post">Export Report</button></p>
-    </form>
-</div>
-
+    <div>
+        <form id="rangeDTP" name="rangeDTP" action='@Url.Action("ChargeBack","ChargeBack")' method="post">
+            <p>
+                View charge back from <input type="text" name="fromDTP" id="fromDTP" required placeholder="Please select a date" onkeypress="return false;"> to
+                <input type="text" name="toDTP" id="toDTP" required placeholder="Please select a date" onkeypress="return false;">.
+            </p>
+            <p><input type="submit" id="submitBtn" value="View" /></p>
+            <p><button type="submit" id="exportBtn" formaction='@Url.Action("ExportRpt","ChargeBack")' formmethod="post">Export Report</button></p>
+        </form>
+    </div>
 
 
-<hr />
-<p>
-    Total charge back for the department is @String.Format("{0:c}", total)
-</p>
-<hr />
-<div>
-    @if (Model.ToList().Count() > 0)
-    {
-        <table class="table">
-            <tr>
-                <th>
 
-                </th>
-                <th>Acknowledged By</th>
-                <th>Disbursement Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
-            {
+    <hr />
+    <p>
+        Total charge back for the department is @String.Format("{0:c}", total)
+    </p>
+    <hr />
+    <div>
+        @if (Model.ToList().Count() > 0)
+        {
+            <table class="table">
                 <tr>
-                    <td>
-                        @item.Index
-                    </td>
-                    <td>
-                        @item.Data.AcknowledgedBy
-                    </td>
-                    <td>
-                        @String.Format("{0:dd MMM yyyy}", item.Data.Date)
-                    </td>
-                    <td>
-                        @String.Format("{0:c}",
-                    item.Data.TransactionDetail.Where(x => x.TransactionRef == item.Data.DisbursementId).
-                    Sum(x => x.Quantity * x.UnitPrice))
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Data.Status)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Details", "ChargeBackDetails", new { id = item.Data.DisbursementId })
-                    </td>
+                    <th>
+
+                    </th>
+                    <th>Acknowledged By</th>
+                    <th>Disbursement Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th></th>
                 </tr>
-            }
 
-        </table>
-    }
+                @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
+                {
+                    <tr>
+                        <td>
+                            @item.Index
+                        </td>
+                        <td>
+                            @item.Data.AcknowledgedBy
+                        </td>
+                        <td>
+                            @String.Format("{0:dd MMM yyyy}", item.Data.Date)
+                        </td>
+                        <td>
+                            @String.Format("{0:c}",
+                        item.Data.TransactionDetail.Where(x => x.TransactionRef == item.Data.DisbursementId).
+                        Sum(x => x.Quantity * x.UnitPrice))
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Data.Status)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "ChargeBackDetails", new { id = item.Data.DisbursementId })
+                        </td>
+                    </tr>
+                }
 
+            </table>
+        }
+
+    </div>
 </div>

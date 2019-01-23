@@ -95,7 +95,7 @@ img.sidelogo {
 /* The side navigation menu */
 .sidebar {
     margin: 0;
-    width: 250px;
+    width: 25%;
     background-color: #222c49;
     position: fixed;
     top: 150px;
