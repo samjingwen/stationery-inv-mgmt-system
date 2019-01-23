@@ -27,11 +27,11 @@ namespace Team7ADProject.Controllers
             DelegateHeadViewModel viewModel = new DelegateHeadViewModel(userId);
             string[] delHead = gmService.GetDelegatedHead(userId);
 
-            ApplicationUser user = manager.FindById(delHead[0]);
-
-            if (delHead != null && manager.IsInRole(user.Id, "Acting Department Head"))
+            if (delHead != null)
             {
-                ViewBag.DelHead = delHead;
+                ApplicationUser user = manager.FindById(delHead[0]);
+                if (manager.IsInRole(user.Id, "Acting Department Head"))
+                    ViewBag.DelHead = delHead;
             }
             ViewBag.DepName = viewModel.DepartmentName;
             return View(viewModel);
