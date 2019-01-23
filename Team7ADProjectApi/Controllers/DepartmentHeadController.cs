@@ -31,21 +31,50 @@ namespace Team7ADProjectApi.Controllers
         }
         #endregion
 
-        //[Authorize(Roles = "Department Head")]
+
+        #region Author : Kay Thi Swe Tun
+        [Authorize(Roles = "Department Head")]
         [HttpGet]
         [Route("api/managedepartmentRep/{id}")]
-        public BriefManageDepRep GetDepartments(string id)//username
+        public BriefDepartment GetDepartments(string id)//username
         {
             GlobalClass gc = new GlobalClass();
 
             BriefDepartment depinfo = gc.DepInfo(id);
-            List<DepEmp> emplist = gc.ListEmp(id);
-            BriefManageDepRep brief = new BriefManageDepRep();
-            brief.depEmps = emplist;
-          brief.depinfo = depinfo;
            
-            return brief;
+            return depinfo;
         }
+
+        [Authorize(Roles = "Department Head")]
+        [HttpGet]
+        [Route("api/managedepartmentEmp/{id}")]
+        public IEnumerable<DepEmp>  GetDepartmentEmps(string id)//username
+        {
+            GlobalClass gc = new GlobalClass();
+
+            List<DepEmp> emplist = gc.ListEmp(id);
+            
+
+            return emplist;
+        }
+
+
+        [Authorize(Roles = "Department Head")]
+        [HttpPost]
+        [Route("api/managedepartmentEmp")]
+        public int GetDepartmentEmps([FromBody]BriefDepartment e)//username
+        {
+            GlobalClass gc = new GlobalClass();
+            gc.assignDepRep(e);
+
+            Console.WriteLine(e.DepartmentName);
+            //List<DepEmp> emplist = gc.ListEmp(id);
+
+
+            return 1;
+        }
+
+        #endregion
         //[HttpGet]
         //[Route("api/managedepartmentRep/{id}")]
         //public BriefManageDepRep GetDepartmentsTest(string id)//username
