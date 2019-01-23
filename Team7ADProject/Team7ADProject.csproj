@@ -627,6 +627,7 @@
     <Content Include="Views\ManagePostponeCollectionDateDepartment\Details.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
     <Content Include="Views\Shared\Error401.cshtml" />
+    <Content Include="Views\Home\_MenuBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />

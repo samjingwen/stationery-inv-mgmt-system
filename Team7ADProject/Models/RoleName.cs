@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Team7ADProject.Models
+namespace Team7ADProjectApi.Models
 {
     public class RoleName
     {
