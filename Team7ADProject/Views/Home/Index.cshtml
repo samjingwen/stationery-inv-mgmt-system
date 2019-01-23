@@ -5,19 +5,22 @@
                 ViewBag.Title = "Home Page";
 }
 <link href="~/Content/Site.css" rel="stylesheet" />
+<h2>Welcome!</h2>
 <div>
     @ViewBag.testing
 </div>
 
-<div>
-    @foreach(var i in Model)
-    {
-        if (User.IsInRole(i.Roles))
+<div style="height:100%;">
+    <div style="padding:20px;">
+        @foreach (var i in Model)
         {
-            <div>
-                @Html.Partial("_MenuBox", i)
-            </div>
+            if (User.IsInRole(i.Roles))
+            {
+                <div>
+                    @Html.Partial("_MenuBox", i)
+                </div>
+            }
         }
-    }
+    </div>
 
 </div>

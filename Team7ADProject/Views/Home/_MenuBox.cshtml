@@ -1,8 +1,10 @@
 ﻿@model Team7ADProject.ViewModels.SideBarViewModel
 
 
-<div style="width:20%">
-    
-    <a href="@Url.Action(Model.Action,Model.Controller)"> @Html.Raw(Model.Title)</a>
+<div>
+    <div style="width:20%" class="menuBox">
 
+        <a href="@Url.Action(Model.Action,Model.Controller)"> @Html.Raw(Model.Title)</a>
+
+    </div>
 </div>
