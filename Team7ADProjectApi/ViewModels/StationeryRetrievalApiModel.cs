@@ -7,10 +7,7 @@ namespace Team7ADProjectApi.ViewModels
 {
     public class StationeryRetrievalApiModel
     {
-        public string ItemName { get; set; }
-        public string Location { get; set; }
-        public int Quantity { get; set; }
-        public int ActualRetrieved { get; set; }
-        public bool Collected { get; set; }
+        public string itemName { get; set; }
+        public List<StationeryRetrieveDto> StationeryRetrieveDtos { get; set; }
     }
 }
