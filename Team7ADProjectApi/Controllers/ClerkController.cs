@@ -43,37 +43,55 @@ namespace Team7ADProjectApi.Controllers
         }
 
         #region Teh Li Heng Generate Retrieval Android
+        [HttpGet]
+        [Route("api/clerk/getretrievallist")]
         public IHttpActionResult GetRetrievalList()
         {
+            //Getting full list of item
+            List<RequestByItemView> fullRetrievalList = _context.RequestByItemView.ToList();
 
-            //List<StationeryRequest> partiallyFulfilled =
-            //    _context.StationeryRequest.Where(m => m.Status == "Partially  Fulfilled").ToList();
-            //List<StationeryRequest> pendingDisbursement =
-            //    _context.StationeryRequest.Where(m => m.Status == "Pending Disbursement").ToList();
+            //Getting disbursement related
+            List<TransactionDetail> partiallyFulfilledRequest =
+                _context.TransactionDetail.Where(m => m.Remarks == "Partially Fulfilled" && m.TransactionRef.StartsWith("Req")).ToList();
 
-            ////combining list of items for different request
-            //List<TransactionDetail> combinedListPartiallyFulfilled = new List<TransactionDetail>();
-            //foreach (StationeryRequest current in partiallyFulfilled)
-            //{
-            //    combinedListPartiallyFulfilled.AddRange(current.TransactionDetail.ToList());
-            //}
+            List<TransactionDetail> partiallyFulfilledDisbursement =
+                _context.TransactionDetail.Where(m => m.Remarks == "Partially Fulfilled" && m.TransactionRef.StartsWith("DISB")).ToList();
 
-            //List<TransactionDetail> combinedListPendingDisrbursement = new List<TransactionDetail>();
-            //foreach (StationeryRequest current in pendingDisbursement)
-            //{
-            //    combinedListPendingDisrbursement.AddRange(current.TransactionDetail.ToList());
-            //}
+            List<RequestByItemView> itemToLess = new List<RequestByItemView>();
+            for (int i = 0; i < partiallyFulfilledRequest.Count; i++)
+            {
+                foreach (TransactionDetail current in partiallyFulfilledDisbursement)
+                {
+                    //find if the request has it's disbursement, if yes add to list to less
+                    if (current.Disbursement.RequestId == partiallyFulfilledRequest[i].TransactionRef && current.ItemId==partiallyFulfilledRequest[i].ItemId)
+                    {
+                        RequestByItemView quantityToLess = new RequestByItemView
+                        {
+                            ItemId = current.ItemId,
+                            Description = current.Stationery.Description,
+                            DepartmentId = current.Disbursement.DepartmentId,
+                            DepartmentName = current.Disbursement.Department.DepartmentName,
+                            Quantity = current.Quantity,//this will give the quantity that should be deducted from total
+                        };
+                        itemToLess.Add(quantityToLess);
+                    }
+                }
+            }
 
+            //go through full retrieval and less it
+            for (int i = 0; i < fullRetrievalList.Count; i++)
+            {
+                for (int j = 0; j < itemToLess.Count; j++)
+                {
+                    if (itemToLess[j].ItemId == fullRetrievalList[i].ItemId &&
+                        itemToLess[j].DepartmentId == fullRetrievalList[i].DepartmentId)
+                    {
+                        fullRetrievalList[i].Quantity -= itemToLess[j].Quantity;
+                    }
+                }
+            }
 
-
-
-
-
-
-
-            //StationeryRetrievalApiModel retrievalApiModel = new StationeryRetrievalApiModel();
-            //retrievalApiModel.
-            return Ok();
+            return Ok(fullRetrievalList);
         }
 
 
