@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Team7ADProjectApi.Service;
 using Team7ADProjectApi.ViewModels;
 using Team7ADProjectApi.Entities;
 
