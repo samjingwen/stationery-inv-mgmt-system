@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
@@ -10,7 +11,8 @@ namespace Team7ADProject.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            List<SideBarViewModel> menulist = SideBarViewModel.GenList();
+            return View(menulist);
         }
 
         [RoleAuthorize]

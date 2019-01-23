@@ -12,7 +12,7 @@ using Team7ADProject.ViewModels;
 //Author: Sam Jing Wen
 namespace Team7ADProject.Controllers
 {
-    [Authorize(Roles = "Department Head")]
+    [RoleAuthorize(Roles = "Department Head")]
     public class ManageRepController : Controller
     {
         #region Sam Jing Wen

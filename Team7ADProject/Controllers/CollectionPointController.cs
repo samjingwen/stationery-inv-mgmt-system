@@ -45,10 +45,6 @@ namespace Team7ADProject.Controllers
 
             return RedirectToAction("Index");
         }
-
-
-
-
         #endregion
 
     }
