@@ -198,9 +198,8 @@ td {
 }
 
 .blue {
-    background-color: #3498DB;
-    border-bottom: 5px solid #2980B9;
-    text-shadow: 0 -2px #2980B9;
+    border-bottom: 1px solid #2980B9;
+    text-shadow: 0 -1px #2980B9;
 }
 
 .red {
@@ -228,7 +227,6 @@ td {
 }
 
 
-
 /*MenuBox - Elaine Chan*/
 .menuBox {
     border: outset;
@@ -242,10 +240,43 @@ td {
     flex-wrap: wrap;
     margin: 30px;
 }
+/*links*/
+.custlink{
+    color:antiquewhite;
+}
 
 a {
-    color: antiquewhite;
+    color: #3E4660;
 }
     a:hover {
+        text-decoration: underline;
         color: #fee1a1;
     }
+
+/*customTable - Elaine Chan*/
+.cusTable {
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 83%;
+}
+th {
+    padding: 2;
+    background-color: #222c49;
+    color: #fee1a1;
+    height: 30px;
+}
+th, td {
+    padding: 2px;
+    text-align: left;
+    border-bottom: 1px solid #8F8C84;
+}
+tr:hover {
+    background-color: #FFF7E8;
+}
+
+/*custcontainer*/
+.custcontainer{
+    height: 100%;
+    width:80%;
+    margin: 15px;
+}
