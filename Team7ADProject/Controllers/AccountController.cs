@@ -81,10 +81,10 @@ namespace Team7ADProject.Controllers
             {
                 case SignInStatus.Success:
                     //Check if user is acting department head, remove role if expired
-                    var userId = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity;
+                    var userId = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId();
                     LogicDB context = new LogicDB();
                     var todayDate = DateTime.Now.Date;
-                    var query = context.DelegationOfAuthority.Where(x => x.EndDate >= todayDate && x.StartDate <= todayDate && x.DelegatedTo == userId.GetUserId()).FirstOrDefault();
+                    var query = context.DelegationOfAuthority.Where(x => x.EndDate >= todayDate && x.StartDate <= todayDate && x.DelegatedTo == userId).FirstOrDefault();
                     if (query == null)
                     {
 
