@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 0;
     padding-bottom: 20px;
+    background-color: #FFFBF3;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -306,3 +307,5 @@ td {
             color: #333;
         }
 }
+
+/*MenuBox - Elaine Chan*/
