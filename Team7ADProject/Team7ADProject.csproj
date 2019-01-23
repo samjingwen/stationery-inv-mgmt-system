@@ -237,11 +237,11 @@
     <Compile Include="Controllers\ChargeBackController.cs" />
     <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
-    <Compile Include="Controllers\DelegateHeadController.cs" />
     <Compile Include="Controllers\GenerateReportController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManageDelegateController.cs" />
     <Compile Include="Controllers\ManagePointController.cs" />
     <Compile Include="Controllers\ManagePostponeCollectionDateController.cs" />
     <Compile Include="Controllers\ManagePostponeCollectionDateDepartmentController.cs" />
@@ -603,7 +603,6 @@
     <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
-    <Content Include="Views\DelegateHead\index.cshtml" />
     <Content Include="Views\History\Detail.cshtml" />
     <Content Include="Views\GenerateReport\GenerateDashboard.cshtml" />
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
@@ -628,6 +627,7 @@
     <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
     <Content Include="Views\Shared\Error401.cshtml" />
     <Content Include="Views\Home\_MenuBox.cshtml" />
+    <Content Include="Views\ManageDelegate\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />

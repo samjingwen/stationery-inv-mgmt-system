@@ -27,15 +27,15 @@
     }
     else
     {
-        <span>@delHead[1];</span>
+        <span>@delHead[1]</span>
     }
 </h5>
 <br />
 
-@using (Html.BeginForm("Delegate", "DelegateHead", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Delegate", "ManageDelegate", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <label>Employee name: </label>
-    @Html.DropDownListFor(model => model.SelectedUser, listItems, "-- Select Employee --")
+    @Html.DropDownListFor(model => model.SelectedUser, listItems, "Select Employee")
     <br />
     <br />
     <label for="datepicker">Start Date : </label>
@@ -103,62 +103,5 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<h6>Delegate Department Head Authority for @Html.Display(Model.DelegateHead.First().DepartmentId)</h6>
-
-    <table>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Email
-            </th>
-            <th>Action</th>
-        </tr>
-
-        @foreach (var item in Model.DelegateHead)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.ActionLink("Delegate", "DelegatAuthority", new { id = item.Id }) |
-                </td>
-            </tr>
-        }
-
-    </table>*@
-
-<br />
-<br />
 
 

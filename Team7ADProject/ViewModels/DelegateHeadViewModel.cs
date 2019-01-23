@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
@@ -46,6 +47,7 @@ namespace Team7ADProject.ViewModels
             }
         }
 
+        [Required]
         public string SelectedUser { get; set; }
 
         public List<AspNetUsers> DeptEmployees
@@ -53,7 +55,10 @@ namespace Team7ADProject.ViewModels
             get
             {
                 if (DeptHeadId != null)
-                    return context.AspNetUsers.Where(x => x.DepartmentId == DepartmentId).ToList();
+                {
+                    return context.AspNetUsers.Where(x => x.DepartmentId == DepartmentId && x.Id != DeptHeadId).ToList();
+                    
+                }
                 else
                     return null;
             }

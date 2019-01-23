@@ -47,18 +47,17 @@ namespace Team7ADProject.Service
                 DepartmentId = deptId
             };
 
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-            var currentUser = manager.FindById(userId);
-
-            manager.RemoveFromRole(selectedUser, "Employee");
-            manager.AddToRole(selectedUser, "Acting Department Head");
             context.DelegationOfAuthority.Add(doaInDb);
             context.SaveChanges();
         }
 
         public string[] GetDelegatedHead(string userId)
         {
-            var query = context.DelegationOfAuthority.Where(x => x.EndDate >= DateTime.Now && x.DelegatedBy == userId).FirstOrDefault();
+            DateTime todayDate = DateTime.Now.Date;
+            LogicDB context = new LogicDB();
+
+            var query = context.DelegationOfAuthority.Where(x => x.EndDate >= todayDate && x.DelegatedBy == userId).FirstOrDefault();
+
             if (query == null)
             {
                 return null;
@@ -68,5 +67,7 @@ namespace Team7ADProject.Service
                 return new string[] { query.AspNetUsers1.Id, query.AspNetUsers1.EmployeeName };
             }
         }
+
+
     }
 }
