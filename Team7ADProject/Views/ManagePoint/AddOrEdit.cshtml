@@ -5,7 +5,7 @@
     Layout = null;
 }
 
-<div>
+<div class="custcontainer">
     @using (Html.BeginForm("AddOrEdit", "ManagePoint", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return jQueryAjaxPost(this);", data_restUrl = Url.Action("AddOrEdit", "ManagePoint", new { id = 0 }) }))
     {
         <div class="row">

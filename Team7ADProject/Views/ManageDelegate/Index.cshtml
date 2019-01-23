@@ -15,42 +15,42 @@
     }
 }
 
+<div class="custcontainer">
+    <h1>Delegate authority</h1>
 
-<h1>Delegate authority</h1>
+    <h5>Department Name :  @ViewBag.DepName  </h5>
+    <h5>
+        Delegated Acting Head:
+        @if (delHead == null)
+        {
+            <span>None</span>
+        }
+        else
+        {
+            <span>@delHead[1]</span>
+        }
+    </h5>
+    <br />
 
-<h5>Department Name :  @ViewBag.DepName  </h5>
-<h5>
-    Delegated Acting Head:
-    @if (delHead == null)
+    @using (Html.BeginForm("Delegate", "ManageDelegate", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
-        <span>None</span>
+        <label>Employee name: </label>
+        @Html.DropDownListFor(model => model.SelectedUser, listItems, "Select Employee")
+        <br />
+        <br />
+        <label for="datepicker">Start Date : </label>
+
+        @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly" })
+
+        <label for="datepicker">End Date : </label>
+
+        @Html.TextBoxFor(model => model.EndDate, new { @class = "date-picker1", @readonly = "readonly" })
+        <br />
+        <br />
+        <input type="submit" value="Submit" />
     }
-    else
-    {
-        <span>@delHead[1];</span>
-    }
-</h5>
-<br />
 
-@using (Html.BeginForm("Delegate", "DelegateHead", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    <label>Employee name: </label>
-    @Html.DropDownListFor(model => model.SelectedUser, listItems, "-- Select Employee --")
-    <br />
-    <br />
-    <label for="datepicker">Start Date : </label>
-
-    @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly" })
-
-    <label for="datepicker">End Date : </label>
-
-    @Html.TextBoxFor(model => model.EndDate, new { @class = "date-picker1", @readonly = "readonly" })
-    <br />
-    <br />
-    <input type="submit" value="Submit" />
-}
-
-
+</div>
 
 
 @section Scripts {
@@ -103,62 +103,5 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<h6>Delegate Department Head Authority for @Html.Display(Model.DelegateHead.First().DepartmentId)</h6>
-
-    <table>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Email
-            </th>
-            <th>Action</th>
-        </tr>
-
-        @foreach (var item in Model.DelegateHead)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.ActionLink("Delegate", "DelegatAuthority", new { id = item.Id }) |
-                </td>
-            </tr>
-        }
-
-    </table>*@
-
-<br />
-<br />
 
 
