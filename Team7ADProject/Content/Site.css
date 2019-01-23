@@ -68,11 +68,12 @@ img.loginlogo {
 
 
 img.sidelogo {
-    width: 200px;
+    width: 233px;
     height: 150px;
     background-color: #222c49;
     position: fixed;
     top: 0;
+    padding:30px;
     left: 0;
 }
 
@@ -94,7 +95,7 @@ img.sidelogo {
 /* The side navigation menu */
 .sidebar {
     margin: 0;
-    width: 200px;
+    width: 250px;
     background-color: #222c49;
     position: fixed;
     top: 150px;
@@ -247,17 +248,17 @@ td {
 
 a {
     color: #3E4660;
+    text-decoration:underline overline;
 }
     a:hover {
-        text-decoration: underline;
-        color: #fee1a1;
+        text-decoration: none;
     }
 
 /*customTable - Elaine Chan*/
 .cusTable {
     border-spacing: 0;
     border-collapse: collapse;
-    width: 83%;
+    width: 100%;
 }
 th {
     padding: 2;
@@ -277,6 +278,18 @@ tr:hover {
 /*custcontainer*/
 .custcontainer{
     height: 100%;
-    width:80%;
+    width:70%;
     margin: 15px;
+    margin-left:75px;
 }
+
+/*green button*/
+.greenBtn {
+    display: inline-block;
+    border-radius: 5px;
+    border: outset 3px #8ba964;
+    background-color: #8ba964;
+    text-align: center;
+}
+
+   

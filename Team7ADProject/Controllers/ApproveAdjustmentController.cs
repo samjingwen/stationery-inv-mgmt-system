@@ -33,7 +33,7 @@ namespace Team7ADProject.Controllers
             List<StockAdjustment> adjList = imService.GetListStockAdjustment();
             if (adjList.Count() == 0)
             {
-                ViewBag.error = "There is no pending request!";
+                ViewBag.error = "There are no pending requests!";
             }
             return View(adjList);
         }
