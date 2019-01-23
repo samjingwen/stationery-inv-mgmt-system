@@ -35,64 +35,66 @@
         });
     </script>
 </head>
-<h2>Department Request History</h2>
+<div class="custcontainer">
+    <h2>Department Request History</h2>
 
-<div>
-    <form id="rangeDTP" name="rangeDTP" action='@Url.Action("Index","History")' method="post">
-        <table>
+    <div>
+        <form id="rangeDTP" name="rangeDTP" action='@Url.Action("Index","History")' method="post">
+            <table>
+                <tr>
+                    <td>
+                        View requisition history from <input type="text" name="fromDTP" id="fromDTP" placeholder="Please select a date">
+                        to <input type="text" name="toDTP" id="toDTP" placeholder="Please select a date">.
+                    </td>
+                    <td width="100px" height="80px"></td>
+                    <td>
+                        <input type="submit" id="submitBtn" value="View" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApprovedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDate)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
             <tr>
                 <td>
-                    View requisition history from <input type="text" name="fromDTP" id="fromDTP" placeholder="Please select a date">
-                    to <input type="text" name="toDTP" id="toDTP" placeholder="Please select a date">.
+                    @Html.DisplayFor(modelItem => item.AspNetUsers1.EmployeeName)
                 </td>
-                <td width="100px" height="80px"></td>
                 <td>
-                    <input type="submit" id="submitBtn" value="View"/>
+                    @Html.DisplayFor(modelItem => item.AspNetUsers.EmployeeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Detail", new { id = item.RequestId })
                 </td>
             </tr>
-        </table>     
-    </form>
+        }
+
+    </table>
+
 </div>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.RequestedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ApprovedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RequestDate)
-        </th>
-        <th>
-
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers1.EmployeeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers.EmployeeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RequestDate)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Detail", new { id = item.RequestId })
-        </td>
-    </tr>
-    }
-
-</table>
-

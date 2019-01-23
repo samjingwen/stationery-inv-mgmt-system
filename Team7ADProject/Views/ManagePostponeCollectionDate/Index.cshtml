@@ -4,73 +4,75 @@
     ViewBag.Title = "Index";
 }
 
-<center><h2><b>Postpone Collection Date</b></h2></center>
+<div class="custcontainer">
+    <center><h2><b>Postpone Collection Date</b></h2></center>
 
-@*Author:Lynn Lynn Oo*@
-@* Design *@
-<style>
-    table {
-        border-collapse: collapse;
-        width: 80%;
-    }
+    @*Author:Lynn Lynn Oo*@
+    @* Design *@
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
 
-    td, th {
-        border: 1px solid #000000;
-        text-align: center;
-        padding: 10px;
-    }
+        td, th {
+            border: 1px solid #000000;
+            text-align: center;
+            padding: 10px;
+        }
 
-    tr:nth-child(even) {
-        background-color: #5b94d1;
-    }
-</style>
-@*Design*@
+        tr:nth-child(even) {
+            background-color: #5b94d1;
+        }
+    </style>
+    @*Design*@
 
 
-<table border="1" width="50" class="table breadcrumb table-bordered table-striped table-hover">
+    <table border="1" width="50" class="table breadcrumb table-bordered table-striped table-hover">
 
-    <tr>
-        <th>No.</th>
-        <th>Request By</th>
-        <th>Department ID</th>
-        <th>Request ID</th>
-        <th>Details</th>
-        <th>Status</th>
-        <th>Collection Date</th>
-        <th>Postpone</th>
-    </tr>
-    @{ int i = 1;}
-    @foreach (var item in Model)
-    {
         <tr>
-            <td>@(i++)</td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AspNetUsers1.EmployeeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartmentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestId)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.RequestId })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CollectionDate)
-            </td>
-            <td>
-                @*@Html.ActionLink("POSTPONE", "Postpone", new { @class = "btn btn-primary" }, new { id = item.RequestId })*@
-                @{
-                    string url = Url.Action("Postpone",new { id=item.RequestId});
-                }
-                <input type="button" value="POSTPONE" onclick="window.location.href('@url')" />
-            </td>
+            <th>No.</th>
+            <th>Request By</th>
+            <th>Department ID</th>
+            <th>Request ID</th>
+            <th>Details</th>
+            <th>Status</th>
+            <th>Collection Date</th>
+            <th>Postpone</th>
         </tr>
-    }
+        @{ int i = 1;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(i++)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetUsers1.EmployeeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestId)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.RequestId })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CollectionDate)
+                </td>
+                <td>
+                    @*@Html.ActionLink("POSTPONE", "Postpone", new { @class = "btn btn-primary" }, new { id = item.RequestId })*@
+                    @{
+                        string url = Url.Action("Postpone", new { id = item.RequestId });
+                    }
+                    <input type="button" value="POSTPONE" onclick="window.location.href('@url')" />
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>
 
+</div>

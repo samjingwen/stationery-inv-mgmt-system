@@ -15,42 +15,42 @@
     }
 }
 
+<div class="custcontainer">
+    <h1>Delegate authority</h1>
 
-<h1>Delegate authority</h1>
+    <h5>Department Name :  @ViewBag.DepName  </h5>
+    <h5>
+        Delegated Acting Head:
+        @if (delHead == null)
+        {
+            <span>None</span>
+        }
+        else
+        {
+            <span>@delHead[1]</span>
+        }
+    </h5>
+    <br />
 
-<h5>Department Name :  @ViewBag.DepName  </h5>
-<h5>
-    Delegated Acting Head:
-    @if (delHead == null)
+    @using (Html.BeginForm("Delegate", "ManageDelegate", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
-        <span>None</span>
+        <label>Employee name: </label>
+        @Html.DropDownListFor(model => model.SelectedUser, listItems, "Select Employee")
+        <br />
+        <br />
+        <label for="datepicker">Start Date : </label>
+
+        @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly" })
+
+        <label for="datepicker">End Date : </label>
+
+        @Html.TextBoxFor(model => model.EndDate, new { @class = "date-picker1", @readonly = "readonly" })
+        <br />
+        <br />
+        <input type="submit" value="Submit" />
     }
-    else
-    {
-        <span>@delHead[1]</span>
-    }
-</h5>
-<br />
 
-@using (Html.BeginForm("Delegate", "ManageDelegate", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    <label>Employee name: </label>
-    @Html.DropDownListFor(model => model.SelectedUser, listItems, "Select Employee")
-    <br />
-    <br />
-    <label for="datepicker">Start Date : </label>
-
-    @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly" })
-
-    <label for="datepicker">End Date : </label>
-
-    @Html.TextBoxFor(model => model.EndDate, new { @class = "date-picker1", @readonly = "readonly" })
-    <br />
-    <br />
-    <input type="submit" value="Submit" />
-}
-
-
+</div>
 
 
 @section Scripts {

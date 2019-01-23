@@ -5,58 +5,59 @@
     var cpName = ViewBag.cpName;
     var cpId = ViewBag.cpId;
 }
-
-<h2>Current Collection Point: @cpName</h2>
-<div>
-    <img class="cplogo" src="~/Content/images/cplogo.png" />
-</div>
-<div class="row">
-    @using (Html.BeginForm("UpdateCollectionPoint", "CollectionPoint", FormMethod.Post))
-    {
-
-
-        <div class="col-md-3" id="radio">
-            @foreach (var cp in Model.CollectionPoints)
-            {
-      
-
-                @Html.HiddenFor(x => cp.CPImagePath, new { @id = "cp_" + cp.CollectionPointId })
-            <label for="@cp.CollectionPointId" class="form-check-label">
+<div class="custcontainer">
+    <h2>Current Collection Point: @cpName</h2>
+    <div>
+        <img class="cplogo" src="~/Content/images/cplogo.png" />
+    </div>
+    <div class="row">
+        @using (Html.BeginForm("UpdateCollectionPoint", "CollectionPoint", FormMethod.Post))
+        {
 
 
-                @if (cpId == cp.CollectionPointId)
+            <div class="col-md-3" id="radio">
+                @foreach (var cp in Model.CollectionPoints)
                 {
 
-                    <input type="radio" id="@cp.CollectionPointId" name="selectedCP"
-                           value="@cp.CollectionPointId" checked="checked">
+
+                    @Html.HiddenFor(x => cp.CPImagePath, new { @id = "cp_" + cp.CollectionPointId })
+                    <label for="@cp.CollectionPointId" class="form-check-label">
+
+
+                        @if (cpId == cp.CollectionPointId)
+                        {
+
+                            <input type="radio" id="@cp.CollectionPointId" name="selectedCP"
+                                   value="@cp.CollectionPointId" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="radio" id="@cp.CollectionPointId" name="selectedCP"
+                                   value="@cp.CollectionPointId">
+                        }
+
+
+
+
+                        <span style="padding-left:5px; width:100px; display:inline-block">@cp.CollectionDescription</span>
+                        <span style="width:100px; display:inline">@cp.Time.ToShortTimeString()</span>
+                    </label>
+                    <br />
+
                 }
-                else
-                {
-                    <input type="radio" id="@cp.CollectionPointId" name="selectedCP"
-                           value="@cp.CollectionPointId" >
-                }
+
+                <input type="submit" value="Submit" class="btn btn-default" style="display: inline; float:left; margin-top:20px;" />
+
+            </div>
+            <div class="col-md-9">
+                <img id="cpImage" class="cpimg" src="~/Content/images/CollPoint/cpImage_1.png" />
+            </div>
+
+        }
 
 
 
-
-                <span style="padding-left:5px; width:100px; display:inline-block">@cp.CollectionDescription</span>
-                <span style="width:100px; display:inline">@cp.Time.ToShortTimeString()</span>
-            </label>
-            <br />
-
-            }
-
-            <input type="submit" value="Submit" class="btn btn-default" style="display: inline; float:left; margin-top:20px;" />
-
-        </div>
-        <div class="col-md-9">
-            <img id="cpImage" class="cpimg" src="~/Content/images/CollPoint/cpImage_1.png" />
-        </div>
-
-    }
-
-
-
+    </div>
 </div>
 @section scripts{
     <script>

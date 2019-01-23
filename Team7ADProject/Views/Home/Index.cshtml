@@ -5,12 +5,13 @@
                 ViewBag.Title = "Home Page";
 }
 <link href="~/Content/Site.css" rel="stylesheet" />
-<h2>Welcome!</h2>
-<div>
-    @ViewBag.testing
-</div>
-
 <div class="custcontainer">
+    <h2>Welcome!</h2>
+    <div>
+        @ViewBag.testing
+    </div>
+
+
     <div style="padding:20px;">
         @foreach (var i in Model)
         {
