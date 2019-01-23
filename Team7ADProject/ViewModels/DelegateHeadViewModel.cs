@@ -1,5 +1,6 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
@@ -9,58 +10,57 @@ namespace Team7ADProject.ViewModels
 {
     public class DelegateHeadViewModel
     {
-        public string CurrentUser { get; set; }
-        public DelegateHeadViewModel(String usrId)
+        LogicDB context = new LogicDB();
+
+        public string DeptHeadId { get; set; }
+
+        public DelegateHeadViewModel(string userId)
         {
-            CurrentUser = usrId;
+            DeptHeadId = userId;
         }
+
+        public DelegateHeadViewModel() { }
+
         public DateTime StartDate { get; set; }
+
         public DateTime EndDate { get; set; }
+
         public string DepartmentName
         {
             get
             {
-                LogicDB context = new LogicDB();
-                String depId = context.AspNetUsers.Where(x => x.Id == CurrentUser).Select(x => x.DepartmentId).First();
-
-                string s = context.Department.Where(x=>x.DepartmentId== depId).Select(x => x.DepartmentName).First();
-                return s;
-
+                if (DeptHeadId != null)
+                    return context.Department.Where(x => x.DepartmentHeadId == DeptHeadId).FirstOrDefault().DepartmentName;
+                else
+                    return null;
             }
         }
-        public string DepartmentID
+
+        public string DepartmentId
         {
             get
             {
-                LogicDB context = new LogicDB();
-                String depId = context.AspNetUsers.Where(x => x.Id == CurrentUser).Select(x => x.DepartmentId).First();
-
-                return depId;
-
+                if (DeptHeadId != null)
+                    return context.Department.FirstOrDefault(x => x.DepartmentHeadId == DeptHeadId).DepartmentId;
+                else
+                    return null;
             }
         }
-        public DelegateHeadViewModel()
-        {
-           
-        }
+
+        [Required]
         public string SelectedUser { get; set; }
-        public List<AspNetUsers> DelegateHead
-        {
-            get
-            {
-                LogicDB context = new LogicDB();
-                String depId = context.AspNetUsers.Where(x => x.Id == CurrentUser).Select(x => x.DepartmentId).First();
-                Console.WriteLine("dep Id --------------------------"+depId);
-                return context.AspNetUsers.Where(x=> x.DepartmentId==depId).ToList(); 
-            }
-        }
-        public List<String> EName
-        {
-            get
-            {
-                LogicDB context = new LogicDB();
 
-                return context.AspNetUsers.Select(x => x.Id).ToList();
+        public List<AspNetUsers> DeptEmployees
+        {
+            get
+            {
+                if (DeptHeadId != null)
+                {
+                    return context.AspNetUsers.Where(x => x.DepartmentId == DepartmentId && x.Id != DeptHeadId).ToList();
+                    
+                }
+                else
+                    return null;
             }
         }
     }

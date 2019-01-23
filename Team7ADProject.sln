@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Team7ADProject", "Team7ADPr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Team7ADProject.Tests", "Team7ADProject.Tests\Team7ADProject.Tests.csproj", "{63668D55-4EA1-458D-B023-252D3C7FE311}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Team7ADProjectApi", "Team7ADProjectApi\Team7ADProjectApi.csproj", "{A438E923-FD10-470D-B2D3-E19C016F3CCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Team7ADProjectAPI", "Team7ADProjectAPI\Team7ADProjectAPI.csproj", "{A438E923-FD10-470D-B2D3-E19C016F3CCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

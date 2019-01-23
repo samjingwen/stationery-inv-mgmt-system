@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Team7ADProject.Entities;
 using Team7ADProject.Models;
 
 namespace Team7ADProject.Controllers
@@ -79,6 +81,19 @@ namespace Team7ADProject.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    //Check if user is acting department head, remove role if expired
+                    var user = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity;
+                    var userId = user.GetUserId();
+                    LogicDB context = new LogicDB();
+                    var todayDate = DateTime.Now.Date;
+                    var query = context.DelegationOfAuthority.Where(x => x.EndDate >= todayDate && x.StartDate <= todayDate && x.DelegatedTo == userId).FirstOrDefault();
+                    if (query == null)
+                    {
+                        ApplicationDbContext appDb = new ApplicationDbContext();
+                        UserManager<ApplicationUser> _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                        //UserManager<ApplicationUser> _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(appDb));
+                        _userManager.RemoveFromRole(userId, "Acting Department Head");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

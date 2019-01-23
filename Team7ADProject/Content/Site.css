@@ -68,11 +68,12 @@ img.loginlogo {
 
 
 img.sidelogo {
-    width: 200px;
+    width: 233px;
     height: 150px;
-    background-color: #fee1a1;
+    background-color: #222c49;
     position: fixed;
     top: 0;
+    padding:30px;
     left: 0;
 }
 
@@ -94,8 +95,8 @@ img.sidelogo {
 /* The side navigation menu */
 .sidebar {
     margin: 0;
-    width: 200px;
-    background-color: #fee1a1;
+    width: 25%;
+    background-color: #222c49;
     position: fixed;
     top: 150px;
     height: 100%;
@@ -105,21 +106,21 @@ img.sidelogo {
     /* Sidebar links */
     .sidebar a {
         display: block;
-        color: #222c49;
+        color: #fee1a1;
         padding: 16px;
         text-decoration: none;
     }
 
         /* Active/current link */
         .sidebar a.active {
-            background-color: #222c49;
-            color: #fee1a1;
+            background-color: #fee1a1;
+            color: #222c49;
         }
 
         /* Links on mouse-over */
         .sidebar a:hover:not(.active) {
-            background-color: #222c49;
-            color: #fee1a1;
+            background-color: #fee1a1;
+            color: #222c49;
         }
 
 
@@ -198,9 +199,8 @@ td {
 }
 
 .blue {
-    background-color: #3498DB;
-    border-bottom: 5px solid #2980B9;
-    text-shadow: 0 -2px #2980B9;
+    border-bottom: 1px solid #2980B9;
+    text-shadow: 0 -1px #2980B9;
 }
 
 .red {
@@ -227,85 +227,69 @@ td {
     border-bottom: 1px solid;
 }
 
-/*Navbar*/
-/* navbar */
-.navbar-default {
-    background-color: #F8F8F8;
-    border-color: #E7E7E7;
-}
-    /* Title */
-    .navbar-default .navbar-brand {
-        color: #777;
-    }
-
-        .navbar-default .navbar-brand:hover,
-        .navbar-default .navbar-brand:focus {
-            color: #5E5E5E;
-        }
-    /* Link */
-    .navbar-default .navbar-nav > li > a {
-        color: #777;
-    }
-
-        .navbar-default .navbar-nav > li > a:hover,
-        .navbar-default .navbar-nav > li > a:focus {
-            color: #333;
-        }
-
-    .navbar-default .navbar-nav > .active > a,
-    .navbar-default .navbar-nav > .active > a:hover,
-    .navbar-default .navbar-nav > .active > a:focus {
-        color: #555;
-        background-color: #E7E7E7;
-    }
-
-    .navbar-default .navbar-nav > .open > a,
-    .navbar-default .navbar-nav > .open > a:hover,
-    .navbar-default .navbar-nav > .open > a:focus {
-        color: #555;
-        background-color: #D5D5D5;
-    }
-    /* Caret */
-    .navbar-default .navbar-nav > .dropdown > a .caret {
-        border-top-color: #777;
-        border-bottom-color: #777;
-    }
-
-    .navbar-default .navbar-nav > .dropdown > a:hover .caret,
-    .navbar-default .navbar-nav > .dropdown > a:focus .caret {
-        border-top-color: #333;
-        border-bottom-color: #333;
-    }
-
-    .navbar-default .navbar-nav > .open > a .caret,
-    .navbar-default .navbar-nav > .open > a:hover .caret,
-    .navbar-default .navbar-nav > .open > a:focus .caret {
-        border-top-color: #555;
-        border-bottom-color: #555;
-    }
-    /* Mobile version */
-    .navbar-default .navbar-toggle {
-        border-color: #DDD;
-    }
-
-        .navbar-default .navbar-toggle:hover,
-        .navbar-default .navbar-toggle:focus {
-            background-color: #DDD;
-        }
-
-        .navbar-default .navbar-toggle .icon-bar {
-            background-color: #CCC;
-        }
-
-@media (max-width: 767px) {
-    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-        color: #777;
-    }
-
-        .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
-        .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-            color: #333;
-        }
-}
 
 /*MenuBox - Elaine Chan*/
+.menuBox {
+    border: outset;
+    border-radius: 10px;
+    background-color: #3E4660;
+    float: left;
+    height: 150px;
+    width: 150px;
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px;
+}
+/*links*/
+.custlink{
+    color:antiquewhite;
+}
+
+a {
+    color: #3E4660;
+    text-decoration:underline overline;
+}
+    a:hover {
+        text-decoration: none;
+    }
+
+/*customTable - Elaine Chan*/
+.cusTable {
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%;
+}
+th {
+    padding: 2;
+    background-color: #222c49;
+    color: #fee1a1;
+    height: 30px;
+}
+th, td {
+    padding: 2px;
+    text-align: left;
+    border-bottom: 1px solid #8F8C84;
+}
+tr:hover {
+    background-color: #FFF7E8;
+}
+
+/*custcontainer*/
+.custcontainer{
+    height: 100%;
+    width:70%;
+    margin: 15px;
+    margin-left:75px;
+}
+
+/*green button*/
+.greenBtn {
+    display: inline-block;
+    border-radius: 5px;
+    border: outset 3px #8ba964;
+    background-color: #8ba964;
+    text-align: center;
+}
+
+   

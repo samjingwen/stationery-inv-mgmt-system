@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
+using Team7ADProject.Service;
 using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
@@ -13,49 +14,19 @@ namespace Team7ADProject.Controllers
 
 
     //For SC to generate retrieval and make amendments
-    [Authorize(Roles = "Store Clerk")]
+    [RoleAuthorize(Roles = "Store Clerk")]
     public class ManageRetrievalController : Controller
     {
+        StationeryRequestService srService = StationeryRequestService.Instance;
+
         // GET: ManageRetrieval
         public ActionResult Index()
         {
-            List<RequestByItemViewModel> model = new List<RequestByItemViewModel>();
-            LogicDB context = new LogicDB();
-            var query = context.RequestByItemView.OrderBy(x => x.ItemId).ToList();
-            foreach(var i in query)
-            {
-                var item = model.Find(x => x.ItemId == i.ItemId);
-                var disb = context.DisbByDept.Where(x => x.ItemId == i.ItemId && x.DepartmentId == i.DepartmentId).FirstOrDefault();
-                if (item != null)
-                {
-                    var newModel = new BreakdownByDeptViewModel
-                    {
-                        DepartmentId = i.DepartmentId,
-                        DepartmentName = i.DepartmentName,
-                        Quantity = disb == null ? (int)i.Quantity : ((int)i.Quantity - (int)disb.Quantity)
-                    };
-                    item.requestList.Add(newModel);
-                }
-                else
-                {
-                    RequestByItemViewModel requestByItemViewModel = new RequestByItemViewModel();
-                    requestByItemViewModel.ItemId = i.ItemId;
-                    requestByItemViewModel.Description = i.Description;
-                    requestByItemViewModel.requestList = new List<BreakdownByDeptViewModel>();
-                    requestByItemViewModel.requestList.Add(new BreakdownByDeptViewModel
-                    {
-                        DepartmentId = i.DepartmentId,
-                        DepartmentName = i.DepartmentName,
-                        Quantity = disb == null ? (int)i.Quantity : ((int)i.Quantity - (int)disb.Quantity)
-                    });
-                    model.Add(requestByItemViewModel);
-                }
-            }
-            return View(model);
+            return View(srService.GetListRequestByItem());
         }
 
         [HttpPost]
-        public ActionResult GenerateDisbursement(List<RequestByItemViewModel> model, string RetrievedBy)
+        public ActionResult GenerateDisbursement(List<RequestByItemViewModel> model)
         {
             //Create new Retrieval
             string userId = User.Identity.GetUserId();
