@@ -1,6 +1,45 @@
-﻿<div class="sidebar">
-    <a href="#home">Home</a>
-    <a href="#news">News</a>
-    <a href="@Url.Action("Contact", "Home")">Contact Side</a>
-    <a href="@Url.Action("About", "Home")">About</a>
+﻿@model IEnumerable<Team7ADProject.ViewModels.SideBarViewModel>
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.Owin;
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using Team7ADProject.Models;
+@{
+    var currentUserId = User.Identity.GetUserId();
+    var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+    var currentUser = manager.FindById(User.Identity.GetUserId());
+}
+
+<div class="sidebar">
+
+    @using Microsoft.AspNet.Identity
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ActionLink("Hello " + currentUser.EmployeeName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+        }
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+    }
+    @foreach (var i in Model)
+
+    {
+        if (i.Roles == "All")
+        {
+            <a href="@Url.Action(i.Action,i.Controller)"> @Html.Raw(i.Title)</a>
+        }
+
+        if (User.IsInRole(i.Roles))
+        {
+            <a href="@Url.Action(i.Action,i.Controller)"> @Html.Raw(i.Title)</a>
+        }
+    }
+    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
 </div>
