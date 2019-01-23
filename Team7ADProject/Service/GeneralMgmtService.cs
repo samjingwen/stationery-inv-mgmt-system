@@ -50,8 +50,8 @@ namespace Team7ADProject.Service
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var currentUser = manager.FindById(userId);
 
-            manager.RemoveFromRole(selectedUser, RoleName.Employee);
-            manager.AddToRole(selectedUser, RoleName.ActingDepartmentHead);
+            manager.RemoveFromRole(selectedUser, "Employee");
+            manager.AddToRole(selectedUser, "Acting Department Head");
             context.DelegationOfAuthority.Add(doaInDb);
             context.SaveChanges();
         }
