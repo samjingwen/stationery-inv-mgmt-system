@@ -1,10 +1,16 @@
 ﻿@model Team7ADProject.ViewModels.SideBarViewModel
+<script>
+    $("menuBox").click(function () {
+        window.location = $(this).find("a").attr("href");
+        return false;
+    })
 
+</script>
 
 <div>
-    <div style="width:20%" class="menuBox">
-
-        <a href="@Url.Action(Model.Action,Model.Controller)"> @Html.Raw(Model.Title)</a>
-
+    <div class="menuBox">
+        <div style="padding-left:25%; padding-top:67%;">
+            <a href="@Url.Action(Model.Action,Model.Controller)" style="text-align:center;"> <b>@Html.Raw(Model.Title)</b></a>
+        </div>
     </div>
 </div>

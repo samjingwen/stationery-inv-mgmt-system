@@ -70,7 +70,7 @@ img.loginlogo {
 img.sidelogo {
     width: 200px;
     height: 150px;
-    background-color: #fee1a1;
+    background-color: #222c49;
     position: fixed;
     top: 0;
     left: 0;
@@ -95,7 +95,7 @@ img.sidelogo {
 .sidebar {
     margin: 0;
     width: 200px;
-    background-color: #fee1a1;
+    background-color: #222c49;
     position: fixed;
     top: 150px;
     height: 100%;
@@ -105,21 +105,21 @@ img.sidelogo {
     /* Sidebar links */
     .sidebar a {
         display: block;
-        color: #222c49;
+        color: #fee1a1;
         padding: 16px;
         text-decoration: none;
     }
 
         /* Active/current link */
         .sidebar a.active {
-            background-color: #222c49;
-            color: #fee1a1;
+            background-color: #fee1a1;
+            color: #222c49;
         }
 
         /* Links on mouse-over */
         .sidebar a:hover:not(.active) {
-            background-color: #222c49;
-            color: #fee1a1;
+            background-color: #fee1a1;
+            color: #222c49;
         }
 
 
@@ -230,12 +230,22 @@ td {
 
 
 /*MenuBox - Elaine Chan*/
-.menuBox{
+.menuBox {
     border: outset;
-    border-radius:10px;
-    background-color: #222c49;
+    border-radius: 10px;
+    background-color: #3E4660;
     float: left;
     height: 150px;
     width: 150px;
-    padding:20px;
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px;
 }
+
+a {
+    color: antiquewhite;
+}
+    a:hover {
+        color: #fee1a1;
+    }
