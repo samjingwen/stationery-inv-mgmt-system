@@ -238,6 +238,7 @@ namespace Team7ADProject.Service
                             newDetail.TransactionRef = newDisb.DisbursementId;
                             newDetail.TransactionDate = DateTime.Now;
                             newDetail.UnitPrice = currentItem.UnitPrice;
+                            newDetail.Remarks = "In Transit";
                             newDisb.TransactionDetail.Add(newDetail);
                             var reqCheck = query.Where(x => x.RequestId == reqt.RequestId).ToList();
                             if (reqCheck.Count > 1)
@@ -280,6 +281,7 @@ namespace Team7ADProject.Service
                             newDetail.TransactionRef = newDisb.DisbursementId;
                             newDetail.TransactionDate = DateTime.Now;
                             newDetail.UnitPrice = currentItem.UnitPrice;
+                            newDetail.Remarks = "In Transit";
                             newDisb.TransactionDetail.Add(newDetail);
                             context.Disbursement.Add(newDisb);
                             context.SaveChanges();
@@ -307,6 +309,7 @@ namespace Team7ADProject.Service
                                     newDetail.TransactionRef = newDisb.DisbursementId;
                                     newDetail.TransactionDate = DateTime.Now;
                                     newDetail.UnitPrice = currentItem.UnitPrice;
+                                    newDetail.Remarks = "In Transit";
                                     newDisb.TransactionDetail.Add(newDetail);
                                     context.Disbursement.Add(newDisb);
                                     context.SaveChanges();
