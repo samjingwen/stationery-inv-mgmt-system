@@ -19,7 +19,7 @@ namespace Team7ADProject.Controllers
             _context = new LogicDB();
         }
         // GET: ManagePostponeCollectionDateDepartment
-        [Authorize(Roles = "Department Head")]
+        [Authorize(Roles = "Department Head, Department Representative")]
         public ActionResult Index()
         {
             string userid = User.Identity.GetUserId();
@@ -42,7 +42,7 @@ namespace Team7ADProject.Controllers
         }
 
         // GET: ManagePostponeCollectionDateDepartment/Details
-        
+        [Authorize(Roles = "Department Head, Department Representative")]
         public ActionResult Details(string id)
         {
             List<TransactionDetail> ItemsByID = _context.TransactionDetail.Where(x => x.TransactionRef == id).ToList();
