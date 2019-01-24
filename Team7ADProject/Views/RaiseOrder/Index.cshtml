@@ -9,7 +9,7 @@
 }
 
 <div class="custcontainer">
-    <h2>View</h2>
+    <h2>View Purchase Orders</h2>
 
     <p>
         @Html.ActionLink("Raise PO", "RaisePo")
@@ -18,10 +18,9 @@
     <p>
         Ordered By : @ViewBag.CurrentUser
     </p>
-    <div class="container">
         <div class="row">
             <div>
-                <table class="table table-striped table-condensed">
+                <table class="cusTable">
                     <tr>
                         <th>
                             PO Number
@@ -53,7 +52,7 @@
                                 S$@Html.DisplayFor(modelItem => item.Amount)
                             </td>
                             <td>
-                                @{string para = item.Date.ToString("MM/dd/yyyy");}
+                                @{string para = item.Date.ToString("dd MMM yyyy");}
                                 @Html.DisplayFor(modelItem => para)
                             </td>
 
@@ -68,7 +67,5 @@
                 </table>
             </div>
         </div>
-    </div>
-
 
 </div>
