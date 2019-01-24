@@ -6,47 +6,6 @@
 }
 
 
-@{/*
-
-                                  @*adding items*@
-                                  @using (Html.BeginForm("Add", "RaiseRequest"))
-                                  {
-                                      @Html.ValidationSummary(true, "Please fix the following errors.")
-                                      <div class="form-group">
-                                          <table>
-                                              <tr>
-                                                  <td>Category</td>
-                                                  <td>
-                                                      @*@Html.DropDownList("category", Enumerable.Empty<SelectListItem>(), "Select Category", new { @class = "form-control" })*@
-                                                      @Html.DropDownListFor(m => m.Category, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", name = "category" })
-                                                      @Html.ValidationMessageFor(m => m.Category)
-                                                  </td>
-                                              <tr>
-                                                  <td>Description</td>
-                                                  <td>
-                                                      @*@Html.DropDownList("description", Enumerable.Empty<SelectListItem>(), "Select Item", new { @class = "form-control table2" })*@
-                                                      @Html.DropDownListFor(m => m.Description, Enumerable.Empty<SelectListItem>(), new { @class = "form-control table2", name = "description" })
-                                                      @Html.ValidationMessageFor(m => m.Description)
-                                                  </td>
-                                              <tr>
-                                                  <td>Unit of measure</td>
-                                                  <td>
-                                                      @Html.EditorFor(m => m.UnitOfMeasure, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", id = "uom" } })
-                                                      @*@Html.LabelFor(m => m.UnitOfMeasure, new { id = "uom", @class = "form-control" })*@
-                                                  </td>
-                                              <tr>
-                                                  <td>Quantity</td>
-                                                  <td>
-                                                      @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control" })
-                                                      @Html.ValidationMessageFor(m => m.Quantity)
-                                                  </td>
-                                              </tr>
-                                          </table>
-                                          @Html.AntiForgeryToken()
-                                          <button type="submit" class="btn btn-primary">Add</button>
-                                      </div>
-                                  }
-                                  */}
 <div class="custcontainer">
     <div class="modal fade" id="newOrderModal">
         <div class="modal-dialog modal-lg" style=" width: 900px !important;">
@@ -57,26 +16,6 @@
                 </div>
                 <form id="NewOrderForm">
                     <div class="modal-body">
-                        @*Request Details*@
-                        @*<h5 style="color:#ff6347">Request Details</h5>
-                            <hr />
-                            <div class="form-horizontal">
-                                <input type="hidden" id="CustomerId" />
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">
-                                        Customer Name
-                                    </label>
-                                    <div class="col-md-4">
-                                        <input type="text" id="name" name="name" placeholder="Customer Name" class="form-control" />
-                                    </div>
-                                    <label class="control-label col-md-2">
-                                        Address
-                                    </label>
-                                    <div class="col-md-4">
-                                        <input type="text" id="address" name="address" placeholder="Customer Address" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>*@
 
                         @*Order Details*@
                         <h5 style="margin-top:10px;color:#ff6347">Request Details</h5>
@@ -115,11 +54,11 @@
                                     Quantity
                                 </label>
                                 <div class="col-md-4">
-                                    @*<input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />*@
+
                                     <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="1" />
                                 </div>
                                 <div class="col-md-2 col-lg-offset-4">
-                                    <a id="addToList" class="btn btn-primary">Add To List</a>
+                                    <a id="addToList">Add To List</a>
                                 </div>
                             </div>
                         </div>
@@ -137,10 +76,10 @@
                             <tbody></tbody>
                         </table>
                     </div>
-                    @*</div>*@
+
                     <div class="modal-footer">
-                        <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="saveRequest" type="submit" class="btn btn-danger">Save Request</button>
+                        <button type="reset" class="redBtn" data-dismiss="modal">Close</button>
+                        <button id="saveRequest" type="submit" class="greenBtn">Save Request</button>
                     </div>
                 </form>
             </div>
@@ -154,7 +93,7 @@
                 <h2 class="panel-title pull-left" style="margin-left:10px;">
                     <strong>Order Details</strong>
                 </h2>
-                <button style="margin-right:10px" class="btn btn-primary pull-right" onclick="addNewOrder()">New Order</button>
+                <button style="margin-right:10px" class="greenBtn pull-right" onclick="addNewOrder()">New Order</button>
             </div>
         </div>
 
@@ -198,59 +137,19 @@
         else
         {
             <div class="panel-body">
-                <h3 style="color:red;">There are no request for today.</h3>
+                <h3 style="color:red;">There are no requests for today.</h3>
             </div>
 
         }
+
     </div>
 </div>
-@***************************************@
-@*<div class="form-group">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <td>No.</td>
-                    <td>Category</td>
-                    <td>Item name</td>
-                    <td>Unit of measure</td>
-                    <td>Quantity</td>
-                    <td>Status</td>
-                    <td>Delete</td>
-                </tr>
-            </thead>
-            @if (Model == null)
-            {
-                <p>We don't have any request yet.</p>
-            }
-            else
-            {
-                <tbody>
-                    @{ int i = 1; }
-                    @foreach (var current in Model.Models)
-                    {
-                        <tr>
-                            <td>@(i++)</td>
-                            <td>@current.Category</td>
-                            <td>@current.Description</td>
-                            <td>@current.UnitOfMeasure</td>
-                            <td>@current.Quantity</td>
-                            <td>Status</td>
-                            <td>
-                                <button data-stationery-id="@current.Description" class="btn-link js-delete">Delete</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            }
-        </table>
-        @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>*@
+
 
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
-    
+
     <script>
         var $dropdown1 = $("select[name='category']");
         var $dropdown2 = $("select[name='description']");
@@ -322,7 +221,7 @@
             });
         });
     </script>
-    
+
 
     @*script for popup*@
     <script>
