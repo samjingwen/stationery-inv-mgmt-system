@@ -3,28 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
-            return View();
+            List<SideBarViewModel> menulist = SideBarViewModel.GenList();
+            return View(menulist);
+
         }
 
-        [RoleAuthorize]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 

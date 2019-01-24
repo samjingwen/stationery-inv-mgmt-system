@@ -59,6 +59,29 @@ namespace Team7ADProjectApi
                          };
             return query.ToList();
         }
+
+        public void assignDepRep(BriefDepartment e)
+        {
+            
+            //Retrieve department head
+            //string depHeadId;
+            // var user = database.AspNetUsers.Where(x => x.Id == depHeadId).FirstOrDefault();
+            //Retrieve department
+            var dept = context.Department.Where(x => x.DepartmentId == e.DepartmentId).FirstOrDefault();
+
+            //Change department rep
+            string oldEmpRepId = dept.DepartmentRepId;
+            //string userId = model.UserId;
+            dept.DepartmentRepId = e.DepartmentRepId;
+            context.SaveChanges();
+            //Change previous Department Rep to employee
+            //manager.RemoveFromRole(oldEmpRepId, "Department Representative");
+           // manager.AddToRole(oldEmpRepId, "Employee");
+            //Assign new employee to Department Rep
+           // manager.RemoveFromRole(userId, "Employee");
+            //t6manager.AddToRole(userId, "Department Representative");
+        }
+
         public string getDepId(string eid)
         {
             return context.AspNetUsers.Where(x => x.Id == eid).Select(x=>x.DepartmentId).First();
@@ -160,6 +183,41 @@ namespace Team7ADProjectApi
             return result.ToList();
         }
 
+        public PurchaseOrder RetrievePO(string poNum)
+        {
+            return context.PurchaseOrder.Where(x => x.PONo == poNum).FirstOrDefault();
+        }
+
+
+        //Approve PO
+        public bool ApprovePO(PurchaseOrder po)
+        {
+            PurchaseOrder purchaseorder = RetrievePO(po.PONo);
+            if (purchaseorder != null)
+            {
+                purchaseorder.ApprovedBy = po.ApprovedBy;
+                purchaseorder.Status = "Pending Delivery";
+                context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        //Reject PO
+        public bool RejectPO(PurchaseOrder po)
+        {
+            PurchaseOrder purchaseorder = RetrievePO(po.PONo);
+            if (purchaseorder != null)
+            {
+                purchaseorder.ApprovedBy = po.ApprovedBy;
+                purchaseorder.Status = "Rejected";
+                context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
         #endregion
 
 

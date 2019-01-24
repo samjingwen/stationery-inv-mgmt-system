@@ -12,13 +12,11 @@ using Team7ADProject.ViewModels;
 //Author Zan Tun Khine
 namespace Team7ADProject.Controllers
 {
-
-
     #region Zan Tun Khine
 
     //For SS or SM to approve adjustment
 
-    [RoleAuthorize(Roles = RoleName.StoreManager + ", " + RoleName.StoreSupervisor)]
+    [RoleAuthorize(Roles = "Store Manager, Store Supervisor")]
     public class ApproveAdjustmentController : Controller
     {
         InventoryMgmtService imService = InventoryMgmtService.Instance;
@@ -33,7 +31,7 @@ namespace Team7ADProject.Controllers
             List<StockAdjustment> adjList = imService.GetListStockAdjustment();
             if (adjList.Count() == 0)
             {
-                ViewBag.error = "There is no pending request!";
+                ViewBag.error = "There are no pending requests!";
             }
             return View(adjList);
         }

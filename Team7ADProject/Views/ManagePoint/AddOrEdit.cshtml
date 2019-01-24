@@ -9,7 +9,7 @@
     @using (Html.BeginForm("AddOrEdit", "ManagePoint", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return jQueryAjaxPost(this);", data_restUrl = Url.Action("AddOrEdit", "ManagePoint", new { id = 0 }) }))
     {
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
@@ -35,7 +35,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Submit" class="btn btn-default" />
+                            <input type="submit" value="Submit" class="greenBtn pull-right" />
                             @if (Model.CollectionPointId != 0)
                             {
                                 <a class="btn btn-success" onclick="refreshAddNewTab('@Url.Action("AddOrEdit","ManagePoint",new{id=0})',false)"><i class="fa fa-plus"></i> Add New</a>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.CPImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">

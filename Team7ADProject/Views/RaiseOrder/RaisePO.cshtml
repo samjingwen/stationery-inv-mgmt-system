@@ -8,83 +8,79 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 }
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <div class="row">
-            <h2 class="panel-title pull-left" style="margin-left:10px;">
-                <strong>Raise Purchase Order</strong> <br /><br />
-            </h2>
-        </div>
-    </div>
-</div>
-<p> @Html.ActionLink("Back to List", "Index")</p>
-<form id="NewPurchaseOrderForm">
+    <div class="custcontainer">
 
-    <table>
-        <tr>
-            <td width="9%">Category</td>
-            <td width="40%">
-                <select class="form-control" name="category" id="category"></select>
-            </td>
-            <td></td>
-            <td width="9%">Price</td>
-            <td width="30%">
-                <input type="text" id="unitprice" readonly="readonly" class="form-control" name="unitprice">
-            </td>
-            <td></td>
-        </tr>
+                    <h2>Raise Purchase Order
+                    </h2>
 
-        <tr>
-            <td>Item</td>
-            <td>
-                <select class="form-control table2" name="description" id="description"></select>
-            </td>
-            <td></td>
-            <td>Quantity</td>
-            <td>
-                <input type="number" id="quantity" name="quantity" data-val="true" placeholder="quantity" class="form-control" min="1" re />
-                @*@Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @type = "number", @min = "1", @max = Int32.MaxValue, @step = "1", @value = "0", @id = "quantity", @name = "quantity" })*@
-                @*<input class="form-control input-validation-error" data-val="true" data-val-number="The field Quantity must be a number." data-val-regex="Please enter a valid quantity." data-val-regex-pattern="^\d+" data-val-required="The Quantity field is required." id="quantity" min="1" name="Quantity" step="1" type="number" value="0" aria-describedby="quantity-error" aria-invalid="true">*@
+        <p> @Html.ActionLink("Back to List", "Index")</p>
+        <form id="NewPurchaseOrderForm">
 
-                @Html.ValidationMessageFor(m => m.Quantity)
-            </td>
-            <td>
-                <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
-            </td>
-        </tr>
-
-        <tr>
-            <td>Supplier</td>
-            <td>
-                <select class="form-control" name="suppliername" id="suppliername"></select>
-            </td>
-            <td></td>
-            <td></td>
-            <td><a id="addToList" class="btn btn-primary">Add To List</a> </td>
-        </tr>
-    </table>
-
-    <div>
-        <table id="detailsTable" class="table">
-            <thead>
+            <table>
                 <tr>
-                    <th style="width:20%">Product</th>
-                    <th style="width:20%">Supplier</th>
-                    <th style="width:15%">Quantity</th>
-                    <th style="width:15%">Amount</th>
-                    <th style="width:10%"></th>
+                    <td width="9%">Category</td>
+                    <td width="40%">
+                        <select class="form-control" name="category" id="category"></select>
+                    </td>
+                    <td></td>
+                    <td width="9%">Price</td>
+                    <td width="30%">
+                        <input type="text" id="unitprice" readonly="readonly" class="form-control" name="unitprice">
+                    </td>
+                    <td></td>
                 </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
 
-    <div class="modal-footer">
-        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Reset</button>
-        <button id="saveOrder" type="submit" class="btn btn-primary">Save Order</button>
-    </div>
-</form>
+                <tr>
+                    <td>Item</td>
+                    <td>
+                        <select class="form-control table2" name="description" id="description"></select>
+                    </td>
+                    <td></td>
+                    <td>Quantity</td>
+                    <td>
+                        <input type="number" id="quantity" name="quantity" data-val="true" placeholder="quantity" class="form-control" min="1" re />
+                        @*@Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @type = "number", @min = "1", @max = Int32.MaxValue, @step = "1", @value = "0", @id = "quantity", @name = "quantity" })*@
+                        @*<input class="form-control input-validation-error" data-val="true" data-val-number="The field Quantity must be a number." data-val-regex="Please enter a valid quantity." data-val-regex-pattern="^\d+" data-val-required="The Quantity field is required." id="quantity" min="1" name="Quantity" step="1" type="number" value="0" aria-describedby="quantity-error" aria-invalid="true">*@
 
+                        @Html.ValidationMessageFor(m => m.Quantity)
+                    </td>
+                    <td>
+                        <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Supplier</td>
+                    <td>
+                        <select class="form-control" name="suppliername" id="suppliername"></select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td><a id="addToList">Add To List</a> </td>
+                </tr>
+            </table>
+
+            <div>
+                <table id="detailsTable" class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:20%">Product</th>
+                            <th style="width:20%">Supplier</th>
+                            <th style="width:15%">Quantity</th>
+                            <th style="width:15%">Amount</th>
+                            <th style="width:10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="reset" class="redBtn" data-dismiss="modal">Reset</button>
+                <button id="saveOrder" type="submit" class="greenBtn">Save Order</button>
+            </div>
+        </form>
+    </div>
 @section scripts
 {
     <script>
