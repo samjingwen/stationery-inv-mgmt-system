@@ -54,7 +54,7 @@ namespace Team7ADProjectApi.Controllers
         {
             var query = (from x in _context.Disbursement
                          join y in _context.Department
-                         on x.DepartmentId equals y.DepartmentId
+                         on x.DepartmentId equals y.DepartmentId where x.Status=="In Transit"
                          select new
                          {
                              x.DisbursementNo,
