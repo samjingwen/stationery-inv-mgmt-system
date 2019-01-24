@@ -30,10 +30,10 @@ namespace Team7ADProjectApi.Controllers
 
         //Get List of disbursements in transit
         [HttpGet]
-        [Route("api/clerk/disbursementlist")]
-        public List<DisbursementListViewModel> GetListDisbursement()
+        [Route("api/clerk/disbnolist/{disbno}")]
+        public List<DisbursementListViewModel> GetListDisbursement(string disbno)
         {
-            var query = from x in _context.DisbByDisbNoView
+            var query = (from x in _context.DisbByDisbNoView
                         select new DisbursementListViewModel
                         {
                             DisbursementNo = x.DisbursementNo,
@@ -42,7 +42,7 @@ namespace Team7ADProjectApi.Controllers
                             ItemId = x.ItemId,
                             Description = x.Description,
                             Quantity = x.Quantity
-                        };
+                        }).Where(x => x.DisbursementNo == disbno);
             return query.ToList();
         }
 

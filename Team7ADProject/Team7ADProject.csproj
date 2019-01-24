@@ -236,7 +236,6 @@
     <Compile Include="Controllers\ApproveOrderController.cs" />
     <Compile Include="Controllers\ChargeBackController.cs" />
     <Compile Include="Controllers\CollectionPointController.cs" />
-    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\GenerateReportController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -633,8 +632,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AmendRequest\" />
-    <Folder Include="Views\Common\" />
-    <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\Navi\" />
     <Folder Include="Views\ReceiveGoods\" />

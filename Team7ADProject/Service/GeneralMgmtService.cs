@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Team7ADProject.Entities;
 using Team7ADProject.Models;
+using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Service
 {
@@ -68,6 +70,57 @@ namespace Team7ADProject.Service
             }
         }
 
+        public string GetDeptIdOfUser(string userId)
+        {
+            return context.AspNetUsers.Where(x => x.Id == userId).FirstOrDefault().DepartmentId;
+        }
 
+        public string GetCurrentRepName(string deptId)
+        {
+            var query = (from x in context.Department
+                        join y in context.AspNetUsers
+                        on x.DepartmentRepId equals y.Id
+                        where x.DepartmentId == deptId
+                        select y.EmployeeName).FirstOrDefault();
+            return query;
+        }
+
+        public string GetCurrentRepId(string deptId)
+        {
+            var query = (from x in context.Department
+                         join y in context.AspNetUsers
+                         on x.DepartmentRepId equals y.Id
+                         where x.DepartmentId == deptId
+                         select y.Id).FirstOrDefault();
+            return query;
+
+        }
+
+
+        public ManageRepViewModel GetManageRepViewModel(string deptId)
+        {
+            var query = (from x in context.AspNetUsers
+                         join y in context.Department
+                         on x.DepartmentId equals y.DepartmentId
+                         where x.DepartmentId == deptId && x.Id != y.DepartmentHeadId && x.Id != y.DepartmentRepId
+                         select x).ToList();
+
+            var users = query.Select(u => new SelectListItem
+            {
+                Value = u.Id,
+                Text = u.EmployeeName
+            });
+
+            ManageRepViewModel model = new ManageRepViewModel() { UserList = users };
+
+            return model;
+        }
+
+        public void UpdateDepartmentRep(string userId, string deptId)
+        {
+            var query = context.Department.FirstOrDefault(x => x.DepartmentId == deptId);
+            query.DepartmentRepId = userId;
+            context.SaveChanges();
+        }
     }
 }
