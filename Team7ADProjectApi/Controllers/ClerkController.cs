@@ -54,8 +54,9 @@ namespace Team7ADProjectApi.Controllers
             List<TransactionDetail> partiallyFulfilledRequest =
                 _context.TransactionDetail.Where(m => m.Remarks == "Partially Fulfilled" && m.TransactionRef.StartsWith("Req")).ToList();
 
+            //TO LESS: Partially fulfilled disbursement
             List<TransactionDetail> partiallyFulfilledDisbursement =
-                _context.TransactionDetail.Where(m => m.Remarks == "Partially Fulfilled" && m.TransactionRef.StartsWith("DISB")).ToList();
+                _context.TransactionDetail.Where(m => (m.Remarks == "Partially Fulfilled" && m.TransactionRef.StartsWith("DISB"))||(m.Disbursement.Status=="In Transit" && m.TransactionRef.StartsWith("DISB"))).ToList();
 
             List<RequestByItemView> itemToLess = new List<RequestByItemView>();
             for (int i = 0; i < partiallyFulfilledRequest.Count; i++)
@@ -90,6 +91,9 @@ namespace Team7ADProjectApi.Controllers
                     }
                 }
             }
+
+            //remove items with 0 quantity
+            fullRetrievalList.RemoveAll(m => m.Quantity == 0);
 
             return Ok(fullRetrievalList);
         }
