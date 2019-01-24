@@ -68,12 +68,13 @@ img.loginlogo {
 
 
 img.sidelogo {
-    width: 233px;
-    height: 150px;
+    width: 20%;
+    height:150px;
     background-color: #222c49;
     position: fixed;
     top: 0;
-    padding:30px;
+    padding:40px;
+    padding-bottom:10px;
     left: 0;
 }
 
@@ -95,7 +96,7 @@ img.sidelogo {
 /* The side navigation menu */
 .sidebar {
     margin: 0;
-    width: 25%;
+    width: 20%;
     background-color: #222c49;
     position: fixed;
     top: 150px;
