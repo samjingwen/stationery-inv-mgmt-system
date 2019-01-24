@@ -13,20 +13,20 @@
 </head>
 <body>
     <div class="custcontainer">
-        <table>
+        <table class="cusTable">
             <tr>
                 <td width="1000px">
                     <h2>Request Details</h2>
                 </td>
                 <td>
-                    @Html.ActionLink("Back", "Index", "History", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
+                    @Html.ActionLink("Back", "Index", "History", routeValues: null, htmlAttributes: new { @role = "button" })
                 </td>
             </tr>
         </table>
 
 
         <div>
-            <table class="table">
+            <table class="cusTable">
                 <tr>
                     <td>
                         @Html.DisplayNameFor(model => model.Request.RequestedBy):
@@ -59,13 +59,13 @@
                         @Html.DisplayNameFor(model => model.Request.RequestDate):
                     </td>
                     <td>
-                        @Html.DisplayFor(model => model.Request.RequestDate)
+                        @String.Format("{0:dd MMM yyyy}",Model.Request.RequestDate)
                     </td>
                 </tr>
             </table>
         </div>
         <div>
-            <table class="table">
+            <table class="cusTable">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Details.First().Stationery.Description)
@@ -94,7 +94,7 @@
                             @Html.DisplayFor(modelItem => item.Remarks)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TransactionDate)
+                            @String.Format("{0:dd MMM yyyy}",item.TransactionDate)
                         </td>
                     </tr>
                 }

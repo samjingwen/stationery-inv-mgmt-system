@@ -55,7 +55,6 @@ namespace Team7ADProject.ViewModels
             //Department Rep
             menulist.Add(new SideBarViewModel() { Roles = "Department Representative", Title = "Collection Date", Action = "Index", Controller = "ManagePostponeCollectionDateDepartment", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Department Representative", Title = "Stationery Requests", Action = "Index", Controller = "RaiseRequest", IsAction = true });
-            menulist.Add(new SideBarViewModel() { Roles = "Department Representative", Title = "Request History", Action = "Index", Controller = "RequisitionHistory", IsAction = true });
 
             //Employee
             menulist.Add(new SideBarViewModel() { Roles = "Employee", Title = "Stationery Requests", Action = "Index", Controller = "RaiseRequest", IsAction = true });

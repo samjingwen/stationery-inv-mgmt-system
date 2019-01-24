@@ -13,7 +13,9 @@
         $(function () {
             $("#fromDTP").datepicker({
                 yearRange: "2017:+0",
+                dateFormat: 'dd MM yy',
                 maxDate: '0',
+                defaultDate: "01 January 2017",
                 changeMonth: true,
                 changeYear: true,
                 showOn: "both",
@@ -23,7 +25,8 @@
             }
             );
             $("#toDTP").datepicker({
-                minDate: '-2y',
+                minDate: "01 January 2017",
+                dateFormat: 'dd MM yy',
                 maxDate: '0',
                 changeMonth: true,
                 changeYear: true,
@@ -48,14 +51,14 @@
                     </td>
                     <td width="100px" height="80px"></td>
                     <td>
-                        <input type="submit" id="submitBtn" value="View" />
+                        <input type="submit" id="submitBtn" value="View" class="greenBtn pull-right" />
                     </td>
                 </tr>
             </table>
         </form>
     </div>
 
-    <table class="table">
+    <table class="cusTable">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.RequestedBy)
@@ -87,7 +90,7 @@
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestDate)
+                    @String.Format("{0:dd MMM yyyy}", item.RequestDate)
                 </td>
                 <td>
                     @Html.ActionLink("Details", "Detail", new { id = item.RequestId })
