@@ -28,12 +28,18 @@ namespace Team7ADProject.Entities
         public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<TransactionDetail> TransactionDetail { get; set; }
         public virtual DbSet<DisbByDept> DisbByDept { get; set; }
+        public virtual DbSet<DisbByDisbNoView> DisbByDisbNoView { get; set; }
         public virtual DbSet<RequestByDeptView> RequestByDeptView { get; set; }
         public virtual DbSet<RequestByItemView> RequestByItemView { get; set; }
         public virtual DbSet<RequestByReqIdView> RequestByReqIdView { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AspNetRoles>()
+                .HasMany(e => e.AspNetUsers)
+                .WithMany(e => e.AspNetRoles)
+                .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
+
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.DelegationOfAuthority)
                 .WithRequired(e => e.AspNetUsers)
