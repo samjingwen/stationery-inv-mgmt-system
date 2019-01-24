@@ -16,12 +16,10 @@ namespace Team7ADProject.Controllers
     {
         #region Teh Li Heng
         static private LogicDB _context;
-        static List<RaiseRequestViewModel> test;
 
         public RaiseRequestController()
         {
             _context=new LogicDB();
-            test=new List<RaiseRequestViewModel>();
         }
 
         protected override void Dispose(bool disposing)
