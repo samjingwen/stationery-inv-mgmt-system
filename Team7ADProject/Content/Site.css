@@ -8,7 +8,7 @@
 .body-content {
     padding-top: 50px;
     padding-bottom: 20px;
-    margin-left: 200px;
+    margin-left: 250px;
     padding: 1px 16px;
     height: 1000px;
 }
@@ -68,7 +68,7 @@ img.loginlogo {
 
 
 img.sidelogo {
-    width: 20%;
+    width: 250px;
     height:150px;
     background-color: #222c49;
     position: fixed;
@@ -96,7 +96,7 @@ img.sidelogo {
 /* The side navigation menu */
 .sidebar {
     margin: 0;
-    width: 20%;
+    width: 250px;
     background-color: #222c49;
     position: fixed;
     top: 150px;
@@ -293,8 +293,8 @@ tr:hover {
 /*custcontainer*/
 .custcontainer{
     height: 100%;
-    width:70%;
-    margin-left:10%;
+    margin-left:10px;
+    max-width: 960px;
 }
 
 /*green button*/
@@ -318,6 +318,6 @@ tr:hover {
     height: 35px;
     color: antiquewhite;
 }
-}
+
 
    

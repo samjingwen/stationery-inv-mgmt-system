@@ -13,6 +13,7 @@ namespace Team7ADProject.Controllers
         {
             List<SideBarViewModel> menulist = SideBarViewModel.GenList();
             return View(menulist);
+
         }
 
         [RoleAuthorize]
