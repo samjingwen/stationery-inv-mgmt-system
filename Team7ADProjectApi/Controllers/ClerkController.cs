@@ -69,7 +69,6 @@ namespace Team7ADProjectApi.Controllers
                              z.CollectionDescription,
                              x.AcknowledgedBy,
                              x.DisbursedBy,
-                             x.Date,
                              x.Status,
                              x.OTP
                          }).Distinct().ToList();
