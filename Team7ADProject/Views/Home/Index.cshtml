@@ -1,9 +1,27 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model IEnumerable<Team7ADProject.ViewModels.SideBarViewModel>
+
+@{
+                
+                ViewBag.Title = "Home Page";
 }
-
-This is home page
-
-
-<div>@ViewBag.testing
+<link href="~/Content/Site.css" rel="stylesheet" />
+<div class="custcontainer">
+    <h2>Welcome!</h2>
+    <div>
+        @ViewBag.testing
     </div>
+
+
+    <div style="padding:20px;">
+        @foreach (var i in Model)
+        {
+            if (User.IsInRole(i.Roles))
+            {
+                <div>
+                    @Html.Partial("_MenuBox", i)
+                </div>
+            }
+        }
+    </div>
+
+</div>

@@ -7,7 +7,7 @@
 @*Author:Lynn Lynn Oo for display | Teh Li Heng for Inline Edit and Save function*@
 
 
-<div class="container">
+<div class="custcontainer">
 
     <h2><b>Own Requisition History</b></h2>
     <br />
@@ -116,7 +116,7 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: 'POST',
-                url: "Requisitionhistory/Save",
+                url: "Save",
                 data: data,
                 success: function(result) {
                     bootbox.dialog({

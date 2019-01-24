@@ -11,6 +11,7 @@
         total = total + (decimal)q;
     }
 }
+<div class="custcontainer">
     <h2>Disbursement Details</h2>
 
     <div>
@@ -67,7 +68,7 @@
             <td><b>Total:</b></td>
             <td>
                 <b>
-                @String.Format("{0:c}",total)
+                    @String.Format("{0:c}", total)
                 </b>
             </td>
         </tr>
@@ -80,3 +81,4 @@
     <p>
         @Html.ActionLink("Back to List", "ChargeBack")
     </p>
+</div>

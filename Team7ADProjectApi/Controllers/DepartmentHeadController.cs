@@ -31,21 +31,50 @@ namespace Team7ADProjectApi.Controllers
         }
         #endregion
 
+
+        #region Author : Kay Thi Swe Tun
         [Authorize(Roles = "Department Head")]
         [HttpGet]
         [Route("api/managedepartmentRep/{id}")]
-        public BriefManageDepRep GetDepartments(string id)//username
+        public BriefDepartment GetDepartments(string id)//username
         {
             GlobalClass gc = new GlobalClass();
 
             BriefDepartment depinfo = gc.DepInfo(id);
-            List<DepEmp> emplist = gc.ListEmp(id);
-            BriefManageDepRep brief = new BriefManageDepRep();
-            brief.depEmps = emplist;
-          brief.depinfo = depinfo;
            
-            return brief;
+            return depinfo;
         }
+
+        [Authorize(Roles = "Department Head")]
+        [HttpGet]
+        [Route("api/managedepartmentEmp/{id}")]
+        public IEnumerable<DepEmp>  GetDepartmentEmps(string id)//username
+        {
+            GlobalClass gc = new GlobalClass();
+
+            List<DepEmp> emplist = gc.ListEmp(id);
+            
+
+            return emplist;
+        }
+
+
+        [Authorize(Roles = "Department Head")]
+        [HttpPost]
+        [Route("api/managedepartmentEmp")]
+        public int GetDepartmentEmps([FromBody]BriefDepartment e)//username
+        {
+            GlobalClass gc = new GlobalClass();
+            gc.assignDepRep(e);
+
+            Console.WriteLine(e.DepartmentName);
+            //List<DepEmp> emplist = gc.ListEmp(id);
+
+
+            return 1;
+        }
+
+        #endregion
         //[HttpGet]
         //[Route("api/managedepartmentRep/{id}")]
         //public BriefManageDepRep GetDepartmentsTest(string id)//username
@@ -66,42 +95,61 @@ namespace Team7ADProjectApi.Controllers
         [Authorize(Roles = RoleName.DepartmentHead)]
         [HttpGet]
         [Route("api/departmenthead/getdepartmenthead/{*id}")]
-        public IHttpActionResult GetDepartmentHead(string id)
+        public IHttpActionResult GetDepartmentHeadListEmployees(string id)
         {
             AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == id);
             AspNetRoles depHeadRoleList = _context.AspNetRoles.FirstOrDefault(m => m.Name == RoleName.ActingDepartmentHead);
-            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.First();
+            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.FirstOrDefault();
             DelegateDepHeadApiModel apiModel = new DelegateDepHeadApiModel();
-            apiModel.DepartmentName = user.Department.DepartmentName;
 
+            apiModel.DepartmentName = user.Department.DepartmentName;
+            IEnumerable<AspNetRoles> employeesInDepartment = _context.AspNetRoles.Where(m => m.Name == RoleName.ActingDepartmentHead || m.Name==RoleName.Employee).ToList();
+            List<AspNetUsers> employeesForDelegate = new List<AspNetUsers>();
+            foreach (var currentRole in employeesInDepartment)
+            {
+                employeesForDelegate.AddRange(currentRole.AspNetUsers.ToList());
+            }
+
+            List<AspNetUsers> employeesForDelegateFilterDepartment =
+                employeesForDelegate.Where(m => m.DepartmentId == user.DepartmentId).ToList();
+            List<EmployeeDto> employeeDtos = new List<EmployeeDto>();
+            foreach (AspNetUsers current in employeesForDelegateFilterDepartment)
+            {
+                EmployeeDto tempEmployeeDto = new EmployeeDto
+                {
+                    Name = current.EmployeeName,
+                    Id = current.Id
+                };
+                employeeDtos.Add(tempEmployeeDto);
+                apiModel.Employees = employeeDtos;
+            }
+            
             if (delegatedDepHead != null)
             {
                 apiModel.DelegatedDepartmentHeadName = delegatedDepHead.EmployeeName;
             }
-
-            apiModel.DepartmentName = "TEST";
-            return Ok(user);
+            return Ok(apiModel);
         }
 
         [Authorize(Roles = RoleName.DepartmentHead)]
         [HttpPost]
-        public IHttpActionResult DelegateDepartmentHead(string userId, string delegatedDepId, DateTime startDate, DateTime endDate)
+        [Route("api/departmenthead/setdepartmenthead")]
+        public IHttpActionResult DelegateDepartmentHead(DelegateDepHeadApiModel depFromJson/*string userId, string delegatedDepartmentHeadName, DateTime startDate, DateTime endDate*/)
         {
-            AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == userId);
-            AspNetUsers delegatedDepHead = _context.AspNetUsers.First(m => m.Id == userId);
+            AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == depFromJson.UserId);
+            AspNetUsers delegatedDepHead = _context.AspNetUsers.FirstOrDefault(m => m.EmployeeName == depFromJson.DelegatedDepartmentHeadName);
             DelegationOfAuthority doaInDb = new DelegationOfAuthority
             {
                 DOAId = GenerateDelegationOfAuthorityId(),
                 DelegatedBy = user.Id,
                 DelegatedTo = delegatedDepHead.Id,
-                StartDate = startDate,
-                EndDate = endDate,
+                StartDate = depFromJson.StartDate,
+                EndDate = depFromJson.EndDate,
                 DepartmentId = user.DepartmentId
             };
 
             _context.DelegationOfAuthority.Add(doaInDb);
             ApplicationUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            userManager.RemoveFromRole(doaInDb.DelegatedTo, RoleName.Employee);
             userManager.AddToRole(doaInDb.DelegatedTo, RoleName.ActingDepartmentHead);
             _context.SaveChanges();
             return Ok();

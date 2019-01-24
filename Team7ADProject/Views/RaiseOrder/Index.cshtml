@@ -8,65 +8,64 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View</h2>
+<div class="custcontainer">
+    <h2>View Purchase Orders</h2>
 
-<p>
-    @Html.ActionLink("Raise PO", "RaisePo")
+    <p>
+        @Html.ActionLink("Raise PO", "RaisePo")
 
-</p>
-<p>
-    Ordered By : @ViewBag.CurrentUser
-</p>
-<div class="container">
-    <div class="row">
-        <div>
-            <table class="table table-striped table-condensed">
-                <tr>
-                    <th>
-                        PO Number
-                    </th>
-                    <th>
-                        Supplier
-                    </th>
-                    <th>
-                        Amount
-                    </th>
-                    <th>
-                        Date
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                </tr>
-
-                @foreach (var item in Model)
-                {
+    </p>
+    <p>
+        Ordered By : @ViewBag.CurrentUser
+    </p>
+        <div class="row">
+            <div>
+                <table class="cusTable">
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PONo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SupplierId)
-                        </td>
-                        <td>
-                            S$@Html.DisplayFor(modelItem => item.Amount)
-                        </td>
-                        <td>
-                            @{string para = item.Date.ToString("MM/dd/yyyy");}
-                            @Html.DisplayFor(modelItem => para)
-                        </td>
-
-                        <td>
-                            @Html.ActionLink(item.Status, "Details", new { poNo = item.PONo })
-                        </td>
-
+                        <th>
+                            PO Number
+                        </th>
+                        <th>
+                            Supplier
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Status
+                        </th>
                     </tr>
-                }
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PONo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SupplierId)
+                            </td>
+                            <td>
+                                S$@Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @{string para = item.Date.ToString("dd MMM yyyy");}
+                                @Html.DisplayFor(modelItem => para)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink(item.Status, "Details", new { poNo = item.PONo })
+                            </td>
+
+                        </tr>
+                    }
 
 
-            </table>
+                </table>
+            </div>
         </div>
-    </div>
+
 </div>
-
-

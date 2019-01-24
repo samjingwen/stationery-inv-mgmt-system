@@ -8,6 +8,7 @@ using Team7ADProject.Entities;
 using Team7ADProject.Models;
 using Microsoft.AspNet.Identity.Owin;
 using Team7ADProject.ViewModels;
+using Team7ADProjectApi.Models;
 
 namespace Team7ADProject.Controllers
 {
