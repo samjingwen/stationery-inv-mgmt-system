@@ -47,6 +47,23 @@ namespace Team7ADProjectApi.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/clerk/disbnolist")]
+        public IHttpActionResult GetListDisNo()
+        {
+            var query = (from x in _context.Disbursement
+                         select new
+                         {
+                             x.DisbursementNo,
+                             x.DepartmentId,
+                             x.AcknowledgedBy,
+                             x.DisbursedBy,
+                             x.Date,
+                             x.Status,
+                             x.OTP
+                         }).Distinct().ToList();
+            return Ok(query);
+        }
 
 
 
