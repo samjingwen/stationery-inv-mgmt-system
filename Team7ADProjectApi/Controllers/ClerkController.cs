@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Team7ADProjectApi.ViewModels;
 using Team7ADProjectApi.Entities;
+using Team7ADProjectApi.Models;
 
 namespace Team7ADProjectApi.Controllers
 {
@@ -95,6 +96,7 @@ namespace Team7ADProjectApi.Controllers
 
         #region Teh Li Heng Generate Retrieval Android
         [HttpGet]
+        [Authorize(Roles = RoleName.StoreClerk)]
         [Route("api/clerk/getretrievallist")]
         public IHttpActionResult GetRetrievalList()
         {
@@ -146,7 +148,23 @@ namespace Team7ADProjectApi.Controllers
             //remove items with 0 quantity
             fullRetrievalList.RemoveAll(m => m.Quantity == 0);
 
-            return Ok(fullRetrievalList);
+            //put into new model with new quantity(preparing for edit) and location
+            List<StationeryRetrievalApiModel> fullRetrievalListWithRetrieve = new List<StationeryRetrievalApiModel>();
+            foreach (RequestByItemView current in fullRetrievalList)
+            {
+                StationeryRetrievalApiModel modelToAdd = new StationeryRetrievalApiModel(current.ItemId,current.Description,current.DepartmentId,current.DepartmentName,current.Quantity);
+                fullRetrievalListWithRetrieve.Add(modelToAdd);
+            }
+
+            for (int i = 0; i < fullRetrievalListWithRetrieve.Count; i++)
+            {
+                string itemId = fullRetrievalListWithRetrieve[i].ItemId;
+                Stationery stationery = _context.Stationery.FirstOrDefault(m => m.ItemId == itemId);
+                fullRetrievalListWithRetrieve[i].Location = stationery.Location;
+                fullRetrievalListWithRetrieve[i].Category = stationery.Category;
+                fullRetrievalListWithRetrieve[i].QuantityInWarehouse = stationery.QuantityWarehouse;
+            }
+            return Ok(fullRetrievalListWithRetrieve);
         }
 
 
