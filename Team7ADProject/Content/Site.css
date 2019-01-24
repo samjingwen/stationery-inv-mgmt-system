@@ -102,6 +102,7 @@ img.sidelogo {
     top: 150px;
     height: 100%;
     overflow: auto;
+
 }
 
     /* Sidebar links */
@@ -304,6 +305,20 @@ tr:hover {
     border: outset 3px #8ba964;
     background-color: #8ba964;
     text-align: center;
+    height: 35px;
+    color: antiquewhite;
+}
+
+/*red button*/
+.redBtn {
+    display: inline-block;
+    border-radius: 5px;
+    border: outset 3px #A96468;
+    background-color: #A96468;
+    text-align: center;
+    height: 35px;
+    color: antiquewhite;
+}
 }
 
    

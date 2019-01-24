@@ -5,7 +5,7 @@
     Layout = null;
 }
 
-<div class="custcontainer">
+<div>
     @using (Html.BeginForm("AddOrEdit", "ManagePoint", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return jQueryAjaxPost(this);", data_restUrl = Url.Action("AddOrEdit", "ManagePoint", new { id = 0 }) }))
     {
         <div class="row">
@@ -35,7 +35,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Submit" class="btn btn-default" />
+                            <input type="submit" value="Submit" class="greenBtn pull-right" />
                             @if (Model.CollectionPointId != 0)
                             {
                                 <a class="btn btn-success" onclick="refreshAddNewTab('@Url.Action("AddOrEdit","ManagePoint",new{id=0})',false)"><i class="fa fa-plus"></i> Add New</a>

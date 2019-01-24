@@ -9,15 +9,10 @@
 }
 
     <div class="custcontainer">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row">
-                    <h2 class="panel-title pull-left" style="margin-left:10px;">
-                        <strong>Raise Purchase Order</strong> <br /><br />
+
+                    <h2>Raise Purchase Order
                     </h2>
-                </div>
-            </div>
-        </div>
+
         <p> @Html.ActionLink("Back to List", "Index")</p>
         <form id="NewPurchaseOrderForm">
 
@@ -61,7 +56,7 @@
                     </td>
                     <td></td>
                     <td></td>
-                    <td><a id="addToList" class="btn btn-primary">Add To List</a> </td>
+                    <td><a id="addToList">Add To List</a> </td>
                 </tr>
             </table>
 
@@ -81,8 +76,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Reset</button>
-                <button id="saveOrder" type="submit" class="btn btn-primary">Save Order</button>
+                <button type="reset" class="redBtn" data-dismiss="modal">Reset</button>
+                <button id="saveOrder" type="submit" class="greenBtn">Save Order</button>
             </div>
         </form>
     </div>

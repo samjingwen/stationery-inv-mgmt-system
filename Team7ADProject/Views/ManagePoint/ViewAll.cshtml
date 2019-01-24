@@ -5,7 +5,7 @@
     Layout = null;
 }
 
-<div class="custcontainer">
+<div>
     <table id="CPTable" class="cusTable">
         <thead>
             <tr>
@@ -29,8 +29,8 @@
                         @Html.DisplayFor(modelItem => item.Time)
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-sm" onclick="Edit('@Url.Action("AddOrEdit", "ManagePoint", new { id=@item.CollectionPointId})')"><i class="fa fa-pencil fa-lg"></i></a>
                         <a class="btn btn-danger btn-sm" onclick="Delete('@Url.Action("Delete", "ManagePoint", new { id=@item.CollectionPointId})')"><i class="fa fa-trash fa-lg"></i></a>
+                        <a class="btn btn-primary btn-sm" onclick="Edit('@Url.Action("AddOrEdit", "ManagePoint", new { id=@item.CollectionPointId})')"><i class="fa fa-pencil fa-lg"></i></a>
                     </td>
                 </tr>
             }
