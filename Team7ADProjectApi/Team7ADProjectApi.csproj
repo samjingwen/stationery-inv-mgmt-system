@@ -295,6 +295,7 @@
     <Compile Include="ViewModels\DepartmentDto.cs" />
     <Compile Include="ViewModels\DepEmp.cs" />
     <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
+    <Compile Include="ViewModels\DisbursementListViewModel.cs" />
     <Compile Include="ViewModels\EmployeeDto.cs" />
     <Compile Include="ViewModels\PendingPO.cs" />
     <Compile Include="ViewModels\PendingPODetails.cs" />
