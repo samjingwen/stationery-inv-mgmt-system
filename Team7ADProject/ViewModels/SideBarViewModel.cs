@@ -24,7 +24,6 @@ namespace Team7ADProject.ViewModels
 
             //Store Supervisor
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Management", Title = "Stock Adjustment", Action = "Index", Controller = "ApproveAdjustment", IsAction = true });
-            menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Management", Title = "Validate Invoice", Action = "Index", Controller = "ValidateInvoice", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Management", Title = "Inventory Management", Action = "Index", Controller = "ManageStationery", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Collection Management", Title = "Collection Point", Action = "Index", Controller = "ManagePoint", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Collection Management", Title = "Collection Date", Action = "Index", Controller = "ManagePostponeCollectionDate", IsAction = true });
@@ -42,6 +41,7 @@ namespace Team7ADProject.ViewModels
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "View Purchase Orders", Action = "Index", Controller = "RaiseOrder", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Raise Stock Adjustment", Action = "Index", Controller = "RaiseAdjustment", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Stationery Retrievals", Action = "Index", Controller = "ManageRetrieval", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Validate Invoice", Action = "Index", Controller = "ValidateInvoice", IsAction = true });
 
             //Department Head
             menulist.Add(new SideBarViewModel() { Roles = "Department Head", SubMenu = "Stationery Management", Title = "Collection Date", Action = "Index", Controller = "ManagePostponeCollectionDateDepartment", IsAction = true });

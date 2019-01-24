@@ -6,6 +6,7 @@
 }
 @*Select Items(modal for items)*@
 <div class="custcontainer">
+    <h2>Validate Invoice</h2>
     <div class="modal fade" id="newItemModal">
         <div class="modal-dialog modal-lg" style=" width: 900px !important;">
             <div class="modal-content">
@@ -51,7 +52,7 @@
                                     <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="1" />
                                 </div>
                                 <div class="col-md-2 col-lg-offset-4">
-                                    <a id="addToList" class="btn btn-primary">Add To List</a>
+                                    <a id="addToList" class="greenBtn pull-right">Add To List</a>
                                 </div>
                             </div>
                         </div>
@@ -115,8 +116,9 @@
         </form>
     </div>
     @Html.AntiForgeryToken()
-    <button style="margin-right:10px" class="btn btn-primary pull-right" onclick="addNewItem()">Add Item</button>
-    <button style="margin-right:10px" id="saveInvoice" class="btn btn-primary pull-right">  Save  </button>
+    <button style="margin-right:10px" id="saveInvoice" class="greenBtn pull-right">  Save  </button>
+    <button style="margin-right:10px" class="blueBtn pull-right" onclick="addNewItem()">Add Item</button>
+
 
 
 </div>
