@@ -29,24 +29,22 @@ namespace Team7ADProjectApi.Controllers
         #region Sam Jing Wen
 
         //Get List of disbursements in transit
-        //public List<DisbursementListViewModel> GetListDisbursement()
-        //{
-        //    var query = from x in _context.Disbursement
-        //                join y in _context.TransactionDetail
-        //                on x.DisbursementId equals y.TransactionRef
-        //                select new DisbursementListViewModel
-        //                {
-                            
-
-
-
-
-        //                }
-
-
-
-
-        //}
+        [HttpGet]
+        [Route("api/clerk/disbursementlist")]
+        public List<DisbursementListViewModel> GetListDisbursement()
+        {
+            var query = from x in _context.DisbByDisbNoView
+                        select new DisbursementListViewModel
+                        {
+                            DisbursementNo = x.DisbursementNo,
+                            DepartmentId = x.DepartmentId,
+                            OTP = x.OTP,
+                            ItemId = x.ItemId,
+                            Description = x.Description,
+                            Quantity = x.Quantity
+                        };
+            return query.ToList();
+        }
 
 
 
