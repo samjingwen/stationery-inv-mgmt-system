@@ -266,6 +266,7 @@
     <Compile Include="Entities\DeliveryOrder.cs" />
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\DisbByDept.cs" />
+    <Compile Include="Entities\DisbByDisbNoView.cs" />
     <Compile Include="Entities\Disbursement.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\LogicDB.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="ViewModels\DepartmentDto.cs" />
     <Compile Include="ViewModels\DepEmp.cs" />
     <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
+    <Compile Include="ViewModels\DisbursementListViewModel.cs" />
     <Compile Include="ViewModels\EmployeeDto.cs" />
     <Compile Include="ViewModels\PendingPO.cs" />
     <Compile Include="ViewModels\PendingPODetails.cs" />
