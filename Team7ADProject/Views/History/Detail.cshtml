@@ -24,84 +24,89 @@
             </tr>
         </table>
 
-
-        <div>
-            <table class="table">
-                <tr>
-                    <td>
-                        @Html.DisplayNameFor(model => model.Request.RequestedBy):
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Request.AspNetUsers1.EmployeeName)
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        @Html.DisplayNameFor(model => model.Request.ApprovedBy):
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Request.AspNetUsers.EmployeeName)
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        @Html.DisplayNameFor(model => model.Request.Status):
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Request.Status)
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        @Html.DisplayNameFor(model => model.Request.RequestDate):
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Request.RequestDate)
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div>
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Details.First().Stationery.Description)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Details.First().Quantity)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Details.First().Remarks)
-                    </th>
-                    <th>
-                        Collection Date
-                    </th>
-                </tr>
-
-                @foreach (var item in Model.Details)
-                {
+        @if (Model != null)
+        {
+            <div>
+                <table class="table">
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Stationery.Description)
+                            @Html.DisplayNameFor(model => model.Request.RequestedBy):
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Quantity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Remarks)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TransactionDate)
+                            @Html.DisplayFor(model => model.Request.AspNetUsers1.EmployeeName)
                         </td>
                     </tr>
-                }
 
-            </table>
+                    <tr>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Request.ApprovedBy):
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Request.AspNetUsers.EmployeeName)
+                        </td>
+                    </tr>
 
-        </div>
+                    <tr>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Request.Status):
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Request.Status)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Request.RequestDate):
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Request.RequestDate)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Details.First().Stationery.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Details.First().Quantity)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Details.First().Remarks)
+                        </th>
+                        <th>
+                            Collection Date
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.Details)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Stationery.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Remarks)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TransactionDate)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="panel-body">
+                <h3 style="color:red;">Invalid url.</h3>
+            </div>
+        }
     </div>
 </body>
 </html>

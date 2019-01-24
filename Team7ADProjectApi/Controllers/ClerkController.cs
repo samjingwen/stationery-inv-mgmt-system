@@ -170,5 +170,6 @@ namespace Team7ADProjectApi.Controllers
 
         #endregion
 
+        //when retrieved remember to set to intransit and create a new retrieval record
     }
 }
