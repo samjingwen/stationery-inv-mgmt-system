@@ -123,7 +123,20 @@ img.sidelogo {
             background-color: #fee1a1;
             color: #222c49;
         }
-
+    .sidebar p {
+        display: block;
+        color: #fee1a1;
+        padding: 16px;
+        text-decoration: none;
+    }
+        .sidebar p.active {
+            background-color: #fee1a1;
+            color: #222c49;
+        }
+        .sidebar p:hover:not(.active) {
+            background-color: #fee1a1;
+            color: #222c49;
+        }
 
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */

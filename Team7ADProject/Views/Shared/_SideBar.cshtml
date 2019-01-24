@@ -7,8 +7,26 @@
     var currentUserId = User.Identity.GetUserId();
     var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
     var currentUser = manager.FindById(User.Identity.GetUserId());
+    var sm =0;
+    var dm =0;
+    var cm=0;
+    foreach (var i in Model)
+    { if (User.IsInRole(i.Roles)) {
+            if (i.SubMenu == "Stationery Management")
+            {
+                sm++;
+            }
+            if(i.SubMenu == "Collection Management")
+            {
+                cm++;
+            }
+            if(i.SubMenu == "Department Management")
+            {
+                dm++;
+            }
+        }
+    }
 }
-
 <div class="sidebar">
     <img class="sidelogo" src="~/Content/images/Logo2.png" />
     @using Microsoft.AspNet.Identity
@@ -28,18 +46,67 @@
             <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
         </ul>
     }
-    @foreach (var i in Model)
 
+    <details>
+        @foreach (var i in Model)
+        {
+            if (i.Roles == "All")
+            {
+                <a href="@Url.Action(i.Action, i.Controller)"> @Html.Raw(i.Title)</a>
+            }
+        }
+        <summary>
+            <p><b>Index ▼</b></p>
+        </summary>
+    </details>
+
+    @if (sm > 0)
     {
-        if (i.Roles == "All")
-        {
-            <a href="@Url.Action(i.Action,i.Controller)"> @Html.Raw(i.Title)</a>
-        }
-
-        if (User.IsInRole(i.Roles))
-        {
-            <a href="@Url.Action(i.Action,i.Controller)"> @Html.Raw(i.Title)</a>
-        }
+        <details>
+            @foreach (var i in Model)
+            {
+                if (User.IsInRole(i.Roles) && i.SubMenu == "Stationery Management")
+                {
+                    <a href="@Url.Action(i.Action, i.Controller)"> @Html.Raw(i.Title)</a>
+                }
+            }
+            <summary><p><b>Stationery Management ▼</b></p></summary>
+        </details>
     }
-    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-</div>
+
+    @if (cm > 0)
+    {<details>
+            @foreach (var i in Model)
+            {
+                if (User.IsInRole(i.Roles) && i.SubMenu == "Collection Management")
+                {
+                    <a href="@Url.Action(i.Action, i.Controller)"> @Html.Raw(i.Title)</a>
+                }
+            }
+            <summary><p><b>Collection Management ▼</b></p></summary>
+        </details>
+    }
+
+    @if (dm > 0)
+    {
+        <details>
+            @foreach (var i in Model)
+            {
+                if (User.IsInRole(i.Roles) && i.SubMenu == "Department Management")
+                {
+                    <a href="@Url.Action(i.Action, i.Controller)"> @Html.Raw(i.Title)</a>
+                }
+            }
+            <summary><p><b>Department Management ▼</b></p></summary>
+        </details>
+    }
+
+        @foreach (var i in Model)
+        {
+            if (User.IsInRole(i.Roles) && i.SubMenu == null)
+            {
+                <a href="@Url.Action(i.Action, i.Controller)"> @Html.Raw(i.Title)</a>
+            }
+        }
+        <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+    </div>
