@@ -78,7 +78,7 @@ namespace Team7ADProject.Service
         public string GetNewRetrievalId()
         {
             string rid;
-            var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).FirstOrDefault();
+            var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).OrderByDescending(x => x.RetrievalId).FirstOrDefault();
             if (ret.Date.Year == DateTime.Now.Year)
             {
                 rid = "R" + DateTime.Now.Year.ToString() + "-" + (Convert.ToInt32(ret.RetrievalId.Substring(6, 4)) + 1).ToString("0000");
