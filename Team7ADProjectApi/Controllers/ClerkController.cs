@@ -24,6 +24,40 @@ namespace Team7ADProjectApi.Controllers
             _context.Dispose();
         }
 
+        GlobalClass gc = new GlobalClass();
+
+        #region Sam Jing Wen
+
+        //Get List of disbursements in transit
+        //public List<DisbursementListViewModel> GetListDisbursement()
+        //{
+        //    var query = from x in _context.Disbursement
+        //                join y in _context.TransactionDetail
+        //                on x.DisbursementId equals y.TransactionRef
+        //                select new DisbursementListViewModel
+        //                {
+                            
+
+
+
+
+        //                }
+
+
+
+
+        //}
+
+
+
+
+
+
+        #endregion
+
+
+
+
         //[Authorize(Roles = "Department Head")]
         //[HttpGet]
         //[Route("api/department/{id}")]
@@ -33,7 +67,6 @@ namespace Team7ADProjectApi.Controllers
         //    return gc.ListDepartment(id);
         //}
 
-        GlobalClass gc = new GlobalClass();
 
         [HttpGet]
         //[Route("api/Request/Items")]
