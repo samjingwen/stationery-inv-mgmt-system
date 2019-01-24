@@ -52,10 +52,13 @@ namespace Team7ADProjectApi.Controllers
         public IHttpActionResult GetListDisNo()
         {
             var query = (from x in _context.Disbursement
+                         join y in _context.Department
+                         on x.DepartmentId equals y.DepartmentId
                          select new
                          {
                              x.DisbursementNo,
                              x.DepartmentId,
+                             y.DepartmentName,
                              x.AcknowledgedBy,
                              x.DisbursedBy,
                              x.Date,
