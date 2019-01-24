@@ -230,7 +230,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AmendRequestController.cs" />
     <Compile Include="Controllers\Api\StationeriesController.cs" />
     <Compile Include="Controllers\ApproveAdjustmentController.cs" />
     <Compile Include="Controllers\ApproveOrderController.cs" />
@@ -253,14 +252,9 @@
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
     <Compile Include="Controllers\RaiseOrderController.cs" />
     <Compile Include="Controllers\RaiseRequestController.cs" />
-    <Compile Include="Controllers\ReceiveGoodsController.cs" />
-    <Compile Include="Controllers\ReceiveOrderController.cs" />
     <Compile Include="Controllers\RetrieveOwnRequisitionHistoryController.cs" />
-    <Compile Include="Controllers\ReturnWarehouseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\UpdateWarehouseController.cs" />
     <Compile Include="Controllers\ValidateInvoiceController.cs" />
-    <Compile Include="Controllers\VoidDisbursementController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
     <Compile Include="Entities\CollectionPoint.cs" />
@@ -631,14 +625,8 @@
     <Content Include="Views\ManageDelegate\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\Navi\" />
-    <Folder Include="Views\ReceiveGoods\" />
-    <Folder Include="Views\ReceiveOrder\" />
-    <Folder Include="Views\ReturnWarehouse\" />
-    <Folder Include="Views\UpdateWarehouse\" />
-    <Folder Include="Views\VoidDisbursement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
