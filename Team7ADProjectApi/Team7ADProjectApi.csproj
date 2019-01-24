@@ -259,7 +259,6 @@
     <Compile Include="Controllers\DepartmentHeadController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
-    <Compile Include="Controllers\VoidDisbursementListController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
     <Compile Include="Entities\CollectionPoint.cs" />
@@ -267,6 +266,7 @@
     <Compile Include="Entities\DeliveryOrder.cs" />
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\DisbByDept.cs" />
+    <Compile Include="Entities\DisbByDisbNoView.cs" />
     <Compile Include="Entities\Disbursement.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\LogicDB.cs" />
@@ -292,13 +292,17 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AdjustmentInfo.cs" />
+    <Compile Include="ViewModels\AdjustmentItemDetail.cs" />
     <Compile Include="ViewModels\BriefDepartment.cs" />
     <Compile Include="ViewModels\DepEmp.cs" />
     <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
+    <Compile Include="ViewModels\DisbursementListViewModel.cs" />
     <Compile Include="ViewModels\EmployeeDto.cs" />
     <Compile Include="ViewModels\PendingPO.cs" />
     <Compile Include="ViewModels\PendingPODetails.cs" />
     <Compile Include="ViewModels\RequestItems.cs" />
+    <Compile Include="ViewModels\StationeryRetrievalApiModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -362,6 +366,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Service\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

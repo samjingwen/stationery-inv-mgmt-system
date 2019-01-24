@@ -50,7 +50,8 @@ namespace Team7ADProject.Service
                         DepartmentName = i.DepartmentName,
                         Quantity = disb == null ? (int)i.Quantity : ((int)i.Quantity - (int)disb.Quantity)
                     };
-                    item.requestList.Add(newModel);
+                    if (newModel.Quantity > 0)
+                        item.requestList.Add(newModel);
                 }
                 else
                 {
@@ -58,13 +59,17 @@ namespace Team7ADProject.Service
                     requestByItemViewModel.ItemId = i.ItemId;
                     requestByItemViewModel.Description = i.Description;
                     requestByItemViewModel.requestList = new List<BreakdownByDeptViewModel>();
-                    requestByItemViewModel.requestList.Add(new BreakdownByDeptViewModel
+                    var newModel = new BreakdownByDeptViewModel
                     {
                         DepartmentId = i.DepartmentId,
                         DepartmentName = i.DepartmentName,
                         Quantity = disb == null ? (int)i.Quantity : ((int)i.Quantity - (int)disb.Quantity)
-                    });
-                    model.Add(requestByItemViewModel);
+                    };
+                    if (newModel.Quantity > 0)
+                    {
+                        requestByItemViewModel.requestList.Add(newModel);
+                        model.Add(requestByItemViewModel);
+                    }
                 }
             }
             return model;
@@ -73,7 +78,7 @@ namespace Team7ADProject.Service
         public string GetNewRetrievalId()
         {
             string rid;
-            var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).FirstOrDefault();
+            var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).OrderByDescending(x => x.RetrievalId).FirstOrDefault();
             if (ret.Date.Year == DateTime.Now.Year)
             {
                 rid = "R" + DateTime.Now.Year.ToString() + "-" + (Convert.ToInt32(ret.RetrievalId.Substring(6, 4)) + 1).ToString("0000");
@@ -113,16 +118,9 @@ namespace Team7ADProject.Service
                     modModel.Remove(sr);
                 }
             }
-            try
-            {
-                context.StationeryRetrieval.Add(retrieval);
-                context.SaveChanges();
-                return modModel;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            context.StationeryRetrieval.Add(retrieval);
+            context.SaveChanges();
+            return modModel;
 
 
         }
@@ -212,6 +210,7 @@ namespace Team7ADProject.Service
                             newDetail.TransactionRef = newDisb.DisbursementId;
                             newDetail.TransactionDate = DateTime.Now;
                             newDetail.UnitPrice = currentItem.UnitPrice;
+                            newDetail.Remarks = "In Transit";
                             newDisb.TransactionDetail.Add(newDetail);
                             var statReq = context.StationeryRequest.Where(x => x.RequestId == reqt.RequestId).FirstOrDefault();
                             if (statReq != null)
@@ -239,6 +238,7 @@ namespace Team7ADProject.Service
                             newDetail.TransactionRef = newDisb.DisbursementId;
                             newDetail.TransactionDate = DateTime.Now;
                             newDetail.UnitPrice = currentItem.UnitPrice;
+                            newDetail.Remarks = "In Transit";
                             newDisb.TransactionDetail.Add(newDetail);
                             var reqCheck = query.Where(x => x.RequestId == reqt.RequestId).ToList();
                             if (reqCheck.Count > 1)
@@ -281,6 +281,7 @@ namespace Team7ADProject.Service
                             newDetail.TransactionRef = newDisb.DisbursementId;
                             newDetail.TransactionDate = DateTime.Now;
                             newDetail.UnitPrice = currentItem.UnitPrice;
+                            newDetail.Remarks = "In Transit";
                             newDisb.TransactionDetail.Add(newDetail);
                             context.Disbursement.Add(newDisb);
                             context.SaveChanges();
@@ -308,6 +309,7 @@ namespace Team7ADProject.Service
                                     newDetail.TransactionRef = newDisb.DisbursementId;
                                     newDetail.TransactionDate = DateTime.Now;
                                     newDetail.UnitPrice = currentItem.UnitPrice;
+                                    newDetail.Remarks = "In Transit";
                                     newDisb.TransactionDetail.Add(newDetail);
                                     context.Disbursement.Add(newDisb);
                                     context.SaveChanges();

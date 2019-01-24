@@ -11,43 +11,53 @@ using Microsoft.AspNet.Identity;
 namespace Team7ADProject.Controllers
 {
     //For department head to view history and for employee to view history
+    [RoleAuthorize(Roles = "Department Head")]
     public class HistoryController : Controller
     {
-        private LogicDB context = new LogicDB();
+        private LogicDB _context = new LogicDB();
         // GET: History
-        [Authorize(Roles = "Department Head")]
         public ActionResult Index(DateTime? fromDTP, DateTime? toDTP)
         {
-            string UID = User.Identity.GetUserId();
-            string DID = context.AspNetUsers.Single(x => x.Id == UID).DepartmentId;
+            string userId = User.Identity.GetUserId();
+            string departmentId = _context.AspNetUsers.Single(x => x.Id == userId).DepartmentId;
             if(fromDTP == null && toDTP == null)
             {
-                return View(context.StationeryRequest.Where(x=>x.DepartmentId == DID).ToList());
+                return View(_context.StationeryRequest.Where(x=>x.DepartmentId == departmentId).ToList());
             }
             else if(fromDTP == null)
             {
-                return View(context.StationeryRequest.Where(x => x.DepartmentId == DID).Where(x => x.RequestDate <= toDTP).ToList());
+                return View(_context.StationeryRequest.Where(x => x.DepartmentId == departmentId).Where(x => x.RequestDate <= toDTP).ToList());
             }
             else if(toDTP == null)
             {
-                return View(context.StationeryRequest.Where(x => x.DepartmentId == DID).Where(x => x.RequestDate >= fromDTP).ToList());
+                return View(_context.StationeryRequest.Where(x => x.DepartmentId == departmentId).Where(x => x.RequestDate >= fromDTP).ToList());
             }
             else
             {
-                return View(context.StationeryRequest.Where(x => x.DepartmentId == DID).Where(x => x.RequestDate >= fromDTP && x.RequestDate <= toDTP).ToList());
+                return View(_context.StationeryRequest.Where(x => x.DepartmentId == departmentId).Where(x => x.RequestDate >= fromDTP && x.RequestDate <= toDTP).ToList());
             }
         }
 
-        [Authorize(Roles = "Department Head")]
         public ActionResult Detail(string id)
         {
-            StationeryRequest stationeryRequest = context.StationeryRequest.Single(x => x.RequestId == id);
-            HistoryDetailViewModel detailModel = new HistoryDetailViewModel()
+            StationeryRequest stationeryRequest = _context.StationeryRequest.Single(x => x.RequestId == id);
+            string userId = User.Identity.GetUserId();
+            AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == userId);
+
+            if (user.DepartmentId == stationeryRequest.DepartmentId)
             {
-                Request = stationeryRequest,
-                Details = context.TransactionDetail.Where(x => x.StationeryRequest.RequestId == stationeryRequest.RequestId).ToList()
-            };
-            return View(detailModel);
+                HistoryDetailViewModel detailModel = new HistoryDetailViewModel()
+                {
+                    Request = stationeryRequest,
+                    Details = _context.TransactionDetail
+                        .Where(x => x.StationeryRequest.RequestId == stationeryRequest.RequestId).ToList()
+                };
+                return View(detailModel);
+            }
+            else
+            {
+                return View();
+            }
         }
 
 

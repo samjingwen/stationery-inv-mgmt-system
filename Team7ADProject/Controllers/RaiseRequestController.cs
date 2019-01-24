@@ -11,17 +11,15 @@ namespace Team7ADProject.Controllers
 {
     //Author: Teh Li Heng 17/1/2019
     //Raise new requests into a list of editable object and save all at once (implemented js and ajax)
-
+    [RoleAuthorize(Roles = "Employee, Department Representative, Store Clerk, Store Supervisor")]
     public class RaiseRequestController : Controller
     {
         #region Teh Li Heng
         static private LogicDB _context;
-        static List<RaiseRequestViewModel> test;
 
         public RaiseRequestController()
         {
             _context=new LogicDB();
-            test=new List<RaiseRequestViewModel>();
         }
 
         protected override void Dispose(bool disposing)

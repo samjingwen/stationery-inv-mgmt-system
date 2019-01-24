@@ -13,9 +13,10 @@ namespace Team7ADProjectApi
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapMvcAttributeRoutes();
             routes.MapRoute(
                 name: "Default",
-                url: "api/{controller}/{action}/{id}",
+                url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }

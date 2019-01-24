@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -230,18 +230,16 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AmendRequestController.cs" />
     <Compile Include="Controllers\Api\StationeriesController.cs" />
     <Compile Include="Controllers\ApproveAdjustmentController.cs" />
     <Compile Include="Controllers\ApproveOrderController.cs" />
     <Compile Include="Controllers\ChargeBackController.cs" />
     <Compile Include="Controllers\CollectionPointController.cs" />
-    <Compile Include="Controllers\CommonController.cs" />
-    <Compile Include="Controllers\DelegateHeadController.cs" />
     <Compile Include="Controllers\GenerateReportController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManageDelegateController.cs" />
     <Compile Include="Controllers\ManagePointController.cs" />
     <Compile Include="Controllers\ManagePostponeCollectionDateController.cs" />
     <Compile Include="Controllers\ManagePostponeCollectionDateDepartmentController.cs" />
@@ -254,14 +252,9 @@
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
     <Compile Include="Controllers\RaiseOrderController.cs" />
     <Compile Include="Controllers\RaiseRequestController.cs" />
-    <Compile Include="Controllers\ReceiveGoodsController.cs" />
-    <Compile Include="Controllers\ReceiveOrderController.cs" />
     <Compile Include="Controllers\RetrieveOwnRequisitionHistoryController.cs" />
-    <Compile Include="Controllers\ReturnWarehouseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\UpdateWarehouseController.cs" />
     <Compile Include="Controllers\ValidateInvoiceController.cs" />
-    <Compile Include="Controllers\VoidDisbursementController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
     <Compile Include="Entities\CollectionPoint.cs" />
@@ -269,6 +262,7 @@
     <Compile Include="Entities\DeliveryOrder.cs" />
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\DisbByDept.cs" />
+    <Compile Include="Entities\DisbByDisbNoView.cs" />
     <Compile Include="Entities\Disbursement.cs" />
     <Compile Include="Entities\Email.cs" />
     <Compile Include="Entities\Invoice.cs" />
@@ -336,8 +330,8 @@
     <Content Include="Content\images\CollPoint\cpImage_4.png" />
     <Content Include="Content\images\CollPoint\cpImage_5.png" />
     <Content Include="Content\images\CollPoint\cpImage_6.png" />
-    <Content Include="Content\images\cplogo.png" />
     <Content Include="Content\images\imageupload.png" />
+    <Content Include="Content\images\cplogo.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="App_Data\useremails.txt" />
     <Content Include="App_Data\usernames.txt" />
@@ -347,6 +341,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\Logo1.png" />
+    <Content Include="Content\images\Logo2.png" />
     <Content Include="Content\images\text.png" />
     <Content Include="Content\login\css\main.css" />
     <Content Include="Content\login\css\util.css" />
@@ -435,7 +430,6 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="Content\sidebar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -605,7 +599,6 @@
     <Content Include="Views\ChargeBack\ChargeBackDetails.cshtml" />
     <Content Include="Views\ManageRetrieval\Index.cshtml" />
     <Content Include="Views\RequisitionHistory\Index.cshtml" />
-    <Content Include="Views\DelegateHead\index.cshtml" />
     <Content Include="Views\History\Detail.cshtml" />
     <Content Include="Views\GenerateReport\GenerateDashboard.cshtml" />
     <Content Include="Views\RaiseAdjustment\Index.cshtml" />
@@ -629,18 +622,12 @@
     <Content Include="Views\ManagePostponeCollectionDateDepartment\Details.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDate\Index.cshtml" />
     <Content Include="Views\Shared\Error401.cshtml" />
+    <Content Include="Views\Home\_MenuBox.cshtml" />
+    <Content Include="Views\ManageDelegate\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\AmendRequest\" />
-    <Folder Include="Views\Common\" />
-    <Folder Include="Views\ConsolidateDisbursement\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\Navi\" />
-    <Folder Include="Views\ReceiveGoods\" />
-    <Folder Include="Views\ReceiveOrder\" />
-    <Folder Include="Views\ReturnWarehouse\" />
-    <Folder Include="Views\UpdateWarehouse\" />
-    <Folder Include="Views\VoidDisbursement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

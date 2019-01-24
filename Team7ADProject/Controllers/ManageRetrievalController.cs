@@ -14,7 +14,7 @@ namespace Team7ADProject.Controllers
 
 
     //For SC to generate retrieval and make amendments
-    [Authorize(Roles = "Store Clerk")]
+    [RoleAuthorize(Roles = "Store Clerk")]
     public class ManageRetrievalController : Controller
     {
         StationeryRequestService srService = StationeryRequestService.Instance;
@@ -26,7 +26,7 @@ namespace Team7ADProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult GenerateDisbursement(List<RequestByItemViewModel> model, string RetrievedBy)
+        public ActionResult GenerateDisbursement(List<RequestByItemViewModel> model)
         {
             //Create new Retrieval
             string userId = User.Identity.GetUserId();

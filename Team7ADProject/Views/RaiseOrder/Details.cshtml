@@ -4,60 +4,62 @@
     ViewBag.Title = "Details";
 }
 
-<h2>  </h2>
+<div class="custcontainer">
+    <h2>@Html.Label(Model.PurchaseOrder.PONo)</h2>
 
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 
-@using (Html.BeginForm("ApproveOrReject", "ApproveOrder"))
-{
-    <div class="container">
-        <div class="row">
-            <div>
-                @Html.LabelFor(m => m.PurchaseOrder.PONo) :
-                @Html.Label(Model.PurchaseOrder.PONo)<br />
+    @using (Html.BeginForm("ApproveOrReject", "ApproveOrder"))
+    {
+        <div style="width:93%;">
+            <div class="row">
+                <div>
+                    @Html.LabelFor(m => m.PurchaseOrder.PONo) :
+                    @Html.Label(Model.PurchaseOrder.PONo)<br />
 
 
-                @Html.LabelFor(m => m.PurchaseOrder.Supplier.SupplierName) :
-                @Html.Label(Model.PurchaseOrder.Supplier.SupplierName)<br />
+                    @Html.LabelFor(m => m.PurchaseOrder.Supplier.SupplierName) :
+                    @Html.Label(Model.PurchaseOrder.Supplier.SupplierName)<br />
 
-                @Html.LabelFor(m => m.PurchaseOrder.Date) :
-                @Html.Label(Model.PurchaseOrder.Date.ToShortDateString())<br />
-                <table class="table table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Item No</th>
-                            <th>Description</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var po in Model.PODetails)
-                        {
+                    @Html.LabelFor(m => m.PurchaseOrder.Date) :
+                    @String.Format("{0:dd MMM yyyy}", Model.PurchaseOrder.Date)<br />
+                    <table class="cusTable">
+                        <thead>
                             <tr>
-                                <td>@po.ItemId</td>
-                                <td>@po.Stationery.Description</td>
-                                <td>@po.Quantity</td>
-                                <td>$@po.UnitPrice.ToString()</td>
-                                <td>$@(po.Quantity * po.UnitPrice)</td>
+                                <th>Item No</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Amount</th>
                             </tr>
-                        }
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total:</strong></td>
-                            <td>
-                                <strong>$@Model.PurchaseOrder.Amount</strong>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var po in Model.PODetails)
+                            {
+                                <tr>
+                                    <td>@po.ItemId</td>
+                                    <td>@po.Stationery.Description</td>
+                                    <td>@po.Quantity</td>
+                                    <td>$@po.UnitPrice.ToString()</td>
+                                    <td>$@(po.Quantity * po.UnitPrice)</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Total:</strong></td>
+                                <td>
+                                    <strong>$@Model.PurchaseOrder.Amount</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
-}
+    }
+</div>

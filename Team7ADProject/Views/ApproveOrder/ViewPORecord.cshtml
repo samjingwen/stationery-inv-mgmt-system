@@ -5,14 +5,15 @@
     ViewBag.Title = "ViewPORecord";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h2>View Purchase Orders</h2>
 
 <!------ Include the above in your HEAD tag ---------->
 @using (Html.BeginForm("PODetails", "ApproveOrder"))
 {
-    <div class="container">
+    <div class="custcontainer">
         <div class="row">
             <div >
-                <table  class="table">
+                <table  class="cusTable">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -27,7 +28,7 @@
                         @foreach (var po in Model)
                         {
                             <tr>
-                                <td>@Html.Label(po.Date.ToShortDateString())</td>
+                                <td>@Html.Label(po.Date.ToString("dd MMM yyyy"))</td>
                                 <td>@po.PONo</td>
                                 <td>@po.Supplier.SupplierName</td>
                                 <td>@po.AspNetUsers1.EmployeeName</td>

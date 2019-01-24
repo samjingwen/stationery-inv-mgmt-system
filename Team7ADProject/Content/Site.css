@@ -1,13 +1,14 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 0;
     padding-bottom: 20px;
+    background-image: linear-gradient(to bottom right,#E8EAEE,#EEECE8)
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-top: 50px;
     padding-bottom: 20px;
-    margin-left: 200px;
+    margin-left: 250px;
     padding: 1px 16px;
     height: 1000px;
 }
@@ -30,16 +31,16 @@ textarea {
 /*Sam Jing Wen Start*/
 
 ul.nav.nav-tabs {
-    margin: 10px 0px;
+    margin: 10px 0;
 }
 
     ul.nav.nav-tabs li:not(.active) a {
-        background-color: #eeeeee;
-        color: grey;
+        background-color: #222c49;
+        color: #fee1a1;
     }
 
     ul.nav.nav-tabs li.active a {
-        border-top: 3px solid #16a765;
+        border-top: 3px solid #fee1a1;
     }
 
 img.cpimg {
@@ -67,11 +68,13 @@ img.loginlogo {
 
 
 img.sidelogo {
-    width : 200px; 
-    height : 150px; 
-    background-color:#f1f1f1; 
+    width: 250px;
+    height: 150px;
+    background-image: linear-gradient(to top right, #1A1E2C,#747D98);
     position: fixed;
-    top: 50px;
+    top: 0;
+    padding: 40px;
+    padding-bottom: 10px;
     left: 0;
 }
 
@@ -89,14 +92,14 @@ img.sidelogo {
 }
 
 
-
+/*Elaine Chan*/
 /* The side navigation menu */
 .sidebar {
     margin: 0;
-    width: 200px;
-    background-color: #f1f1f1;
+    width: 250px;
+    background-image: linear-gradient(to bottom right, #1A1E2C,#747D98);
     position: fixed;
-    top:200px;
+    top: 150px;
     height: 100%;
     overflow: auto;
 }
@@ -104,59 +107,36 @@ img.sidelogo {
     /* Sidebar links */
     .sidebar a {
         display: block;
-        color: black;
+        color: #fee1a1;
         padding: 16px;
         text-decoration: none;
     }
 
         /* Active/current link */
         .sidebar a.active {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #fee1a1;
+            color: #565D74;
         }
 
         /* Links on mouse-over */
         .sidebar a:hover:not(.active) {
-            background-color: #555;
-            color: white;
+            background-color: #fee1a1;
+            color: #565D74;
         }
-
-
-
-/* On screens that are less than 700px wide, make the sidebar into a topbar */
-@media screen and (max-width: 700px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
+    .sidebar p {
+        display: block;
+        color: #fee1a1;
+        padding: 16px;
+        text-decoration: none;
     }
-
-        .sidebar a {
-            float: left;
+        .sidebar p.active {
+            background-color: #fee1a1;
+            color: #565D74;
         }
-
-    div.body-content {
-        margin-left: 0;
-    }
-}
-
-/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-@media screen and (max-width: 400px) {
-    .sidebar a {
-        text-align: center;
-        float: none;
-    }
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
+        .sidebar p:hover:not(.active) {
+            background-color: #fee1a1;
+            color: #565D74;
+        }
 
 
 /*Sam Jing Wen End*/
@@ -187,7 +167,7 @@ td {
 .action-button {
     position: relative;
     padding: 10px 40px;
-    margin: 0px 10px 10px 0px;
+    margin: 0 10px 10px 0;
     float: left;
     border-radius: 10px;
     font-family: 'Pacifico', cursive;
@@ -196,28 +176,22 @@ td {
     text-decoration: none;
 }
 
-.blue {
-    background-color: #3498DB;
-    border-bottom: 5px solid #2980B9;
-    text-shadow: 0px -2px #2980B9;
-}
-
 .red {
     background-color: #E74C3C;
     border-bottom: 5px solid #BD3E31;
-    text-shadow: 0px -2px #BD3E31;
+    text-shadow: 0 -2px #BD3E31;
 }
 
 .green {
     background-color: #82BF56;
     border-bottom: 5px solid #669644;
-    text-shadow: 0px -2px #669644;
+    text-shadow: 0 -2px #669644;
 }
 
 .yellow {
     background-color: #F2CF66;
     border-bottom: 5px solid #D1B358;
-    text-shadow: 0px -2px #D1B358;
+    text-shadow: 0 -2px #D1B358;
 }
 
 .action-button:active {
@@ -226,3 +200,95 @@ td {
     border-bottom: 1px solid;
 }
 
+
+/*MenuBox - Elaine Chan*/
+.menuBox {
+    border: outset;
+    border-radius: 10px;
+    background-image: linear-gradient(to top left,#1A1E2C,#747D98);
+    float: left;
+    height: 150px;
+    width: 150px;
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px;
+}
+/*links*/
+.custlink {
+    color: antiquewhite;
+}
+
+a {
+    color: #746D56;
+    text-decoration: overline;
+    text-decoration-color: #BAB6AB;
+}
+    a:hover {
+        text-decoration: underline;
+    }
+
+/*customTable - Elaine Chan*/
+.cusTable {
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%;
+}
+th {
+    padding: 2;
+    background-color: #414657;
+    color: #fee1a1;
+    height: 30px;
+}
+th, td {
+    padding: 2px;
+    text-align: left;
+    border-bottom: 1px solid #8F8C84;
+}
+tr:hover {
+    background-color: #FFF7E8;
+}
+
+/*custcontainer*/
+.custcontainer{
+    height: 100%;
+    margin-left:10px;
+    max-width: 77%;
+}
+
+/*green button*/
+.greenBtn {
+    display: inline-block;
+    border-radius: 5px;
+    border: outset 3px #566A3F;
+    background-color: #566A3F;
+    text-align: center;
+    height: 35px;
+    color: antiquewhite;
+}
+
+/*red button*/
+.redBtn {
+    display: inline-block;
+    border-radius: 5px;
+    border: outset 3px #6A3F41;
+    background-color: #6A3F41;
+    text-align: center;
+    height: 35px;
+    color: antiquewhite;
+}
+/*blue button*/
+.blueBtn {
+    display: inline-block;
+    border-radius: 5px;
+    border: outset 3px #414657;
+    background-color: #414657;
+    text-align: center;
+    height: 35px;
+    color: antiquewhite;
+}
+
+
+.a{
+    text-decoration:underline;
+}

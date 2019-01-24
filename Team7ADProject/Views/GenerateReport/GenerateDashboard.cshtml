@@ -78,30 +78,38 @@
 
 </head>
 
-<h2>Store Dashboard</h2>
-<br/>
-<table>
-    <tr>
-        <th>Module selected:</th>
-        <td>@String.Format("{0}", @Model.module)</td>
-    </tr>
-    <tr>
-        <th>Period selected from: </th>
-        <td>@String.Format("{0:dd MMM yyyy}", @Model.fDate) to @String.Format("{0:dd MMM yyyy}", @Model.tDate)</td>     
-    </tr>
-    <tr>
-        <th>Stationery categories:  </th>
-        <td>@foreach (var item in @Model.selectstatcategory) {@String.Format(" {0} ",item)} </td>
+<div class="custcontainer">
+    <h2>Store Dashboard</h2>
+    <br />
+    <table>
+        <tr>
+            <th>Module selected:</th>
+            <td>@String.Format("{0}", @Model.module)</td>
+        </tr>
+        <tr>
+            <th>Period selected from: </th>
+            <td>@String.Format("{0:dd MMM yyyy}", @Model.fDate) to @String.Format("{0:dd MMM yyyy}", @Model.tDate)</td>
+        </tr>
+        <tr>
+            <th>Stationery categories:  </th>
+            <td>
+                @foreach (var item in @Model.selectstatcategory)
+                {@String.Format(" {0} ", item)}
+        </td>
     </tr>
     <tr>
         <th>Entities selected:</th>
-        <td>@foreach (var item in @Model.selectentcategory) {@String.Format(" {0} ", item)} </td>
-    </tr>
+        <td>
+            @foreach (var item in @Model.selectentcategory)
+            {@String.Format(" {0} ", item)}
+    </td>
+</tr>
 
 
 </table>
-<div style="width:80%;">
-    <div id="ReportFilters" style="width:20%; height:100%; border:groove; float:right;">
+<br />
+<div>
+    <div id="ReportFilters" style="width:20%; height:100%; float:right;">
         <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post">
             <p>Select module:</p>
             <p>
@@ -122,9 +130,9 @@
                 <input type="text" required name="toDateTP" id="toDateTP" placeholder="Please select a date" onkeypress="return false;">
             </p>
             <details>
-                <summary style="background-color:#788F9E; color:snow">
+                <summary style="background-color:#414657; color:antiquewhite">
                     <p>
-                        <b>Stationery Categories:</b>
+                        <b>Stationery Categories ▼</b>
                     </p>
                 </summary>
                 <div></div>
@@ -136,9 +144,9 @@
                 </p>
             </details>
             <details>
-                <summary style="background-color:#788F9E; color:snow">
+                <summary style="background-color:#414657; color:antiquewhite">
                     <p>
-                        <b>Select Entity:</b>
+                        <b>Select Entity ▼</b>
                     </p>
                 </summary>
                 <p>
@@ -162,10 +170,11 @@
                     </div>
                 </p>
             </details>
-            <input type="submit" id="filterBtn" value="Filter" />
+            <input type="submit" id="filterBtn" value="Filter" class="blueBtn pull-right"/>
         </form>
     </div>
 
     <div id="charts">@Html.Partial("_Charts")</div>
 
+</div>
 </div>

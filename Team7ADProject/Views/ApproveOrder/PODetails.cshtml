@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Purchase Order Detail</h2>
 
 
-
-    <div class="container">
+    <div class="custcontainer">
         <div class="row">
             <div>
                 @Html.LabelFor(m => m.PurchaseOrder.PONo) :
@@ -19,7 +19,7 @@
                 @Html.Label(Model.PurchaseOrder.Supplier.SupplierName)<br />
 
                 @Html.LabelFor(m => m.PurchaseOrder.Date) :
-                @Html.Label(Model.PurchaseOrder.Date.ToShortDateString())<br />
+                @Html.Label(Model.PurchaseOrder.Date.ToString("dd MMMM yyyy"))<br />
                 <table class="table">
                     <thead>
                         <tr>
