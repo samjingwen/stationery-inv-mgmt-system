@@ -15,7 +15,7 @@ namespace Team7ADProject.Controllers
     {
         private LogicDB _context = new LogicDB();
         // GET: History
-        [Authorize(Roles = "Department Head, Department Representative")]
+        [Authorize(Roles = "Department Head")]
         public ActionResult Index(DateTime? fromDTP, DateTime? toDTP)
         {
             string userId = User.Identity.GetUserId();
@@ -38,8 +38,7 @@ namespace Team7ADProject.Controllers
             }
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Department Head, Department Representative")]
+        [Authorize(Roles = "Department Head")]
         public ActionResult Detail(string id)
         {
             StationeryRequest stationeryRequest = _context.StationeryRequest.Single(x => x.RequestId == id);
