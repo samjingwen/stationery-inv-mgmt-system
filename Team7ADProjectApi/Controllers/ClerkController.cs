@@ -83,14 +83,14 @@ namespace Team7ADProjectApi.Controllers
 
 
 
-        //[Authorize(Roles = "Department Head")]
-        //[HttpGet]
-        //[Route("api/department/{id}")]
-        //public IEnumerable<BriefDepartment> GetDepartments(string id)
-        //{
-        //    GlobalClass gc = new GlobalClass();
-        //    return gc.ListDepartment(id);
-        //}
+        [Authorize(Roles = "Department Head, Acting Department Head")]
+        [HttpGet]
+        [Route("api/department/{id}")]
+        public IEnumerable<BriefDepartment> GetDepartments(string id)
+        {
+            GlobalClass gc = new GlobalClass();
+            return gc.ListDepartment(id);
+        }
 
 
         [HttpGet]
