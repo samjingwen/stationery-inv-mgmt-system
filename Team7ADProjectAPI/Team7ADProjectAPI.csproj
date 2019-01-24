@@ -257,8 +257,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClerkController.cs" />
     <Compile Include="Controllers\DepartmentHeadController.cs" />
+    <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
-
     <Compile Include="Controllers\VoidDisbursementListController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
@@ -292,10 +292,10 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AdjustmentInfo.cs" />
+    <Compile Include="ViewModels\AdjustmentItemDetail.cs" />
     <Compile Include="ViewModels\BriefDepartment.cs" />
-    <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
     <Compile Include="ViewModels\DepEmp.cs" />
-    <Compile Include="ViewModels\BriefManageDepRep.cs" />
     <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
     <Compile Include="ViewModels\EmployeeDto.cs" />
     <Compile Include="ViewModels\PendingPO.cs" />
@@ -336,6 +336,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
