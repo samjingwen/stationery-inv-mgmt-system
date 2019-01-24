@@ -50,7 +50,7 @@ namespace Team7ADProject.ViewModels
             menulist.Add(new SideBarViewModel() { Roles = "Department Head", SubMenu = "Stationery Management", Title = "Collection Point", Action = "Index", Controller = "ManagePostponeCollectionDateDepartment", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Department Head", Title = "Charge Back", Action = "ChargeBack", Controller = "ChargeBack", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Department Head", SubMenu = "Department Management", Title = "Manage Representative", Action = "Index", Controller = "ManageRep", IsAction = true });
-            menulist.Add(new SideBarViewModel() { Roles = "Department Head", SubMenu = "Department Management", Title = "Delegate Acting Head", Action = "Index", Controller = "DelegateHead", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Department Head", SubMenu = "Department Management", Title = "Delegate Acting Head", Action = "Index", Controller = "ManageDelegate", IsAction = true });
 
             //Department Rep
             menulist.Add(new SideBarViewModel() { Roles = "Department Representative", Title = "Collection Date", Action = "Index", Controller = "ManagePostponeCollectionDateDepartment", IsAction = true });
