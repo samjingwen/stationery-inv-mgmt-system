@@ -11,103 +11,106 @@
     <title>Index</title>
 </head>
 <body>
-    <h2>Stock Adjustment</h2>
+    <div class="custcontainer">
+        <h2>Stock Adjustment</h2>
 
-    <div class="modal fade" id="newItemModal">
-        <div class="modal-dialog modal-lg" style=" width: 900px !important;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <a href="#" class="close" data-dismiss="modal">&times;</a>
-                    <h4>Add Item</h4>
-                </div>
-                <form id="NewItemForm">
-                    <div class="modal-body">
-                        <h5 style="margin-top:10px;color:#ff6347">Item Details</h5>
-                        <hr />
-                        <div class="form-horizontal">
-                            <input type="hidden" id="ItemId" />
-                            <div class="form-group">
-                                <label class="control-label col-md-2">
-                                    Product Category
-                                </label>
-                                <div class="col-md-4">
-                                    <select class="form-control" name="category" id="category"></select>
+        <div class="modal fade" id="newItemModal">
+            <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+                        <h4>Add Item</h4>
+                    </div>
+                    <form id="NewItemForm">
+                        <div class="modal-body">
+                            <h5 style="margin-top:10px;color:#ff6347">Item Details</h5>
+                            <hr />
+                            <div class="form-horizontal">
+                                <input type="hidden" id="ItemId" />
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">
+                                        Product Category
+                                    </label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" name="category" id="category"></select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">
-                                    Item Description
-                                </label>
-                                <div class="col-md-4">
-                                    <select class="form-control table2" name="description" id="description"></select>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">
+                                        Item Description
+                                    </label>
+                                    <div class="col-md-4">
+                                        <select class="form-control table2" name="description" id="description"></select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">
-                                    Unit of measure
-                                </label>
-                                <div class="col-md-4">
-                                    <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">
+                                        Unit of measure
+                                    </label>
+                                    <div class="col-md-4">
+                                        <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
+                                    </div>
+                                    <div hidden="hidden">
+                                        <input type="text" id="stockQuantity" readonly="readonly" hidden="hidden" />
+                                        <input type="text" id="price" readonly="readonly" hidden="hidden" />
+                                    </div>
                                 </div>
-                                <div hidden="hidden">
-                                    <input type="text" id="stockQuantity" readonly="readonly" hidden ="hidden"/>
-                                    <input type="text" id="price" readonly="readonly" hidden="hidden" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">
-                                    Quantity
-                                </label>
-                                <div class="col-md-4">
-                                    <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control"/>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">
+                                        Quantity
+                                    </label>
+                                    <div class="col-md-4">
+                                        <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="addToList" class="btn btn-primary">Add To List</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="addToList" class="btn btn-primary">Add To List</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+
+        <button id="addItem" onclick="addNewItem()" class="btn btn-secondary pull-right">Add Item</button>
+
+        <form id="raiseAdjustmentForm">
+            <table id="adjustmentTable" class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Item Description
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            Current Stock
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="form-group pull-right">
+                <div class="form-horizontal" id="remarkDiv">
+                    <label id="remarkLabel">Remark</label>
+                    <input id="remark" />
+                </div>
+                <button id="saveAdjustment" type="submit" class="btn btn-primary pull-right">Save Adjustment</button>
+            </div>
+        </form>
     </div>
-
-    <button id="addItem" onclick="addNewItem()" class="btn btn-secondary pull-right">Add Item</button>
-
-    <form id="raiseAdjustmentForm">
-        <table id="adjustmentTable" class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Category
-                    </th>
-                    <th>
-                        Item Description
-                    </th>
-                    <th>
-                        Quantity
-                    </th>
-                    <th>
-                        Current Stock
-                    </th>
-                    <th>
-                        Amount
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <div class="form-group pull-right">
-            <div class="form-horizontal" id="remarkDiv">
-                <label id="remarkLabel">Remark</label>
-                <input id="remark" />
-            </div>
-            <button id="saveAdjustment" type="submit" class="btn btn-primary pull-right">Save Adjustment</button>
-        </div>
-    </form>
 </body>
+
 </html>
 
 @section scripts{

@@ -10,7 +10,7 @@
 }
 
 @using (Html.BeginForm("ManageRole2", "Role", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+{<div class="custcontainer">
     <h4>Manage Roles</h4>
     <hr />
     @Html.DropDownListFor(m => m.RoleId, Model.RoleList, "Select Role")
@@ -38,4 +38,5 @@
     <div>
         <input type="submit" value="Assign" class="btn btn-default" />
     </div>
+</div>
 }
