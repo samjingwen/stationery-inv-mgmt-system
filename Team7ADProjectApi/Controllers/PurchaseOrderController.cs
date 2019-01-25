@@ -8,10 +8,11 @@ using Team7ADProjectApi.ViewModels;
 
 // Author : Zan Tun Khine
 
+  
 namespace Team7ADProjectApi.Controllers
 {
     using Entities;
-
+    [Authorize(Roles ="Store Manager")]
     public class PurchaseOrderController : ApiController
     {
 
