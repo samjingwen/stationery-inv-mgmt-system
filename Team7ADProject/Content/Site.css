@@ -70,7 +70,7 @@ img.loginlogo {
 img.sidelogo {
     width: 250px;
     height: 150px;
-    background-image: linear-gradient(to top right, #1A1E2C,#747D98);
+    background-color: #5D5B50;
     position: fixed;
     top: 0;
     padding: 40px;
@@ -97,7 +97,7 @@ img.sidelogo {
 .sidebar {
     margin: 0;
     width: 250px;
-    background-image: linear-gradient(to bottom right, #1A1E2C,#747D98);
+    background-color: #5D5B50;
     position: fixed;
     top: 150px;
     height: 100%;
@@ -107,34 +107,34 @@ img.sidelogo {
     /* Sidebar links */
     .sidebar a {
         display: block;
-        color: #fee1a1;
+        color: antiquewhite;
         padding: 16px;
         text-decoration: none;
     }
 
         /* Active/current link */
         .sidebar a.active {
-            background-color: #fee1a1;
+            background-color: antiquewhite;
             color: #565D74;
         }
 
         /* Links on mouse-over */
         .sidebar a:hover:not(.active) {
-            background-color: #fee1a1;
+            background-color: antiquewhite;
             color: #565D74;
         }
     .sidebar p {
         display: block;
-        color: #fee1a1;
+        color: antiquewhite;
         padding: 16px;
         text-decoration: none;
     }
         .sidebar p.active {
-            background-color: #fee1a1;
+            background-color: antiquewhite;
             color: #565D74;
         }
         .sidebar p:hover:not(.active) {
-            background-color: #fee1a1;
+            background-color: antiquewhite;
             color: #565D74;
         }
 
@@ -205,7 +205,7 @@ td {
 .menuBox {
     border: outset;
     border-radius: 10px;
-    background-image: linear-gradient(to top left,#1A1E2C,#747D98);
+    background-color: #5D5B50;
     float: left;
     height: 150px;
     width: 150px;

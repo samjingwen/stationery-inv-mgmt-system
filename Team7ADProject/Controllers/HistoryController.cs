@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Team7ADProject.Entities;
 using Team7ADProject.ViewModels;
 using Microsoft.AspNet.Identity;
+using Team7ADProjectApi.Models;
 
 //Author Cheng Zongpei
 namespace Team7ADProject.Controllers
