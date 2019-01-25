@@ -255,6 +255,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AcknowledgeDeliveryController.cs" />
     <Compile Include="Controllers\ClerkController.cs" />
     <Compile Include="Controllers\DepartmentHeadController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
@@ -292,6 +293,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AckDelivery.cs" />
     <Compile Include="ViewModels\AdjustmentInfo.cs" />
     <Compile Include="ViewModels\AdjustmentItemDetail.cs" />
     <Compile Include="ViewModels\BriefDepartment.cs" />

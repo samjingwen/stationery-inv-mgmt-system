@@ -225,6 +225,24 @@ namespace Team7ADProjectApi
 
             return false;
         }
+
+        //Create DO 
+
+        public bool CreateDO(DeliveryOrder dOrder)
+        {
+            try
+            {   
+                context.DeliveryOrder.Add(dOrder);
+                context.SaveChanges();  
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
+
+
         #endregion
 
 

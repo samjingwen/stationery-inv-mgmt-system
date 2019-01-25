@@ -14,6 +14,13 @@ namespace Team7ADProjectApi.Controllers
     {
         #region Author Zan Tun Khine
 
+        #region Display list of POs where Status==>
+
+
+
+        #endregion
+
+
         #region Display Detail list of items for selected PO
         [HttpGet]
         [Route("api/ackdelivery/{*poNo}")]
@@ -24,7 +31,10 @@ namespace Team7ADProjectApi.Controllers
         }
         #endregion
 
+        #region Update the DO ( in DO table and TD tables)
 
+
+        #endregion
 
         #endregion
     }

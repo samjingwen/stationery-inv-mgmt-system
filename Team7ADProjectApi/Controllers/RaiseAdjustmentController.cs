@@ -82,7 +82,6 @@ namespace Team7ADProjectApi.Controllers
                 context.StockAdjustment.Add(adjustment);
                 context.SaveChanges();
                 
-
             }
             return Ok();
         }
