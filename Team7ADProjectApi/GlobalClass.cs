@@ -244,7 +244,95 @@ namespace Team7ADProjectApi
 
 
         #endregion
+        #region Gao Jiaxue
 
+        public List<StationeryRequestApiModel> GetAllStationeryRequestList(string userid)
+        {
+            var result = from m in context.TransactionDetail
+                         join x in context.StationeryRequest 
+                         on m.TransactionRef equals x.RequestId
+                         join y in context.AspNetUsers
+                         on x.RequestedBy equals y.Id
+                         join z in context.Department
+                         on y.DepartmentId equals z.DepartmentId
+                         where y.Id == userid
+                         select new StationeryRequestApiModel {
+                             RequestId = x.RequestId,
+                             RequestedBy = x.RequestedBy,
+                             RequestDate = x.RequestDate,
+                             ApprovedBy=x.ApprovedBy,
+                             DepartmentId=x.DepartmentId,
+                             Status=x.Status,               
+                         };
+                        
+                return result.ToList();
+        }
+
+
+        public StationeryRequestApiModel SelectedStationeryRequest(String rid)
+        {
+            var resultT = from x in context.TransactionDetail
+                          where x.TransactionRef == rid
+                          select new RequestTransactionDetailApiModel {
+                              TransactionId=x.TransactionId,
+                              TransactionRef=rid,
+                              ItemId=x.ItemId,
+                              Quantity=x.Quantity,
+                              UnitPrice=x.UnitPrice
+                          };
+
+            var resultS = from x in context.StationeryRequest
+                          where x.RequestId == rid
+                          select x;
+
+            StationeryRequest ss = resultS.First();
+           List<RequestTransactionDetailApiModel> tt = resultT.ToList();
+          
+            StationeryRequestApiModel stModel = new StationeryRequestApiModel();
+            stModel.RequestId = rid;
+            stModel.RequestedBy = ss.RequestedBy;
+            stModel.RequestDate = ss.RequestDate;
+            stModel.Status = ss.Status;
+            stModel.requestTransactionDetailApiModels= tt;
+
+            return stModel;
+        }
+        //get request ID
+        public StationeryRequest RetrieveReq(string rid)
+        {
+            return context.StationeryRequest.Where(x => x.RequestId == rid).FirstOrDefault();
+        }
+
+        //Approve Req
+        public bool ApproveReq(StationeryRequest req)
+        {
+            StationeryRequest stationeryRequest = RetrieveReq(req.RequestId);
+            if (stationeryRequest != null)
+            {
+                stationeryRequest.ApprovedBy = req.ApprovedBy;
+                stationeryRequest.Status = "Pending Disbursement";
+                context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        //Reject Req
+        public bool RejectReq(StationeryRequest req)
+        {
+            StationeryRequest stationeryRequest = RetrieveReq(req.RequestId);
+            if (stationeryRequest != null)
+            {
+                stationeryRequest.ApprovedBy = req.ApprovedBy;
+                stationeryRequest.Status = "Rejected";
+                context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+        #endregion
 
     }
 }
