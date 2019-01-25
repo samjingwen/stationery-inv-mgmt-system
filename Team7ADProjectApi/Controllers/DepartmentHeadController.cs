@@ -101,7 +101,7 @@ namespace Team7ADProjectApi.Controllers
             AspNetRoles depHeadRoleList = _context.AspNetRoles.FirstOrDefault(m => m.Name == RoleName.ActingDepartmentHead);
             AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.FirstOrDefault();
             DelegateDepHeadApiModel apiModel = new DelegateDepHeadApiModel();
-
+     
             apiModel.DepartmentName = user.Department.DepartmentName;
             IEnumerable<AspNetRoles> employeesInDepartment = _context.AspNetRoles.Where(m => m.Name == RoleName.ActingDepartmentHead || m.Name==RoleName.Employee).ToList();
             List<AspNetUsers> employeesForDelegate = new List<AspNetUsers>();
