@@ -302,7 +302,6 @@
     <Compile Include="ViewModels\EmployeeDto.cs" />
     <Compile Include="ViewModels\PendingPO.cs" />
     <Compile Include="ViewModels\PendingPODetails.cs" />
-    <Compile Include="ViewModels\Request.cs" />
     <Compile Include="ViewModels\RequestItems.cs" />
     <Compile Include="ViewModels\SetStationeryRetrievalApiModel.cs" />
     <Compile Include="ViewModels\RequestTransactionDetailApiModel.cs" />
