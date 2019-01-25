@@ -309,6 +309,7 @@
     <Compile Include="ViewModels\RequestTransactionDetailApiModel.cs" />
     <Compile Include="ViewModels\StationeryRequestApiModel.cs" />
     <Compile Include="ViewModels\StationeryRetrievalApiModel.cs" />
+    <Compile Include="ViewModels\StockAdjustmentValidate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
