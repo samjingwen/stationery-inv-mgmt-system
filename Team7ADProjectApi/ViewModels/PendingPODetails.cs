@@ -8,8 +8,14 @@ namespace Team7ADProjectApi.ViewModels
 {
     public class PendingPODetails
     {
+        #region From Stationery
+        public string Description { get; set; }
+
+        #endregion
+
         #region From TrasactionDetail
 
+        public int TransactionId { get; set; }
         public string ItemId { get; set; }
         public int Quantity { get; set; }
         public string Remarks { get; set; }
@@ -24,7 +30,7 @@ namespace Team7ADProjectApi.ViewModels
         public string Status { get; set; }
         public string OrderedBy { get; set; }
         public DateTime Date { get; set; }
-        public decimal Amount { get; set; }
+        public decimal? Amount { get; set; }
         public decimal? UnitAmount { get; set; }
         #endregion
 

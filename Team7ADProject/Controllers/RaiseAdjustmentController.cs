@@ -12,18 +12,17 @@ using Microsoft.AspNet.Identity;
 namespace Team7ADProject.Controllers
 {
     //For SC to raise adjustment
+    [RoleAuthorize(Roles = "Store Clerk")]
     public class RaiseAdjustmentController : Controller
     {
         LogicDB context = new LogicDB();
         // GET: RaiseAdjustment
 
-        [Authorize(Roles = "Store Clerk")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [Authorize(Roles = "Store Clerk")]
         [HttpPost]
         public ActionResult Save(AdjustmentViewModel[] requests,string remark)
         {

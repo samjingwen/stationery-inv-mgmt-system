@@ -12,11 +12,11 @@ using Team7ADProjectApi.Models;
 namespace Team7ADProject.Controllers
 {
     //For department head to view history and for employee to view history
+    [RoleAuthorize(Roles = "Department Head")]
     public class HistoryController : Controller
     {
         private LogicDB _context = new LogicDB();
         // GET: History
-        [Authorize(Roles = RoleName.DepartmentHead)]
         public ActionResult Index(DateTime? fromDTP, DateTime? toDTP)
         {
             string userId = User.Identity.GetUserId();
@@ -39,7 +39,6 @@ namespace Team7ADProject.Controllers
             }
         }
 
-        [Authorize(Roles = RoleName.DepartmentHead)]
         public ActionResult Detail(string id)
         {
             StationeryRequest stationeryRequest = _context.StationeryRequest.Single(x => x.RequestId == id);

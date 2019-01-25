@@ -5,7 +5,7 @@
 }
 
 <div class="custcontainer">
-    <center><h2><b>Postpone Collection Date</b></h2></center>
+    <h2>Postpone Collection Date</h2>
 
     @*Author:Lynn Lynn Oo*@
     @* Design *@
@@ -28,7 +28,7 @@
     @*Design*@
 
 
-    <table border="1" width="50" class="table breadcrumb table-bordered table-striped table-hover">
+    <table class="cusTable">
 
         <tr>
             <th>No.</th>
@@ -61,14 +61,14 @@
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CollectionDate)
+                    @String.Format("{0:dd MMM yyyy}", item.CollectionDate)
                 </td>
                 <td>
-                    @*@Html.ActionLink("POSTPONE", "Postpone", new { @class = "btn btn-primary" }, new { id = item.RequestId })*@
-                    @{
-                        string url = Url.Action("Postpone", new { id = item.RequestId });
-                    }
-                    <input type="button" value="POSTPONE" onclick="window.location.href('@url')" />
+                @*@Html.ActionLink("POSTPONE", "Postpone", new { @class = "btn btn-primary" }, new { id = item.RequestId })*@
+                                    @{
+                                    string url = Url.Action("Postpone", new { id = item.RequestId });
+                                }
+                    <input type="button" class="greenBtn pull-right" value="POSTPONE" onclick="window.location.href('@url')" />
                 </td>
             </tr>
         }

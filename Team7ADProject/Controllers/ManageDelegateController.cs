@@ -11,6 +11,7 @@ using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
+    [RoleAuthorize(Roles = "Department Head")]
     public class ManageDelegateController : Controller
     {
         // GET: ManageDelegate
@@ -18,7 +19,6 @@ namespace Team7ADProject.Controllers
 
         // GET: DelegateHead
         [HttpGet]
-        [RoleAuthorize(Roles = "Department Head")]
         public ActionResult Index()
         {
             ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -40,7 +40,6 @@ namespace Team7ADProject.Controllers
 
 
         [HttpPost]
-        [RoleAuthorize(Roles = "Department Head")]
         public ActionResult Delegate(DelegateHeadViewModel model)
         {
             ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();

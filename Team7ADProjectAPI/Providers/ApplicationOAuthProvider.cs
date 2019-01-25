@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using Team7ADProjectApi.Entities;
 using Team7ADProjectApi.Models;
 
 namespace Team7ADProjectApi.Providers
@@ -38,6 +40,22 @@ namespace Team7ADProjectApi.Providers
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
+            //Check if ADH has expired, remove role if expired
+            var userId = user.Id;
+            LogicDB dbContext = new LogicDB();
+            var todayDate = DateTime.Now.Date;
+            var query = dbContext.DelegationOfAuthority.Where(x => x.EndDate >= todayDate && x.StartDate <= todayDate && x.DelegatedTo == userId).FirstOrDefault();
+            if (query == null)
+            {
+                ApplicationDbContext appDb = new ApplicationDbContext();
+                //UserManager<ApplicationUser> _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                //UserManager<ApplicationUser> _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(appDb));
+                userManager.RemoveFromRole(userId, "Acting Department Head");
+            }
+
+
+
+
 
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                OAuthDefaults.AuthenticationType);

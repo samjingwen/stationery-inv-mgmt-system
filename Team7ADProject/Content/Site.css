@@ -1,14 +1,14 @@
 ﻿body {
     padding-top: 0;
     padding-bottom: 20px;
-    background-color: #FFFBF3;
+    background-image: linear-gradient(to bottom right,#E8EAEE,#EEECE8)
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-top: 50px;
     padding-bottom: 20px;
-    margin-left: 200px;
+    margin-left: 250px;
     padding: 1px 16px;
     height: 1000px;
 }
@@ -68,13 +68,13 @@ img.loginlogo {
 
 
 img.sidelogo {
-    width: 20%;
-    height:150px;
-    background-color: #222c49;
+    width: 250px;
+    height: 150px;
+    background-color: #5D5B50;
     position: fixed;
     top: 0;
-    padding:40px;
-    padding-bottom:10px;
+    padding: 40px;
+    padding-bottom: 10px;
     left: 0;
 }
 
@@ -96,84 +96,47 @@ img.sidelogo {
 /* The side navigation menu */
 .sidebar {
     margin: 0;
-    width: 20%;
-    background-color: #222c49;
+    width: 250px;
+    background-color: #5D5B50;
     position: fixed;
     top: 150px;
     height: 100%;
     overflow: auto;
-
 }
 
     /* Sidebar links */
     .sidebar a {
         display: block;
-        color: #fee1a1;
+        color: antiquewhite;
         padding: 16px;
         text-decoration: none;
     }
 
         /* Active/current link */
         .sidebar a.active {
-            background-color: #fee1a1;
-            color: #222c49;
+            background-color: antiquewhite;
+            color: #565D74;
         }
 
         /* Links on mouse-over */
         .sidebar a:hover:not(.active) {
-            background-color: #fee1a1;
-            color: #222c49;
+            background-color: antiquewhite;
+            color: #565D74;
         }
     .sidebar p {
         display: block;
-        color: #fee1a1;
+        color: antiquewhite;
         padding: 16px;
         text-decoration: none;
     }
         .sidebar p.active {
-            background-color: #fee1a1;
-            color: #222c49;
+            background-color: antiquewhite;
+            color: #565D74;
         }
         .sidebar p:hover:not(.active) {
-            background-color: #fee1a1;
-            color: #222c49;
+            background-color: antiquewhite;
+            color: #565D74;
         }
-
-
-/* On screens that are less than 700px wide, make the sidebar into a topbar */
-@media screen and (max-width: 700px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-
-        .sidebar a {
-            float: left;
-        }
-
-    div.body-content {
-        margin-left: 0;
-    }
-}
-
-/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-@media screen and (max-width: 400px) {
-    .sidebar a {
-        text-align: center;
-        float: none;
-    }
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
 
 
 /*Sam Jing Wen End*/
@@ -213,11 +176,6 @@ td {
     text-decoration: none;
 }
 
-.blue {
-    border-bottom: 1px solid #2980B9;
-    text-shadow: 0 -1px #2980B9;
-}
-
 .red {
     background-color: #E74C3C;
     border-bottom: 5px solid #BD3E31;
@@ -247,7 +205,7 @@ td {
 .menuBox {
     border: outset;
     border-radius: 10px;
-    background-color: #3E4660;
+    background-color: #5D5B50;
     float: left;
     height: 150px;
     width: 150px;
@@ -257,16 +215,17 @@ td {
     margin: 30px;
 }
 /*links*/
-.custlink{
-    color:antiquewhite;
+.custlink {
+    color: antiquewhite;
 }
 
 a {
-    color: #3E4660;
-    text-decoration:underline overline;
+    color: #746D56;
+    text-decoration: overline;
+    text-decoration-color: #BAB6AB;
 }
     a:hover {
-        text-decoration: none;
+        text-decoration: underline;
     }
 
 /*customTable - Elaine Chan*/
@@ -277,7 +236,7 @@ a {
 }
 th {
     padding: 2;
-    background-color: #222c49;
+    background-color: #414657;
     color: #fee1a1;
     height: 30px;
 }
@@ -293,16 +252,16 @@ tr:hover {
 /*custcontainer*/
 .custcontainer{
     height: 100%;
-    width:70%;
-    margin-left:10%;
+    margin-left:10px;
+    max-width: 77%;
 }
 
 /*green button*/
 .greenBtn {
     display: inline-block;
     border-radius: 5px;
-    border: outset 3px #8ba964;
-    background-color: #8ba964;
+    border: outset 3px #566A3F;
+    background-color: #566A3F;
     text-align: center;
     height: 35px;
     color: antiquewhite;
@@ -312,12 +271,24 @@ tr:hover {
 .redBtn {
     display: inline-block;
     border-radius: 5px;
-    border: outset 3px #A96468;
-    background-color: #A96468;
+    border: outset 3px #6A3F41;
+    background-color: #6A3F41;
     text-align: center;
     height: 35px;
     color: antiquewhite;
 }
+/*blue button*/
+.blueBtn {
+    display: inline-block;
+    border-radius: 5px;
+    border: outset 3px #414657;
+    background-color: #414657;
+    text-align: center;
+    height: 35px;
+    color: antiquewhite;
 }
 
-   
+
+.a{
+    text-decoration:underline;
+}

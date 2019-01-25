@@ -15,7 +15,7 @@ namespace Team7ADProjectApi.ViewModels
         public string Status { get; set; }
         public string OrderedBy { get; set; }
         public DateTime Date { get; set; }
-        public decimal Amount { get; set; }
+        public decimal? Amount { get; set; }
         public string ApprovedBy { get; set; }
 
         #endregion

@@ -9,10 +9,10 @@
 
 <div class="custcontainer">
 
-    <h2><b>Own Requisition History</b></h2>
+    <h2><b>Employee Requisition History</b></h2>
     <br />
 
-    <table class="table table-bordered table-hover">
+    <table class="cusTable">
 
 
         <tr>
@@ -51,7 +51,7 @@
                     }
                 </td>
                 <td>@item.UnitOfMeasure</td>
-                <td>@item.RequestDate.ToShortDateString()</td>
+                <td>@String.Format("{0:dd MMM yyyy}", item.RequestDate)</td>
                 <td>@item.Status</td>
                 @if (@item.Status == "Pending Approval")
                 {
@@ -71,7 +71,7 @@
         }
     </table>
     <div style="float: right; margin-right: 65px">
-        @Html.ActionLink("Back", "Index", "RequisitionHistory", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+        @Html.ActionLink("Back", "Index", "RequisitionHistory", routeValues: null, htmlAttributes: new { @class = "bluebtn" })
     </div>
 
 </div>

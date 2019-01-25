@@ -20,8 +20,7 @@ namespace Team7ADProject.Controllers
 
         #region Author: Zan Tun Khine
 
-        [Authorize(Roles = "Store Manager")]
-
+        [RoleAuthorize(Roles = "Store Manager")]
         // GET: ManageSupplier
         public ActionResult Index()
         {
