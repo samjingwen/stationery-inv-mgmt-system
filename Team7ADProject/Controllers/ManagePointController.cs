@@ -17,7 +17,7 @@ namespace Team7ADProject.Controllers
 
     #region Sam Jing Wen
 
-    [Authorize(Roles = "Store Clerk, Store Manager, Store Supervisor")]
+    [RoleAuthorize(Roles = "Store Clerk, Store Manager, Store Supervisor")]
     public class ManagePointController : Controller
     {
         private LogicDB db = new LogicDB();

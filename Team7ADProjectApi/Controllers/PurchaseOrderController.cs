@@ -8,10 +8,11 @@ using Team7ADProjectApi.ViewModels;
 
 // Author : Zan Tun Khine
 
+  
 namespace Team7ADProjectApi.Controllers
 {
     using Entities;
-
+    [Authorize(Roles ="Store Manager")]
     public class PurchaseOrderController : ApiController
     {
 
@@ -21,7 +22,7 @@ namespace Team7ADProjectApi.Controllers
         #region List all the POs   
 
         [HttpGet]
-        [Route("api/allpo/")]
+        [Route("api/allpo")]
         public IEnumerable<PendingPO> ListAllPO()
         {
             GlobalClass gc = new GlobalClass();
@@ -32,7 +33,7 @@ namespace Team7ADProjectApi.Controllers
 
         #region List all the pending POs
         [HttpGet]
-        [Route("api/pendingpo/")]
+        [Route("api/pendingpo")]
         public IEnumerable<PendingPO> ListAllPendingPO()
         {
             GlobalClass gc = new GlobalClass();

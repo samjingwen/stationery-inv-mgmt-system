@@ -127,9 +127,10 @@ namespace Team7ADProjectApi
                              PONo = x.PONo,
                              SupplierId = z.SupplierName,
                              Status = x.Status,
-                             OrderedBy = y.EmployeeName,
+                             OrderedBy = y.EmployeeName,                        
                              Date = x.Date,
-                             Amount = x.Amount
+                             Amount = x.Amount,
+                             ApprovedBy = x.ApprovedBy
                          };
             return result.ToList();
         }
@@ -150,7 +151,8 @@ namespace Team7ADProjectApi
                              Status = x.Status,
                              OrderedBy = y.EmployeeName,
                              Date = x.Date,
-                             Amount = x.Amount
+                            Amount = x.Amount,
+                            ApprovedBy = x.ApprovedBy
                          };
             return result.ToList();
         }
@@ -165,18 +167,23 @@ namespace Team7ADProjectApi
                          on y.SupplierId equals z.SupplierId
                          join w in context.AspNetUsers               // AspNetUsers ==> w
                          on y.OrderedBy equals w.Id
+                         join v in context.Stationery                // Stationery ==> v
+                         on x.ItemId equals v.ItemId
                          where x.TransactionRef == poNo
                          select new PendingPODetails
                          {
-                             ItemId = x.ItemId,
-                             PONo = y.PONo,
+                             Description = v.Description,
+                             TransactionId = x.TransactionId,
+                             ItemId = x.ItemId,                          
+                             Quantity = x.Quantity,
+                             Remarks = x.Remarks,
                              TransactionRef = x.TransactionRef,
+                             UnitPrice = x.UnitPrice,
+                             PONo = y.PONo,
                              SupplierId = z.SupplierName,
                              Status = y.Status,
                              OrderedBy = w.EmployeeName,
-                             Quantity = x.Quantity,
-                             UnitPrice = x.UnitPrice,
-                             Remarks = x.Remarks,
+                             Date = y.Date,                            
                              Amount = y.Amount,
                              UnitAmount = x.UnitPrice * x.Quantity
                          };

@@ -11,6 +11,7 @@ using Team7ADProjectApi.Models;
 namespace Team7ADProject.Controllers
 {
     //For DH or ADH to approve or reject request
+    [RoleAuthorize(Roles = "Department Head, Acting Department Head")]
     public class ManageRequestController : Controller
     {
         private readonly LogicDB _context;
@@ -27,7 +28,6 @@ namespace Team7ADProject.Controllers
 
         #region Author : Kay Thi Swe Tun
         // GET: ManageRequest
-        [Authorize(Roles = RoleName.DepartmentHead + "," + RoleName.ActingDepartmentHead)]
         public ActionResult Index()
         {
             List<RequestedItemViewModel> models = new List<RequestedItemViewModel>();

@@ -11,11 +11,11 @@ namespace Team7ADProject.Controllers
 {
     //For SS to generate reports
     //Author: Elaine Chan
+    [RoleAuthorize(Roles = "Store Manager, Store Supervisor")]
     public class GenerateReportController : Controller
     {
         #region Author: Elaine Chan
         // GET: GenerateReport
-        [Authorize(Roles = "Store Manager, Store Supervisor")]
         public ActionResult GenerateDashboard()
         {
             LogicDB context = new LogicDB();
@@ -113,7 +113,6 @@ namespace Team7ADProject.Controllers
             return View(grvm);
         }
 
-        [Authorize(Roles = "Store Manager, Store Supervisor")]
         [HttpPost]
         public ActionResult GenerateDashboard(DateTime? fromDateTP, DateTime? toDateTP, string module, List<string> selstatcat, List<string> seldeptcat, List<string> seleecat, List<string> selsscat)
         {
