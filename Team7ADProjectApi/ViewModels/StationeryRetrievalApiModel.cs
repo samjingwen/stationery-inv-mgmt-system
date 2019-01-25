@@ -25,6 +25,8 @@ namespace Team7ADProjectApi.ViewModels
 
         public int QuantityInWarehouse { get; set; }
 
+        public string Remarks { get; set; }
+
         public StationeryRetrievalApiModel(string itemId, string description, string departmentId,string departmentName, int? neededQuantity)
         {
             ItemId = itemId;
@@ -32,7 +34,8 @@ namespace Team7ADProjectApi.ViewModels
             DepartmentId = departmentId;
             DepartmentName = departmentName;
             NeededQuantity = neededQuantity;
-            NewQuantity = neededQuantity;
+            NewQuantity = 0;
+            Remarks = "";
         }
     }
 }
