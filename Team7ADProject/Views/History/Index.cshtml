@@ -48,7 +48,7 @@
                     </td>
                     <td width="100px" height="80px"></td>
                     <td>
-                        <input type="submit" id="submitBtn" value="View" />
+                        <input type="submit" id="submitBtn" value="View" class="blueBtn pull-right" />
                     </td>
                 </tr>
             </table>
@@ -88,7 +88,7 @@
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.RequestDate)
+                        @String.Format("{0:dd MMM yyyy}",item.RequestDate)
                     </td>
                     <td>
                         @Html.ActionLink("Details", "Detail", new { id = item.RequestId })
