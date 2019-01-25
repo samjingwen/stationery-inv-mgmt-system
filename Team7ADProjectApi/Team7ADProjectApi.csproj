@@ -300,6 +300,7 @@
     <Compile Include="ViewModels\PendingPO.cs" />
     <Compile Include="ViewModels\PendingPODetails.cs" />
     <Compile Include="ViewModels\RequestItems.cs" />
+    <Compile Include="ViewModels\SetStationeryRetrievalApiModel.cs" />
     <Compile Include="ViewModels\StationeryRetrievalApiModel.cs" />
   </ItemGroup>
   <ItemGroup>
