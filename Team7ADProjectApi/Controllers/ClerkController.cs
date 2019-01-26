@@ -422,10 +422,62 @@ namespace Team7ADProjectApi.Controllers
         }
 
 
+        //when retrieved remember to set to intransit and create a new retrieval record
 
+
+        public string GenerateRetrievalId()
+        {
+            string prefix = "R" + DateTime.Today.Year + "-";
+            int entries = _context.StationeryRetrieval.Where(m => m.RetrievalId.StartsWith(prefix)).ToList().Count;
+            string suffix = (entries + 1).ToString().PadLeft(4, '0');
+            string newRetrievalId = prefix + suffix;
+            return newRetrievalId;
+        }
+
+        public int GenerateTransactionDetailId()
+        {
+            TransactionDetail lastItem = _context.TransactionDetail.OrderByDescending(m => m.TransactionId).First();
+            int lastRequestId = lastItem.TransactionId;
+            int newRequestId = lastRequestId + 1;
+            return newRequestId;
+        }
+
+        public string GenerateStockAdjustmentId()
+        {
+            StockAdjustment lastItem = _context.StockAdjustment.OrderByDescending(m => m.StockAdjId).First();
+            string lastStockAdjIdWithoutPrefix = lastItem.StockAdjId.Substring(4, 6);
+            int newStockAdjIdWithoutPrefixInt = Int32.Parse(lastStockAdjIdWithoutPrefix) + 1;
+            string newStockAdjIdWithoutPrefixString = newStockAdjIdWithoutPrefixInt.ToString().PadLeft(6, '0');
+            string stockAdjId = "SAD-" + newStockAdjIdWithoutPrefixString;
+            return stockAdjId;
+        }
+
+        public int GenerateDisbursementIdSuffixOnly()
+        {
+            Disbursement lastItem = _context.Disbursement.OrderByDescending(m => m.DisbursementId).First();
+            string lastDisbursementIdWithoutPrefix = lastItem.DisbursementId.Substring(4, 6);
+            int newDisbursementIdWithoutPrefixInt = Int32.Parse(lastDisbursementIdWithoutPrefix) + 1;
+            return newDisbursementIdWithoutPrefixInt;
+        }
+
+        public int GenerateDisbursementNoSuffixOnly()
+        {
+            Disbursement lastItem = _context.Disbursement.OrderByDescending(m => m.DisbursementId).First();
+            string lastDisbursementNoWithoutPrefix = lastItem.DisbursementNo.Substring(5, 5);
+            int newDisbursementNoWithoutPrefixInt = Int32.Parse(lastDisbursementNoWithoutPrefix) + 1;
+            return newDisbursementNoWithoutPrefixInt;
+        }
+
+        public string GenerateOTP()
+        {
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            int num = rand.Next(0, chars.Length - 1);
+            string OTP = chars[num] + rand.Next(0, 1000).ToString().PadLeft(3, '0');
+            return OTP;
+        }
+        #endregion
 
         #region Author:Kay Thi Swe Tun
-
         [HttpGet]
         [Route("api/clerk/voiddisb/{disbno}")]
         public bool GetDisbursementVoid(string disbno)
@@ -434,13 +486,10 @@ namespace Team7ADProjectApi.Controllers
             GlobalClass gc = new GlobalClass();
             return gc.VoidDisbursement(disbno);
 
-           
+
 
         }
-            #endregion
+        #endregion
 
-
-
-            //when retrieved remember to set to intransit and create a new retrieval record
-        }
+    }
 }
