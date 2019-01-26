@@ -14,6 +14,8 @@ namespace Team7ADProject.Controllers
     [RoleAuthorize(Roles = "Department Head")]
     public class ManageDelegateController : Controller
     {
+
+        #region Author:Kay Thi Swe Tun
         // GET: ManageDelegate
         GeneralMgmtService gmService = GeneralMgmtService.Instance;
 
@@ -55,5 +57,7 @@ namespace Team7ADProject.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+
+        #endregion
     }
 }

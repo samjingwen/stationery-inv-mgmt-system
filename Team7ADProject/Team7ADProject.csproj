@@ -325,6 +325,7 @@
     <Compile Include="ViewModels\StationeryRetrievalViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\accordion.css" />
     <Content Include="Content\Error.css" />
     <Content Include="Content\images\CollPoint\cpImage_1.png" />
     <Content Include="Content\images\CollPoint\cpImage_2.png" />
@@ -337,7 +338,6 @@
     <Content Include="Content\images\logo.png" />
     <Content Include="App_Data\useremails.txt" />
     <Content Include="App_Data\usernames.txt" />
-    <Content Include="Content\accordion.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
