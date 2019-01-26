@@ -176,6 +176,25 @@ namespace Team7ADProjectApi.Controllers
 
         #endregion
 
-        //when retrieved remember to set to intransit and create a new retrieval record
-    }
+
+
+        #region Author:Kay Thi Swe Tun
+
+        [HttpGet]
+        [Route("api/clerk/voiddisb/{disbno}")]
+        public bool GetDisbursementVoid(string disbno)
+        {
+
+            GlobalClass gc = new GlobalClass();
+            return gc.VoidDisbursement(disbno);
+
+           
+
+        }
+            #endregion
+
+
+
+            //when retrieved remember to set to intransit and create a new retrieval record
+        }
 }
