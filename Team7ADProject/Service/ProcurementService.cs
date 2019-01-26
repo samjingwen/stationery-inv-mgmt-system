@@ -69,7 +69,7 @@ namespace Team7ADProject.Service
             if (isApproved)
             {
                 thisPo.Status = "Pending Delivery";
-                thisPo.ApprovedBy = query.UserName;
+                thisPo.ApprovedBy = query.Id;
 
                 try
                 {
@@ -93,7 +93,7 @@ namespace Team7ADProject.Service
             else
             {
                 thisPo.Status = "Rejected";
-                thisPo.ApprovedBy = query.UserName;
+                thisPo.ApprovedBy = query.Id;
                 try
                 {
                     context.SaveChanges();
