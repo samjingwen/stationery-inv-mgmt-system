@@ -626,7 +626,6 @@
     <Content Include="Views\Shared\Error401.cshtml" />
     <Content Include="Views\Home\_MenuBox.cshtml" />
     <Content Include="Views\ManageDelegate\Index.cshtml" />
-    <Content Include="Views\ValidateInvoice\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Email\" />

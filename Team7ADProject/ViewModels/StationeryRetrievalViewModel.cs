@@ -42,6 +42,17 @@ namespace Team7ADProject.ViewModels
     {
         public string ItemId { get; set; }
         public string Description { get; set; }
+        public int QtyInStock
+        {
+            get
+            {
+                LogicDB context = new LogicDB();
+                if (ItemId != null)
+                    return context.Stationery.FirstOrDefault(x => x.ItemId == ItemId).QuantityWarehouse;
+                else
+                    return 0;
+            }
+        }
         public int TotalQty
         {
             get
