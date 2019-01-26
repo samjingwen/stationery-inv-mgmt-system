@@ -346,6 +346,7 @@
     <Content Include="Content\images\Logo1.png" />
     <Content Include="Content\images\Logo2.png" />
     <Content Include="Content\images\text.png" />
+    <Content Include="Content\images\website-background.jpg" />
     <Content Include="Content\login\css\main.css" />
     <Content Include="Content\login\css\util.css" />
     <Content Include="Content\login\fonts\font-awesome-4.7.0\css\font-awesome.css" />
