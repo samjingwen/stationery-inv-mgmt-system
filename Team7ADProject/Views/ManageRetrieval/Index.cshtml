@@ -40,7 +40,11 @@
                     @Html.DisplayFor(x => x[i].Description)
                     @Html.HiddenFor(x => x[i].Description)
                 </td>
-                <td>@Html.DisplayFor(x => x[i].QtyInStock)</td>
+                <td>
+                    @Html.DisplayFor(x => x[i].QtyInStock)
+                    @Html.HiddenFor(x => x[i].QtyInStock, new { @id = "stock" + Model[i].ItemId })
+                
+                </td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -102,15 +106,25 @@
                 var total = 0;
                 for (var i = 0; i < elements.length; i++) {
                     if (!isNaN(elements[i].value) && elements[i].length != 0) {
-                        total += parseFloat(elements[i].value);
+                        total += parseInt(elements[i].value);
                     }
                 }
                 if (!isNaN(total)) {
-                    $('#' + name).text(total);
+                    var stock = document.getElementById('stock' + name.substring(3, name.length));
+                    if (total > stock.value) {
+                        $(this).removeClass('valid');
+                        $(this).addClass('input-validation-error');
+                    }
+                    else {
+                        $('#' + name).text(total);
+                        $(this).removeClass('input-validation-error');
+                        $(this).addClass('valid');
+                    }
                 }
                 
 
             });
+
         });
 
 
