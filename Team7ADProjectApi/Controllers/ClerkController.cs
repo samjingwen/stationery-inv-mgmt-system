@@ -476,5 +476,20 @@ namespace Team7ADProjectApi.Controllers
             return OTP;
         }
         #endregion
+
+        #region Author:Kay Thi Swe Tun
+        [HttpGet]
+        [Route("api/clerk/voiddisb/{disbno}")]
+        public bool GetDisbursementVoid(string disbno)
+        {
+
+            GlobalClass gc = new GlobalClass();
+            return gc.VoidDisbursement(disbno);
+
+
+
+        }
+        #endregion
+
     }
 }
