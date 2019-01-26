@@ -136,8 +136,6 @@ namespace Team7ADProject.Controllers
 
         #endregion
 
-
-
         #region Email
 
         public void SendEmail()

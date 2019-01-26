@@ -195,6 +195,11 @@ namespace Team7ADProjectApi
             return context.PurchaseOrder.Where(x => x.PONo == poNum).FirstOrDefault();
         }
 
+        //List PONo where status is "Pending Delivery"
+        public List<String> PendingDeliveryPoList()
+        {
+            return context.PurchaseOrder.Where(y=>y.Status=="Pending Delivery").Select(x => x.PONo).ToList();
+        }
 
         //Approve PO
         public bool ApprovePO(PurchaseOrder po)
@@ -227,7 +232,6 @@ namespace Team7ADProjectApi
         }
 
         //Create DO 
-
         public bool CreateDO(DeliveryOrder dOrder)
         {
             try
@@ -244,6 +248,7 @@ namespace Team7ADProjectApi
 
 
         #endregion
+
         #region Gao Jiaxue
 
         public List<StationeryRequestApiModel> GetAllStationeryRequestList(string userid)
