@@ -327,6 +327,7 @@
   <ItemGroup>
     <Content Include="Content\accordion.css" />
     <Content Include="Content\Error.css" />
+    <Content Include="Content\images\bg.jpg" />
     <Content Include="Content\images\CollPoint\cpImage_1.png" />
     <Content Include="Content\images\CollPoint\cpImage_2.png" />
     <Content Include="Content\images\CollPoint\cpImage_3.png" />
