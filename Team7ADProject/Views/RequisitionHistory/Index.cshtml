@@ -11,69 +11,74 @@
 
     <h2><b>Employee Requisition History</b></h2>
     <br />
-
-    <table class="cusTable">
-
-
-        <tr>
-            <th>No.</th>
-            <th>Item Description</th>
-            <th>Quantity</th>
-            <th>Unit of Measure</th>
-            <th>Request Date</th>
-            <th>Status</th>
-        </tr>
+    <div class="panel panel-default">
+        <table class="cusTable table table-bordered">
 
 
-        @{ int i = 1;}
-
-        @foreach (var item in Model)
-        {
             <tr>
-                <td>@(i++)</td>
-                <td>@item.ItemDescription</td>
-                <td>
+                <th>No.</th>
+                <th>Item Description</th>
+                <th>Quantity</th>
+                <th>Unit of Measure</th>
+                <th>Request Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+
+            @{ int i = 1;}
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(i++)</td>
+                    <td>@item.ItemDescription</td>
+                    <td>
+                        @if (@item.Status == "Pending Approval")
+                        {
+                            <input id="requestId" name="itemId" type="hidden" value="@item.RequestId">
+                            <input id="itemId" name="itemQuantity" type="hidden" value="@item.ItemId">
+                            <input id="itemQuantity" name="itemQuantity" type="hidden" value="@item.ItemQuantity">
+                            <div class="inline-view">
+                                @item.ItemQuantity
+                            </div>
+                            <div class='inline-edit' style="display: none">
+                                @Html.EditorFor(modelItem => item.ItemQuantity, new { htmlAttributes = new { @type = "number", @min = "1", style = "width: 50px", @class = "edit" } })
+                            </div>
+                        }
+                        else
+                        {
+                            @item.ItemQuantity
+                        }
+                    </td>
+                    <td>@item.UnitOfMeasure</td>
+                    <td>@String.Format("{0:dd MMM yyyy}", item.RequestDate)</td>
+                    <td>@item.Status</td>
                     @if (@item.Status == "Pending Approval")
                     {
-                        <input id="requestId" name="itemId" type="hidden" value="@item.RequestId">
-                        <input id="itemId" name="itemQuantity" type="hidden" value="@item.ItemId">
-                        <input id="itemQuantity" name="itemQuantity" type="hidden" value="@item.ItemQuantity">
-                        <div class="inline-view">
-                            @item.ItemQuantity
-                        </div>
-                        <div class='inline-edit' style="display: none">
-                            @Html.EditorFor(modelItem => item.ItemQuantity, new { htmlAttributes = new { @type = "number", @min = "1", style = "width: 50px", @class = "edit" } })
-                        </div>
+                        <td>
+                            <div class='inline-view'>
+                                <a href='#' class="edit" onclick='startEdit();return false;'>Edit</a>
+                            </div>
+                            <div class='inline-edit' style='display:none;'>
+                                <a href='#' onclick='saveEdit();return false;'>Save</a>
+                            </div>
+                            <div class='inline-edit' style='display:none;'>
+                                <a href='#' onclick='cancelEdit();return false;'>Cancel</a>
+                            </div>
+                        </td>
                     }
                     else
                     {
-                        @item.ItemQuantity
+                        <td></td>
                     }
-                </td>
-                <td>@item.UnitOfMeasure</td>
-                <td>@String.Format("{0:dd MMM yyyy}", item.RequestDate)</td>
-                <td>@item.Status</td>
-                @if (@item.Status == "Pending Approval")
-                {
-                    <td>
-                        <div class='inline-view'>
-                            <a href='#' class="edit" onclick='startEdit();return false;'>Edit</a>
-                        </div>
-                        <div class='inline-edit' style='display:none;'>
-                            <a href='#' onclick='saveEdit();return false;'>Save</a>
-                        </div>
-                        <div class='inline-edit' style='display:none;'>
-                            <a href='#' onclick='cancelEdit();return false;'>Cancel</a>
-                        </div>
-                    </td>
-                }
-            </tr>
-        }
-    </table>
-    <div style="float: right; margin-right: 65px">
-        @Html.ActionLink("Back", "Index", "RequisitionHistory", routeValues: null, htmlAttributes: new { @class = "bluebtn" })
+                </tr>
+            }
+        </table>
+        <div style="float: right; margin-right: 65px">
+            @Html.ActionLink("Back", "Index", "RequisitionHistory", routeValues: null, htmlAttributes: new { @class = "bluebtn" })
+        </div>
     </div>
-
 </div>
 @section scripts
 {
@@ -116,13 +121,13 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: 'POST',
-                url: "Save",
+                url: "RequisitionHistory/Save",
                 data: data,
-                success: function(result) {
+                success: function (result) {
                     bootbox.dialog({
                         message: result,
                         size: 'small',
-                        onEscape: function() {
+                        onEscape: function () {
                             location.reload();
                         }
                     });
@@ -132,10 +137,10 @@
                     bootbox.dialog({
                         message: 'Error! Invalid data.',
                         size: 'small',
-                        onEscape: function() {
+                        onEscape: function () {
                             location.reload();
                         }
-                    }); 
+                    });
                 }
             });
         }
