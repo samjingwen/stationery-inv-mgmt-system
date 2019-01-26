@@ -15,69 +15,123 @@
                     @Html.Label("Description")
                 </th>
                 <th>
+                    @Html.Label("Qty In Stock")
+                </th>
+                <th>
                     @Html.Label("DepartmentId")
                 </th>
                 <th>
                     @Html.Label("Department Name")
                 </th>
                 <th>
-                    @Html.Label("Quantity")
+                    @Html.Label("Requested Qty")
                 </th>
                 <th>
-                    @Html.Label("RetrievedQty")
+                    @Html.Label("Retrieved Qty")
                 </th>
                 <th></th>
             </tr>
 
             @for (int i = 0; i < Model.Count; i++)
             {
-                <tr>
-                    @Html.HiddenFor(x => x[i].ItemId)
-                    <td>
-                        @Html.DisplayFor(x => x[i].Description)
-                        @Html.HiddenFor(x => x[i].Description)
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+            <tr>
+                @Html.HiddenFor(x => x[i].ItemId)
+                <td>
+                    @Html.DisplayFor(x => x[i].Description)
+                    @Html.HiddenFor(x => x[i].Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x[i].QtyInStock)
+                    @Html.HiddenFor(x => x[i].QtyInStock, new { @id = "stock" + Model[i].ItemId })
+                
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
                 for (int j = 0; j < Model[i].requestList.Count; j++)
                 {
-                    <tr>
-                        <td></td>
-                        <td>
-                            @Html.DisplayFor(x => x[i].requestList[j].DepartmentId)
-                            @Html.HiddenFor(x => x[i].requestList[j].DepartmentId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(x => x[i].requestList[j].DepartmentName)
-                            @Html.HiddenFor(x => x[i].requestList[j].DepartmentName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(x => x[i].requestList[j].Quantity)
-                        </td>
-                        <td>
-                            @Html.EditorFor(x => x[i].requestList[j].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].requestList[j].Quantity } })
-                        </td>
-                    </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    @Html.DisplayFor(x => x[i].requestList[j].DepartmentId)
+                    @Html.HiddenFor(x => x[i].requestList[j].DepartmentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x[i].requestList[j].DepartmentName)
+                    @Html.HiddenFor(x => x[i].requestList[j].DepartmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x[i].requestList[j].Quantity)
+                </td>
+                <td>
+                    @Html.EditorFor(x => x[i].requestList[j].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].requestList[j].Quantity, @class = "ret" + Model[i].ItemId } })
+                </td>
+            </tr>
                 }
 
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
 
-                    <td style="font-weight:bold; font-size: 18px">
-                        @Html.DisplayFor(x => x[i].TotalQty)
+                <td style="font-weight:bold; font-size: 18px">
+                    @Html.DisplayFor(x => x[i].TotalQty)
 
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                </td>
+                <td style="font-weight:bold; font-size: 18px">
+                    @Html.Label("0", new { @id = "ret" + Model[i].ItemId })
+                </td>
+                <td></td>
+            </tr>
             }
 
         </table>
 
         <input type="submit" value="Generate Disbursement List" class="greenBtn pull-right" />
     }</div>
+
+
+
+@section scripts{
+<script>
+        $(document).ready(function () {
+            $('input[type=number]').change(function () {
+                var name = this.className.split(' ')[0];
+                var elements = document.getElementsByClassName(name);
+                var total = 0;
+                for (var i = 0; i < elements.length; i++) {
+                    if (!isNaN(elements[i].value) && elements[i].length != 0) {
+                        total += parseInt(elements[i].value);
+                    }
+                }
+                if (!isNaN(total)) {
+                    var stock = document.getElementById('stock' + name.substring(3, name.length));
+                    if (total > stock.value) {
+                        $(this).removeClass('valid');
+                        $(this).addClass('input-validation-error');
+                    }
+                    else {
+                        $('#' + name).text(total);
+                        $(this).removeClass('input-validation-error');
+                        $(this).addClass('valid');
+                    }
+                }
+                
+
+            });
+
+        });
+
+
+
+
+
+</script>
+    
+    
+}

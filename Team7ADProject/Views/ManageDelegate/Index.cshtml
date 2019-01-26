@@ -40,11 +40,11 @@
         <br />
         <label for="datepicker">Start Date : </label>
 
-        @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly" })
+        @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly",@Value ="yy-mm-dd" })
 
-        <label for="datepicker">End Date : </label>
+        <label for="datepicker1">End Date : </label>
 
-        @Html.TextBoxFor(model => model.EndDate, new { @class = "date-picker1", @readonly = "readonly" })
+        @Html.TextBoxFor(model => model.EndDate,new { @class = "date-picker1", @readonly = "readonly", @Value = "yy-mm-dd" })
         <br />
         <br />
         <input type="submit" value="Submit" class="greenBtn pull-right"/>
@@ -78,14 +78,15 @@
             });
 
             $(".date-picker").datepicker("option", { minDate: + 0 });
-            // $(".date-picker").datepicker('setDate', 'today');
-
+           
             $(".date-picker1").datepicker({
                 dateFormat: 'yy-mm-dd',
                 showAnim: 'clip',
-                disabled: true
-
+                disabled: true,
+              
             });
+
+          
         });
 
 
