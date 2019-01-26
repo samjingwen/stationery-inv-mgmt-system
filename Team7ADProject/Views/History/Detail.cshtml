@@ -60,7 +60,7 @@
                             @Html.DisplayNameFor(model => model.Request.RequestDate):
                         </td>
                         <td>
-                            @Html.DisplayFor(model => model.Request.RequestDate)
+                            @String.Format("{0:dd MMM yyyy}",Model.Request.RequestDate)
                         </td>
                     </tr>
                 </table>
@@ -94,7 +94,7 @@
                                 @Html.DisplayFor(modelItem => item.Remarks)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.TransactionDate)
+                                @String.Format("{0:dd MMM yyyy}", item.TransactionDate)
                             </td>
                         </tr>
                     }

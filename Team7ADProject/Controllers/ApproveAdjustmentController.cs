@@ -12,8 +12,6 @@ using Team7ADProject.ViewModels;
 //Author Zan Tun Khine
 namespace Team7ADProject.Controllers
 {
-
-
     #region Zan Tun Khine
 
     //For SS or SM to approve adjustment

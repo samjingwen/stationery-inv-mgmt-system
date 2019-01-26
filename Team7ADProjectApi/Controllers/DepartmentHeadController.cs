@@ -101,7 +101,7 @@ namespace Team7ADProjectApi.Controllers
             AspNetRoles depHeadRoleList = _context.AspNetRoles.FirstOrDefault(m => m.Name == RoleName.ActingDepartmentHead);
             AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.FirstOrDefault();
             DelegateDepHeadApiModel apiModel = new DelegateDepHeadApiModel();
-
+     
             apiModel.DepartmentName = user.Department.DepartmentName;
             IEnumerable<AspNetRoles> employeesInDepartment = _context.AspNetRoles.Where(m => m.Name == RoleName.ActingDepartmentHead || m.Name==RoleName.Employee).ToList();
             List<AspNetUsers> employeesForDelegate = new List<AspNetUsers>();
@@ -134,7 +134,7 @@ namespace Team7ADProjectApi.Controllers
         [Authorize(Roles = RoleName.DepartmentHead)]
         [HttpPost]
         [Route("api/departmenthead/setdepartmenthead")]
-        public IHttpActionResult DelegateDepartmentHead(DelegateDepHeadApiModel depFromJson/*string userId, string delegatedDepartmentHeadName, DateTime startDate, DateTime endDate*/)
+        public IHttpActionResult DelegateDepartmentHead(DelegateDepHeadApiModel depFromJson)
         {
             AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == depFromJson.UserId);
             AspNetUsers delegatedDepHead = _context.AspNetUsers.FirstOrDefault(m => m.EmployeeName == depFromJson.DelegatedDepartmentHeadName);

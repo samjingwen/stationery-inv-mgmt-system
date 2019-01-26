@@ -6,6 +6,7 @@
 }
 @*Select Items(modal for items)*@
 <div class="custcontainer">
+    <h2>Validate Invoice</h2>
     <div class="modal fade" id="newItemModal">
         <div class="modal-dialog modal-lg" style=" width: 900px !important;">
             <div class="modal-content">
@@ -51,7 +52,7 @@
                                     <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="1" />
                                 </div>
                                 <div class="col-md-2 col-lg-offset-4">
-                                    <a id="addToList" class="btn btn-primary">Add To List</a>
+                                    <a id="addToList" class="greenBtn pull-right">Add To List</a>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +69,7 @@
             <table>
                 <tr>
                     <td>
-                        <label class="control-label col-md-2">InvoiceNo</label>
+                        <label class="control-label col-md-3" style="width:100%">Invoice No</label>
                     </td>
                     <td>
                         <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo">
@@ -76,7 +77,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label class="control-label col-md-2">SupplierId</label>
+                        <label class="control-label col-md-3" style="width:100%">Supplier ID</label>
                     </td>
                     <td>
                         <select class="form-control" name="SupplierId" id="SupplierId"></select>
@@ -84,7 +85,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label class="control-label col-md-2">InvoiceAmount</label>
+                        <label class="control-label col-md-3" style="width:100%">Invoice Amount</label>
                     </td>
                     <td>
                         <input type="text" id="InvoiceAmount" class="form-control" name="InvoiceAmount">
@@ -92,10 +93,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <label class="control-label col-md-2">DelOrderId</label>
+                        <label class="control-label col-md-3" style="width:100%">Delivery Order No</label>
                     </td>
                     <td>
-                        <input type="text" id="DelOrderId" class="form-control" name="DelOrderId">
+                        <input type="text" id="DelOrderNo" class="form-control" name="DelOrderNo">
                     </td>
                 </tr>
             </table>
@@ -115,8 +116,9 @@
         </form>
     </div>
     @Html.AntiForgeryToken()
-    <button style="margin-right:10px" class="btn btn-primary pull-right" onclick="addNewItem()">Add Item</button>
-    <button style="margin-right:10px" id="saveInvoice" class="btn btn-primary pull-right">  Save  </button>
+    <button style="margin-right:10px" id="saveInvoice" class="greenBtn pull-right">  Save  </button>
+    <button style="margin-right:10px" class="blueBtn pull-right" onclick="addNewItem()">Add Item</button>
+
 
 
 </div>
@@ -146,11 +148,11 @@
                 InvoiceAmount.focus();
                 return false;
             }
-            var DelOrderId = document.forms["invoiceForm"]["DelOrderId"];
-            if (DelOrderId.value == "") {
+            var DelOrderNo = document.forms["invoiceForm"]["DelOrderNo"];
+            if (DelOrderNo.value == "") {
                 //alert("DelOrder Id must be filled out");
-                $("#DelOrderId").css("borderColor", "red");
-                DelOrderId.focus();
+                $("#DelOrderNo").css("borderColor", "red");
+                DelOrderNo.focus();
                 return false;
             }
             return true;
@@ -167,9 +169,9 @@
 
             $("#InvoiceAmount").css("borderColor", "")
         });
-        $("#DelOrderId").change(function () {
+        $("#DelOrderNo").change(function () {
 
-            $("#DelOrderId").css("borderColor", "")
+            $("#DelOrderNo").css("borderColor", "")
         });
 
     </script>
@@ -305,7 +307,7 @@
                 invoiceno: $("#InvoiceNo").val(),
                 supplierid: $("#SupplierId").val(),
                 invoiceamount: $("#InvoiceAmount").val(),
-                delorderid: $("#DelOrderId").val()
+                delorderno: $("#DelOrderNo").val()
             });
             $.each($("#detailsTable tbody tr"), function () {
                 requestArr.push({

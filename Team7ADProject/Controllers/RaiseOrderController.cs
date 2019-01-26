@@ -14,7 +14,7 @@ using System.Text;
 namespace Team7ADProject.Controllers
 {
     //For SC to raise PO
-    [Authorize(Roles = "Store Clerk")]
+    [RoleAuthorize(Roles = "Store Clerk")]
     public class RaiseOrderController : Controller
     {
 
@@ -135,8 +135,6 @@ namespace Team7ADProject.Controllers
         #endregion
 
         #endregion
-
-
 
         #region Email
 

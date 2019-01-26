@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -230,7 +231,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AmendRequestController.cs" />
     <Compile Include="Controllers\Api\StationeriesController.cs" />
     <Compile Include="Controllers\ApproveAdjustmentController.cs" />
     <Compile Include="Controllers\ApproveOrderController.cs" />
@@ -253,14 +253,9 @@
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
     <Compile Include="Controllers\RaiseOrderController.cs" />
     <Compile Include="Controllers\RaiseRequestController.cs" />
-    <Compile Include="Controllers\ReceiveGoodsController.cs" />
-    <Compile Include="Controllers\ReceiveOrderController.cs" />
     <Compile Include="Controllers\RetrieveOwnRequisitionHistoryController.cs" />
-    <Compile Include="Controllers\ReturnWarehouseController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\UpdateWarehouseController.cs" />
     <Compile Include="Controllers\ValidateInvoiceController.cs" />
-    <Compile Include="Controllers\VoidDisbursementController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
     <Compile Include="Entities\CollectionPoint.cs" />
@@ -313,6 +308,7 @@
     <Compile Include="ViewModels\GenerateReport\StringDoubleDPViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
     <Compile Include="ViewModels\InvoiceDetailsViewModel.cs" />
+    <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\PostponeCollectionDate%28Department%29\PostponeCollectionDateDepartmentViewModel.cs" />
     <Compile Include="ViewModels\PostponeCollectionDate%28Store%29\PostponeCollDateDetailsViewModel.cs" />
@@ -528,6 +524,7 @@
     <Content Include="Content\login\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
     <Content Include="Content\login\vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="Content\login\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -629,16 +626,11 @@
     <Content Include="Views\Shared\Error401.cshtml" />
     <Content Include="Views\Home\_MenuBox.cshtml" />
     <Content Include="Views\ManageDelegate\Index.cshtml" />
+    <Content Include="Views\ValidateInvoice\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\AmendRequest\" />
     <Folder Include="Views\Email\" />
     <Folder Include="Views\Navi\" />
-    <Folder Include="Views\ReceiveGoods\" />
-    <Folder Include="Views\ReceiveOrder\" />
-    <Folder Include="Views\ReturnWarehouse\" />
-    <Folder Include="Views\UpdateWarehouse\" />
-    <Folder Include="Views\VoidDisbursement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

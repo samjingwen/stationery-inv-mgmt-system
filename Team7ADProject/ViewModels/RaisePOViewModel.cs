@@ -116,13 +116,9 @@ namespace Team7ADProject.ViewModels
         //[StringLength(25)]
         //public string Status { get; set; }
 
-
-
         //public IEnumerable<PurchaseOrder> PurchaseOrders { get; set; }
 
         //public IEnumerable<TransactionDetail> TransactionDetail { get; set; }
-
-
 
         //public IEnumerable<String> SupplierAndPrice { get; set; }
 
@@ -131,15 +127,11 @@ namespace Team7ADProject.ViewModels
 
         //}
 
-
         //[Required]
         //[StringLength(4)]
         //public string ItemId { get; set; }
 
         //public int Quantity { get; set; }
-
-
-
 
         //[Required]
         //public string Description { get; set; }
@@ -147,10 +139,6 @@ namespace Team7ADProject.ViewModels
         //[Required]
         //[StringLength(50)]
         //public string Category { get; set; }
-
-
-
-
 
 
         //[Display(Name = "Category")]

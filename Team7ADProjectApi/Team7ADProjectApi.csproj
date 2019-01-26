@@ -255,10 +255,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AcknowledgeDeliveryController.cs" />
     <Compile Include="Controllers\ClerkController.cs" />
     <Compile Include="Controllers\DepartmentHeadController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
+    <Compile Include="Controllers\StationeryRequestController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
     <Compile Include="Entities\CollectionPoint.cs" />
@@ -292,6 +294,9 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AckDelivery.cs" />
+    <Compile Include="ViewModels\AdjustmentInfo.cs" />
+    <Compile Include="ViewModels\AdjustmentItemDetail.cs" />
     <Compile Include="ViewModels\BriefDepartment.cs" />
     <Compile Include="ViewModels\DepEmp.cs" />
     <Compile Include="ViewModels\DelegateDepHeadApiModel.cs" />
@@ -300,7 +305,11 @@
     <Compile Include="ViewModels\PendingPO.cs" />
     <Compile Include="ViewModels\PendingPODetails.cs" />
     <Compile Include="ViewModels\RequestItems.cs" />
+    <Compile Include="ViewModels\SetStationeryRetrievalApiModel.cs" />
+    <Compile Include="ViewModels\RequestTransactionDetailApiModel.cs" />
+    <Compile Include="ViewModels\StationeryRequestApiModel.cs" />
     <Compile Include="ViewModels\StationeryRetrievalApiModel.cs" />
+    <Compile Include="ViewModels\StockAdjustmentValidate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

@@ -77,7 +77,7 @@
 
             <div class="modal-footer">
                 <button type="reset" class="redBtn" data-dismiss="modal">Reset</button>
-                <button id="saveOrder" type="submit" class="greenBtn">Save Order</button>
+                <button id="saveOrder" type="submit" class="greenBtn">Raise Order</button>
             </div>
         </form>
     </div>
@@ -180,7 +180,7 @@
                 return;
             }
 
-            if ($.trim($("#quantity").val()) < 0) {
+            if ($.trim($("#quantity").val()) < 1) {
                 bootbox.alert("Error! Please select the valid quantity!");
                 return;
             }

@@ -16,6 +16,7 @@ namespace Team7ADProject.Controllers
 
     #region Teh Li Heng
     //For SC to change stationeries information
+    [RoleAuthorize(Roles = "Store Clerk, Store Supervisor")]
     public class ManageStationeryController : Controller
     {
         private LogicDB _context;
