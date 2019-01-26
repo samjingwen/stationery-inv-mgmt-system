@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     @Scripts.Render("~/bundles/modernizr")
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../Content/grid.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Lato|Sarabun|Source+Sans+Pro" rel="stylesheet">
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -25,15 +26,24 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
+        @Scripts.Render("~/bundles/jqueryval")
+        @*<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>*@
+        <script src="~/Scripts/notify.min.js"></script>
+        @RenderSection("scripts", required: false)
+        <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
         <footer>
-            <p>&copy; @DateTime.Now.Year - GDIPSA 47 - Team 7</p>
+            <div class="row">
+                <p>
+                    This webpage was created for the course "Application Development Project" by Team 7. No copyrights here.<br>
+                    This webpage is for you! So go and do whatever you want with it and have fun.
+                </p>
+                <p>
+                    Build with <ion-icon name="heart" style="color: #ea0000; padding: 0 3px;"></ion-icon> in the frosty building of NUS Singapore, January 2019.<br/>
+                    &copy; @DateTime.Now.Year - GDIPSA 47 - Team 7
+                </p>
+            </div>
         </footer>
     </div>
-    @Scripts.Render("~/bundles/jqueryval")
-    @*<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>*@
-    <script src="~/Scripts/notify.min.js"></script>
-    @RenderSection("scripts", required: false)
-    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
 </body>
 </html>
 
