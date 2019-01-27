@@ -124,5 +124,13 @@ namespace Team7ADProject.ViewModels
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
     }
+    public class SimpleRequestViewModel
+    {
+        public string RequestId { get; set; }
+        public string DepartmentId { get; set; }
+        public string ItemId { get; set; }
+        public decimal UnitPrice { get; set; }
+        public int Quantity { get; set; }
+    }
 
 }
