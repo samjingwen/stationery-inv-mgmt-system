@@ -294,6 +294,7 @@
     <Compile Include="Service\ProcurementService.cs" />
     <Compile Include="Service\StationeryRequestService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Validation\UniqueSupplier.cs" />
     <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\Api\AdjustmentApiViewModel.cs" />
     <Compile Include="ViewModels\Api\RaiseRequestDTO.cs" />
