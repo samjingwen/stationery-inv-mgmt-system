@@ -402,6 +402,7 @@
     <Content Include="Content\login\vendor\select2\select2.min.js" />
     <Content Include="Content\sidebar\css\sidebar.css" />
     <Content Include="Content\sidebar\js\sidebar.js" />
+    <Content Include="Content\animate.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
