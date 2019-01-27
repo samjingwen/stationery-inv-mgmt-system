@@ -45,6 +45,15 @@ namespace Team7ADProject.Controllers
             else
                 return RedirectToAction("Index", new { id = 1 });
         }
+
+        public ActionResult ViewDisbursement()
+        {
+
+            List<DisbursementByDeptViewModel> model = srService.GetListDisb();
+            return View(model);
+
+
+        }
         
 
     }

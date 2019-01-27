@@ -274,6 +274,71 @@ namespace Team7ADProject.Service
             }
             
         }
+
+        public List<DisbursementByDeptViewModel> GetListDisb()
+        {
+            var query = (from x in context.Disbursement
+                         join y in context.TransactionDetail
+                         on x.DisbursementId equals y.TransactionRef
+                         join z in context.Department
+                         on x.DepartmentId equals z.DepartmentId
+                         join c in context.CollectionPoint
+                         on z.CollectionPointId equals c.CollectionPointId
+                         join i in context.Stationery
+                         on y.ItemId equals i.ItemId
+                         where x.Status == "In Transit"
+                         select new
+                         {
+                             x.DepartmentId,
+                             z.DepartmentName,
+                             c.CollectionPointId,
+                             c.CollectionDescription,
+                             y.ItemId,
+                             i.Description,
+                             y.Quantity
+                         }).ToList();
+
+            List<DisbursementByDeptViewModel> model = new List<DisbursementByDeptViewModel>();
+
+            foreach(var item in query)
+            {
+                var deptExists = model.FirstOrDefault(x => x.DepartmentId == item.DepartmentId);
+                if (deptExists != null)
+                {
+                    var itemExists = deptExists.requestList.FirstOrDefault(x => x.ItemId == item.ItemId);
+                    if (itemExists != null)
+                    {
+                        itemExists.Quantity += item.Quantity;
+                    }
+                    else
+                    {
+                        BreakdownByItemViewModel newItemModel = new BreakdownByItemViewModel();
+                        newItemModel.ItemId = item.ItemId;
+                        newItemModel.Description = item.Description;
+                        newItemModel.Quantity = item.Quantity;
+                        deptExists.requestList.Add(newItemModel);
+                    }
+                }
+                else
+                {
+                    DisbursementByDeptViewModel newDeptModel = new DisbursementByDeptViewModel();
+                    newDeptModel.DepartmentId = item.DepartmentId;
+                    newDeptModel.DepartmentName = item.DepartmentName;
+
+                    List<BreakdownByItemViewModel> newItemList = new List<BreakdownByItemViewModel>();
+
+                    BreakdownByItemViewModel newItemModel = new BreakdownByItemViewModel();
+                    newItemModel.ItemId = item.ItemId;
+                    newItemModel.Description = item.Description;
+                    newItemModel.Quantity = item.Quantity;
+
+                    newItemList.Add(newItemModel);
+                    newDeptModel.requestList = newItemList;
+                    model.Add(newDeptModel);
+                }
+            }
+            return model;
+        }
     }
 
     
