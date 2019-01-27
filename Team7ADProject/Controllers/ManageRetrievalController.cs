@@ -28,16 +28,14 @@ namespace Team7ADProject.Controllers
         [HttpPost]
         public ActionResult GenerateDisbursement(List<RequestByItemViewModel> model)
         {
-            //Create new Retrieval
+            //Get user for the current http request
             string userId = User.Identity.GetUserId();
-            List<RequestByItemViewModel> modModel = srService.SaveRetrieval(model, userId);
 
             //Generate Disbursement
-            List<DisbursementByDeptViewModel> disbList = srService.GenerateDisbursement(modModel);
+            List<DisbursementByDeptViewModel> disbList = srService.GenerateDisbursement(model);
 
-            //Save to Disbursement
-            List<DisbursementByDeptViewModel> modDisbList = new List<DisbursementByDeptViewModel>(disbList);
-            srService.SaveDisbursement(modDisbList, userId);
+            //Update database
+            srService.SaveAndDisburse(model, userId);
 
             return View(disbList);
         }
