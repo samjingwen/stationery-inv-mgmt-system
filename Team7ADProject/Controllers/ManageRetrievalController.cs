@@ -20,8 +20,12 @@ namespace Team7ADProject.Controllers
         StationeryRequestService srService = StationeryRequestService.Instance;
 
         // GET: ManageRetrieval
-        public ActionResult Index()
+        public ActionResult Index(int id = 0)
         {
+            if (id == 1)
+            {
+                ViewBag.srError = 1;
+            }
             return View(srService.GetListRequestByItem());
         }
 
@@ -35,9 +39,11 @@ namespace Team7ADProject.Controllers
             List<DisbursementByDeptViewModel> disbList = srService.GenerateDisbursement(model);
 
             //Update database
-            srService.SaveAndDisburse(model, userId);
-
-            return View(disbList);
+            bool isSuccess = srService.SaveAndDisburse(model, userId);
+            if (isSuccess)
+                return View(disbList);
+            else
+                return RedirectToAction("Index", new { id = 1 });
         }
         
 

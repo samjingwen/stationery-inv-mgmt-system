@@ -142,7 +142,7 @@ namespace Team7ADProject.Service
         }
 
 
-        public void SaveAndDisburse(List<RequestByItemViewModel> model, string userId)
+        public bool SaveAndDisburse(List<RequestByItemViewModel> model, string userId)
         {
             using(var dbContextTransaction = context.Database.BeginTransaction())
             {
@@ -263,10 +263,12 @@ namespace Team7ADProject.Service
                     }
 
                     dbContextTransaction.Commit();
+                    return true;
                 }
                 catch (Exception)
                 {
                     dbContextTransaction.Rollback();
+                    return false;
                 }
                 
             }
