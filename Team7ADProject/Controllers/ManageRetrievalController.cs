@@ -18,7 +18,7 @@ namespace Team7ADProject.Controllers
     [RoleAuthorize(Roles = "Store Clerk")]
     public class ManageRetrievalController : Controller
     {
-        StationeryRequestService srService = new StationeryRequestService();
+        StationeryRequestService srService = StationeryRequestService.Instance;
 
         // GET: ManageRetrieval
         public ActionResult Index(int id = 0)
