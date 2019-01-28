@@ -100,14 +100,18 @@
 
 @section scripts{
     <script>
+        var srError = @ViewBag.srError;
+
+        if (srError == 1) {
+            $.notify("Something went wrong. Please try again later.", {
+                globalPosition: "top center",
+                className: "error"
+            });
+        }
+    </script>
+    <script>
         $(document).ready(function () {
-            var srError = @ViewBag.srError;
-            if (srError == 1) {
-                $.notify("Something went wrong. Please try again later.", {
-                    globalPosition: "top center",
-                    className: "error"
-                });
-            }
+            
 
 
             $('input[type=number]').change(function () {

@@ -39,18 +39,46 @@ namespace Team7ADProject.Service
         {
             List<RequestByItemViewModel> model = new List<RequestByItemViewModel>();
             var query = context.RequestByItemView.OrderBy(x => x.ItemId).ToList();
+            var disbList = (from x in context.DisbByDept
+                        select new SimpleDisbViewModel
+                        {
+                            DepartmentId = x.DepartmentId,
+                            DepartmentName = x.DepartmentName,
+                            ItemId = x.ItemId,
+                            Description = x.Description,
+                            Quantity = x.Quantity
+                        }).ToList();
+
             foreach (var i in query)
             {
                 var item = model.Find(x => x.ItemId == i.ItemId);
-                var disb = context.DisbByDept.Where(x => x.ItemId == i.ItemId && x.DepartmentId == i.DepartmentId).FirstOrDefault();
+
+                var disb = disbList.FirstOrDefault(x => x.DepartmentId == i.DepartmentId && x.ItemId == i.ItemId);
+
+
                 if (item != null)
                 {
-                    var newModel = new BreakdownByDeptViewModel
+                    BreakdownByDeptViewModel newModel;
+                    if (disb == null)
                     {
-                        DepartmentId = i.DepartmentId,
-                        DepartmentName = i.DepartmentName,
-                        Quantity = disb == null ? (int)i.Quantity : ((int)i.Quantity - (int)disb.Quantity)
-                    };
+                        newModel = new BreakdownByDeptViewModel
+                        {
+                            DepartmentId = i.DepartmentId,
+                            DepartmentName = i.DepartmentName,
+                            Quantity = (int)i.Quantity
+                        };
+                    }
+                    else
+                    {
+                        newModel = new BreakdownByDeptViewModel
+                        {
+                            DepartmentId = i.DepartmentId,
+                            DepartmentName = i.DepartmentName,
+                            Quantity = ((int)i.Quantity - (int)disb.Quantity)
+                        };
+                        disb.Quantity = 0;
+                    }
+                  
                     if (newModel.Quantity > 0)
                         item.requestList.Add(newModel);
                 }
@@ -221,6 +249,11 @@ namespace Team7ADProject.Service
                                         isComplete = false;
                                     }
                                 }
+                                else
+                                {
+                                    item.Quantity = 0;
+                                    isComplete = false;
+                                }
                             }
 
                             foreach (var item in req.ItemList)
@@ -371,44 +404,32 @@ namespace Team7ADProject.Service
                                                     Quantity = x.Quantity
                                                 }).ToList();
 
-            var offsets = context.DisbByDept.ToList();
-            foreach (var i in offsets)
-            {
-                var reqt = requests.Where(x => x.DepartmentId == i.DepartmentId && x.ItemId == i.ItemId).FirstOrDefault();
-                if (reqt != null)
-                {
-                    if (reqt.Quantity > i.Quantity)
-                    {
-                        reqt.Quantity = reqt.Quantity - (int)i.Quantity;
-                    }
-                    else if (reqt.Quantity == i.Quantity)
-                    {
-                        requests.Remove(reqt);
-                    }
-                    else
-                    {
-                        i.Quantity -= reqt.Quantity;
-                        while (i.Quantity > 0)
-                        {
-                            requests.Remove(reqt);
-                            reqt = requests.Where(x => x.DepartmentId == i.DepartmentId && x.ItemId == i.ItemId).FirstOrDefault();
-                            if (reqt != null)
+            var offsets = (from x in context.Disbursement
+                            join d in context.Department
+                            on x.DepartmentId equals d.DepartmentId
+                            join y in context.TransactionDetail
+                            on x.DisbursementId equals y.TransactionRef
+                            join i in context.Stationery
+                            on y.ItemId equals i.ItemId
+                            join z in context.StationeryRequest
+                            on x.RequestId equals z.RequestId
+                            where z.Status == "Partially Fulfilled"
+                            select new SimpleDisbViewModel
                             {
-                                if (reqt.Quantity > i.Quantity)
-                                {
-                                    reqt.Quantity = reqt.Quantity - (int)i.Quantity;
-                                }
-                                else if (reqt.Quantity == i.Quantity)
-                                {
-                                    requests.Remove(reqt);
-                                }
-                                else
-                                {
-                                    i.Quantity -= reqt.Quantity;
-                                }
-                            }
-                        }
-                    }
+                                RequestId = x.RequestId,
+                                DepartmentId = x.DepartmentId,
+                                DepartmentName = d.DepartmentName,
+                                ItemId = y.ItemId,
+                                Description = i.Description,
+                                Quantity = y.Quantity
+                            }).ToList();
+
+            foreach(var req in requests)
+            {
+                var disb = offsets.FirstOrDefault(x => x.RequestId == req.RequestId);
+                if (disb != null)
+                {
+                    req.Quantity -= (int)disb.Quantity;
                 }
             }
 
