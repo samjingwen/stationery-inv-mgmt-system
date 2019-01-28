@@ -79,6 +79,15 @@ namespace Team7ADProjectApi.Controllers
             return Ok(query);
         }
 
+        //Acknowledge disbursement
+        [HttpPost]
+        [Route("api/clerk/acknowledgement")]
+        public int UpdateDisb([FromBody] AckListViewModel)
+        {
+            return 1;
+        }
+
+
 
 
 
