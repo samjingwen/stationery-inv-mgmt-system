@@ -20,26 +20,39 @@ namespace Team7ADProject.Controllers
         StationeryRequestService srService = StationeryRequestService.Instance;
 
         // GET: ManageRetrieval
-        public ActionResult Index()
+        public ActionResult Index(int id = 0)
         {
+            if (id == 1)
+            {
+                ViewBag.srError = 1;
+            }
             return View(srService.GetListRequestByItem());
         }
 
         [HttpPost]
         public ActionResult GenerateDisbursement(List<RequestByItemViewModel> model)
         {
-            //Create new Retrieval
+            //Get user for the current http request
             string userId = User.Identity.GetUserId();
-            List<RequestByItemViewModel> modModel = srService.SaveRetrieval(model, userId);
 
             //Generate Disbursement
-            List<DisbursementByDeptViewModel> disbList = srService.GenerateDisbursement(modModel);
+            List<DisbursementByDeptViewModel> disbList = srService.GenerateDisbursement(model);
 
-            //Save to Disbursement
-            List<DisbursementByDeptViewModel> modDisbList = new List<DisbursementByDeptViewModel>(disbList);
-            srService.SaveDisbursement(modDisbList, userId);
+            //Update database
+            bool isSuccess = srService.SaveAndDisburse(model, userId);
+            if (isSuccess)
+                return View(disbList);
+            else
+                return RedirectToAction("Index", new { id = 1 });
+        }
 
-            return View(disbList);
+        public ActionResult ViewDisbursement()
+        {
+
+            List<DisbursementByDeptViewModel> model = srService.GetListDisb();
+            return View(model);
+
+
         }
         
 

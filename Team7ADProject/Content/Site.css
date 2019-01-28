@@ -6,7 +6,11 @@
 
 body {
     font-family: Source Sans Pro, Cambria, Georgia, serif;
-    background: #f9f9f9 url(images/bg.jpg);
+    background: #f9f9f9 url(images/bg.jpg) /*no-repeat center center fixed*/;
+    /*-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;*/
+    /*background-size: cover;*/
     font-weight: 300;
     font-size: 15px;
     color: #333;
@@ -288,7 +292,8 @@ a {
 th {
     padding: 2px;
     background-color: #414657;
-    color: #fee1a1;
+    /*color: #fee1a1;*/
+    color: white;
     height: 30px;
 }
 th, td {
@@ -311,11 +316,12 @@ tr:hover {
 .greenBtn {
     display: inline-block;
     border-radius: 5px;
-    border: outset 3px #566A3F;
-    background-color: #566A3F;
+    border: outset 3px #27ae60;
+    background-color: #27ae60;
     text-align: center;
     height: 35px;
-    color: antiquewhite;
+    /*color: antiquewhite;*/
+    color: white;
 }
 
 /*red button*/
@@ -326,7 +332,8 @@ tr:hover {
     background-color: #6A3F41;
     text-align: center;
     height: 35px;
-    color: antiquewhite;
+    /*color: antiquewhite;*/
+    color: white;
 }
 /*blue button*/
 .blueBtn {
@@ -336,7 +343,8 @@ tr:hover {
     background-color: #414657;
     text-align: center;
     height: 35px;
-    color: antiquewhite;
+    /*color: antiquewhite;*/
+    color: white;
 }
 
 

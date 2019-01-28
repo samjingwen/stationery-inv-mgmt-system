@@ -114,7 +114,23 @@ namespace Team7ADProject.ViewModels
     public class RequestByIdViewModel
     {
         public string RequestId { get; set; }
-        public List<BreakdownByItemViewModel> ItemList { get; set; }
+        public string DepartmentId { get; set; }
+        public List<DeptAndItemViewModel> ItemList { get; set; }
+    }
+
+    public class DeptAndItemViewModel
+    {
+        public string ItemId { get; set; }
+        public decimal UnitPrice { get; set; }
+        public int Quantity { get; set; }
+    }
+    public class SimpleRequestViewModel
+    {
+        public string RequestId { get; set; }
+        public string DepartmentId { get; set; }
+        public string ItemId { get; set; }
+        public decimal UnitPrice { get; set; }
+        public int Quantity { get; set; }
     }
 
 }
