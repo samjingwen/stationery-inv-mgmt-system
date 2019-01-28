@@ -63,23 +63,30 @@ namespace Team7ADProjectApi
         public void assignDepRep(BriefDepartment e)
         {
             
-            //Retrieve department head
-            //string depHeadId;
-            // var user = database.AspNetUsers.Where(x => x.Id == depHeadId).FirstOrDefault();
-            //Retrieve department
-            var dept = context.Department.Where(x => x.DepartmentId == e.DepartmentId).FirstOrDefault();
+           // //Retrieve department head
+           // //string depHeadId;
+           // // var user = database.AspNetUsers.Where(x => x.Id == depHeadId).FirstOrDefault();
+           // //Retrieve department
+           // var dept = context.Department.Where(x => x.DepartmentId == e.DepartmentId).FirstOrDefault();
 
-            //Change department rep
-            string oldEmpRepId = dept.DepartmentRepId;
-            //string userId = model.UserId;
-            dept.DepartmentRepId = e.DepartmentRepId;
-            context.SaveChanges();
-            //Change previous Department Rep to employee
-            //manager.RemoveFromRole(oldEmpRepId, "Department Representative");
-           // manager.AddToRole(oldEmpRepId, "Employee");
-            //Assign new employee to Department Rep
-           // manager.RemoveFromRole(userId, "Employee");
-            //t6manager.AddToRole(userId, "Department Representative");
+           // //Change department rep
+           // string oldEmpRepId = dept.DepartmentRepId;
+           // //string userId = model.UserId;
+           // dept.DepartmentRepId = e.DepartmentRepId;
+           // context.SaveChanges();
+           // //Change previous Department Rep to employee
+           ////manager.RemoveFromRole(oldEmpRepId, "Department Representative");
+           //// manager.AddToRole(oldEmpRepId, "Employee");
+           // //Assign new employee to Department Rep
+           //// manager.RemoveFromRole(userId, "Employee");
+           // //t6manager.AddToRole(userId, "Department Representative");
+
+
+
+
+
+
+
         }
 
         public string getDepId(string eid)
@@ -383,75 +390,56 @@ namespace Team7ADProjectApi
         public List<ReturntoWarehouseApiModel> GetItemList()
         {
             var showList = from x in context.StationeryRequest
-                         join y in context.TransactionDetail on x.RequestId equals y.TransactionRef
-                         join z in context.Stationery on y.ItemId equals z.ItemId
-                         join v in context.CollectionPoint on x.DepartmentId equals v.CollectionDescription
-                           where x.Status == "Void"
+                           join y in context.TransactionDetail on x.RequestId equals y.TransactionRef
+                           join z in context.Stationery on y.ItemId equals z.ItemId
+                           join d in context.Department on x.DepartmentId equals d.DepartmentId
+                           join v in context.CollectionPoint on d.CollectionPointId equals v.CollectionPointId
+                           where (x.Status == "Void" || x.Status == "Partially Returned")
 
-                         select new ReturntoWarehouseApiModel
-                         {
-                             ItemId=z.ItemId,
-                             Description = z.Description,
-                             Quantity = y.Quantity,
-                             Department = x.DepartmentId,
-                             Location = v.CollectionDescription,
-                         };
+                           select new ReturntoWarehouseApiModel
+                           {
+                               RequestId = x.RequestId,
+                               ItemId = z.ItemId,
+                               Description = z.Description,
+                               Quantity = y.Quantity,
+                               Department = d.DepartmentName,
+                               Location = v.CollectionDescription,
+                           };
             return showList.ToList();
         }
 
-        //for Detail_View
-        public ReturntoWarehouseApiModel ShowSelectedDetail(String itemid)
-
+        
+        public string Return(ReturntoWarehouseApiModel apiModel)
         {
-            var Detail = from x in context.StationeryRequest
-                         join y in context.TransactionDetail on x.RequestId equals y.TransactionRef
-                         join z in context.Stationery on y.ItemId equals z.ItemId
-                         join v in context.CollectionPoint on x.DepartmentId equals v.CollectionDescription
-                         where x.Status == "Void"
-
-                         select new ReturntoWarehouseApiModel
-                         {
-                             ItemId = z.ItemId,
-                             Description = z.Description,
-                             Quantity = y.Quantity,
-                             Department = x.DepartmentId,
-                             Location=v.CollectionDescription,  
-                         };
-
-
-            List<ReturntoWarehouseApiModel> tt = Detail.ToList();
-            Stationery stnry = new Stationery();
-            TransactionDetail tran = new TransactionDetail();
-            StationeryRequest stnryReq = new StationeryRequest();
-            CollectionPoint clp = new CollectionPoint();
-            ReturntoWarehouseApiModel Model = new ReturntoWarehouseApiModel();
+            TransactionDetail transactionInDb = context.TransactionDetail.FirstOrDefault(m => m.TransactionRef == apiModel.RequestId && m.ItemId == apiModel.ItemId && m.Remarks == "Void");
+            if (transactionInDb.StationeryRequest.Status == "Void")
             {
-                Model.ItemId = itemid;
-                Model.Description = stnry.Description;
-                Model.Quantity = tran.Quantity;
-                Model.Department = stnryReq.DepartmentId;
-                Model.Location = clp.CollectionDescription;
+                string status = "fail";
+                transactionInDb.Stationery.QuantityWarehouse += transactionInDb.Stationery.QuantityTransit;
+                transactionInDb.Stationery.QuantityTransit -= transactionInDb.Stationery.QuantityTransit;
+                transactionInDb.Remarks = "Returned";
+                //check if all items are returned for stationery request
+                StationeryRequest stationeryRequestInDb = context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
+                bool allReturned = true;
+                foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
+                {
+                    if (current.Remarks != "Returned")
+                    {
+                        stationeryRequestInDb.Status = "Partially Returned";
+                        allReturned = false;
+                        break;
+                    }
+                }
+                if (allReturned)
+                    stationeryRequestInDb.Status = "Returned";
+                context.SaveChanges();
+                status = "success";
+                return status;
             }
-            return Model;
+            return "error";
         }
-
-        //Event after clicking Return
-        public ReturntoWarehouseApiModel EventAfterReturn(string itemid)
-        {
-            StationeryRequest stnryReq = new StationeryRequest();
-            TransactionDetail tran = new TransactionDetail();
-            Stationery stnry = new Stationery();
-     
-            ReturntoWarehouseApiModel Model = new ReturntoWarehouseApiModel();
-            {
-                itemid = Model.ItemId;
-               // stnry.QuantityTransit = Model.Quantity;
-                stnry.QuantityWarehouse += Model.Quantity;
-            }
-            return Model;
-        }
-  
-        }
-        #endregion
 
     }
+    #endregion
+
+}

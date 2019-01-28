@@ -62,15 +62,30 @@ namespace Team7ADProjectApi.Controllers
         [Authorize(Roles = "Department Head")]
         [HttpPost]
         [Route("api/managedepartmentEmp")]
-        public int GetDepartmentEmps([FromBody]BriefDepartment e)//username
+        public int SetDepartmentRep([FromBody]BriefDepartment e)//username
         {
-            GlobalClass gc = new GlobalClass();
-            gc.assignDepRep(e);
+                   
+            //Retrieve department head
+            //string depHeadId;
+            // var user = database.AspNetUsers.Where(x => x.Id == depHeadId).FirstOrDefault();
+            //Retrieve department
+            var dept =_context.Department.Where(x => x.DepartmentId == e.DepartmentId).FirstOrDefault();
 
-            Console.WriteLine(e.DepartmentName);
-            //List<DepEmp> emplist = gc.ListEmp(id);
+            //Change department rep
+            string oldEmpRepId = dept.DepartmentRepId;
+            //string userId = model.UserId;
+            dept.DepartmentRepId = e.DepartmentRepId;
+           
+            //Change previous Department Rep to employee
+            ApplicationUserManager manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            manager.RemoveFromRole(oldEmpRepId,RoleName.DepartmentRepresentative);
+            manager.AddToRole(oldEmpRepId,RoleName.Employee);
+            //Assign new employee to Department Rep
+            manager.RemoveFromRole(e.DepartmentRepId, RoleName.Employee);
+            manager.AddToRole(e.DepartmentRepId, RoleName.DepartmentRepresentative);
 
-
+            _context.SaveChanges();
+           
             return 1;
         }
 

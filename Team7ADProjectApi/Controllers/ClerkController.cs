@@ -488,6 +488,7 @@ namespace Team7ADProjectApi.Controllers
 
         #region Author:Kay Thi Swe Tun
         [HttpGet]
+        [Authorize(Roles = RoleName.StoreClerk)]
         [Route("api/clerk/voiddisb/{disbno}")]
         public bool GetDisbursementVoid(string disbno)
         {
@@ -498,6 +499,7 @@ namespace Team7ADProjectApi.Controllers
 
 
         }
+
         #endregion
 
     }
