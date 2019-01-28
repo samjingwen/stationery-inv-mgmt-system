@@ -38,8 +38,8 @@ namespace Team7ADProjectApi.Controllers
         #endregion
         #region Approve Req
         [HttpPost]
-        [Route("api/StationeryRequest/approve")]
-        public bool ApproveReq([FromBody] StationeryRequest req)
+        [Route("api/stationeryrequest/approve")]
+        public bool ApproveReq([FromBody]StationeryRequestApiModel req)
         {
             GlobalClass gc = new GlobalClass();
             return gc.ApproveReq(req);
@@ -48,8 +48,8 @@ namespace Team7ADProjectApi.Controllers
 
         #region Reject PO
         [HttpPost]
-        [Route("api/StationeryRequest/reject")]
-        public bool RejectPO([FromBody]StationeryRequest req)
+        [Route("api/stationeryrequest/reject")]
+        public bool RejectPO([FromBody]StationeryRequestApiModel req)
         {
             GlobalClass gc = new GlobalClass();
             return gc.RejectReq(req);

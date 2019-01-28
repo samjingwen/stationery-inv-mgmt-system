@@ -7,12 +7,12 @@ using System.Web.Http;
 using Team7ADProjectApi.ViewModels;
 
 // Author : Zan Tun Khine
-
   
 namespace Team7ADProjectApi.Controllers
 {
+  
     using Entities;
-    [Authorize(Roles ="Store Manager")]
+    [Authorize(Roles = "Store Manager")]
     public class PurchaseOrderController : ApiController
     {
 
@@ -31,6 +31,7 @@ namespace Team7ADProjectApi.Controllers
         #endregion
 
         #region List all the pending POs
+
         [HttpGet]
         [Route("api/pendingpo")]
         public IEnumerable<PendingPO> ListAllPendingPO()
@@ -38,6 +39,7 @@ namespace Team7ADProjectApi.Controllers
             GlobalClass gc = new GlobalClass();
             return gc.PendingPOList();
         }
+
         #endregion
 
         #region Display selected PO details
@@ -52,23 +54,27 @@ namespace Team7ADProjectApi.Controllers
         #endregion
 
         #region Approve PO
+
         [HttpPost]
         [Route("api/pendingpo/approve")]
-        public bool ApprovePO([FromBody] PurchaseOrder po)
+        public IHttpActionResult ApprovePO([FromBody] PurchaseOrder po)
         {
             GlobalClass gc = new GlobalClass();
-            return gc.ApprovePO(po);
+            return Ok(gc.ApprovePO(po));
         }
+
         #endregion
 
         #region Reject PO
+
         [HttpPost]
         [Route("api/pendingpo/reject")]
-        public bool RejectPO([FromBody] PurchaseOrder po)
+        public IHttpActionResult RejectPO([FromBody] PurchaseOrder po)
         {
             GlobalClass gc = new GlobalClass();
-            return gc.RejectPO(po);
+            return Ok(gc.RejectPO(po));
         }
+
         #endregion
 
         #endregion

@@ -33,10 +33,10 @@ namespace Team7ADProjectApi
         public List<RequestItems> ListRequestByItem()
         {
             var query = (from x in context.RequestByItemView select new RequestItems
-                            {
-                               ItemId = x.ItemId,
-                               Description = x.Description
-                            }).Distinct().ToList();
+            {
+                ItemId = x.ItemId,
+                Description = x.Description
+            }).Distinct().ToList();
             return query;
         }
 
@@ -52,11 +52,11 @@ namespace Team7ADProjectApi
                         where y.DepartmentId == depid
                         select new DepEmp
                         {
-                          EName=y.EmployeeName,
-                          Empid=y.Id,
-                          Email=y.Email,
-                          phone=y.PhoneNumber
-                         };
+                            EName = y.EmployeeName,
+                            Empid = y.Id,
+                            Email = y.Email,
+                            phone = y.PhoneNumber
+                        };
             return query.ToList();
         }
 
@@ -91,14 +91,14 @@ namespace Team7ADProjectApi
 
         public string getDepId(string eid)
         {
-            return context.AspNetUsers.Where(x => x.Id == eid).Select(x=>x.DepartmentId).First();
-            
+            return context.AspNetUsers.Where(x => x.Id == eid).Select(x => x.DepartmentId).First();
+
 
         }
         public BriefDepartment DepInfo(string id)
         {
             var depid = getDepId(id);
-        
+
             var query = from x in context.Department
                         join y in context.AspNetUsers
                         on x.DepartmentRepId equals y.Id
@@ -134,7 +134,7 @@ namespace Team7ADProjectApi
                              PONo = x.PONo,
                              SupplierId = z.SupplierName,
                              Status = x.Status,
-                             OrderedBy = y.EmployeeName,                        
+                             OrderedBy = y.EmployeeName,
                              Date = x.Date,
                              Amount = x.Amount,
                              ApprovedBy = x.ApprovedBy
@@ -158,13 +158,13 @@ namespace Team7ADProjectApi
                              Status = x.Status,
                              OrderedBy = y.EmployeeName,
                              Date = x.Date,
-                            Amount = x.Amount,
-                            ApprovedBy = x.ApprovedBy
+                             Amount = x.Amount,
+                             ApprovedBy = x.ApprovedBy
                          };
             return result.ToList();
         }
 
-        //retrieve all the pending PO details
+        //retrieve the selected PO details for Approve Or Reject PO
         public List<PendingPODetails> SelectedPODetails(String poNo)
         {
             var result = from x in context.TransactionDetail         // TransactionDetail ==> x
@@ -181,7 +181,7 @@ namespace Team7ADProjectApi
                          {
                              Description = v.Description,
                              TransactionId = x.TransactionId,
-                             ItemId = x.ItemId,                          
+                             ItemId = x.ItemId,
                              Quantity = x.Quantity,
                              Remarks = x.Remarks,
                              TransactionRef = x.TransactionRef,
@@ -190,9 +190,10 @@ namespace Team7ADProjectApi
                              SupplierId = z.SupplierName,
                              Status = y.Status,
                              OrderedBy = w.EmployeeName,
-                             Date = y.Date,                            
+                             Date = y.Date,
                              Amount = y.Amount,
-                             UnitAmount = x.UnitPrice * x.Quantity
+                             UnitAmount = x.UnitPrice * x.Quantity                           
+
                          };
             return result.ToList();
         }
@@ -205,7 +206,7 @@ namespace Team7ADProjectApi
         //List PONo where status is "Pending Delivery"
         public List<String> PendingDeliveryPoList()
         {
-            return context.PurchaseOrder.Where(y=>y.Status=="Pending Delivery").Select(x => x.PONo).ToList();
+            return context.PurchaseOrder.Where(y => y.Status == "Pending Delivery").Select(x => x.PONo).ToList();
         }
 
         //Approve PO
@@ -274,21 +275,107 @@ namespace Team7ADProjectApi
             return false;
         }
 
-        //Create DO 
+        //Create a Single DO 
         public bool CreateDO(DeliveryOrder dOrder)
         {
             try
-            {   
+            {
                 context.DeliveryOrder.Add(dOrder);
-                context.SaveChanges();  
+                context.SaveChanges();
                 return true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
         }
 
+        //Create multiple DOs
+
+        public bool CreateMDO(List<DeliveryOrder> dOrderlist)
+        {
+            try
+            {
+                foreach (DeliveryOrder doitem in dOrderlist)
+                {
+                    context.DeliveryOrder.Add(doitem);
+                }
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
+        //To retrieve stationery based on the itemID
+        public Stationery RetrieveStationery(string itemID)
+        {
+            return context.Stationery.Where(x => x.ItemId == itemID).FirstOrDefault();
+        }
+
+        public bool CreateMDO2(List<AckDeliveryDetails> itemlist)
+        {
+            //string userId = itemlist[0].AcceptedBy;
+            //string poNum = itemlist[0].PONo;
+            //List<String> Items = itemlist.Select(x => x.PONo).ToList();
+            String PONum = "";
+            String SupplierId = "";
+            if (itemlist != null)
+            {
+                string newDOId = GenerateDoId();            
+                foreach (var item in itemlist)
+                {
+                    Stationery stat = RetrieveStationery(item.ItemId);
+                    stat.QuantityWarehouse = stat.QuantityWarehouse + item.Quantity;
+                    PurchaseOrder po = RetrievePO(item.PONo);
+                    po.Status = "Delivered";
+                    PONum = po.PONo;
+                    SupplierId = po.SupplierId;
+
+                    TransactionDetail transac = new TransactionDetail
+                    {
+                        ItemId = item.ItemId,
+                        Quantity = item.Quantity,
+                        Remarks = "Delivered",
+                        TransactionRef = newDOId,
+                        TransactionDate = DateTime.Today,
+                        UnitPrice = context.TransactionDetail.Where(x => x.ItemId == item.ItemId && x.TransactionRef == item.PONo).Select(y => y.UnitPrice).FirstOrDefault()
+
+                    };          
+                    context.TransactionDetail.Add(transac);
+                    context.SaveChanges();
+                }
+
+                DeliveryOrder newDo = new DeliveryOrder
+                {
+                    DelOrderId = newDOId,
+                    DelOrderNo = itemlist[0].DelOrderNo,
+                    SupplierId = SupplierId,
+                    AcceptedBy = itemlist[0].AcceptedBy,
+                    Date = DateTime.Today,
+                    PONo = itemlist[0].PONo,
+                    Status = "UNBILLED"
+                };
+            context.DeliveryOrder.Add(newDo);
+                context.SaveChanges();
+            }
+           return true;
+     
+        }
+
+    // Generate DOId 
+    // Format : GRN19-####
+
+    public string GenerateDoId()
+        {
+            var lastDoNo = context.DeliveryOrder.OrderByDescending(x => x.DelOrderId).FirstOrDefault();
+            string current = lastDoNo.DelOrderId.Substring(6);
+            int newSerial = Int32.Parse(current) + 1;  
+            return ("GRN" + DateTime.Now.Date.ToString("yy") + "-" + newSerial.ToString("0000"));
+        }
 
         #endregion
 
@@ -297,24 +384,40 @@ namespace Team7ADProjectApi
 
         public List<StationeryRequestApiModel> GetAllStationeryRequestList(string userid)
         {
-            var result = from m in context.TransactionDetail
-                         join x in context.StationeryRequest 
-                         on m.TransactionRef equals x.RequestId
+            //var result = from m in context.TransactionDetail
+            //             join x in context.StationeryRequest 
+            //             on m.TransactionRef equals x.RequestId
+            //             join y in context.AspNetUsers
+            //             on x.RequestedBy equals y.Id
+            //             join z in context.Department
+            //             on y.DepartmentId equals z.DepartmentId
+            //             where y.Id == userid
+            //             //&&x.Status== "Pending Approval"
+            //             select new StationeryRequestApiModel {
+            //                 RequestId = x.RequestId,
+            //                 RequestedBy = x.AspNetUsers1.EmployeeName,
+            //                 RequestDate = x.RequestDate,
+            //                 ApprovedBy=x.ApprovedBy,
+            //                 DepartmentId=x.DepartmentId,
+            //                 Status=x.Status,               
+            //             };
+            var result = from x in context.StationeryRequest
                          join y in context.AspNetUsers
                          on x.RequestedBy equals y.Id
                          join z in context.Department
                          on y.DepartmentId equals z.DepartmentId
                          where y.Id == userid
-                         select new StationeryRequestApiModel {
+                         //&&x.Status== "Pending Approval"
+                         select new StationeryRequestApiModel
+                         {
                              RequestId = x.RequestId,
-                             RequestedBy = x.RequestedBy,
+                             RequestedBy = x.AspNetUsers1.EmployeeName,
                              RequestDate = x.RequestDate,
-                             ApprovedBy=x.ApprovedBy,
-                             DepartmentId=x.DepartmentId,
-                             Status=x.Status,               
+                             ApprovedBy = x.ApprovedBy,
+                             DepartmentId = x.DepartmentId,
+                             Status = x.Status,
                          };
-                        
-                return result.ToList();
+                   return result.ToList();
         }
 
 
@@ -339,7 +442,7 @@ namespace Team7ADProjectApi
           
             StationeryRequestApiModel stModel = new StationeryRequestApiModel();
             stModel.RequestId = rid;
-            stModel.RequestedBy = ss.RequestedBy;
+            stModel.RequestedBy = ss.AspNetUsers1.EmployeeName;
             stModel.RequestDate = ss.RequestDate;
             stModel.Status = ss.Status;
             stModel.requestTransactionDetailApiModels= tt;
@@ -353,7 +456,7 @@ namespace Team7ADProjectApi
         }
 
         //Approve Req
-        public bool ApproveReq(StationeryRequest req)
+        public bool ApproveReq(StationeryRequestApiModel req)
         {
             StationeryRequest stationeryRequest = RetrieveReq(req.RequestId);
             if (stationeryRequest != null)
@@ -368,7 +471,7 @@ namespace Team7ADProjectApi
         }
 
         //Reject Req
-        public bool RejectReq(StationeryRequest req)
+        public bool RejectReq(StationeryRequestApiModel req)
         {
             StationeryRequest stationeryRequest = RetrieveReq(req.RequestId);
             if (stationeryRequest != null)
