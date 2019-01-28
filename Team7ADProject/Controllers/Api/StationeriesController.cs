@@ -75,7 +75,7 @@ namespace Team7ADProject.Controllers.Api
         [Route("~/api/stationeries/categories/{category}")]
         public IHttpActionResult GetItemsFromCategory(string category)
         {
-            List<Stationery> items = _context.Stationery.Where(m => m.Category == category && m.ActiveState==true).ToList();
+            List<Stationery> items = _context.Stationery.Where(m => m.Category == category && m.ActiveState == true).ToList();
 
             List<RaiseRequestDTO> viewModels = new List<RaiseRequestDTO>();
             for (int i = 0; i < items.Count; i++)
@@ -205,5 +205,24 @@ namespace Team7ADProject.Controllers.Api
         }
         #endregion
 
+        #region Author:Lynn Lynn Oo
+        [Route("~/api/stationeries/returntowarehouse/{itemId}")]
+        public IHttpActionResult GetReturnInfo(string itemId)
+        {
+            Stationery stationery = _context.Stationery.Single(xy => xy.ItemId == itemId);
+            Stationery x = new Stationery();
+            TransactionDetail y = new TransactionDetail();
+            StationeryRequest v = new StationeryRequest();
+            CollectionPoint z = new CollectionPoint();
+            TransactionDetail trans = _context.TransactionDetail.Single(xz => xz.ItemId == itemId);
+            ReturntoWarehouseApiViewModel model = new ReturntoWarehouseApiViewModel();
+            model.Description = x.Description;
+            model.Quantity = y.Quantity;
+            model.Department = v.DepartmentId;
+            model.Location = z.CollectionDescription;
+            return Ok(model);
+        }
+    
+        #endregion
     }
 }
