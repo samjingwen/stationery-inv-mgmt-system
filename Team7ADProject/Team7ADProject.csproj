@@ -299,6 +299,7 @@
     <Compile Include="ViewModels\Api\AdjustmentApiViewModel.cs" />
     <Compile Include="ViewModels\Api\RaiseRequestDTO.cs" />
     <Compile Include="ViewModels\AdjustmentViewModel.cs" />
+    <Compile Include="ViewModels\Api\ReturntoWarehouseApiViewModel.cs" />
     <Compile Include="ViewModels\Api\TopSupplierAndPriceDTO.cs" />
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
