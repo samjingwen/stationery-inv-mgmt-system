@@ -46,7 +46,7 @@ namespace Team7ADProjectApi.Controllers
         //Create One DO
         [HttpPost] 
         [Route("api/ackdelivery/add")]
-        public IHttpActionResult create([FromBody] DeliveryOrder newDO)
+        public IHttpActionResult Create([FromBody] DeliveryOrder newDO)
         {
             return Ok(new GlobalClass().CreateDO(newDO));
         }
@@ -54,7 +54,7 @@ namespace Team7ADProjectApi.Controllers
         //Create Multiple DOs
         [HttpPost]
         [Route("api/ackdelivery/addm")]
-        public IHttpActionResult createM([FromBody] List<DeliveryOrder> newDO)
+        public IHttpActionResult CreateM([FromBody] List<DeliveryOrder> newDO)
         {
             return Ok(new GlobalClass().CreateMDO(newDO));
         }
@@ -62,7 +62,7 @@ namespace Team7ADProjectApi.Controllers
         //Create DO , Create New Transactions Ref to DOId , Update Warehouse Stock
         [HttpPost]
         [Route("api/ackdelivery/addmm")]
-        public IHttpActionResult createM2([FromBody] List<AckDeliveryDetails> newDO)
+        public IHttpActionResult CreateM2([FromBody] List<AckDeliveryDetails> newDO)
         {
             return Ok(new GlobalClass().CreateMDO2(newDO));
         }
