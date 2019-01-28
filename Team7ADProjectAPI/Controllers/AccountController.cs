@@ -220,7 +220,7 @@ namespace Team7ADProjectApi.Controllers
             return Ok();
         }
 
-        // GET api/Account/ExternalLogin
+        //// GET api/Account/ExternalLogin
         //[OverrideAuthentication]
         //[HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         //[AllowAnonymous]

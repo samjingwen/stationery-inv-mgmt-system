@@ -42,6 +42,17 @@ namespace Team7ADProject.ViewModels
     {
         public string ItemId { get; set; }
         public string Description { get; set; }
+        public int QtyInStock
+        {
+            get
+            {
+                LogicDB context = new LogicDB();
+                if (ItemId != null)
+                    return context.Stationery.FirstOrDefault(x => x.ItemId == ItemId).QuantityWarehouse;
+                else
+                    return 0;
+            }
+        }
         public int TotalQty
         {
             get
@@ -103,7 +114,33 @@ namespace Team7ADProject.ViewModels
     public class RequestByIdViewModel
     {
         public string RequestId { get; set; }
-        public List<BreakdownByItemViewModel> ItemList { get; set; }
+        public string DepartmentId { get; set; }
+        public List<DeptAndItemViewModel> ItemList { get; set; }
     }
 
+    public class DeptAndItemViewModel
+    {
+        public string ItemId { get; set; }
+        public decimal UnitPrice { get; set; }
+        public int Quantity { get; set; }
+    }
+    public class SimpleRequestViewModel
+    {
+        public string RequestId { get; set; }
+        public string DepartmentId { get; set; }
+        public string ItemId { get; set; }
+        public decimal UnitPrice { get; set; }
+        public int Quantity { get; set; }
+    }
+
+    public class SimpleDisbViewModel
+    {
+        public string RequestId { get; set; }
+        public string DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
+        public string ItemId { get; set; }
+        public string Description { get; set; }
+        public int? Quantity { get; set; }
+    }
+    
 }

@@ -40,25 +40,26 @@
         <br />
         <label for="datepicker">Start Date : </label>
 
-        @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly" })
+        @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly", @Value = "yy-mm-dd" })
 
         <label for="datepicker">End Date : </label>
 
-        @Html.TextBoxFor(model => model.EndDate, new { @class = "date-picker1", @readonly = "readonly" })
+        @Html.TextBoxFor(model => model.EndDate, new { @class = "date-picker1", @readonly = "readonly", @Value = "yy-mm-dd" })
         <br />
         <br />
-        <input type="submit" value="Submit" class="greenBtn pull-right"/>
+        <input type="submit" value="Submit" class="greenBtn pull-right" />
     }
 
 </div>
 
 
 @section Scripts {
-    <!-- jQuery UI CSS Reference -->
-    <link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" />
-    <!-- Required jQuery and jQuery UI Javascript references -->
-    <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery-ui-1.10.4.min.js")"></script>
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+
+
 
 
     <!-- Code to wire up your DatePicker -->
@@ -78,18 +79,16 @@
             });
 
             $(".date-picker").datepicker("option", { minDate: + 0 });
-            // $(".date-picker").datepicker('setDate', 'today');
 
             $(".date-picker1").datepicker({
                 dateFormat: 'yy-mm-dd',
                 showAnim: 'clip',
-                disabled: true
+                disabled: true,
 
             });
+
+
         });
-
-
-
 
 
     </script>

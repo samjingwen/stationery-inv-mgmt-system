@@ -79,6 +79,15 @@ namespace Team7ADProjectApi.Controllers
             return Ok(query);
         }
 
+        //Acknowledge disbursement
+        [HttpPost]
+        [Route("api/clerk/acknowledgement")]
+        public int UpdateDisb([FromBody] AckListViewModel ackListViewModel)
+        {
+            return 1;
+        }
+
+
 
 
 
@@ -476,5 +485,22 @@ namespace Team7ADProjectApi.Controllers
             return OTP;
         }
         #endregion
+
+        #region Author:Kay Thi Swe Tun
+        [HttpGet]
+        [Authorize(Roles = RoleName.StoreClerk)]
+        [Route("api/clerk/voiddisb/{disbno}")]
+        public bool GetDisbursementVoid(string disbno)
+        {
+
+            GlobalClass gc = new GlobalClass();
+            return gc.VoidDisbursement(disbno);
+
+
+
+        }
+
+        #endregion
+
     }
 }

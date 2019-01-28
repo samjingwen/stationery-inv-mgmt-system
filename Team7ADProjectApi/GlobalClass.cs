@@ -62,24 +62,31 @@ namespace Team7ADProjectApi
 
         public void assignDepRep(BriefDepartment e)
         {
+            
+           // //Retrieve department head
+           // //string depHeadId;
+           // // var user = database.AspNetUsers.Where(x => x.Id == depHeadId).FirstOrDefault();
+           // //Retrieve department
+           // var dept = context.Department.Where(x => x.DepartmentId == e.DepartmentId).FirstOrDefault();
 
-            //Retrieve department head
-            //string depHeadId;
-            // var user = database.AspNetUsers.Where(x => x.Id == depHeadId).FirstOrDefault();
-            //Retrieve department
-            var dept = context.Department.Where(x => x.DepartmentId == e.DepartmentId).FirstOrDefault();
+           // //Change department rep
+           // string oldEmpRepId = dept.DepartmentRepId;
+           // //string userId = model.UserId;
+           // dept.DepartmentRepId = e.DepartmentRepId;
+           // context.SaveChanges();
+           // //Change previous Department Rep to employee
+           ////manager.RemoveFromRole(oldEmpRepId, "Department Representative");
+           //// manager.AddToRole(oldEmpRepId, "Employee");
+           // //Assign new employee to Department Rep
+           //// manager.RemoveFromRole(userId, "Employee");
+           // //t6manager.AddToRole(userId, "Department Representative");
 
-            //Change department rep
-            string oldEmpRepId = dept.DepartmentRepId;
-            //string userId = model.UserId;
-            dept.DepartmentRepId = e.DepartmentRepId;
-            context.SaveChanges();
-            //Change previous Department Rep to employee
-            //manager.RemoveFromRole(oldEmpRepId, "Department Representative");
-            // manager.AddToRole(oldEmpRepId, "Employee");
-            //Assign new employee to Department Rep
-            // manager.RemoveFromRole(userId, "Employee");
-            //t6manager.AddToRole(userId, "Department Representative");
+
+
+
+
+
+
         }
 
         public string getDepId(string eid)
@@ -217,6 +224,42 @@ namespace Team7ADProjectApi
             return false;
         }
 
+        public bool VoidDisbursement(string disbno)
+        {
+            Disbursement disb = context.Disbursement.Where(x=> x.DisbursementNo == disbno).FirstOrDefault();
+
+
+
+            if (disb != null)
+            {
+
+                string reqid = disb.RequestId;
+                StationeryRequest req = context.StationeryRequest.Find(reqid);
+                if (req != null)
+                {
+                    req.Status = "Void";
+                }
+
+                disb.Status = "Void";
+
+                TransactionDetail transactionDetail = context.TransactionDetail.Where(x => x.TransactionRef == disb.DisbursementId).FirstOrDefault();
+                if (transactionDetail != null)
+                {
+                    transactionDetail.Remarks = "Void";
+                }
+
+                context.SaveChanges();
+                return true;
+            }
+
+            return false;
+
+
+
+
+            throw new NotImplementedException();
+        }
+
         //Reject PO
         public bool RejectPO(PurchaseOrder po)
         {
@@ -336,6 +379,7 @@ namespace Team7ADProjectApi
 
         #endregion
 
+
         #region Gao Jiaxue
 
         public List<StationeryRequestApiModel> GetAllStationeryRequestList(string userid)
@@ -426,6 +470,63 @@ namespace Team7ADProjectApi
         }
         #endregion
 
+
+
+        #region Author:Lynn Lynn Oo
+        //for List_View
+        public List<ReturntoWarehouseApiModel> GetItemList()
+        {
+            var showList = from x in context.StationeryRequest
+                           join y in context.TransactionDetail on x.RequestId equals y.TransactionRef
+                           join z in context.Stationery on y.ItemId equals z.ItemId
+                           join d in context.Department on x.DepartmentId equals d.DepartmentId
+                           join v in context.CollectionPoint on d.CollectionPointId equals v.CollectionPointId
+                           where (x.Status == "Void" || x.Status == "Partially Returned")
+
+                           select new ReturntoWarehouseApiModel
+                           {
+                               RequestId = x.RequestId,
+                               ItemId = z.ItemId,
+                               Description = z.Description,
+                               Quantity = y.Quantity,
+                               Department = d.DepartmentName,
+                               Location = v.CollectionDescription,
+                           };
+            return showList.ToList();
+        }
+
+        
+        public string Return(ReturntoWarehouseApiModel apiModel)
+        {
+            TransactionDetail transactionInDb = context.TransactionDetail.FirstOrDefault(m => m.TransactionRef == apiModel.RequestId && m.ItemId == apiModel.ItemId && m.Remarks == "Void");
+            if (transactionInDb.StationeryRequest.Status == "Void")
+            {
+                string status = "fail";
+                transactionInDb.Stationery.QuantityWarehouse += transactionInDb.Stationery.QuantityTransit;
+                transactionInDb.Stationery.QuantityTransit -= transactionInDb.Stationery.QuantityTransit;
+                transactionInDb.Remarks = "Returned";
+                //check if all items are returned for stationery request
+                StationeryRequest stationeryRequestInDb = context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
+                bool allReturned = true;
+                foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
+                {
+                    if (current.Remarks != "Returned")
+                    {
+                        stationeryRequestInDb.Status = "Partially Returned";
+                        allReturned = false;
+                        break;
+                    }
+                }
+                if (allReturned)
+                    stationeryRequestInDb.Status = "Returned";
+                context.SaveChanges();
+                status = "success";
+                return status;
+            }
+            return "error";
+        }
+
     }
+    #endregion
 
 }
