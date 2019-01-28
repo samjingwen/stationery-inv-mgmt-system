@@ -63,23 +63,30 @@ namespace Team7ADProjectApi
         public void assignDepRep(BriefDepartment e)
         {
             
-            //Retrieve department head
-            //string depHeadId;
-            // var user = database.AspNetUsers.Where(x => x.Id == depHeadId).FirstOrDefault();
-            //Retrieve department
-            var dept = context.Department.Where(x => x.DepartmentId == e.DepartmentId).FirstOrDefault();
+           // //Retrieve department head
+           // //string depHeadId;
+           // // var user = database.AspNetUsers.Where(x => x.Id == depHeadId).FirstOrDefault();
+           // //Retrieve department
+           // var dept = context.Department.Where(x => x.DepartmentId == e.DepartmentId).FirstOrDefault();
 
-            //Change department rep
-            string oldEmpRepId = dept.DepartmentRepId;
-            //string userId = model.UserId;
-            dept.DepartmentRepId = e.DepartmentRepId;
-            context.SaveChanges();
-            //Change previous Department Rep to employee
-            //manager.RemoveFromRole(oldEmpRepId, "Department Representative");
-           // manager.AddToRole(oldEmpRepId, "Employee");
-            //Assign new employee to Department Rep
-           // manager.RemoveFromRole(userId, "Employee");
-            //t6manager.AddToRole(userId, "Department Representative");
+           // //Change department rep
+           // string oldEmpRepId = dept.DepartmentRepId;
+           // //string userId = model.UserId;
+           // dept.DepartmentRepId = e.DepartmentRepId;
+           // context.SaveChanges();
+           // //Change previous Department Rep to employee
+           ////manager.RemoveFromRole(oldEmpRepId, "Department Representative");
+           //// manager.AddToRole(oldEmpRepId, "Employee");
+           // //Assign new employee to Department Rep
+           //// manager.RemoveFromRole(userId, "Employee");
+           // //t6manager.AddToRole(userId, "Department Representative");
+
+
+
+
+
+
+
         }
 
         public string getDepId(string eid)
