@@ -63,22 +63,14 @@ namespace Team7ADProject.Controllers
         public ActionResult Save(RaisePOViewModel[] poModel)
         {
             //Validation
-            string result = "Error! Request Failed!";
-
-            bool validQuantity = false;
-            for (int i = 0; i < poModel.Length; i++)
+            string result = "Error!";
+         
+            if(poModel == null)
             {
-                validQuantity = poModel[i].Quantity > 0;
-                if (validQuantity != true)
-                    break;
+                result = "Invalid Items! Please check the items again!";
             }
-            if (!validQuantity)
-            {
-                result = "Invalid input! Kindly raise a valid request!";
-            }
-
-
-            //Creating new entries
+     
+            //Add New Items
             else
             {
                 // to get the user ID of the current user
@@ -135,8 +127,6 @@ namespace Team7ADProject.Controllers
         #endregion
 
         #endregion
-
-
 
         #region Email
 

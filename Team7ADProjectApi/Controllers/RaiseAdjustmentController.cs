@@ -6,9 +6,12 @@ using System.Net.Http;
 using System.Web.Http;
 using Team7ADProjectApi.Entities;
 using Team7ADProjectApi.ViewModels;
+using Team7ADProjectApi.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Team7ADProjectApi.Controllers
 {
+    [Authorize(Roles = RoleName.StoreClerk)]
     public class RaiseAdjustmentController : ApiController
     {
         public LogicDB context = new LogicDB();
@@ -55,7 +58,7 @@ namespace Team7ADProjectApi.Controllers
                 StockAdjustment adjustment = new StockAdjustment
                 {
                     StockAdjId = newAdjustId(),
-                    PreparedBy = "0468dd23-2d20-4fae-b20c-8add2bce2d57",
+                    PreparedBy = User.Identity.GetUserId(),
                     ApprovedBy = null,
                     Remarks = "remark",
                     Date = DateTime.Today
@@ -82,7 +85,6 @@ namespace Team7ADProjectApi.Controllers
                 context.StockAdjustment.Add(adjustment);
                 context.SaveChanges();
                 
-
             }
             return Ok();
         }

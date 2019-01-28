@@ -1,7 +1,18 @@
-﻿body {
+﻿/*body {
     padding-top: 0;
     padding-bottom: 20px;
     background-image: linear-gradient(to bottom right,#E8EAEE,#EEECE8)
+}*/
+
+body {
+    font-family: Source Sans Pro, Cambria, Georgia, serif;
+    background: #FBF9F6;
+    font-weight: 300;
+    font-size: 15px;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -160,8 +171,8 @@ td {
 
 
 .animate {
-    transition: all 0.1s;
     -webkit-transition: all 0.1s;
+    transition: all 0.1s;
 }
 
 .action-button {
@@ -195,9 +206,9 @@ td {
 }
 
 .action-button:active {
-    transform: translate(0px,5px);
-    -webkit-transform: translate(0px,5px);
+    -webkit-transform: translate(0,5px);
     border-bottom: 1px solid;
+    transform: translate(0,5px);
 }
 
 
@@ -235,9 +246,9 @@ a {
     width: 100%;
 }
 th {
-    padding: 2;
+    padding: 2px;
     background-color: #414657;
-    color: #fee1a1;
+    color: antiquewhite;
     height: 30px;
 }
 th, td {
@@ -260,8 +271,8 @@ tr:hover {
 .greenBtn {
     display: inline-block;
     border-radius: 5px;
-    border: outset 3px #566A3F;
-    background-color: #566A3F;
+    border: outset 3px #27ae60;
+    background-color: #27ae60;
     text-align: center;
     height: 35px;
     color: antiquewhite;

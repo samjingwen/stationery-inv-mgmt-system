@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -293,10 +294,12 @@
     <Compile Include="Service\ProcurementService.cs" />
     <Compile Include="Service\StationeryRequestService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Validation\UniqueSupplier.cs" />
     <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\Api\AdjustmentApiViewModel.cs" />
     <Compile Include="ViewModels\Api\RaiseRequestDTO.cs" />
     <Compile Include="ViewModels\AdjustmentViewModel.cs" />
+    <Compile Include="ViewModels\Api\ReturntoWarehouseApiViewModel.cs" />
     <Compile Include="ViewModels\Api\TopSupplierAndPriceDTO.cs" />
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
@@ -307,6 +310,7 @@
     <Compile Include="ViewModels\GenerateReport\StringDoubleDPViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
     <Compile Include="ViewModels\InvoiceDetailsViewModel.cs" />
+    <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\PostponeCollectionDate%28Department%29\PostponeCollectionDateDepartmentViewModel.cs" />
     <Compile Include="ViewModels\PostponeCollectionDate%28Store%29\PostponeCollDateDetailsViewModel.cs" />
@@ -323,7 +327,11 @@
     <Compile Include="ViewModels\StationeryRetrievalViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\accordion.css" />
     <Content Include="Content\Error.css" />
+    <Content Include="Content\grid.css" />
+    <Content Include="Content\ihover.css" />
+    <Content Include="Content\images\bg.jpg" />
     <Content Include="Content\images\CollPoint\cpImage_1.png" />
     <Content Include="Content\images\CollPoint\cpImage_2.png" />
     <Content Include="Content\images\CollPoint\cpImage_3.png" />
@@ -335,13 +343,20 @@
     <Content Include="Content\images\logo.png" />
     <Content Include="App_Data\useremails.txt" />
     <Content Include="App_Data\usernames.txt" />
-    <Content Include="Content\accordion.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\Logo1.png" />
     <Content Include="Content\images\Logo2.png" />
+    <Content Include="Content\images\members\CZP.PNG" />
+    <Content Include="Content\images\members\EC.PNG" />
+    <Content Include="Content\images\members\GJX.PNG" />
+    <Content Include="Content\images\members\LH.jpg" />
+    <Content Include="Content\images\members\LLO.PNG" />
+    <Content Include="Content\images\members\KT.jpg" />
+    <Content Include="Content\images\members\SAM.PNG" />
+    <Content Include="Content\images\members\Zan.PNG" />
     <Content Include="Content\images\text.png" />
     <Content Include="Content\login\css\main.css" />
     <Content Include="Content\login\css\util.css" />
@@ -389,6 +404,7 @@
     <Content Include="Content\login\vendor\select2\select2.min.js" />
     <Content Include="Content\sidebar\css\sidebar.css" />
     <Content Include="Content\sidebar\js\sidebar.js" />
+    <Content Include="Content\animate.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -624,6 +640,7 @@
     <Content Include="Views\Shared\Error401.cshtml" />
     <Content Include="Views\Home\_MenuBox.cshtml" />
     <Content Include="Views\ManageDelegate\Index.cshtml" />
+    <Content Include="Views\ManageRetrieval\ViewDisbursement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Email\" />

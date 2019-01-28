@@ -1,11 +1,7 @@
-﻿body {
-    margin: 50px;
-}
-
+﻿
 #ah:hover, #ah:visited, #ah:link, #ah:active {
     text-decoration: none;
-    color:cornsilk;
-    
+    color: cornsilk;
 }
 
 .controls {
@@ -16,7 +12,6 @@
 .panel-title .trigger:before {
     content: '\e082';
     font-family: 'Glyphicons Halflings';
-   
 }
 
 .panel-title .trigger.collapsed:before {

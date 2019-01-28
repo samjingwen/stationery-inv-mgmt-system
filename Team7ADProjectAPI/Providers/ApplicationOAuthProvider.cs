@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -53,16 +54,14 @@ namespace Team7ADProjectApi.Providers
                 userManager.RemoveFromRole(userId, "Acting Department Head");
             }
 
-
-
-
-
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                OAuthDefaults.AuthenticationType);
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
-            AuthenticationProperties properties = CreateProperties(user.Id);
+            
+            System.Collections.Generic.IList<string> s= userManager.GetRoles(user.Id);
+            AuthenticationProperties properties = CreateProperties(user.Id,s);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
@@ -104,11 +103,13 @@ namespace Team7ADProjectApi.Providers
             return Task.FromResult<object>(null);
         }
 
-        public static AuthenticationProperties CreateProperties(string userName)
+        public static AuthenticationProperties CreateProperties(string userName, IList<string> s)
         {
+            
             IDictionary<string, string> data = new Dictionary<string, string>
             {
-                { "userName", userName }
+                { "userName", userName },
+                {"roleName",s.First() }
             };
             return new AuthenticationProperties(data);
         }

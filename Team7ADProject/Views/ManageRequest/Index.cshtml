@@ -9,12 +9,12 @@
 <div class="card-body">
     @if (ViewBag.ShowItems)
     {
-        <p>true</p>
+       
         int j = 0; int i = 0;
         foreach (var cp in Model)
         {
             <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne" style="background-color: navy;height:50px;display:block;padding-top:14px;">
+                <div class="panel-heading" role="tab" id="headingOne" style="background-color: dimgray;height:50px;display:block;padding-top:14px;">
                   
                     <h4 class="panel-title">
 
@@ -148,12 +148,11 @@
 </div>
 
             @section Scripts {
-                <link href="~/Content/accordion.css" rel="stylesheet" />
+               <link href="~/Content/accordion.css" rel="stylesheet" />
 
                 <script>
                    
-                   
-
+                  
                     //After Click Save Button Pass All Data View To Controller For Edit Database
                     function editRequest(data) {
                         return $.ajax({
