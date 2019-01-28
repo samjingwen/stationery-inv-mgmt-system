@@ -72,60 +72,68 @@ namespace Team7ADProject.Controllers
         {
             string result = "Error! Request is incomplete!";
             bool validQuantity = false;
-            for (int i = 0; i < requests.Length; i++)
+            if (requests!=null)
             {
-                validQuantity = requests[i].Quantity > 0;
-                if (validQuantity != true)
-                    break;
-            }
-            if (!validQuantity)
-            {
-                result = "Invalid input! Kindly raise a valid request.";
-            }
-
-            else
-            {
-                string currentUserId = User.Identity.GetUserId();
-                AspNetUsers currentUser = _context.AspNetUsers.First(m => m.Id == currentUserId);
-
-
-                string newStationeryRequestId = GenerateRequestId();
-                if (requests != null)
+                for (int i = 0; i < requests.Length; i++)
                 {
-                    StationeryRequest stationeryRequestInDb = new StationeryRequest
-                    {
-                        RequestId = newStationeryRequestId,
-                        RequestedBy = currentUserId,
-                        ApprovedBy = null,
-                        DepartmentId = currentUser.DepartmentId,
-                        Status = "Pending Approval",
-                        Comment = null,
-                        RequestDate = DateTime.Today,
-                        CollectionDate = null
-                    };
+                    validQuantity = requests[i].Quantity > 0;
+                    if (validQuantity != true)
+                        break;
+                }
+                if (!validQuantity)
+                {
+                    result = "Invalid input! Kindly raise a valid request.";
+                }
 
-                    _context.StationeryRequest.Add(stationeryRequestInDb);
-                    _context.SaveChanges();
+                else
+                {
+                    string currentUserId = User.Identity.GetUserId();
+                    AspNetUsers currentUser = _context.AspNetUsers.First(m => m.Id == currentUserId);
 
-                    foreach (var item in requests)
+
+                    string newStationeryRequestId = GenerateRequestId();
+                    if (requests != null)
                     {
-                        decimal itemPrice = _context.Stationery.Single(m => m.ItemId == item.Description).FirstSuppPrice;
-                        TransactionDetail transactionDetailInDb = new TransactionDetail
+                        StationeryRequest stationeryRequestInDb = new StationeryRequest
                         {
-                            TransactionId = GenerateTransactionDetailId(),
-                            ItemId = item.Description,
-                            Quantity = item.Quantity,
-                            Remarks = "Pending Approval",
-                            TransactionRef = newStationeryRequestId,
-                            TransactionDate = DateTime.Today,
-                            UnitPrice = itemPrice
+                            RequestId = newStationeryRequestId,
+                            RequestedBy = currentUserId,
+                            ApprovedBy = null,
+                            DepartmentId = currentUser.DepartmentId,
+                            Status = "Pending Approval",
+                            Comment = null,
+                            RequestDate = DateTime.Today,
+                            CollectionDate = null
                         };
-                        _context.TransactionDetail.Add(transactionDetailInDb);
+
+                        _context.StationeryRequest.Add(stationeryRequestInDb);
+                        _context.SaveChanges();
+
+                        foreach (var item in requests)
+                        {
+                            decimal itemPrice = _context.Stationery.Single(m => m.ItemId == item.Description).FirstSuppPrice;
+                            TransactionDetail transactionDetailInDb = new TransactionDetail
+                            {
+                                TransactionId = GenerateTransactionDetailId(),
+                                ItemId = item.Description,
+                                Quantity = item.Quantity,
+                                Remarks = "Pending Approval",
+                                TransactionRef = newStationeryRequestId,
+                                TransactionDate = DateTime.Today,
+                                UnitPrice = itemPrice
+                            };
+                            _context.TransactionDetail.Add(transactionDetailInDb);
+                        }
+                        _context.SaveChanges();
+                        result = "Success! Request is complete!";
                     }
-                    _context.SaveChanges();
-                    result = "Success! Request is complete!";
                 }
             }
+            else
+            {
+                result = "List is empty.";
+            }
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

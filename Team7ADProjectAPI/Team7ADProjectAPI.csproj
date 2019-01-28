@@ -297,6 +297,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AckDelivery.cs" />
     <Compile Include="ViewModels\AckDisbViewModel.cs" />
+    <Compile Include="ViewModels\AckDeliveryDetails.cs" />
     <Compile Include="ViewModels\AdjustmentInfo.cs" />
     <Compile Include="ViewModels\AdjustmentItemDetail.cs" />
     <Compile Include="ViewModels\BriefDepartment.cs" />
