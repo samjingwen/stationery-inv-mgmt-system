@@ -260,6 +260,7 @@
     <Compile Include="Controllers\DepartmentHeadController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RaiseAdjustmentController.cs" />
+    <Compile Include="Controllers\ReturnToWarehouseController.cs" />
     <Compile Include="Controllers\StationeryRequestController.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
