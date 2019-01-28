@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,7 +18,7 @@ namespace Team7ADProject.Controllers
     [RoleAuthorize(Roles = "Store Clerk")]
     public class ManageRetrievalController : Controller
     {
-        StationeryRequestService srService = StationeryRequestService.Instance;
+        StationeryRequestService srService = new StationeryRequestService();
 
         // GET: ManageRetrieval
         public ActionResult Index(int id = 0)
@@ -39,12 +40,11 @@ namespace Team7ADProject.Controllers
             List<DisbursementByDeptViewModel> disbList = srService.GenerateDisbursement(model);
 
             //Update database
-            //bool isSuccess = 
-            srService.SaveAndDisburse(model, userId);
-            //if (isSuccess)
+            bool isSuccess = srService.SaveAndDisburse(model, userId);
+            if (isSuccess)
                 return View(disbList);
-            //else
-                //return RedirectToAction("Index", new { id = 1 });
+            else
+                return RedirectToAction("Index", new { id = 1 });
         }
 
         public ActionResult ViewDisbursement()

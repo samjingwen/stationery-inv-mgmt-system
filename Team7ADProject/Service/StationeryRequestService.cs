@@ -7,38 +7,13 @@ using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Service
 {
-    public sealed class StationeryRequestService
+    public class StationeryRequestService
     {
-        #region Singleton Design Pattern
-
-        private static readonly StationeryRequestService instance = new StationeryRequestService();
-
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
-        static StationeryRequestService()
-        {
-        }
-
-        private StationeryRequestService()
-        {
-        }
-
-        public static StationeryRequestService Instance
-        {
-            get
-            {
-                return instance;
-            }
-        }
-        #endregion
-
-
-        LogicDB context = new LogicDB();
-
         public List<RequestByItemViewModel> GetListRequestByItem()
         {
+            LogicDB context = new LogicDB();
             List<RequestByItemViewModel> model = new List<RequestByItemViewModel>();
-            var query = context.RequestByItemView.OrderBy(x => x.ItemId).ToList();
+            var requests = context.RequestByItemView.OrderBy(x => x.ItemId).ToList();
             var disbList = (from x in context.DisbByDept
                         select new SimpleDisbViewModel
                         {
@@ -49,12 +24,11 @@ namespace Team7ADProject.Service
                             Quantity = x.Quantity
                         }).ToList();
 
-            foreach (var i in query)
+            foreach (var req in requests)
             {
-                var item = model.Find(x => x.ItemId == i.ItemId);
+                var item = model.Find(x => x.ItemId == req.ItemId);
 
-                var disb = disbList.FirstOrDefault(x => x.DepartmentId == i.DepartmentId && x.ItemId == i.ItemId);
-
+                var disb = disbList.FirstOrDefault(x => x.DepartmentId == req.DepartmentId && x.ItemId == req.ItemId);
 
                 if (item != null)
                 {
@@ -63,18 +37,18 @@ namespace Team7ADProject.Service
                     {
                         newModel = new BreakdownByDeptViewModel
                         {
-                            DepartmentId = i.DepartmentId,
-                            DepartmentName = i.DepartmentName,
-                            Quantity = (int)i.Quantity
+                            DepartmentId = req.DepartmentId,
+                            DepartmentName = req.DepartmentName,
+                            Quantity = (int)req.Quantity
                         };
                     }
                     else
                     {
                         newModel = new BreakdownByDeptViewModel
                         {
-                            DepartmentId = i.DepartmentId,
-                            DepartmentName = i.DepartmentName,
-                            Quantity = ((int)i.Quantity - (int)disb.Quantity)
+                            DepartmentId = req.DepartmentId,
+                            DepartmentName = req.DepartmentName,
+                            Quantity = ((int)req.Quantity - (int)disb.Quantity)
                         };
                         disb.Quantity = 0;
                     }
@@ -85,15 +59,30 @@ namespace Team7ADProject.Service
                 else
                 {
                     RequestByItemViewModel requestByItemViewModel = new RequestByItemViewModel();
-                    requestByItemViewModel.ItemId = i.ItemId;
-                    requestByItemViewModel.Description = i.Description;
+                    requestByItemViewModel.ItemId = req.ItemId;
+                    requestByItemViewModel.Description = req.Description;
                     requestByItemViewModel.requestList = new List<BreakdownByDeptViewModel>();
-                    var newModel = new BreakdownByDeptViewModel
+                    BreakdownByDeptViewModel newModel;
+                    if (disb == null)
                     {
-                        DepartmentId = i.DepartmentId,
-                        DepartmentName = i.DepartmentName,
-                        Quantity = disb == null ? (int)i.Quantity : ((int)i.Quantity - (int)disb.Quantity)
-                    };
+                        newModel = new BreakdownByDeptViewModel
+                        {
+                            DepartmentId = req.DepartmentId,
+                            DepartmentName = req.DepartmentName,
+                            Quantity = (int)req.Quantity
+                        };
+                    }
+                    else
+                    {
+                        newModel = new BreakdownByDeptViewModel
+                        {
+                            DepartmentId = req.DepartmentId,
+                            DepartmentName = req.DepartmentName,
+                            Quantity = ((int)req.Quantity - (int)disb.Quantity)
+                        };
+                        disb.Quantity = 0;
+                    }
+                    
                     if (newModel.Quantity > 0)
                     {
                         requestByItemViewModel.requestList.Add(newModel);
@@ -106,6 +95,7 @@ namespace Team7ADProject.Service
 
         public string GetNewRetrievalId()
         {
+            LogicDB context = new LogicDB();
             string rid;
             var ret = context.StationeryRetrieval.OrderByDescending(x => x.Date).OrderByDescending(x => x.RetrievalId).FirstOrDefault();
             if (ret.Date.Year == DateTime.Now.Year)
@@ -122,6 +112,7 @@ namespace Team7ADProject.Service
         //Convert breakdown of stationery by items to breakdown of stationery by dept
         public List<DisbursementByDeptViewModel> GenerateDisbursement(List<RequestByItemViewModel> model)
         {
+            LogicDB context = new LogicDB();
             List<DisbursementByDeptViewModel> disbList = new List<DisbursementByDeptViewModel>();
 
             for (int i = 0; i < model.Count; i++)
@@ -170,12 +161,13 @@ namespace Team7ADProject.Service
         }
 
 
-        public void SaveAndDisburse(List<RequestByItemViewModel> model, string userId)
+        public bool SaveAndDisburse(List<RequestByItemViewModel> model, string userId)
         {
-            //using(var dbContextTransaction = context.Database.BeginTransaction())
-            //{
-                //try
-                //{
+            LogicDB context = new LogicDB();
+            using(var dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
                     StationeryRetrieval retrieval = new StationeryRetrieval();
                     string rid = GetNewRetrievalId();
                     retrieval.RetrievalId = rid;
@@ -212,7 +204,6 @@ namespace Team7ADProject.Service
 
                     List<RequestByIdViewModel> requests = CreateDisbHelpers.GetRequestQuery(context).OrderBy(x => x.RequestId).ToList();
                     
-
                     List<DisbursementByDeptViewModel> disbList = GenerateDisbursement(model);
 
                     foreach (var dept in disbList)
@@ -231,7 +222,7 @@ namespace Team7ADProject.Service
                         foreach (var req in deptReqList)
                         {
                             bool isComplete = true;
-
+                            //NEED TO REVIEW HERE
                             foreach (var item in req.ItemList)
                             {
                                 var disbItem = dept.requestList.FirstOrDefault(x => x.ItemId == item.ItemId);
@@ -243,7 +234,6 @@ namespace Team7ADProject.Service
                                     }
                                     else
                                     {
-
                                         item.Quantity = disbItem.RetrievedQty;
                                         disbItem.RetrievedQty = 0; //0
                                         isComplete = false;
@@ -295,21 +285,22 @@ namespace Team7ADProject.Service
                         }
                     }
 
-                    //dbContextTransaction.Commit();
-                    //return true;
-                //}
-                //catch (Exception)
-                //{
-                    //dbContextTransaction.Rollback();
-                    //return false;
-                //}
+                    dbContextTransaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return false;
+                }
                 
-            //}
+            }
             
         }
 
         public List<DisbursementByDeptViewModel> GetListDisb()
         {
+            LogicDB context = new LogicDB();
             var query = (from x in context.Disbursement
                          join y in context.TransactionDetail
                          on x.DisbursementId equals y.TransactionRef
@@ -426,7 +417,7 @@ namespace Team7ADProject.Service
 
             foreach(var req in requests)
             {
-                var disb = offsets.FirstOrDefault(x => x.RequestId == req.RequestId);
+                var disb = offsets.FirstOrDefault(x => x.RequestId == req.RequestId && x.ItemId == req.ItemId);
                 if (disb != null)
                 {
                     req.Quantity -= (int)disb.Quantity;
