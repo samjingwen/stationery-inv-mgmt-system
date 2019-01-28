@@ -106,7 +106,7 @@ namespace Team7ADProjectApi.Controllers
 
         #region Teh Li Heng Generate Retrieval Android
         [HttpGet]
-        [Authorize(Roles = RoleName.StoreClerk)]
+        //[Authorize(Roles = RoleName.StoreClerk)]
         [Route("api/clerk/getretrievallist")]
         public IHttpActionResult GetRetrievalList()
         {
