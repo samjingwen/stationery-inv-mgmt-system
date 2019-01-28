@@ -233,6 +233,13 @@ namespace Team7ADProjectApi
                 }
 
                 disb.Status = "Void";
+
+                TransactionDetail transactionDetail = context.TransactionDetail.Where(x => x.TransactionRef == disb.DisbursementId).FirstOrDefault();
+                if (transactionDetail != null)
+                {
+                    transactionDetail.Remarks = "Void";
+                }
+
                 context.SaveChanges();
                 return true;
             }
