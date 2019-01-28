@@ -82,7 +82,7 @@ namespace Team7ADProjectApi.Controllers
         //Acknowledge disbursement
         [HttpPost]
         [Route("api/clerk/acknowledgement")]
-        public int UpdateDisb([FromBody] AckListViewModel)
+        public int UpdateDisb([FromBody] AckListViewModel ackListViewModel)
         {
             return 1;
         }

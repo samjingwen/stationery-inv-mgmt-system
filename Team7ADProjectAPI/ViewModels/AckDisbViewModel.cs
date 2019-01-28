@@ -9,12 +9,11 @@ namespace Team7ADProjectApi.ViewModels
     public class AckListViewModel
     {
         public string DisbursedBy { get; set; }
-
-        public List<AckDisbViewModel> AckList {get;set;}
+        public List<AckDisbViewModel> AckList { get; set; }
+    }
 
     public class AckDisbViewModel
     {
-
         public string DisbursementNo { get; set; }
         public string DepartmentId { get; set; }
         public string AcknowledgedBy
