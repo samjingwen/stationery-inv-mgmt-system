@@ -278,6 +278,7 @@ namespace Team7ADProjectApi
 
         #endregion
 
+
         #region Gao Jiaxue
 
         public List<StationeryRequestApiModel> GetAllStationeryRequestList(string userid)
@@ -368,5 +369,82 @@ namespace Team7ADProjectApi
         }
         #endregion
 
+
+
+        #region Author:Lynn Lynn Oo
+        //for List_View
+        public List<ReturntoWarehouseApiModel> GetItemList()
+        {
+            var showList = from x in context.StationeryRequest
+                         join y in context.TransactionDetail on x.RequestId equals y.TransactionRef
+                         join z in context.Stationery on y.ItemId equals z.ItemId
+                         join v in context.CollectionPoint on x.DepartmentId equals v.CollectionDescription
+                           where x.Status == "Void"
+
+                         select new ReturntoWarehouseApiModel
+                         {
+                             ItemId=z.ItemId,
+                             Description = z.Description,
+                             Quantity = y.Quantity,
+                             Department = x.DepartmentId,
+                             Location = v.CollectionDescription,
+                         };
+            return showList.ToList();
+        }
+
+        //for Detail_View
+        public ReturntoWarehouseApiModel ShowSelectedDetail(String itemid)
+
+        {
+            var Detail = from x in context.StationeryRequest
+                         join y in context.TransactionDetail on x.RequestId equals y.TransactionRef
+                         join z in context.Stationery on y.ItemId equals z.ItemId
+                         join v in context.CollectionPoint on x.DepartmentId equals v.CollectionDescription
+                         where x.Status == "Void"
+
+                         select new ReturntoWarehouseApiModel
+                         {
+                             ItemId = z.ItemId,
+                             Description = z.Description,
+                             Quantity = y.Quantity,
+                             Department = x.DepartmentId,
+                             Location=v.CollectionDescription,  
+                         };
+
+
+            List<ReturntoWarehouseApiModel> tt = Detail.ToList();
+            Stationery stnry = new Stationery();
+            TransactionDetail tran = new TransactionDetail();
+            StationeryRequest stnryReq = new StationeryRequest();
+            CollectionPoint clp = new CollectionPoint();
+            ReturntoWarehouseApiModel Model = new ReturntoWarehouseApiModel();
+            {
+                Model.ItemId = itemid;
+                Model.Description = stnry.Description;
+                Model.Quantity = tran.Quantity;
+                Model.Department = stnryReq.DepartmentId;
+                Model.Location = clp.CollectionDescription;
+            }
+            return Model;
+        }
+
+        //Event after clicking Return
+        public ReturntoWarehouseApiModel EventAfterReturn(string itemid)
+        {
+            StationeryRequest stnryReq = new StationeryRequest();
+            TransactionDetail tran = new TransactionDetail();
+            Stationery stnry = new Stationery();
+     
+            ReturntoWarehouseApiModel Model = new ReturntoWarehouseApiModel();
+            {
+                itemid = Model.ItemId;
+               // stnry.QuantityTransit = Model.Quantity;
+                stnry.QuantityWarehouse += Model.Quantity;
+            }
+            return Model;
+        }
+  
+        }
+        #endregion
+
     }
-}
