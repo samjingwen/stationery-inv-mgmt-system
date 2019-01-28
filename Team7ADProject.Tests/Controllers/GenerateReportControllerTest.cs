@@ -8,7 +8,7 @@ using Team7ADProject.ViewModels.GenerateReport;
 namespace Team7ADProject.Tests.Controllers
 {
     [TestClass]
-    public class GenerareReportControllerTest
+    public class GenerateReportControllerTest
     {
         [TestMethod]
         public void TestInitialReportView()
