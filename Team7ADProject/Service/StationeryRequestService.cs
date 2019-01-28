@@ -170,12 +170,12 @@ namespace Team7ADProject.Service
         }
 
 
-        public bool SaveAndDisburse(List<RequestByItemViewModel> model, string userId)
+        public void SaveAndDisburse(List<RequestByItemViewModel> model, string userId)
         {
-            using(var dbContextTransaction = context.Database.BeginTransaction())
-            {
-                try
-                {
+            //using(var dbContextTransaction = context.Database.BeginTransaction())
+            //{
+                //try
+                //{
                     StationeryRetrieval retrieval = new StationeryRetrieval();
                     string rid = GetNewRetrievalId();
                     retrieval.RetrievalId = rid;
@@ -295,16 +295,16 @@ namespace Team7ADProject.Service
                         }
                     }
 
-                    dbContextTransaction.Commit();
-                    return true;
-                }
-                catch (Exception)
-                {
-                    dbContextTransaction.Rollback();
-                    return false;
-                }
+                    //dbContextTransaction.Commit();
+                    //return true;
+                //}
+                //catch (Exception)
+                //{
+                    //dbContextTransaction.Rollback();
+                    //return false;
+                //}
                 
-            }
+            //}
             
         }
 

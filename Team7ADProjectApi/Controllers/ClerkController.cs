@@ -84,9 +84,33 @@ namespace Team7ADProjectApi.Controllers
         [Route("api/clerk/acknowledgement")]
         public int UpdateDisb([FromBody] AckListViewModel ackListViewModel)
         {
+            using (var dbContextTransaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    foreach (var i in ackListViewModel.AckList)
+                    {
+                        var query = _context.Disbursement.Where(x => x.DisbursementNo == i.DisbursementNo).ToList();
+                        foreach (var disb in query)
+                        {
+                            var dept = _context.Department.FirstOrDefault(x => x.DepartmentId == i.DepartmentId);
+                            disb.AcknowledgedBy = dept.DepartmentRepId;
+                            disb.DisbursedBy = i.AcknowledgedBy;
+                            disb.Status = "Acknowledged";
+                            disb.DisbursedBy = ackListViewModel.DisbursedBy;
+                            _context.SaveChanges();
+                        }
+                    }
 
-
-            return 1;
+                    dbContextTransaction.Commit();
+                    return 1;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return 0;
+                }
+            }
         }
 
 
