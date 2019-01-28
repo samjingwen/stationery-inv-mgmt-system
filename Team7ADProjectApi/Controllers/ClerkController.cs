@@ -84,6 +84,8 @@ namespace Team7ADProjectApi.Controllers
         [Route("api/clerk/acknowledgement")]
         public int UpdateDisb([FromBody] AckListViewModel ackListViewModel)
         {
+
+
             return 1;
         }
 
