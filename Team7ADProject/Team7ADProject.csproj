@@ -294,10 +294,12 @@
     <Compile Include="Service\ProcurementService.cs" />
     <Compile Include="Service\StationeryRequestService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Validation\UniqueSupplier.cs" />
     <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\Api\AdjustmentApiViewModel.cs" />
     <Compile Include="ViewModels\Api\RaiseRequestDTO.cs" />
     <Compile Include="ViewModels\AdjustmentViewModel.cs" />
+    <Compile Include="ViewModels\Api\ReturntoWarehouseApiViewModel.cs" />
     <Compile Include="ViewModels\Api\TopSupplierAndPriceDTO.cs" />
     <Compile Include="ViewModels\ChargeBack\DisbursementDetailsViewModel.cs" />
     <Compile Include="ViewModels\CollectionPointViewModel.cs" />
@@ -638,6 +640,7 @@
     <Content Include="Views\Shared\Error401.cshtml" />
     <Content Include="Views\Home\_MenuBox.cshtml" />
     <Content Include="Views\ManageDelegate\Index.cshtml" />
+    <Content Include="Views\ManageRetrieval\ViewDisbursement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Email\" />

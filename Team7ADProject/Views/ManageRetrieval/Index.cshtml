@@ -6,7 +6,7 @@
 
 <div class="custcontainer">
     <h2>Index</h2>
-    @using (Html.BeginForm("GenerateDisbursement", "ManageRetrieval", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("GenerateDisbursement", "ManageRetrieval", FormMethod.Post, new { @class = "form-horizontal", id = "retForm", role = "form" }))
     {
         <table class="table">
             <tr>
@@ -34,72 +34,86 @@
 
             @for (int i = 0; i < Model.Count; i++)
             {
-            <tr>
-                @Html.HiddenFor(x => x[i].ItemId)
-                <td>
-                    @Html.DisplayFor(x => x[i].Description)
-                    @Html.HiddenFor(x => x[i].Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => x[i].QtyInStock)
-                    @Html.HiddenFor(x => x[i].QtyInStock, new { @id = "stock" + Model[i].ItemId })
-                
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+                <tr>
+                    @Html.HiddenFor(x => x[i].ItemId)
+                    <td>
+                        @Html.DisplayFor(x => x[i].Description)
+                        @Html.HiddenFor(x => x[i].Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x[i].QtyInStock)
+                        @Html.HiddenFor(x => x[i].QtyInStock, new { @id = "stock" + Model[i].ItemId, @class = "stockQty" })
+
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
                 for (int j = 0; j < Model[i].requestList.Count; j++)
                 {
-            <tr>
-                <td></td>
-                <td></td>
-                <td>
-                    @Html.DisplayFor(x => x[i].requestList[j].DepartmentId)
-                    @Html.HiddenFor(x => x[i].requestList[j].DepartmentId)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => x[i].requestList[j].DepartmentName)
-                    @Html.HiddenFor(x => x[i].requestList[j].DepartmentName)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => x[i].requestList[j].Quantity)
-                </td>
-                <td>
-                    @Html.EditorFor(x => x[i].requestList[j].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].requestList[j].Quantity, @class = "ret" + Model[i].ItemId } })
-                </td>
-            </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            @Html.DisplayFor(x => x[i].requestList[j].DepartmentId)
+                            @Html.HiddenFor(x => x[i].requestList[j].DepartmentId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x[i].requestList[j].DepartmentName)
+                            @Html.HiddenFor(x => x[i].requestList[j].DepartmentName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x[i].requestList[j].Quantity)
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x[i].requestList[j].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].requestList[j].Quantity, @class = "ret" + Model[i].ItemId } })
+                        </td>
+                    </tr>
                 }
 
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
 
-                <td style="font-weight:bold; font-size: 18px">
-                    @Html.DisplayFor(x => x[i].TotalQty)
+                    <td style="font-weight:bold; font-size: 18px">
+                        @Html.DisplayFor(x => x[i].TotalQty)
 
-                </td>
-                <td style="font-weight:bold; font-size: 18px">
-                    @Html.Label("0", new { @id = "ret" + Model[i].ItemId })
-                </td>
-                <td></td>
-            </tr>
+                    </td>
+                    <td style="font-weight:bold; font-size: 18px">
+                        @Html.Label("0", new { @id = "ret" + Model[i].ItemId, @class = "retQty" })
+                    </td>
+                    <td></td>
+                </tr>
             }
 
         </table>
 
         <input type="submit" value="Generate Disbursement List" class="greenBtn pull-right" />
-    }</div>
+    }
+</div>
 
 
 
 @section scripts{
-<script>
+    <script>
+        var srError = @ViewBag.srError;
+
+        if (srError == 1) {
+            $.notify("Something went wrong. Please try again later.", {
+                globalPosition: "top center",
+                className: "error"
+            });
+        }
+    </script>
+    <script>
         $(document).ready(function () {
+            
+
+
             $('input[type=number]').change(function () {
                 var name = this.className.split(' ')[0];
                 var elements = document.getElementsByClassName(name);
@@ -121,17 +135,60 @@
                         $(this).addClass('valid');
                     }
                 }
-                
-
             });
 
+            $('#retForm').data('validator').settings.submitHandler = function (form) {
+                var ele = document.getElementsByClassName('stockQty');
+                var isValid = true;
+                for (var i = 0; i < ele.length; i++) {
+                    var retval = document.getElementsByClassName('ret' + ele[i].id.substring(5, ele[i].length));
+                    var total = 0;
+                    for (var j = 0; j < retval.length; j++) {
+                        if (!isNaN(retval[j].value) && retval[j].length != 0) {
+                            total += parseInt(retval[j].value);
+                        }
+                    }
+                    if (total > ele[i].value) {
+                        isValid = false;
+                        break;
+                    }
+                }
+                if (isValid) {
+                    form.submit();
+                }
+                else {
+                    
+                    $.notify("Quantity retrieved cannot exceed quantity in stock.", {
+                        globalPosition: "top center",
+                        className: "error"
+                    });
+                    return false;
+                }
+                //form.submit();
+
+                //$.notify("hello", {
+                //    globalPosition: "top center",
+                //    className: "error"
+                //})
+                //        for (var i = 0; i < ele.length; i++) {
+                //            var retval = document.getElementById('ret' + ele[i].id.substring(5, ele[i].length));
+                //            alert(retval.value);
+                //        }
+                //        if (true) {
+                //            //$(".error").html("Your total must sum to 100.")
+                //            return false;
+                //        } else {
+                //            return false;
+                //        }
+                //            //form.submit();
+            };
         });
 
 
 
 
 
-</script>
-    
-    
+    </script>
+
+
 }
