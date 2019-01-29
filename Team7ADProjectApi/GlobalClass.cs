@@ -89,6 +89,43 @@ namespace Team7ADProjectApi
 
         }
 
+        public bool VoidDisbursement(string disbno)
+        {
+            Disbursement disb = context.Disbursement.Where(x => x.DisbursementNo == disbno).FirstOrDefault();
+
+
+
+            if (disb != null)
+            {
+
+                string reqid = disb.RequestId;
+                StationeryRequest req = context.StationeryRequest.Find(reqid);
+                if (req != null)
+                {
+                    req.Status = "Void";
+                }
+
+                disb.Status = "Void";
+
+                TransactionDetail transactionDetail = context.TransactionDetail.Where(x => x.TransactionRef == disb.DisbursementId).FirstOrDefault();
+                if (transactionDetail != null)
+                {
+                    transactionDetail.Remarks = "Void";
+                }
+
+                context.SaveChanges();
+                return true;
+            }
+
+            return false;
+
+
+
+
+            throw new NotImplementedException();
+        }
+
+
         public string getDepId(string eid)
         {
             return context.AspNetUsers.Where(x => x.Id == eid).Select(x => x.DepartmentId).First();
@@ -224,42 +261,7 @@ namespace Team7ADProjectApi
             return false;
         }
 
-        public bool VoidDisbursement(string disbno)
-        {
-            Disbursement disb = context.Disbursement.Where(x=> x.DisbursementNo == disbno).FirstOrDefault();
-
-
-
-            if (disb != null)
-            {
-
-                string reqid = disb.RequestId;
-                StationeryRequest req = context.StationeryRequest.Find(reqid);
-                if (req != null)
-                {
-                    req.Status = "Void";
-                }
-
-                disb.Status = "Void";
-
-                TransactionDetail transactionDetail = context.TransactionDetail.Where(x => x.TransactionRef == disb.DisbursementId).FirstOrDefault();
-                if (transactionDetail != null)
-                {
-                    transactionDetail.Remarks = "Void";
-                }
-
-                context.SaveChanges();
-                return true;
-            }
-
-            return false;
-
-
-
-
-            throw new NotImplementedException();
-        }
-
+        
         //Reject PO
         public bool RejectPO(PurchaseOrder po)
         {

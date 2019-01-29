@@ -61,6 +61,21 @@
 </div>
 @section scripts{
     <script>
+        var successHandler = @ViewBag.successHandler;
+        if (successHandler == 2) {
+            $.notify("Something went wrong. Please try again later.", {
+                globalPosition: "top center",
+                className: "error"
+            });
+        }
+        else if (successHandler == 1) {
+            $.notify("Collection point updated!", {
+                globalPosition: "top center",
+                className: "success"
+            });
+        }
+    </script>
+    <script>
         $(document).ready(function () {
             var cpImg = document.getElementById('cpImage')
 

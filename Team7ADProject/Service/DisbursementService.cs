@@ -49,13 +49,21 @@ namespace Team7ADProject.Service
             return context.AspNetUsers.FirstOrDefault(x => x.Id == userId).Department.CollectionPoint.CollectionDescription;
         }
 
-        public void UpdateCollectionPoint(string userId, int cpId)
+        public bool UpdateCollectionPoint(string userId, int cpId)
         {
             var query = context.AspNetUsers.FirstOrDefault(x => x.Id == userId);
             var dept = query.Department;
             var collPoint = context.CollectionPoint.FirstOrDefault(x => x.CollectionPointId == cpId);
             dept.CollectionPoint = collPoint;
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
 

@@ -19,7 +19,7 @@ namespace Team7ADProject.Controllers
         #region Author: Sam Jing Wen
         DisbursementService disbursementService = DisbursementService.Instance;
         
-        public ActionResult Index()
+        public ActionResult Index(int id = 0)
         {
             LogicDB context = new LogicDB();
             CollectionPointViewModel model = new CollectionPointViewModel();
@@ -31,6 +31,12 @@ namespace Team7ADProject.Controllers
 
             ViewBag.cpId = cpId;
             ViewBag.cpName = cpName;
+
+            if (id == 1)
+                ViewBag.successHandler = 1;
+            else if (id == 2)
+                ViewBag.successHandler = 2;
+
             return View(model);
         }
 
@@ -41,14 +47,18 @@ namespace Team7ADProject.Controllers
 
             int cpId = Convert.ToInt32(model.SelectedCP);
 
-            disbursementService.UpdateCollectionPoint(userId, cpId);
+            bool isSuccess = disbursementService.UpdateCollectionPoint(userId, cpId);
 
-            return RedirectToAction("Index");
+            if (isSuccess)
+            {
+                return RedirectToAction("Index", new { id = 1 });
+            }
+            else
+            {
+                return RedirectToAction("Index", new { id = 2 });
+            }
+
         }
-
-
-
-
         #endregion
 
     }
