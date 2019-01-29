@@ -118,7 +118,7 @@ namespace Team7ADProjectApi.Controllers
 
         [HttpGet]
         [Route("adjustment/email/{amount}")]
-        public IHttpActionResult getEmail(decimal amount)
+        public IHttpActionResult getEmail(double amount)
         {
             return Ok((amount <= -250) ? context.Department.Single(x => x.DepartmentId == "STAT").AspNetUsers2.Email : context.Department.Single(x => x.DepartmentId == "STAT").AspNetUsers1.Email);
         }
