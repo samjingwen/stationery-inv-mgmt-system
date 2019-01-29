@@ -63,6 +63,9 @@ namespace Team7ADProject.ViewModels
             menulist.Add(new SideBarViewModel() { Roles = "Employee", Title = "Stationery Requests", Action = "Index", Controller = "RaiseRequest", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Employee", Title = "Request History", Action = "Index", Controller = "RequisitionHistory", IsAction = true });
 
+            //Acting Head
+            menulist.Add(new SideBarViewModel() { Roles = "Acting Department Head", SubMenu = "Stationery Management", Title = "Stationery Requests", Action = "Index", Controller = "ManageRequest", IsAction = true });
+
             return menulist;
         }
         
