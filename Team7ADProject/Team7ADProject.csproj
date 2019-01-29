@@ -643,7 +643,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Email\" />
-    <Folder Include="Views\Navi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
