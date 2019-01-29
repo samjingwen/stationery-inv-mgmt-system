@@ -105,12 +105,14 @@ namespace Team7ADProjectApi.Providers
 
         public static AuthenticationProperties CreateProperties(string userName, IList<string> s)
         {
-            
-            IDictionary<string, string> data = new Dictionary<string, string>
+
+            IDictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("userName", userName);
+            int count = 0;
+            foreach(var i in s)
             {
-                { "userName", userName },
-                {"roleName",s.First() }
-            };
+                data.Add("roleName" + count, i);
+            }
             return new AuthenticationProperties(data);
         }
     }
