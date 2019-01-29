@@ -60,7 +60,7 @@ namespace Team7ADProjectApi.Controllers
                     StockAdjId = newAdjustId(),
                     PreparedBy = User.Identity.GetUserId(),
                     ApprovedBy = null,
-                    Remarks = "remark",
+                    Remarks = request[0].remark,
                     Date = DateTime.Today
                 };
 

@@ -19,7 +19,7 @@ using Team7ADProject.ViewModels.Api;
 namespace Team7ADProject.Controllers
 {
     //For employee/department rep can view their own requisition histories
-    [Authorize(Roles = "Employee,Department Representative")]
+    [Authorize(Roles = "Store Clerk,Employee,Department Representative")]
     public class RequisitionHistoryController : Controller
     {
         
@@ -30,7 +30,7 @@ namespace Team7ADProject.Controllers
             _context = new LogicDB();
         }
         #region Author:Lynn Lynn Oo || Teh Li Heng
-        [Authorize(Roles = "Employee,Department Representation")]
+        [Authorize(Roles = "Store Clerk,Employee,Department Representative")]
 
         public ActionResult Index()
         {

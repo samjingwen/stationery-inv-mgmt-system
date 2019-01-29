@@ -10,5 +10,7 @@ namespace Team7ADProjectApi.ViewModels
         public string itemId;
 
         public int quantity;
+
+        public string remark;
     }
 }
