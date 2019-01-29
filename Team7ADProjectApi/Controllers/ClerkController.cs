@@ -82,13 +82,36 @@ namespace Team7ADProjectApi.Controllers
         //Acknowledge disbursement
         [HttpPost]
         [Route("api/clerk/acknowledgement")]
-        public int UpdateDisb([FromBody] AckListViewModel ackListViewModel)
+       public int UpdateDisb([FromBody] AckListViewModel ackListViewModel)
         {
-            return 1;
+            using (var dbContextTransaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    foreach (var i in ackListViewModel.AckList)
+                    {
+                        var query = _context.Disbursement.Where(x => x.DisbursementNo == i.DisbursementNo).ToList();
+                        foreach (var disb in query)
+                        {
+                            var dept = _context.Department.FirstOrDefault(x => x.DepartmentId == i.DepartmentId);
+                            disb.AcknowledgedBy = dept.DepartmentRepId;
+                            disb.DisbursedBy = i.AcknowledgedBy;
+                            disb.Status = "Acknowledged";
+                            disb.DisbursedBy = ackListViewModel.DisbursedBy;
+                            _context.SaveChanges();
+                        }
+                    }
+
+                    dbContextTransaction.Commit();
+                    return 1;
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    return 0;
+                }
+            }
         }
-
-
-
 
 
         #endregion
@@ -115,7 +138,7 @@ namespace Team7ADProjectApi.Controllers
 
         #region Teh Li Heng Generate Retrieval Android
         [HttpGet]
-        [Authorize(Roles = RoleName.StoreClerk)]
+        //[Authorize(Roles = RoleName.StoreClerk)]
         [Route("api/clerk/getretrievallist")]
         public IHttpActionResult GetRetrievalList()
         {
