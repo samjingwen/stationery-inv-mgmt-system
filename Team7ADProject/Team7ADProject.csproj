@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -599,7 +600,6 @@
     <Content Include="Views\Role\CreateUsers.cshtml" />
     <Content Include="Views\ManageRep\Index.cshtml" />
     <Content Include="Views\CollectionPoint\Index.cshtml" />
-    <Content Include="Views\CollectionPoint\UpdateCollectionPoint.cshtml" />
     <Content Include="Views\ManageSupplier\Create.cshtml" />
     <Content Include="Views\ManageSupplier\Details.cshtml" />
     <Content Include="Views\ManageSupplier\Edit.cshtml" />
