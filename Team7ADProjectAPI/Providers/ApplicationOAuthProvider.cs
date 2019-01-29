@@ -113,6 +113,7 @@ namespace Team7ADProjectApi.Providers
             {
                 string keyName = "roleName" + count;
                 data.Add(keyName, i);
+                count++;
             }
             return new AuthenticationProperties(data);
         }
