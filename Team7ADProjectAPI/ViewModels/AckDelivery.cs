@@ -7,7 +7,7 @@ using Team7ADProjectApi.Entities;
 namespace Team7ADProjectApi.ViewModels
 {
 
-    #region Author Zan Tun Khne
+    #region Author Zan Tun Khine
     public class AckDelivery
     {
 
@@ -15,6 +15,11 @@ namespace Team7ADProjectApi.ViewModels
 
         //public string PONo { get; set; }
         //public string Status { get; set; }
+        public string OrderedBy { get; set; }
+        public decimal Amount { get; set; }
+
+        //public string SupplierId { get; set; }
+
         #endregion
 
         #region From DeliveryOrder
@@ -30,7 +35,7 @@ namespace Team7ADProjectApi.ViewModels
         #endregion
 
         #region From Stationery 
-
+        public string Description { get; set; }
         public string ItemId { get; set; }
         public int QuantityWarehouse { get; set; }
 
@@ -49,6 +54,7 @@ namespace Team7ADProjectApi.ViewModels
 
         public List<TransactionDetail> PODetails { get; set; }
         public List<String> PendingDeliveryPOs { get; set; }
+        public decimal? UnitAmount { get; set; }
 
     }
 

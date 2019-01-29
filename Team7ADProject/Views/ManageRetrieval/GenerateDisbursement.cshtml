@@ -6,8 +6,6 @@
 <div class="custcontainer">
     <h2>GenerateDisbursement</h2>
 
-    @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
         <table class="table">
             <tr>
 
@@ -32,38 +30,38 @@
                     <td>@Html.DisplayFor(x => x[i].DepartmentName)</td>
                     <td>
                         @Html.DisplayFor(x => x[i].CollectionDescription)
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            for (int j = 0; j < Model[i].requestList.Count; j++)
-            {
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                for (int j = 0; j < Model[i].requestList.Count; j++)
+                {
+                    <tr>
+                        <td></td>
+                        <td>
+                            @Html.HiddenFor(x => x[i].requestList[j].ItemId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x[i].requestList[j].Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x[i].requestList[j].RetrievedQty)
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+
                 <tr>
                     <td></td>
-                    <td>
-                        @Html.HiddenFor(x => x[i].requestList[j].ItemId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(x => x[i].requestList[j].Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(x => x[i].requestList[j].RetrievedQty)
-                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                 </tr>
             }
 
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        }
-
         </table>
-    }
+
 </div>
