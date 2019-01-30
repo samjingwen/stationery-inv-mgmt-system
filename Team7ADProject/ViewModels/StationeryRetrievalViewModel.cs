@@ -108,6 +108,21 @@ namespace Team7ADProject.ViewModels
                 }
             }
         }
+        public string CollectionTime
+        {
+            get
+            {
+                if (DepartmentId != null)
+                {
+                    LogicDB context = new LogicDB();
+                    return context.Department.FirstOrDefault(x => x.DepartmentId == DepartmentId).CollectionPoint.Time.ToString("hh:mm tt");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
         public List<BreakdownByItemViewModel> requestList { get; set; }
     }
 
