@@ -527,55 +527,55 @@ namespace Team7ADProjectApi
         //}
 
         
-        //public string ReturnTo(ReturntoWarehouseApiModel apiModel)
-        //{
+        public string ReturnTo(ReturntoWarehouseApiModel apiModel)
+        {
            
-        //    TransactionDetail transactionInDb = context.TransactionDetail.FirstOrDefault(m => m.TransactionRef == apiModel.RequestId && m.ItemId == apiModel.ItemId && m.Remarks == "Void");
-        //    // Console.WriteLine("ttttttttttttttttttttttttteeeeeeeeeeeeeeeeesssssssssssssssttttttttttttt");
-        //    if (transactionInDb == null)
-        //        return "error";
+            TransactionDetail transactionInDb = context.TransactionDetail.FirstOrDefault(m => m.TransactionRef == apiModel.RequestId && m.ItemId == apiModel.ItemId && m.Remarks == "Void");
+            // Console.WriteLine("ttttttttttttttttttttttttteeeeeeeeeeeeeeeeesssssssssssssssttttttttttttt");
+            if (transactionInDb == null)
+                return "error";
 
-        //    else
-        //    {
-        //        string status = "fail";
-        //        var stationer = context.StationeryRequest.Where(x => x.RequestId == transactionInDb.TransactionRef).First();
-        //        if (stationer.Status == "Void")
-        //                {
-        //            var item = context.Stationery.Where(x => x.ItemId == transactionInDb.ItemId).FirstOrDefault();
-        //                  item.QuantityWarehouse += transactionInDb.Stationery.QuantityTransit;
-        //                  item.QuantityTransit -= transactionInDb.Stationery.QuantityTransit;
-        //                   transactionInDb.Remarks = "Returned";
-        //            stationer.Status = "Returned";
+            else
+            {
+                string status = "fail";
+                var stationer = context.StationeryRequest.Where(x => x.RequestId == transactionInDb.TransactionRef).First();
+                if (stationer.Status == "Void")
+                        {
+                    var item = context.Stationery.Where(x => x.ItemId == transactionInDb.ItemId).FirstOrDefault();
+                          item.QuantityWarehouse += transactionInDb.Stationery.QuantityTransit;
+                          item.QuantityTransit -= transactionInDb.Stationery.QuantityTransit;
+                           transactionInDb.Remarks = "Returned";
+                    stationer.Status = "Returned";
 
-        //            //check if all items are returned for stationery request
-        //            //       StationeryRequest stationeryRequestInDb = context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
-        //            //       bool allReturned = true;
-        //            //       foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
-        //            //        {
-        //            //           if (current.Remarks != "Returned")
-        //            //            {
-        //            //              stationeryRequestInDb.Status = "Partially Returned";
-        //            //              allReturned = false;
-        //            //              break;
-        //            //            }
-        //            //        }
-        //            //if (allReturned)
-        //            //{
-        //            //    stationeryRequestInDb.Status = "Returned";
-        //            //    context.SaveChanges();
-        //            //    status = "success";
+                    //check if all items are returned for stationery request
+                    //       StationeryRequest stationeryRequestInDb = context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
+                    //       bool allReturned = true;
+                    //       foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
+                    //        {
+                    //           if (current.Remarks != "Returned")
+                    //            {
+                    //              stationeryRequestInDb.Status = "Partially Returned";
+                    //              allReturned = false;
+                    //              break;
+                    //            }
+                    //        }
+                    //if (allReturned)
+                    //{
+                    //    stationeryRequestInDb.Status = "Returned";
+                    //    context.SaveChanges();
+                    //    status = "success";
 
-        //            //}
-        //            context.SaveChanges();
-        //            status = "success";
-        //        }
-        //        return status;
+                    //}
+                    context.SaveChanges();
+                    status = "success";
+                }
+                return status;
 
-        //    }
-        //   // var stationer = context.StationeryRequest.Where(x => x.RequestId == transactionInDb.TransactionRef).First();
+            }
+           // var stationer = context.StationeryRequest.Where(x => x.RequestId == transactionInDb.TransactionRef).First();
             
-        ////
-        //}
+        //
+        }
 
     }
     #endregion
