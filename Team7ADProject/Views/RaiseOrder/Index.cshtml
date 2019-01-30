@@ -10,14 +10,13 @@
 
 <div class="custcontainer">
     <h2>View Purchase Orders</h2>
+    <div>
+        <input type="submit" class="blueBtn pull-right" style="width:90px" value="Raise PO" onclick="location.href='@Url.Action("RaisePo", "RaiseOrder")'" />
+    </div>
+    <br />
+    <br />
 
-    <p>
-        @Html.ActionLink("Raise PO", "RaisePo")
-
-    </p>
-    <p>
-        Ordered By : @ViewBag.CurrentUser
-    </p>
+     
     <div class="row">
         <div>
             <table id="poTable" class="cusTable">

@@ -7,8 +7,6 @@
                 Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("ApproveOrReject", "ApproveAdjustment"))
-{
     <div class="custcontainer">
         <div class="row">
             <div>
@@ -41,18 +39,20 @@
                     <tbody>
                         @{
                             decimal? amount = 0;
+                            decimal? unitamount = 0;
 
                             foreach (var adj in Model.AdjustmentDetails)
                             {
+                                unitamount = (Math.Abs(adj.Quantity) * adj.UnitPrice);
                                 <tr>
                                     <td>@adj.ItemId</td>
                                     <td>@adj.Stationery.Description</td>
                                     <td>@adj.Quantity</td>
                                     <td>$@adj.UnitPrice.ToString()</td>
-                                    <td>$@(adj.Quantity * adj.UnitPrice)</td>
+                                    <td>$@unitamount</td>
                                     <td>@adj.Remarks</td>
                                 </tr>
-                                amount += adj.Quantity * adj.UnitPrice;
+                                amount += unitamount;
                             }
                         }
                         <tr>
@@ -65,30 +65,32 @@
                         </tr>
                     </tbody>
                 </table>
-                @{
-                    if ((@Model.StockAdjustment.ApprovedBy == null) && (amount <= 250) && (User.IsInRole("Store Supervisor")))
-                    {
-                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "btn btn-primary", onclick = "ApproveAlert()" })
-                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "btn btn-primary", onclick = "RejectAlert" })
-                    }
 
-                    if ((@Model.StockAdjustment.ApprovedBy == null) && (User.IsInRole("Store Manager")))
-                    {
-                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "btn btn-primary", onclick = "ApproveAlert()" })
-                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "btn btn-primary", onclick = "RejectAlert" })
-                    }
-                }
+                <div class="modal-footer">
+                    @{
+                        if ((@Model.StockAdjustment.ApprovedBy == null) && (Math.Abs(amount.Value) <= 250) && (User.IsInRole("Store Supervisor")))
+                        {
+                            @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @style = "width:80px", onclick = "ApproveAlert()" })
+                            @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @style = "width:80px", onclick = "RejectAlert()" })
+                        }
 
-                <br />
+                        if ((@Model.StockAdjustment.ApprovedBy == null) && (User.IsInRole("Store Manager")))
+                        {
+                            @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @style = "width:80px", onclick = "ApproveAlert()" })
+                            @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @style = "width:80px", onclick = "RejectAlert()" })
+                        }
+                    }
+                </div>
+                    <br />
+                </div>
             </div>
-        </div>
     </div>
     <script>
             function ApproveAlert() {
-                alert("Approved Successfully")
+                alert("Approved Successfully.")
             }
             function RejectAlert() {
-                alert("Rejected Successfully")
+                alert("Rejected Successfully.")
             }
     </script>
-}
+
