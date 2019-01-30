@@ -53,8 +53,9 @@
                     </tbody>
                 </table>
                 @if (@Model.PurchaseOrder.Status == "Pending Approval")
-                {@Html.ActionLink("Approve", "Approve", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "btn btn-primary", onclick = "ApproveAlert()" })
-                @Html.ActionLink("Reject", "Reject", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "btn btn-primary", onclick = "RejectAlert" })}
+                {@Html.ActionLink("Approve", "Approve", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "greenBtn pull-right", onclick = "ApproveAlert()" })
+                   
+                @Html.ActionLink("Reject", "Reject", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "redBtn pull-right", onclick = "RejectAlert" })}
                 <br />
             </div>
         </div>
