@@ -81,19 +81,66 @@ namespace Team7ADProject.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    //Check if user is acting department head, remove role if expired
-                    var user = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity;
-                    var userId = user.GetUserId();
+                    //Check doa for list of valid acting department heads
                     LogicDB context = new LogicDB();
                     var todayDate = DateTime.Now.Date;
-                    var query = context.DelegationOfAuthority.Where(x => x.EndDate >= todayDate && x.StartDate <= todayDate && x.DelegatedTo == userId).FirstOrDefault();
-                    if (query == null)
+                    ApplicationDbContext appDb = new ApplicationDbContext();
+                    UserManager<ApplicationUser> _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                    var doaList = context.DelegationOfAuthority.Where(x => x.StartDate <= todayDate && x.EndDate >= todayDate).ToList();
+                    foreach(var doa in doaList)
                     {
-                        ApplicationDbContext appDb = new ApplicationDbContext();
-                        UserManager<ApplicationUser> _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                        //UserManager<ApplicationUser> _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(appDb));
-                        _userManager.RemoveFromRole(userId, "Acting Department Head");
+                        if (_userManager.IsInRole(doa.DelegatedTo, "Acting Department Head"))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            using (var dbContextTransaction = context.Database.BeginTransaction())
+                            {
+                                try
+                                {
+                                    if (_userManager.IsInRole(doa.DelegatedTo, "Employee"))
+                                    {
+                                        _userManager.AddToRole(doa.DelegatedTo, "Acting Department Head");
+                                        _userManager.RemoveFromRole(doa.DelegatedTo, "Employee");
+                                    }
+                                    dbContextTransaction.Commit();
+                                }
+                                catch (Exception)
+                                {
+                                    dbContextTransaction.Rollback();
+
+                                }
+                            }
+                        }
                     }
+                    //check doa for list of invalid acting department heads
+                    var doaExpList = context.DelegationOfAuthority.Where(x => x.StartDate > todayDate || x.EndDate < todayDate).ToList();
+                    foreach(var doaExp in doaExpList)
+                    {
+                        if (_userManager.IsInRole(doaExp.DelegatedTo, "Acting Department Head"))
+                        {
+                            using (var dbContextTransaction = context.Database.BeginTransaction())
+                            {
+                                try
+                                {
+                                    _userManager.AddToRole(doaExp.DelegatedTo, "Employee");
+                                    _userManager.RemoveFromRole(doaExp.DelegatedTo, "Acting Department Head");
+                                    dbContextTransaction.Commit();
+                                }
+                                catch (Exception)
+                                {
+                                    dbContextTransaction.Rollback();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
