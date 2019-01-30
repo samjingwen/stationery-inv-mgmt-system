@@ -18,9 +18,10 @@
     <p>
         Ordered By : @ViewBag.CurrentUser
     </p>
-        <div class="row">
-            <div>
-                <table class="cusTable">
+    <div class="row">
+        <div>
+            <table id="poTable" class="cusTable">
+                <thead>
                     <tr>
                         <th>
                             PO Number
@@ -38,7 +39,8 @@
                             Status
                         </th>
                     </tr>
-
+                </thead>
+                <tbody>
                     @foreach (var item in Model)
                     {
                         <tr>
@@ -62,10 +64,20 @@
 
                         </tr>
                     }
+                </tbody>
 
-
-                </table>
-            </div>
+            </table>
         </div>
+    </div>
 
 </div>
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $("#poTable").DataTable();
+    </script>
+
+
+
+}

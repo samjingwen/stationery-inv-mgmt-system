@@ -12,8 +12,8 @@
 {
     <div class="custcontainer">
         <div class="row">
-            <div >
-                <table  class="cusTable">
+            <div>
+                <table id="ApprovePOTable" class="cusTable">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -33,7 +33,7 @@
                                 <td>@po.Supplier.SupplierName</td>
                                 <td>@po.AspNetUsers1.EmployeeName</td>
                                 <td>$@po.Amount</td>
-                                @{ 
+                                @{
                                     string className = "";
                                     if (po.Status == "Completed")
                                     { className = "action - button shadow animate blue"; }
@@ -43,8 +43,8 @@
                                     { className = "action - button shadow animate yellow"; }
                                     if (po.Status == "Partially Fulfilled")
                                     { className = "action - button shadow animate green"; }
-                                    }
-                                <td>@Html.ActionLink(po.Status, "PODetails", "ApproveOrder", new {poNo = po.PONo }, new {@class = className }) </td>
+                                }
+                                <td>@Html.ActionLink(po.Status, "PODetails", "ApproveOrder", new { poNo = po.PONo }, new { @class = className }) </td>
                             </tr>
                         }
                     </tbody>
@@ -54,4 +54,14 @@
         </div>
     </div>
 }
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $("#ApprovePOTable").DataTable();
 
+    </script>
+
+
+
+}
