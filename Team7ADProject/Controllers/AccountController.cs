@@ -95,7 +95,7 @@ namespace Team7ADProject.Controllers
                         }
                         else
                         {
-                            using (var dbContextTransaction = context.Database.BeginTransaction())
+                            using (var dbContextTransaction = appDb.Database.BeginTransaction())
                             {
                                 try
                                 {
@@ -120,7 +120,7 @@ namespace Team7ADProject.Controllers
                     {
                         if (_userManager.IsInRole(doaExp.DelegatedTo, "Acting Department Head"))
                         {
-                            using (var dbContextTransaction = context.Database.BeginTransaction())
+                            using (var dbContextTransaction = appDb.Database.BeginTransaction())
                             {
                                 try
                                 {
