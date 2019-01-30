@@ -386,30 +386,12 @@ namespace Team7ADProjectApi
 
         public List<StationeryRequestApiModel> GetAllStationeryRequestList(string userid)
         {
-            //var result = from m in context.TransactionDetail
-            //             join x in context.StationeryRequest 
-            //             on m.TransactionRef equals x.RequestId
-            //             join y in context.AspNetUsers
-            //             on x.RequestedBy equals y.Id
-            //             join z in context.Department
-            //             on y.DepartmentId equals z.DepartmentId
-            //             where y.Id == userid
-            //             //&&x.Status== "Pending Approval"
-            //             select new StationeryRequestApiModel {
-            //                 RequestId = x.RequestId,
-            //                 RequestedBy = x.AspNetUsers1.EmployeeName,
-            //                 RequestDate = x.RequestDate,
-            //                 ApprovedBy=x.ApprovedBy,
-            //                 DepartmentId=x.DepartmentId,
-            //                 Status=x.Status,               
-            //             };
+            var user = from u in context.AspNetUsers where u.Id == userid select u;
+            AspNetUsers aspNetUsers = user.First();
             var result = from x in context.StationeryRequest
                          join y in context.AspNetUsers
                          on x.RequestedBy equals y.Id
-                         join z in context.Department
-                         on y.DepartmentId equals z.DepartmentId
-                         where y.Id == userid
-                         //&&x.Status== "Pending Approval"
+                         where y.DepartmentId==aspNetUsers.DepartmentId
                          select new StationeryRequestApiModel
                          {
                              RequestId = x.RequestId,
