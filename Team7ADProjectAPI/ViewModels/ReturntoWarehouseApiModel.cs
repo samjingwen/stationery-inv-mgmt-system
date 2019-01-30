@@ -9,8 +9,15 @@ namespace Team7ADProjectApi.ViewModels
     public class ReturntoWarehouseApiModel
     {
         public string RequestId { get; set; } 
-        public string ItemId { get; set; }
-        public List<TransactionDetail> TransactionDetails { get; set; }
+        public string DepartmentName { get; set; }
+        public List<ReturnItemViewModel> itemViewModels { get; set; }
+
+        public ReturntoWarehouseApiModel()
+        {
+            RequestId = null;
+            DepartmentName = null;
+            itemViewModels = new List<ReturnItemViewModel>();
+        }
 
     }
 }
