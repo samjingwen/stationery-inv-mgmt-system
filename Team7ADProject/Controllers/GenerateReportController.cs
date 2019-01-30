@@ -144,9 +144,7 @@ namespace Team7ADProject.Controllers
             LogicDB context = new LogicDB();
             String userId = User.Identity.GetUserId();
 
-            String DID = context.Department.
-                        Where(x => x.DepartmentHeadId == userId).
-                        First().DepartmentId;
+            String DID = context.AspNetUsers.Where(x => x.Id == userId).First().DepartmentId;
             int r = 0;
 
             #region Build VM
