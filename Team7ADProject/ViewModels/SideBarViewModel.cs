@@ -34,13 +34,14 @@ namespace Team7ADProject.ViewModels
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Management", Title = "Stock Adjustment", Action = "Index", Controller = "ApproveAdjustment", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Management", Title = "Supplier Management", Action = "Index", Controller = "ManageSupplier", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", Title = "Collection Point", Action = "Index", Controller = "ManagePoint", IsAction = true });
-            menulist.Add(new SideBarViewModel() { Roles = "Store Manager", Title = "Reporting", Action = "GenerateDashboard", Controller = "GenerateReport", IsAction = true });
+            //menulist.Add(new SideBarViewModel() { Roles = "Store Manager", Title = "Reporting", Action = "GenerateDashboard", Controller = "GenerateReport", IsAction = true });
 
             //Store Clerk
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", Title = "Collection Point", Action = "Index", Controller = "ManagePoint", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Purchase Orders", Action = "Index", Controller = "RaiseOrder", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Raise Stock Adjustment", Action = "Index", Controller = "RaiseAdjustment", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Stationery Retrievals", Action = "Index", Controller = "ManageRetrieval", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "View Disbursements", Action = "ViewDisbursement", Controller = "ManageRetrieval", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Validate Invoice", Action = "Index", Controller = "ValidateInvoice", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", Title = "Stationery Requests", Action = "Index", Controller = "RaiseRequest", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", Title = "Request History", Action = "Index", Controller = "RequisitionHistory", IsAction = true });
@@ -51,6 +52,7 @@ namespace Team7ADProject.ViewModels
             menulist.Add(new SideBarViewModel() { Roles = "Department Head", SubMenu = "Stationery Management", Title = "Request History", Action = "Index", Controller = "History", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Department Head", SubMenu = "Stationery Management", Title = "Collection Point", Action = "Index", Controller = "ManagePostponeCollectionDateDepartment", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Department Head", Title = "Charge Back", Action = "ChargeBack", Controller = "ChargeBack", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Department Head", Title = "Reporting", Action = "GenerateDashboard", Controller = "GenerateReport", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Department Head", SubMenu = "Department Management", Title = "Manage Representative", Action = "Index", Controller = "ManageRep", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Department Head", SubMenu = "Department Management", Title = "Delegate Acting Head", Action = "Index", Controller = "ManageDelegate", IsAction = true });
 

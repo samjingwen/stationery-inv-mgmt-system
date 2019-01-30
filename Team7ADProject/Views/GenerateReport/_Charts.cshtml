@@ -21,7 +21,9 @@
             animationEnabled: true,
             theme: "light1",
             exportEnabled: true,
-            title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.title)) },
+            title: {
+                text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.title)),
+            fontSize: 16.5},
             axisY: { valueFormatString: "#,###", prefix: "$" },
             data: [{
                 type: "bar",
@@ -42,11 +44,7 @@
                     showInLegend: true,
                     name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[0].label)),
                     dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[0].datapoint))
-                }@*, {type: "line",
-                    showInLegend: true,
-                    name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[1].label)),
-                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[1].datapoint))
-                    }*@]
+                }]
         });
 
         var namearr = new Array();
