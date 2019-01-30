@@ -36,23 +36,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var po in Model.PODetails)
-                            {
-                                <tr>
-                                    <td>@po.ItemId</td>
-                                    <td>@po.Stationery.Description</td>
-                                    <td>@po.Quantity</td>
-                                    <td>$@po.UnitPrice.ToString()</td>
-                                    <td>$@(po.Quantity * po.UnitPrice)</td>
-                                </tr>
+                            @{
+                                decimal? unitamount = 0;
+                                decimal? amount = 0;
+
+
+                                foreach (var po in Model.PODetails)
+                                {
+                                    unitamount = po.Quantity * po.UnitPrice;
+                                    <tr>
+                                        <td>@po.ItemId</td>
+                                        <td>@po.Stationery.Description</td>
+                                        <td>@po.Quantity</td>
+                                        <td>$@po.UnitPrice.ToString()</td>
+                                        <td>$@unitamount</td>
+                                    </tr>
+                                    amount += unitamount;
+                                }
                             }
+
+
                             <tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td><strong>Total:</strong></td>
                                 <td>
-                                    <strong>$@Model.PurchaseOrder.Amount</strong>
+                                    <strong>$@amount</strong>
                                 </td>
                             </tr>
                         </tbody>
