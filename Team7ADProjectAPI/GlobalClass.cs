@@ -511,8 +511,9 @@ namespace Team7ADProjectApi
         
         public string ReturnTo(ReturntoWarehouseApiModel apiModel)
         {
-           
-            TransactionDetail transactionInDb = context.TransactionDetail.FirstOrDefault(m => m.TransactionRef == apiModel.RequestId && m.ItemId == apiModel.ItemId && m.Remarks == "Void");
+
+            //TransactionDetail transactionInDb = context.TransactionDetail.FirstOrDefault(m => m.TransactionRef == apiModel.RequestId && m.ItemId == apiModel.ItemId && m.Remarks == "Void");
+            TransactionDetail transactionInDb = context.TransactionDetail.FirstOrDefault(m => m.TransactionRef == apiModel.RequestId  && m.Remarks == "Void");
             // Console.WriteLine("ttttttttttttttttttttttttteeeeeeeeeeeeeeeeesssssssssssssssttttttttttttt");
             if (transactionInDb == null)
                 return "error";
