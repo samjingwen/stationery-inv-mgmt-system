@@ -23,9 +23,9 @@
                         </a>
 
                         <span style="display: block;float:right;margin-left:10px">
-                            <button data-stationery-id="@cp.RequestID" style="margin-top:-7px" class="js-approve btn btn-primary">Approve</button>
+                            <button data-stationery-id="@cp.RequestID" style="margin-top:-7px" class="js-approve btn btn-primary greenBtn">Approve</button>
                             <span id="rejectModal">
-                                <button data-stationery-id="@cp.RequestID" style="margin-top:-7px" class="js-reject btn btn-primary">Reject Request</button>
+                                <button data-stationery-id="@cp.RequestID" style="margin-top:-7px" class="js-reject btn btn-primary redBtn">Reject Request</button>
                             </span>
                         </span>
                         <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" >
@@ -106,7 +106,7 @@
               </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="saveReject" type="submit" class="btn btn-danger">Reject Request</button>
+                    <button id="saveReject" type="submit" class="redBtn">Reject Request</button>
                 </div>
             </form>
 
@@ -139,7 +139,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="saveAprove" type="submit" class="btn btn-danger">Approve Request</button>
+                    <button id="saveAprove" type="submit" class="greenBtn">Approve Request</button>
                 </div>
             </form>
 
@@ -159,7 +159,7 @@
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',
                             type: 'POST',
-                            url: "Edit",
+                            url: "../ManageRequest/Edit",
                             data: data,
                             success: function (result) {
                                 //alert(result);
