@@ -2,64 +2,92 @@
 @{
     ViewBag.Title = "ViewDisbursement";
 }
-
-<h2>ViewDisbursement</h2>
-
-
-<table class="table">
-    <tr>
-
-        <th>
-            @Html.Label("Department Name")
-        </th>
-        <th>@Html.Label("Collection Point")</th>
-
-        <th>
-            @Html.Label("Item Name")
-        </th>
-
-        <th>
-            @Html.Label("Quantity")
-        </th>
-    </tr>
-
-    @for (int i = 0; i < Model.Count; i++)
-    {
-        <tr>
-            @Html.HiddenFor(x => x[i].DepartmentId)
-            <td>@Html.DisplayFor(x => x[i].DepartmentName)</td>
-            <td>
-                @Html.DisplayFor(x => x[i].CollectionDescription)
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        for (int j = 0; j < Model[i].requestList.Count; j++)
-        {
-            <tr>
-                <td></td>
-                <td>
-                    @Html.HiddenFor(x => x[i].requestList[j].ItemId)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => x[i].requestList[j].Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => x[i].requestList[j].Quantity)
-                </td>
-                <td></td>
-            </tr>
+<head>
+    <style type="text/css" media="print" >
+        body {
+            visibility: hidden;
         }
 
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    }
+        .print {
+            visibility: visible;
+        }
+        .unprint{
+            visibility: hidden;
+        }
+    </style>
 
-</table>
+</head>
+<body>
+    <div class="print">
+        <h2>ViewDisbursement</h2>
+        <a class="btn btn-primary btn-lg unprint" onclick="printFunction()" style="float:right"><i class="fa fa-print"></i></a>
+
+        
+        <table class="table">
+            <tr>
+
+                <th>
+                    @Html.Label("Department Name")
+                </th>
+                <th>@Html.Label("Collection Point")</th>
+
+                <th>
+                    @Html.Label("Item Name")
+                </th>
+                <th>
+                    @Html.Label("Quantity")
+                </th>
+                <th></th>
+
+            </tr>
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    @Html.HiddenFor(x => x[i].DepartmentId)
+                    <td>@Html.DisplayFor(x => x[i].DepartmentName)</td>
+                    <td>
+                        @Html.DisplayFor(x => x[i].CollectionDescription)
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                for (int j = 0; j < Model[i].requestList.Count; j++)
+                {
+                    <tr>
+                        <td></td>
+                        <td>
+                            @Html.HiddenFor(x => x[i].requestList[j].ItemId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x[i].requestList[j].Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x[i].requestList[j].Quantity)
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</body>
+@section scripts{
+    <script>
+        function printFunction() {
+            window.print();
+        }
+    </script>
+
+
+}

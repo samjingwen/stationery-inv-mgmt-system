@@ -115,5 +115,12 @@ namespace Team7ADProjectApi.Controllers
             int newRequestId = lastRequestId + 1;
             return newRequestId;
         }
+
+        [HttpGet]
+        [Route("adjustment/email/{amount}")]
+        public IHttpActionResult getEmail(double amount)
+        {
+            return Ok((amount <= -250) ? context.Department.Single(x => x.DepartmentId == "STAT").AspNetUsers2.Email : context.Department.Single(x => x.DepartmentId == "STAT").AspNetUsers1.Email);
+        }
     }
 }

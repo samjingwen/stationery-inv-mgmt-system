@@ -49,11 +49,8 @@ namespace Team7ADProject.Controllers
 
         public ActionResult ViewDisbursement()
         {
-
             List<DisbursementByDeptViewModel> model = srService.GetListDisb();
             return View(model);
-
-
         }
         
 

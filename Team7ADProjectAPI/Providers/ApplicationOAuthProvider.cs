@@ -111,7 +111,9 @@ namespace Team7ADProjectApi.Providers
             int count = 0;
             foreach(var i in s)
             {
-                data.Add("roleName" + count, i);
+                string keyName = "roleName" + count;
+                data.Add(keyName, i);
+                count++;
             }
             return new AuthenticationProperties(data);
         }

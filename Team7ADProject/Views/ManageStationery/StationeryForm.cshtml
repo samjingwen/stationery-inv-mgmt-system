@@ -130,48 +130,7 @@
                     </div>
                 </div>
             </div>
-            @*<tr>
-                    <td>@Html.LabelFor(m => m.FirstSupplierId)</td>
-                    <td>
-                        @Html.DropDownListFor(m => m.FirstSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control", id = "team1" })
-                        @Html.ValidationMessageFor(m => m.FirstSupplierId)
-                    </td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(m => m.FirstSuppPrice)</td>
-                    <td>
-                        @Html.TextBoxFor(m => m.FirstSuppPrice, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.FirstSuppPrice)
-                    </td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(m => m.SecondSupplierId)</td>
-                    <td>
-                        @Html.DropDownListFor(m => m.SecondSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control", id = "team2" })
-                        @Html.ValidationMessageFor(m => m.SecondSupplierId)
-                    </td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(m => m.SecondSuppPrice)</td>
-                    <td>
-                        @Html.TextBoxFor(m => m.SecondSuppPrice, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.SecondSuppPrice)
-                    </td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(m => m.ThirdSupplierId)</td>
-                    <td>
-                        @Html.DropDownListFor(m => m.ThirdSupplierId, new SelectList(Model.Suppliers, "SupplierId", "SupplierName"), "Select Unit", new { @class = "form-control", id = "team3" })
-                        @Html.ValidationMessageFor(m => m.ThirdSupplierId)
-                    </td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(m => m.ThirdSuppPrice)</td>
-                    <td>
-                        @Html.TextBoxFor(m => m.ThirdSuppPrice, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.ThirdSuppPrice)
-                    </td>
-                </tr>*@
+ 
             @Html.HiddenFor(m => m.ItemId)
 
         </div>
