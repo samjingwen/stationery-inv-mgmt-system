@@ -62,14 +62,43 @@ namespace Team7ADProjectApi.Controllers
             return Ok(apiModels);
         }
 
-        //[HttpPost]
-        //[Route("api/returntowarehouse/return")]
-        //public IHttpActionResult ReturnItem([FromBody]ReturntoWarehouseApiModel apiModel)
-        //{
-        //    GlobalClass gc = new GlobalClass();
-        //    string status = gc.ReturnTo(apiModel);
-        //    return Ok(status);
-        //}
+        [Route("~/api/returntowarehouse/return")]
+        [HttpPost]
+        [Authorize(Roles = RoleName.StoreClerk)]
+        public IHttpActionResult ReturnItem(ReturnToWarehouseSetApiModel apiModel)
+        {
+            string status = "fail";
+            StationeryRequest stationeryRequestInDb =
+                _context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
+
+            TransactionDetail transactionDetailInDb =
+                stationeryRequestInDb.TransactionDetail.FirstOrDefault(m =>
+                    m.ItemId == apiModel.ItemId && m.Quantity == apiModel.Quantity);
+            transactionDetailInDb.Remarks = "Returned";
+            _context.SaveChanges();
+            stationeryRequestInDb = _context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
+
+            //Checking if all items are returned
+            bool allReturned = true;
+            foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
+            {
+                if (current.Remarks != "Void")
+                {
+                    allReturned = false;
+                    break;
+                }
+            }
+
+            if (allReturned)
+            {
+                stationeryRequestInDb.Status = "Returned";
+
+                Disbursement disbursementInDb =
+                    _context.Disbursement.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
+                disbursementInDb.Status = "Returned";
+            }
+            return Ok(status);
+        }
 
         #endregion
     }
