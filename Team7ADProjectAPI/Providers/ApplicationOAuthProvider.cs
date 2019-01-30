@@ -41,17 +41,63 @@ namespace Team7ADProjectApi.Providers
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
-            //Check if ADH has expired, remove role if expired
-            var userId = user.Id;
+
+            //Check doa for list of valid acting department heads
             LogicDB dbContext = new LogicDB();
             var todayDate = DateTime.Now.Date;
-            var query = dbContext.DelegationOfAuthority.Where(x => x.EndDate >= todayDate && x.StartDate <= todayDate && x.DelegatedTo == userId).FirstOrDefault();
-            if (query == null)
+            ApplicationDbContext appDb = new ApplicationDbContext();
+            var doaList = dbContext.DelegationOfAuthority.Where(x => x.StartDate <= todayDate && x.EndDate >= todayDate).ToList();
+            foreach (var doa in doaList)
             {
-                ApplicationDbContext appDb = new ApplicationDbContext();
-                //UserManager<ApplicationUser> _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                //UserManager<ApplicationUser> _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(appDb));
-                userManager.RemoveFromRole(userId, "Acting Department Head");
+                if (userManager.IsInRole(doa.DelegatedTo, "Acting Department Head"))
+                {
+                    continue;
+                }
+                else
+                {
+                    using (var dbContextTransaction = appDb.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            if (userManager.IsInRole(doa.DelegatedTo, "Employee"))
+                            {
+                                userManager.AddToRole(doa.DelegatedTo, "Acting Department Head");
+                                userManager.RemoveFromRole(doa.DelegatedTo, "Employee");
+                            }
+                            dbContextTransaction.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            dbContextTransaction.Rollback();
+
+                        }
+                    }
+                }
+            }
+            //check doa for list of invalid acting department heads
+            var doaExpList = dbContext.DelegationOfAuthority.Where(x => x.StartDate > todayDate || x.EndDate < todayDate).ToList();
+            foreach (var doaExp in doaExpList)
+            {
+                if (userManager.IsInRole(doaExp.DelegatedTo, "Acting Department Head"))
+                {
+                    using (var dbContextTransaction = appDb.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            userManager.AddToRole(doaExp.DelegatedTo, "Employee");
+                            userManager.RemoveFromRole(doaExp.DelegatedTo, "Acting Department Head");
+                            dbContextTransaction.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            dbContextTransaction.Rollback();
+                        }
+                    }
+                }
+                else
+                {
+                    continue;
+                }
             }
 
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,

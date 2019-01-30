@@ -241,12 +241,17 @@ namespace Team7ADProject.Service
                             OTP = rand.Next(10000).ToString("0000");
                         } while (context.Disbursement.Where(x => x.OTP == OTP).FirstOrDefault() != null);
 
+                        Dictionary<string, int> tempDict = new Dictionary<string, int>();
+                        foreach(var retItem in dept.requestList)
+                        {
+                            tempDict.Add(retItem.Description, retItem.RetrievedQty);
+                        }
+
                         var deptReqList = requests.Where(x => x.DepartmentId == dept.DepartmentId).ToList();
 
                         foreach (var req in deptReqList)
                         {
                             bool isComplete = true;
-                            //NEED TO REVIEW HERE
                             foreach (var item in req.ItemList)
                             {
                                 var disbItem = dept.requestList.FirstOrDefault(x => x.ItemId == item.ItemId);
@@ -307,6 +312,21 @@ namespace Team7ADProject.Service
                                 currentReq.Status = "Partially Fulfilled";
                             }
                         }
+                        //Send email to dept rep
+                        string email = "samjingwen92@gmail.com";
+                        string subject = string.Format("Stationeries ready for collection (Disbursement No: {0})", disbNo);
+
+                        string content = string.Format("Disbursement No: {0}{1}Please quote the OTP below when collecting your stationeries.{2}OTP: {3}{4}Collection Point: {5}{6}Time: {7}{8}Item\t\t\t\t\t\t\tQuantity{9}", 
+                            disbNo, Environment.NewLine, Environment.NewLine, OTP, Environment.NewLine, dept.CollectionDescription, Environment.NewLine, dept.CollectionTime, Environment.NewLine, Environment.NewLine);
+                        foreach(KeyValuePair<string, int> entry in tempDict)
+                        {
+                            content += string.Format("{0}\t\t\t\t\t\t{1}{2}", entry.Key, entry.Value, Environment.NewLine);
+                        }
+                        Email.Send(email, subject, content);
+
+
+
+
                     }
 
                     dbContextTransaction.Commit();
