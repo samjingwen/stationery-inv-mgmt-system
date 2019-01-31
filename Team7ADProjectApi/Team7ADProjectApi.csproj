@@ -296,6 +296,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AckDelivery.cs" />
     <Compile Include="ViewModels\AckDisbViewModel.cs" />
     <Compile Include="ViewModels\AckDeliveryDetails.cs" />
     <Compile Include="ViewModels\AdjustmentInfo.cs" />

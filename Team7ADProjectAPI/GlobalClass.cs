@@ -468,6 +468,7 @@ namespace Team7ADProjectApi
                 //S3:postpone is avaliable so if the day is before friday,collection date should be set to postpone date
                 if (DateTime.Today < nextAD.AddDays(-3))
                 { stationeryRequest.CollectionDate = department.NextAvailableDate; }
+                //S4:postpone is avaliable so if the day is before friday,collection date should be set to postpone date +7
                 if (nextAD.AddDays(-3) <= DateTime.Today && DateTime.Today < nextAD)
                 { stationeryRequest.CollectionDate = nextAD.AddDays(7); }
                 context.SaveChanges();
