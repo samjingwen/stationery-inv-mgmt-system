@@ -75,7 +75,16 @@ namespace Team7ADProjectApi.Controllers
             TransactionDetail transactionDetailInDb =
                 stationeryRequestInDb.TransactionDetail.FirstOrDefault(m =>
                     m.ItemId == apiModel.ItemId && m.Quantity == apiModel.Quantity);
+
+            //moving from quantity in transit to quantity in warehouse
+            Stationery stationeryInDb =
+                _context.Stationery.FirstOrDefault(m => m.ItemId == transactionDetailInDb.ItemId);
+            stationeryInDb.QuantityTransit -= apiModel.Quantity;
+            stationeryInDb.QuantityWarehouse += apiModel.Quantity;
+
             transactionDetailInDb.Remarks = "Returned";
+
+
             _context.SaveChanges();
             status = "Successfully returned";
             stationeryRequestInDb = _context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
@@ -118,6 +127,13 @@ namespace Team7ADProjectApi.Controllers
                 TransactionDetail transactionDetailInDb =
                     stationeryRequestInDb.TransactionDetail.FirstOrDefault(m =>
                         m.ItemId == apiModel.ItemId && m.Quantity == apiModel.Quantity);
+
+                //moving from quantity in transit to quantity in warehouse
+                Stationery stationeryInDb =
+                    _context.Stationery.FirstOrDefault(m => m.ItemId == transactionDetailInDb.ItemId);
+                stationeryInDb.QuantityTransit -= apiModel.Quantity;
+                stationeryInDb.QuantityWarehouse += apiModel.Quantity;
+
                 transactionDetailInDb.Remarks = "Returned";
                 _context.SaveChanges();
                 status = "Successfully added";
