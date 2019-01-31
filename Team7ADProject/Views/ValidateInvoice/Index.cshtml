@@ -6,10 +6,11 @@
 }
 
 
-    @*Invoice Information*@
-    <div class="form-group">
-        <form name="invoiceForm">
-            <table id="doTable">
+@*Invoice Information*@
+<div class="form-group">
+    <form name="invoiceForm">
+        <table id="doTable">
+            <thead>
                 <tr>
                     <td>
                         <label class="control-label col-md-3" style="width:100%">Invoice No</label>
@@ -34,33 +35,45 @@
                         <input type="text" id="InvoiceAmount" class="form-control" name="InvoiceAmount">
                     </td>
                 </tr>
-                <tbody></tbody>
                 <tr>
-                    <td></td>
+                    <td><a id="showDONO" class="greenBtn pull-right">Show DO NO</a></td>
                     <td>
                         <a id="showDO" class="greenBtn pull-right">Show DO Details</a>
                     </td>
                 </tr>
-            </table>
+            <thead>
+            <tbody></tbody>
+        </table>
 
-            <table id="detailsTable" class="table">
-                <thead>
-                    <tr>
-                        <th style="width:30%">Item ID</th>
-                        <th style="width:30%">Item Description</th>
-                        <th style="width:20%">Product Category</th>
-                        <th style="width:15%">Quantity</th>
-                        <th style="width:10%"></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </form>
-    </div>
-    @Html.AntiForgeryToken()
-    <button style="margin-right:10px" id="saveInvoice" class="greenBtn pull-right">  Save  </button>
-    <button style="margin-right:10px" class="blueBtn pull-right" onclick="addNewItem()">Add Item</button>
+        <table id="detailsTable" class="table">
+            <thead>
+                <tr>
+                    <th style="width:30%">Item ID</th>
+                    <th style="width:30%">Item Description</th>
+                    <th style="width:20%">Product Category</th>
+                    <th style="width:15%">Quantity</th>
+                    <th style="width:10%"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
+        @Html.AntiForgeryToken()
+        <button style="margin-right:10px" id="saveInvoice" class="greenBtn pull-right">  Save  </button>
+        <button style="margin-right:10px" class="blueBtn pull-right" onclick="addNewItem()">Add Item</button>
+
+        <table id="do" class="table">
+            <thead>
+                <tr>
+                    <th style="width:30%">DO</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </form>
+</div>
+<div id="cblist">
+</div>
 
 @section scripts
               {
@@ -135,83 +148,43 @@
             });
         }
     </script>
-    @*load dropdown list in modal*@
+
+
+
+    @*script for show all DOs*@
     <script>
-        var $dropdown1 = $("select[name='category']");
-        var $dropdown2 = $("select[name='description']");
-        loadItem();
-        function loadItem() {
-            $dropdown1.empty();
-            $dropdown2.empty();
-            $('#quantity').val("");
-            $dropdown1.append('<option>Select Category</option>');
-            $dropdown2.append('<option>Select Item</option>');
-            $dropdown1.prop('selectedIndex', 0);
-            $dropdown2.prop('selectedIndex', 0);
-            $.ajax({
-                url: '../api/stationeries/categories/',
-                type: 'GET',
-                dataType: 'json',
-                success: function (j) {
-                    $.each(j, function (i, value) {
-                        $dropdown1.append($('<option>').text(value).attr('value', value));
-                    });
-                }
-            });
-        }
-        //Load 2nd list
-        $dropdown1.change(function () {
-            $dropdown2.empty();
-            $dropdown2.append('<option>Select Item</option>');
-            $("#category").css("borderColor", "")
-            $.ajax({
-                url: '../api/stationeries/categories/' + $dropdown1.val(),
-                type: 'GET',
-                dataType: 'json',
-                success: function (json) {
-                    $.each(json, function (i, value) {
-                        $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
-                    });
-                }
-            });
-        });
-        //Load unit of measure
-        $dropdown2.change(function () {
-            $("#description").css("borderColor", "")
-            $.ajax({
-                url: '../api/stationeries/item/' + $dropdown2.val(),
-                type: 'GET',
-                dataType: 'json',
-                success: function (json) {
-                    $("#uom").val(json);
-                }
-            });
-        });
-    </script>
-    @*script for popup*@
-    <script>
-        //after select supplier all the do under this supplier  and not billed ones will be shown
-        $dropdown0.change(function (e) {
+        $("#showDONO").click(function (e) {
             e.preventDefault();
+            $('#cblist').empty();
             $.ajax({
-                url: '../api/deliveryorder/' + $dropdown0.val(),
+                url: '../api/deliveryorder/select/' + $dropdown0.val(),
                 type: 'GET',
                 dataType: 'json',
-                success: function (result) {
-                   // var detailsTableBody = $("#detailsTable tbody");
-                    var form = $("#detailsTable tbody");
-                    var elems = [];
-                  
-                    for (var i in result) {
-                        var doItem = '<tr><td>' + i.itemid + '</td><td>' + i.description + '</td><td>' + i.name + '</td><td>' + category + '</td><td>' + i.quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
-                        var dos = '<tr>' +'<input type="checkbox" name="' + i.DelOrderNo + '" value=' + i.dono + '">' + i.DelOrderNo + '<br></tr>';
-                        elems.push(i.dono);
-                        form.append(dos);
-                    }
-                    $('#input_hidden_field').val(JSON.stringify(elems));
+                success: function (json) {
+                   // var tablea = $("#do tbody");
+                    //var trHTML = '';
+                    //var elems = [];
+                    // var doItem = '<tr><td>' + i.itemid + '</td><td>' + i.description + '</td><td>' + i.name + '</td><td>' + category + '</td><td>' + i.quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+                    $.each(json, function (i, value) {
+                        // var dos = '<tr>' + '<input type="checkbox" name="' + i.DelOrderNo + '" value=' + i.dono + '">' + i.DelOrderNo + '<br></tr>';
+                        // elems.push(i.dono);
+                        console.log('i', value.DelOrderId);
+                        addCheckbox(value.DelOrderNo);
+                       // trHTML+='<tr><td>' + value.DelOrderNo + '<td></tr>';
+                    });
+                    //tablea.append(trHTML);
                 }
             });
         });
+        function addCheckbox(name) {
+            var container = $('#cblist');
+            var inputs = container.find('input');
+            var id = inputs.length + 1;
+
+            $('<input />', { type: 'checkbox', id:name, value: name }).appendTo(container);
+            $('<label />', { 'for': 'cb' + id, text: name }).appendTo(container);
+            $('</br>').appendTo(container);
+        }
 
         //var value = $('#input_hidden_field').val(); //retrieve array
         //value = JSON.parse(value);
@@ -226,17 +199,17 @@
         //}
         function retriveitems(doid) {
             $.ajax({
-            url: '../api/deliveryorder/select' + doid,
+                url: '../api/deliveryorder/select' + doid,
                 type: 'GET',
-                    dataType: 'json',
-                        success: function (result) {
-                            var detailsTableBody = $("#detailsTable tbody");
-                            for (var i in result) {
-                                var doItem = '<tr><td>' +i.itemid + '</td><td>' + i.description + '</td><td>' + i.name + '</td><td>' + category + '</td><td>' + i.quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
-                                detailsTableBody.append(doItem);
-                            }
-                        }
-        });
+                dataType: 'json',
+                success: function (result) {
+                    var detailsTableBody = $("#detailsTable tbody");
+                    for (var i in result) {
+                        var doItem = '<tr><td>' + i.itemid + '</td><td>' + i.description + '</td><td>' + i.name + '</td><td>' + category + '</td><td>' + i.quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+                        detailsTableBody.append(doItem);
+                    }
+                }
+            });
 
         }
 
