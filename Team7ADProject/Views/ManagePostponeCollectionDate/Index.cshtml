@@ -8,25 +8,6 @@
     <h2>Postpone Collection Date</h2>
 
     @*Author:Lynn Lynn Oo*@
-    @* Design *@
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 80%;
-        }
-
-        td, th {
-            border: 1px solid #000000;
-            text-align: center;
-            padding: 10px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #5b94d1;
-        }
-    </style>
-    @*Design*@
-
 
     <table class="cusTable">
 
@@ -64,11 +45,11 @@
                     @String.Format("{0:dd MMM yyyy}", item.CollectionDate)
                 </td>
                 <td>
-                @*@Html.ActionLink("POSTPONE", "Postpone", new { @class = "btn btn-primary" }, new { id = item.RequestId })*@
+
                                     @{
                                     string url = Url.Action("Postpone", new { id = item.RequestId });
                                 }
-                    <input type="button" class="greenBtn pull-right" value="POSTPONE" onclick="window.location.href('@url')" />
+                    <input type="button" class="blueBtn pull-right" value="POSTPONE" onclick="window.location.href('@url')" />
                 </td>
             </tr>
         }

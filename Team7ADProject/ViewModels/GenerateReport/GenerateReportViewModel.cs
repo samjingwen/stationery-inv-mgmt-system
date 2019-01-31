@@ -20,6 +20,7 @@ namespace Team7ADProject.ViewModels.GenerateReport
         public DateTime tDate { get; set; }
 
         public string module { get; set; }
+        public string deptID { get; set; }
 
         public List<string> statcategory { get; set; }
         public List<string> entcategory { get; set; }
@@ -33,13 +34,14 @@ namespace Team7ADProject.ViewModels.GenerateReport
         public ChartViewModel deptDP { get; set; }
         public List<ChartViewModel> data { get; set; }
 
-        public static GenerateReportViewModel InitGRVM()
+        public static GenerateReportViewModel InitGRVM(string DID)
         {
             var grvm = new GenerateReportViewModel
             {
                 fDate = new DateTime(2017, 1, 1),
                 tDate = DateTime.Today,
                 module = "Disbursements",
+                deptID = DID,
                 statcategory = new List<string>(),
                 entcategory = new List<string>(),
                 employee = new List<string>(),
@@ -59,24 +61,34 @@ namespace Team7ADProject.ViewModels.GenerateReport
             {
                 grvm.statcategory.Add(l);
             }
+            grvm.selectstatcategory = grvm.statcategory;
+
+            if (DID == "STAT")
+            { 
             var sslist = context.PurchaseOrder.GroupBy(x => x.SupplierId).Select(y => y.Key);
             foreach (var l in sslist) { grvm.supplier.Add(l); }
 
             var eelist = context.StationeryRetrieval.GroupBy(x => x.AspNetUsers.EmployeeName).Select(y => y.Key);
             foreach (var l in eelist) { grvm.employee.Add(l); }
-
-            grvm.selectstatcategory = grvm.statcategory;
+                        
             var elist = context.Department.GroupBy(x => x.DepartmentId).Select(y => y.Key);
             foreach (var l in elist)
             {
                 grvm.entcategory.Add(l);
             }
             grvm.selectentcategory = grvm.entcategory;
+            }
+            else
+            {
+                grvm.entcategory.Add(DID);
+                grvm.selectentcategory.Add(DID);
+                
+            }
 
             return grvm;
         }
 
-        public static GenerateReportViewModel InitGRVM(DateTime? fromDateTP, DateTime? toDateTP, 
+        public static GenerateReportViewModel InitGRVM(string DID, DateTime? fromDateTP, DateTime? toDateTP, 
             string module, List<string> selstatcat, List<string> seldeptcat, List<string> seleecat, List<string> selsscat)
         {
             LogicDB context = new LogicDB();
@@ -85,6 +97,7 @@ namespace Team7ADProject.ViewModels.GenerateReport
                 fDate = (DateTime)fromDateTP,
                 tDate = (DateTime)toDateTP,
                 module = module,
+                deptID = DID,
                 statcategory = new List<string>(),
                 entcategory = new List<string>(),
                 employee = new List<string>(),
@@ -119,48 +132,58 @@ namespace Team7ADProject.ViewModels.GenerateReport
                 }
             }
 
-            var sslist = context.PurchaseOrder.GroupBy(x => x.SupplierId).Select(y => y.Key);
-
-            foreach (var l in sslist) { grvm.supplier.Add(l); }
-
-            var eelist = context.StationeryRetrieval.GroupBy(x => x.AspNetUsers.EmployeeName).Select(y => y.Key);
-            foreach (var l in eelist) { grvm.employee.Add(l); }
-
-            var entlist = context.Department.GroupBy(x => x.DepartmentId).Select(y => y.Key);
-            foreach (var l in entlist)
+            if (DID == "STAT")
             {
-                grvm.entcategory.Add(l);
-            }
+                var sslist = context.PurchaseOrder.GroupBy(x => x.SupplierId).Select(y => y.Key);
 
-            if (module == "Purchases")
-            {
-                if (selsscat == null)
-                    foreach (var l in sslist)
-                    { grvm.selectentcategory.Add(l); }
-                else { foreach (var l in selsscat) { grvm.selectentcategory.Add(l); } }
-            }
+                foreach (var l in sslist) { grvm.supplier.Add(l); }
 
-            if (module == "Retrieval")
-            {
-                if (seleecat == null)
-                    foreach (var l in eelist)
-                    { grvm.selectentcategory.Add(l); }
-                else { foreach (var l in seleecat) { grvm.selectentcategory.Add(l); } }
-            }
-            else
-            {
-                if (seldeptcat == null)
+                var eelist = context.StationeryRetrieval.GroupBy(x => x.AspNetUsers.EmployeeName).Select(y => y.Key);
+                foreach (var l in eelist) { grvm.employee.Add(l); }
+
+                var entlist = context.Department.GroupBy(x => x.DepartmentId).Select(y => y.Key);
+                foreach (var l in entlist)
                 {
-                    foreach (var l in grvm.entcategory) { grvm.selectentcategory.Add(l); }
+                    grvm.entcategory.Add(l);
+                }
+                if (module == "Purchases")
+                {
+                    if (selsscat == null)
+                        foreach (var l in sslist)
+                        { grvm.selectentcategory.Add(l); }
+                    else { foreach (var l in selsscat) { grvm.selectentcategory.Add(l); } }
+                }
+
+                if (module == "Retrieval")
+                {
+                    if (seleecat == null)
+                        foreach (var l in eelist)
+                        { grvm.selectentcategory.Add(l); }
+                    else { foreach (var l in seleecat) { grvm.selectentcategory.Add(l); } }
                 }
                 else
                 {
-                    foreach (var l in seldeptcat)
+                    if (seldeptcat == null)
                     {
-                        grvm.selectentcategory.Add(l);
+                        foreach (var l in grvm.entcategory) { grvm.selectentcategory.Add(l); }
+                    }
+                    else
+                    {
+                        foreach (var l in seldeptcat)
+                        {
+                            grvm.selectentcategory.Add(l);
+                        }
                     }
                 }
             }
+
+            else
+            {
+                grvm.entcategory.Add(DID);
+                grvm.selectentcategory.Add(DID);
+            }
+
+            
 
             return grvm;
         }

@@ -34,7 +34,7 @@
                     <td>@stationery.ReorderLevel</td>
                     <td>@stationery.Location</td>
                     <td>
-                        <button data-stationery-id="@stationery.ItemId" class="redBtn">Delete</button>
+                        <button data-stationery-id="@stationery.ItemId" class="redBtn js-delete">Delete</button>
                     </td>
                 </tr>
             }
@@ -43,10 +43,10 @@
 
     </table>
 
-
+    @*@Scripts.Render("~/bundles/jqueryval")*@
     @section scripts
 {
-        @Scripts.Render("~/bundles/jqueryval")
+
 
         <script>
             $(document).ready(function () {

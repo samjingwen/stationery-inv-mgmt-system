@@ -117,8 +117,11 @@
                     <option value="Disbursements">Disbursements</option>
                     <option value="Requests">Stationery Requests</option>
                     <option value="ChargeBack">Charge Backs</option>
-                    <option value="Purchases">Purchases</option>
-                    <option value="Retrieval">Retrieval</option>
+                    @if (Model.deptID == "STAT")
+                    {
+                        <option value="Purchases">Purchases</option>
+                        <option value="Retrieval">Retrieval</option>
+                    }
                 </select>
             </p>
 

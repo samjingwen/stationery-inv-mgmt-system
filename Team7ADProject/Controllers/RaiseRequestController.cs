@@ -125,6 +125,14 @@ namespace Team7ADProject.Controllers
                             _context.TransactionDetail.Add(transactionDetailInDb);
                         }
                         _context.SaveChanges();
+
+                        //Sending email to department head to approve the request
+                        //string depRepEmail = _context.Department.FirstOrDefault(m => m.DepartmentId == pair.Key).AspNetUsers1.Email;
+                        string recipient = "team7logicdb@gmail.com"; //dummy email used
+                        string title = "A request by " + currentUser.EmployeeName+" is raised";
+                        string body = "Kindly check the details for the request.";
+                        Email.Send(recipient, title, body);
+
                         result = "Success! Request is complete!";
                     }
                 }

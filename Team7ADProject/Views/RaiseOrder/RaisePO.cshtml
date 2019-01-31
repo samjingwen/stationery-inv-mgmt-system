@@ -37,7 +37,7 @@
                     <td></td>
                     <td>Quantity</td>
                     <td>
-                        <input type="number" id="quantity" name="quantity" data-val="true" placeholder="quantity" class="form-control" min="1" re />
+                        <input type="number" id="quantity" name="quantity" data-val="true" placeholder="quantity" class="form-control" min="1"/>
                         @*@Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @type = "number", @min = "1", @max = Int32.MaxValue, @step = "1", @value = "0", @id = "quantity", @name = "quantity" })*@
                         @*<input class="form-control input-validation-error" data-val="true" data-val-number="The field Quantity must be a number." data-val-regex="Please enter a valid quantity." data-val-regex-pattern="^\d+" data-val-required="The Quantity field is required." id="quantity" min="1" name="Quantity" step="1" type="number" value="0" aria-describedby="quantity-error" aria-invalid="true">*@
 
@@ -55,7 +55,8 @@
                     </td>
                     <td></td>
                     <td></td>
-                    <td><a id="addToList">Add To List</a> </td>
+                    <td><button class="blueBtn pull-right" id="addToList" style="width:100px" type="submit">Add To List</button></td>
+          
                 </tr>
             </table>
 
@@ -75,8 +76,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="reset" class="redBtn" data-dismiss="modal">Reset</button>
-                <button id="saveOrder" type="submit" class="greenBtn">Raise Order</button>
+                <button type="reset" class="redBtn" style = "width:100px" data-dismiss="modal">Reset</button>
+                <button id="saveOrder" type="submit" style = "width:100px" class="greenBtn">Raise Order</button>
             </div>
         </form>
     </div>
@@ -179,7 +180,7 @@
                 return;
             }
 
-            if ($.trim($("#quantity").val()) < 1) {
+            if ($.trim($("#quantity").val()) < 1 || $.trim($("#quantity").val()) > 100000) {
                 bootbox.alert("Error! Please select the valid quantity!");
                 return;
             }
