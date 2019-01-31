@@ -20,6 +20,7 @@ namespace Team7ADProject.Controllers
         }
         // GET: ManagePostponeCollectionDateDepartment
         [RoleAuthorize(Roles = "Department Head, Department Representative")]
+        [HttpGet]
         public ActionResult Index()
         {
             string userid = User.Identity.GetUserId();
@@ -39,6 +40,15 @@ namespace Team7ADProject.Controllers
                 viewModel.Add(viewModeltwo);
             }
             return View(viewModel);
+        }
+        //weeksPostponeDuration
+
+        [RoleAuthorize(Roles = "Department Head, Department Representative")]
+        [HttpPost]
+        public ActionResult Postpone(int weeksPostponeDuration)
+        {
+            //code here
+            return View();
         }
 
         // GET: ManagePostponeCollectionDateDepartment/Details
