@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-2">
-                                        Unit of measure
+                                        Current Quantity
                                     </label>
                                     <div class="col-md-4">
                                         <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-2">
-                                        Quantity
+                                        Adjustment Quantity
                                     </label>
                                     <div class="col-md-4">
                                         <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />
@@ -166,7 +166,7 @@
                 //data: 'q=' + str,
                 dataType: 'json',
                 success: function (json) {
-                    $("#uom").val(json.UnitOfMeasure);
+                    $("#uom").val(json.QuantityWareHouse);
                     $("#stockQuantity").val(json.QuantityWareHouse);
                     $("#price").val(json.Price);
                 }
@@ -191,6 +191,7 @@
         $("#addToList").click(function (e) {
             e.preventDefault();
 
+            var currentQuantity = $("#uom").val();
             if ($.trim($("#category").val()) == "Select Category") {
                 $("#category").css("borderColor", "red");
                 return;
@@ -199,11 +200,10 @@
                 $("#description").css("borderColor", "red");
                 return;
             }
-            if ($.trim($("#quantity").val()) == "" || $.trim($("#quantity").val()) == '0') {
+            if ($.trim($("#quantity").val()) == "" || $.trim($("#quantity").val()) == '0'||(Number($.trim($("#quantity").val())))<-currentQuantity) {
                 $("#quantity").css("borderColor", "red");
                 return;
             }
-                
 
             var id = $("#description").val(),
                 category = $("#category").val(),

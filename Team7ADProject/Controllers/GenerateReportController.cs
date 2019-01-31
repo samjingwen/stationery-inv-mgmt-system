@@ -7,6 +7,9 @@ using Team7ADProject.Entities;
 using Team7ADProject.ViewModels.GenerateReport;
 using Newtonsoft.Json;
 using Microsoft.AspNet.Identity;
+using ClosedXML.Excel;
+using System.IO;
+using System.Data;
 
 namespace Team7ADProject.Controllers
 {
@@ -613,9 +616,94 @@ namespace Team7ADProject.Controllers
                 return View(grvm);
             
         }
+
+        public FileResult ExportRpt(DateTime? fromDateTP, DateTime? toDateTP, string module, List<string> selstatcat, List<string> seldeptcat)
+        {
+            String userId = User.Identity.GetUserId();
+
+            DataTable dt = new DataTable("Report");
+
+            LogicDB context = new LogicDB();
+
+            if(seldeptcat == null)
+            {
+                seldeptcat = context.Department.Select(x => x.DepartmentId).ToList();
+            }
+
+            if(selstatcat == null)
+            {
+                selstatcat = context.Stationery.Select(x => x.Category).ToList();
+            }
+
+            if (module == "Disbursements")
+            {
+
+                dt.Columns.AddRange(new DataColumn[6] { new DataColumn("Disbursement ID"),
+                new DataColumn("Department"),
+            new DataColumn("Acknowledged By"),
+                new DataColumn("Disbursement Date"),
+                new DataColumn("RequestID"),
+                new DataColumn("Status")});
+
+                var reportData = context.TransactionDetail.Where(x => x.Disbursement.Date >= fromDateTP && x.Disbursement.Date <= toDateTP && x.Disbursement.AcknowledgedBy != null &&
+                seldeptcat.Any(id => id == x.Disbursement.DepartmentId) && selstatcat.Any(id => id == x.Stationery.Category)).ToList().Select(y => new
+                {
+                    y.Disbursement.DisbursementId,
+                    y.Disbursement.Department.DepartmentName,
+                    y.Disbursement.AspNetUsers.EmployeeName,
+                    y.Disbursement.Date,
+                    y.Disbursement.RequestId,
+                    y.Disbursement.Status
+                });
+
+                foreach (var i in reportData)
+                {
+                    dt.Rows.Add(i.DisbursementId, i.DepartmentName, i.EmployeeName, i.Date, i.RequestId, i.Status);
+                }
+
+            }
+                        
+            if(module == "ChargeBack")
+            {
+
+                dt.Columns.AddRange(new DataColumn[6] { new DataColumn("Disbursement ID"),
+                new DataColumn("Department"),
+            new DataColumn("Acknowledged By"),
+                new DataColumn("Disbursement Date"),
+                new DataColumn("RequestID"),
+                new DataColumn("Status")});
+
+                var reportData = context.TransactionDetail.Where(x => x.Disbursement.Date >= fromDateTP && x.Disbursement.Date <= toDateTP &&
+                seldeptcat.Any(id => id == x.Disbursement.DepartmentId) && selstatcat.Any(id => id == x.Stationery.Category)).ToList().Select(y => new
+                {
+                    y.Disbursement.DisbursementId,
+                    y.Disbursement.Department.DepartmentName,
+                    y.Disbursement.AspNetUsers.EmployeeName,
+                    y.Disbursement.Date,
+                    y.Disbursement.RequestId,
+                    y.Disbursement.Status
+                });
+
+                foreach (var i in reportData)
+                {
+                    dt.Rows.Add(i.DisbursementId, i.DepartmentName, i.EmployeeName, i.Date, i.RequestId, i.Status);
+                }
+            }
+           
+                using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream st = new MemoryStream())
+                {
+                    wb.SaveAs(st);
+                    return File(st.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", String.Format("{0}_Report.xlsx",module));
+                }
+            }
+
+        }
     }
 
-     
+             #endregion
 
-        #endregion
+
     }

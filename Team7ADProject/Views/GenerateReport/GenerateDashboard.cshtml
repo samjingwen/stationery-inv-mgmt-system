@@ -60,17 +60,25 @@
                     $('#deptselect').hide();
                     $('#supplierselect').hide();
                     $('#employeeselect').show();
+                    $('#report').hide();
                 }
             
                 else if ($(this).val() == 'Purchases') {
                     $('#deptselect').hide();
                     $('#supplierselect').show();
                     $('#employeeselect').hide();
+                    $('#report').hide();
                 }
                 else {
                     $('#deptselect').show();
                     $('#supplierselect').hide();
                     $('#employeeselect').hide();
+                    $('#report').show();
+                }
+            }));
+            if ($('#module').change(function () {
+                if ($(this).val() == 'Requests') {
+                    $('#report').hide();
                 }
             }));
         });
@@ -111,6 +119,12 @@
 <div>
     <div id="ReportFilters" style="width:20%; height:100%; float:right;">
         <form id="filterOps" name="filterOps" action='@Url.Action("GenerateDashboard","GenerateReport")' method="post">
+            @if(Model.deptID == "STAT" )
+            {<div id="report">
+                <p><button type="submit" id="exportBtn" formaction='@Url.Action("ExportRpt","GenerateReport")' class="blueBtn pull-right" formmethod="post">Export Report</button></p>
+            </div>
+            }
+            <p>   </p>
             <p>Select module:</p>
             <p>
                 <select id="module" name="module">
@@ -173,7 +187,7 @@
                     </div>
                 </p>
             </details>
-            <input type="submit" id="filterBtn" value="Filter" class="blueBtn pull-right"/>
+            <input type="submit" id="filterBtn" value="Filter" class="blueBtn pull-right" />
         </form>
     </div>
 

@@ -25,7 +25,7 @@ namespace Team7ADProjectApi.Controllers
             GlobalClass gc = new GlobalClass();
             return gc.GetAllStationeryRequestList(userid);
         }
-        //Get a selected request
+        // get a selected request
         //[Authorize(Roles = RoleName.DepartmentHead)]
         //[Authorize(Roles = RoleName.ActingDepartmentHead)]
         [HttpGet]
@@ -37,21 +37,26 @@ namespace Team7ADProjectApi.Controllers
         }
         #endregion
         #region Approve Req
+        //[Authorize(Roles = RoleName.DepartmentHead)]
+        //[Authorize(Roles = RoleName.ActingDepartmentHead)]
         [HttpPost]
         [Route("api/stationeryrequest/approve")]
-        public bool ApproveReq([FromBody]StationeryRequestApiModel req,[FromBody] string userid)
+        public bool ApproveRequest([FromBody]StationeryRequestApiModel req)
         {
             GlobalClass gc = new GlobalClass();
-            return gc.ApproveReq(req,userid);
+            return gc.ApproveReq(req);
         }
         #endregion
 
-        #region Reject PO
+        #region Reject Request
+        //[Authorize(Roles = RoleName.DepartmentHead)]
+        //[Authorize(Roles = RoleName.ActingDepartmentHead)]
         [HttpPost]
         [Route("api/stationeryrequest/reject")]
-        public bool RejectPO([FromBody]StationeryRequestApiModel req)
+        public bool RejectRequst([FromBody]StationeryRequestApiModel req)
         {
             GlobalClass gc = new GlobalClass();
+            //return gc.ApproveReq(req);
             return gc.RejectReq(req);
         }
         #endregion
