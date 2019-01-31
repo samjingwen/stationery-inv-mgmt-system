@@ -309,8 +309,7 @@
     <Compile Include="ViewModels\GenerateReport\GenerateReportViewModel.cs" />
     <Compile Include="ViewModels\GenerateReport\StringDoubleDPViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
-    <Compile Include="ViewModels\InvoiceDetailsViewModel.cs" />
-    <Compile Include="ViewModels\InvoiceViewModel.cs" />
+    <Compile Include="ViewModels\ValidateInvoiceViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\PostponeCollectionDate%28Department%29\PostponeCollectionDateDepartmentViewModel.cs" />
     <Compile Include="ViewModels\PostponeCollectionDate%28Store%29\PostponeCollDateDetailsViewModel.cs" />
@@ -640,6 +639,7 @@
     <Content Include="Views\Home\_MenuBox.cshtml" />
     <Content Include="Views\ManageDelegate\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\ViewDisbursement.cshtml" />
+    <Content Include="Views\ValidateInvoice\GetSupplierDO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Email\" />

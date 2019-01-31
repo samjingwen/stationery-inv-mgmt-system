@@ -1,0 +1,68 @@
+﻿@model List<Team7ADProject.ViewModels.DelOrderDetailsViewModel>
+@{
+    ViewBag.Title = "GetSupplierDO";
+    Layout = null;
+}
+
+
+<table id="DeptTable" class="cusTable">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                @Html.Label("Delivery Order No")
+            </th>
+            <th>
+                @Html.Label("Date")
+            </th>
+            <th>
+                @Html.Label("Item")
+            </th>
+            <th>
+                @Html.Label("Quantity")
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Html.CheckBoxFor(x => x[i].isSelected)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x[i].DelOrderNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => x[i].Date)
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            for (int j = 0; j < Model[i].Details.Count; j++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        @Html.DisplayFor(x => x[i].Details[j].Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x[i].Details[j].Quantity)
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<br />
+
+<input type="submit" value="Validate" class="greenBtn pull-right" />
+
+
+

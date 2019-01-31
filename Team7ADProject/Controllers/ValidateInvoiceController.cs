@@ -29,37 +29,59 @@ namespace Team7ADProject.Controllers
         // GET: ValidateInvoice
         public ActionResult Index()
         {
-            var suppliers = pService.GetListSupplier();
-            if (suppliers == null)
+            return View();
+        }
+
+        public ActionResult GetSupplierDO(string id = null)
+        {
+            return View(pService.GetSupplierDelOrder(id));
+        }
+
+        public ActionResult GetSuppliers()
+        {
+            IEnumerable<BriefSupplier> suppliers = (from x in _context.Supplier
+                                                    select new BriefSupplier
+                                                    {
+                                                        SupplierId = x.SupplierId,
+                                                        SupplierName = x.SupplierName
+                                                    }).Distinct().ToList();
+            return Json(new { suppliers }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult RenderTable(string id = null)
+        {
+            try
             {
-                return HttpNotFound();
+                var query = pService.GetSupplierDelOrder(id);
+                if (query.Count > 0)
+                {
+                    return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "GetSupplierDO", query) }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = true, html = "<h3>No Delivery Orders found!<h3>" }, JsonRequestBehavior.AllowGet);
+                }
             }
-            var invoiceDetailsViewModel = new InvoiceDetailsViewModel
-            { Suppliers = suppliers };
-            return View(invoiceDetailsViewModel);
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         //Create new Invoice and TransactionDetails
         [HttpPost]
-        public ActionResult Create(InvoiceViewModel[] invoice, TransactionDetail[] requests)
+        public ActionResult Validate(List<DelOrderDetailsViewModel> model)
         {
-            string result = "Error! Invoice is not complete.";
-            if (requests == null)
-            {
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
 
-            bool isValid = pService.CheckInvoice(invoice, requests);
-            if (isValid)
-            {
-                pService.CreateInvoice(invoice, requests);
-                result = "Invoice successfully created.";
-            }
-            else
-            {
-                result = "Invoice detaiils are incorrect. Please check again.";
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
+
+
+            return View();
+
+
+
+
+
         }
         
         #endregion
