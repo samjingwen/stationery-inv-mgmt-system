@@ -29,10 +29,23 @@ namespace Team7ADProject.Controllers
         {
             try
             {
-                Department dept = _context.Department.FirstOrDefault(x => x.DepartmentId == id);
-                dept.NextAvailableDate = ((DateTime)dept.NextAvailableDate).AddDays(7);
-                _context.SaveChanges();
-                return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "Index", _context.Department.ToList()), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+                if (id == "ALL")
+                {
+                    var deptList = _context.Department.ToList();
+                    foreach(var dept in deptList)
+                    {
+                        dept.NextAvailableDate = ((DateTime)dept.NextAvailableDate).AddDays(7);
+                    }
+                    _context.SaveChanges();
+                    return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "Index", _context.Department.ToList()), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    Department dept = _context.Department.FirstOrDefault(x => x.DepartmentId == id);
+                    dept.NextAvailableDate = ((DateTime)dept.NextAvailableDate).AddDays(7);
+                    _context.SaveChanges();
+                    return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "Index", _context.Department.ToList()), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
