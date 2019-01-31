@@ -271,7 +271,6 @@
     <Compile Include="Entities\DisbByDept.cs" />
     <Compile Include="Entities\DisbByDisbNoView.cs" />
     <Compile Include="Entities\Disbursement.cs" />
-    <Compile Include="Entities\Email.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\LogicDB.cs" />
     <Compile Include="Entities\PurchaseOrder.cs" />
