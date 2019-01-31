@@ -386,12 +386,11 @@ namespace Team7ADProjectApi
 
         public List<StationeryRequestApiModel> GetAllStationeryRequestList(string userid)
         {
-            var user = from u in context.AspNetUsers where u.Id == userid select u;
-            AspNetUsers aspNetUsers = user.First();
+            string depid = GetUserDepId(userid);
             var result = from x in context.StationeryRequest
                          join y in context.AspNetUsers
                          on x.RequestedBy equals y.Id
-                         where y.DepartmentId==aspNetUsers.DepartmentId
+                         where y.DepartmentId==depid
                          select new StationeryRequestApiModel
                          {
                              RequestId = x.RequestId,
@@ -438,15 +437,25 @@ namespace Team7ADProjectApi
         {
             return context.StationeryRequest.Where(x => x.RequestId == rid).FirstOrDefault();
         }
-
-        //Approve Req
-        public bool ApproveReq(StationeryRequestApiModel req)
+        //Get user DepartmentID
+        public string GetUserDepId(string userid)
         {
+            var user = from u in context.AspNetUsers where u.Id == userid select u;
+            AspNetUsers aspNetUser = user.First();
+            string depId = aspNetUser.DepartmentId;
+            return depId;
+        }
+        //Approve Req
+        public bool ApproveReq(StationeryRequestApiModel req,string userid)
+        {
+            string depid = GetUserDepId(userid);
+            Department department = (from d in context.Department where d.DepartmentId == depid select d).FirstOrDefault();
             StationeryRequest stationeryRequest = RetrieveReq(req.RequestId);
             if (stationeryRequest != null)
             {
                 stationeryRequest.ApprovedBy = req.ApprovedBy;
                 stationeryRequest.Status = "Pending Disbursement";
+                //if(DateTime.Today>department)
                 context.SaveChanges();
                 return true;
             }
