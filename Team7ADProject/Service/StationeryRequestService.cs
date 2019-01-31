@@ -298,7 +298,6 @@ namespace Team7ADProject.Service
                                     newDisb.TransactionDetail.Add(newDetail);
                                     context.Disbursement.Add(newDisb);
                                     context.SaveChanges();
-
                                 }
                             }
 
@@ -313,7 +312,7 @@ namespace Team7ADProject.Service
                             }
                         }
                         //Send email to dept rep
-                        string email = "samjingwen92@gmail.com";
+                        string email = context.Department.FirstOrDefault(x => x.DepartmentId == dept.DepartmentId).AspNetUsers1.Email;
                         string subject = string.Format("Stationeries ready for collection (Disbursement No: {0})", disbNo);
 
                         string content = string.Format("Disbursement No: {0}{1}Please quote the OTP below when collecting your stationeries.{2}OTP: {3}{4}Collection Point: {5}{6}Time: {7}{8}Item\t\t\t\t\t\t\tQuantity{9}", 
