@@ -30,9 +30,11 @@ namespace Team7ADProject.ViewModels.GenerateReport
         public List<string> employee { get; set; }
 
         public ChartViewModel stattimeDP { get; set; }
+        public ChartViewModel enttimeDP { get; set; }
         public ChartViewModel statDP { get; set; }
         public ChartViewModel deptDP { get; set; }
         public List<ChartViewModel> data { get; set; }
+        public List<ChartViewModel> entdata { get; set; }
 
         public static GenerateReportViewModel InitGRVM(string DID)
         {
@@ -49,7 +51,9 @@ namespace Team7ADProject.ViewModels.GenerateReport
                 selectentcategory = new List<string>(),
                 selectstatcategory = new List<string>(),
                 data = new List<ChartViewModel>(),
+                entdata = new List<ChartViewModel>(),
                 stattimeDP = new ChartViewModel("Breakdown by Stationery over Time", "", new List<StringDoubleDPViewModel>()),
+                enttimeDP = new ChartViewModel("Breakdown by Entity over Time","", new List<StringDoubleDPViewModel>()),
                 statDP = new ChartViewModel("Breakdown by Stationery Category", "", new List<StringDoubleDPViewModel>()),
                 deptDP = new ChartViewModel("Breakdown by Entity", "", new List<StringDoubleDPViewModel>())
 
@@ -105,7 +109,9 @@ namespace Team7ADProject.ViewModels.GenerateReport
                 selectentcategory = new List<string>(),
                 selectstatcategory = new List<string>(),
                 data = new List<ChartViewModel>(),
+                entdata = new List<ChartViewModel>(),
                 stattimeDP = new ChartViewModel("Breakdown by Stationery over Time", "", new List<StringDoubleDPViewModel>()),
+                enttimeDP = new ChartViewModel("Breakdown by Entity over Time", "", new List<StringDoubleDPViewModel>()),
                 statDP = new ChartViewModel("Breakdown by Stationery Category", "", new List<StringDoubleDPViewModel>()),
                 deptDP = new ChartViewModel("Breakdown by Entity", "", new List<StringDoubleDPViewModel>())
 
@@ -161,7 +167,7 @@ namespace Team7ADProject.ViewModels.GenerateReport
                         { grvm.selectentcategory.Add(l); }
                     else { foreach (var l in seleecat) { grvm.selectentcategory.Add(l); } }
                 }
-                else
+                else if(module == "Disbursements" || module == "ChargeBack" || module == "Requests")
                 {
                     if (seldeptcat == null)
                     {
