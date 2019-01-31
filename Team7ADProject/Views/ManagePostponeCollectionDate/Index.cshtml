@@ -45,18 +45,6 @@
 
 @section scripts{
     <script>
-        function refreshPage(resetUrl) {
-            $.ajax({
-                type: 'GET',
-                url: resetUrl,
-                success: function (response) {
-                    $("#DeptPpTable").html(response);
-                }
-
-            });
-        }
-
-
         function Postpone(url) {
             bootbox.confirm({
                 message: "Confirm to postpone?",
@@ -71,7 +59,7 @@
                         className: 'btn-danger'
                     }
                 },
-                callback: function (result) {
+                callback: function () {
                     $.ajax({
                         type: 'POST',
                         url: url,
