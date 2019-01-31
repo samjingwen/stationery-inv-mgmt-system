@@ -177,6 +177,28 @@ namespace Team7ADProjectApi.Controllers
             return Ok(status);
         }
 
+        [Authorize(Roles = RoleName.DepartmentHead)]
+        [HttpPost]
+        [Route("api/departmenthead/revoke/{id}")]
+        public IHttpActionResult RevokeHead(string id)
+        {
+            string status = "Fail to revoke.";
+
+            //removing user from role
+            UserManager<ApplicationUser> userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            userManager.AddToRole(id, RoleName.Employee);
+            userManager.RemoveFromRole(id, RoleName.ActingDepartmentHead);
+
+            //Changing the date of Delegation of authority to cut short
+            DelegationOfAuthority doaInDb = _context.DelegationOfAuthority.OrderByDescending(m => m.DOAId)
+                .FirstOrDefault(m => m.DelegatedTo == id);
+            doaInDb.EndDate=DateTime.Today.AddDays(-1);
+            _context.SaveChanges();
+            status = "Successfully revoked.";
+
+            return Ok(status);
+        }
+
         public int GenerateDelegationOfAuthorityId()
         {
             DelegationOfAuthority lastItem = _context.DelegationOfAuthority.OrderByDescending(m => m.DOAId).First();
