@@ -21,7 +21,7 @@
                     </tr>
                     <tr>
                         <td> Date :</td>
-                        <td> @Html.Label(Model.StockAdjustment.Date.ToShortDateString())</td>
+                        <td> @String.Format("{0:dd MMM yyyy}", Model.StockAdjustment.Date)</td>
                     </tr>
                 </table>
 
