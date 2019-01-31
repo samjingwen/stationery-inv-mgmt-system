@@ -271,6 +271,7 @@
     <Compile Include="Entities\DisbByDept.cs" />
     <Compile Include="Entities\DisbByDisbNoView.cs" />
     <Compile Include="Entities\Disbursement.cs" />
+    <Compile Include="Entities\Email.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\LogicDB.cs" />
     <Compile Include="Entities\PurchaseOrder.cs" />
@@ -308,7 +309,9 @@
     <Compile Include="ViewModels\PendingPO.cs" />
     <Compile Include="ViewModels\PendingPODetails.cs" />
     <Compile Include="ViewModels\RequestItems.cs" />
+    <Compile Include="ViewModels\ReturnItemViewModel.cs" />
     <Compile Include="ViewModels\ReturntoWarehouseApiModel.cs" />
+    <Compile Include="ViewModels\ReturnToWarehouseSetApiModel.cs" />
     <Compile Include="ViewModels\SetStationeryRetrievalApiModel.cs" />
     <Compile Include="ViewModels\RequestTransactionDetailApiModel.cs" />
     <Compile Include="ViewModels\StationeryRequestApiModel.cs" />

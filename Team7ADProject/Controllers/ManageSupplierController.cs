@@ -14,13 +14,14 @@ using System.Net;
 namespace Team7ADProject.Controllers
 {
     //For SM to update supplier listing and preferred suppliers
+
+    [RoleAuthorize(Roles = "Store Manager")]
     public class ManageSupplierController : Controller
     {
         private LogicDB context = new LogicDB();
 
         #region Author: Zan Tun Khine
 
-        [RoleAuthorize(Roles = "Store Manager")]
         // GET: ManageSupplier
         public ActionResult Index()
         {
@@ -42,14 +43,37 @@ namespace Team7ADProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Supplier.Add(supplier);
-                context.SaveChanges();
-                return RedirectToAction("Index");
+                if (!(CheckSupplier(supplier.SupplierId)))
+                {
+                    context.Supplier.Add(supplier);
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Error1 = "The Supplier ID Already Exists!";
+                    return View();
+                }
             }
 
             return View(supplier);
         }
 
+        // to check whether the newly added supplier already exists or not
+        public bool CheckSupplier(string id)
+        {
+            Supplier supplier = context.Supplier.Find(id);
+
+            if (supplier != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
 
         // GET: Suppliers/Edit/id
         public ActionResult Edit(string id)

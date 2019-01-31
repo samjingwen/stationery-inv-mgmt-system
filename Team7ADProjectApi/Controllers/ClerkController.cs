@@ -219,7 +219,7 @@ namespace Team7ADProjectApi.Controllers
             apiModelToSet.ApiModelList.RemoveAll(m => m.NewQuantity == 0 && m.Remarks == "");
 
             //This controller method will generate stationery retrieval, disbursement, stock adjustment
-            string currentUserId = User.Identity.GetUserId(); //need to check if this works
+            string currentUserId = User.Identity.GetUserId();
             string newRetrievalId = GenerateRetrievalId();
             //create a new stationery retrieval with pending delivery
             StationeryRetrieval retrievalInDb = new StationeryRetrieval
@@ -409,6 +409,15 @@ namespace Team7ADProjectApi.Controllers
                 _context.Disbursement.Add(disbursementInDb);
                 _context.SaveChanges();
 
+                //emailing the disbursement to department rep
+                //string depRepEmail = _context.Department.FirstOrDefault(m => m.DepartmentId == pair.Key).AspNetUsers1.Email;
+                string recipient = "team7logicdb@gmail.com"; //dummy email used
+                string title = "Disbursement is scheduled on "+requestLinked.CollectionDate;
+                string body = "The Stationery Request " + requestLinked.RequestId + " will be issued on " +
+                              requestLinked.CollectionDate + ". Kindly use the OTP " + disbursementInDb.OTP +
+                              " to retrieve it.";
+                Email.Send(recipient, title, body);
+
                 for (int i = 0; i < pair.Value.Count; i++)
                 {
                     pair.Value[i].TransactionRef = disbursementId;
@@ -450,6 +459,20 @@ namespace Team7ADProjectApi.Controllers
             //        }
             //    }
             //}
+
+            //Email the clerk if item is below reorder level
+            foreach (StationeryRetrievalApiModel current in apiModelToSet.ApiModelList)
+            {
+                Stationery stationery = _context.Stationery.FirstOrDefault(m => m.ItemId == current.ItemId);
+                if (stationery.QuantityWarehouse < stationery.ReorderQuantity)
+                {
+                    string recipient = "team7logicdb@gmail.com";
+                    string title = "Item " + stationery.Description + " needs to be ordered";
+                    string body = "The current item quantity is less than reorder level of " +
+                                  stationery.ReorderQuantity + ". Kindly restock the supplies.";
+                    Email.Send(recipient,title,body);
+                }
+            }
             return Ok();
         }
 

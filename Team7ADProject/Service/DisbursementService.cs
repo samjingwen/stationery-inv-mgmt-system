@@ -69,6 +69,8 @@ namespace Team7ADProject.Service
 
         public IEnumerable<DepartmentChargeBackViewModel> GetDepartmentChargeBackViewModels(string userId)
         {
+            LogicDB context = new LogicDB();
+
             String DID = context.Department.
                         Where(x => x.DepartmentHeadId == userId).
                         First().DepartmentId;

@@ -13,9 +13,14 @@ namespace Team7ADProject.Tests.Controllers
         [TestMethod]
         public void TestInitialReportView()
         {
+            //arrange
             var controller = new GenerateReportController();
+
+            //act
             var result = controller.GenerateDashboard() as ViewResult;
             var model = result.Model as GenerateReportViewModel;
+
+            //assert
             Assert.IsNotNull(result);
             Assert.AreEqual("Disbursements", model.module);
             Assert.AreEqual(10, model.selectentcategory.Count);
@@ -24,12 +29,16 @@ namespace Team7ADProject.Tests.Controllers
         [TestMethod]
         public void TestFilteredReportView()
         {
+            //arrange
             var controller = new GenerateReportController();
+
+            //act
             var result = controller.GenerateDashboard(new DateTime(2017, 03, 03), new DateTime(2018, 03, 03), "Requests",
                 new List<String>(new string[] { "Pen","Clip" }), new List<String>(new string[] { "ACCT","BUSI" }), null, null) 
                 as ViewResult;
             var model = result.Model as GenerateReportViewModel;
                        
+            //assert
             Assert.IsNotNull(result);
             
 

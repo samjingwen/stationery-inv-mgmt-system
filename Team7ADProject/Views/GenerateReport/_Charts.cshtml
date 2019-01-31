@@ -21,11 +21,29 @@
             animationEnabled: true,
             theme: "light1",
             exportEnabled: true,
-            title: { text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.title)) },
+            title: {
+                text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.title)),
+            fontSize: 16.5},
             axisY: { valueFormatString: "#,###", prefix: "$" },
             data: [{
                 type: "bar",
                 dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.datapoint))
+                }]
+        });
+                
+        var enttimeChart = new CanvasJS.Chart("DisbEntTime", {
+            animationEnabled: true,
+            exportEnabled: true,
+            zoomEnabled: true,
+            title: {
+                text: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.enttimeDP.title))
+                },
+            data: [
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.entdata[0].label)),
+                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.entdata[0].datapoint))
                 }]
         });
 
@@ -42,15 +60,13 @@
                     showInLegend: true,
                     name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[0].label)),
                     dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[0].datapoint))
-                }@*, {type: "line",
-                    showInLegend: true,
-                    name: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[1].label)),
-                    dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data[1].datapoint))
-                    }*@]
+                }]
         });
 
         var namearr = new Array();
         var dxparr = new Array();
+        var entnamearr = new Array();
+        var entdxparr = new Array();
 
         @foreach(var i in Model.data)
         {
@@ -58,7 +74,15 @@
             var pt = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(i.datapoint));
             @:dxparr.push(@pt);
             
-        }
+        };
+
+       @foreach(var j in Model.entdata)
+        {
+            @:entnamearr.push("@j.label");
+            var entpt = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(j.datapoint));
+            @:entdxparr.push(@entpt);
+            
+        };
 
         for (i = 1; i < namearr.length; i++) {
             var newSeries = {
@@ -69,11 +93,23 @@
              };
         
             disbTimeChart.options.data.push(newSeries);
-        }
+        };
+
+        for (j = 1; j < entnamearr.length; j++) {
+            var newSeriesent = {
+                name: entnamearr[j],
+                showInLegend: true,
+                type: "line",
+                dataPoints: entdxparr[j]
+            };
+
+            enttimeChart.options.data.push(newSeriesent);
+        };
 
         disbChart.render();
         disbStatChart.render();
         disbTimeChart.render();
+        enttimeChart.render();
 
     };
 </script>
@@ -83,5 +119,9 @@
     <div id="DisbStat" style="height: 250px; width:49%; float:left; padding-left:10px;">
     </div>
 </div>
+@if (Model.deptID == "STAT")
+{
+<div id="DisbEntTime" style="height: 300px; width: 80%; float:left; padding-top:40px;">
+</div>}
 <div id="DisbTime" style="height: 300px; width: 80%; float:left; padding-top:40px;">
 </div>

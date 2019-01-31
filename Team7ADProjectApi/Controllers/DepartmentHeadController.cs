@@ -90,20 +90,6 @@ namespace Team7ADProjectApi.Controllers
         }
 
         #endregion
-        //[HttpGet]
-        //[Route("api/managedepartmentRep/{id}")]
-        //public BriefManageDepRep GetDepartmentsTest(string id)//username
-        //{
-        //    GlobalClass gc = new GlobalClass();
-
-        //    BriefDepartment depinfo = gc.DepInfo(id);
-        //    List<DepEmp> emplist = gc.ListEmp(id);
-        //    BriefManageDepRep brief = new BriefManageDepRep();
-        //    brief.depEmps = emplist;
-        //    brief.depinfo = depinfo;
-
-        //    return brief;
-        //}
 
         #region Teh Li Heng
 
@@ -114,7 +100,7 @@ namespace Team7ADProjectApi.Controllers
         {
             AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == id);
             AspNetRoles depHeadRoleList = _context.AspNetRoles.FirstOrDefault(m => m.Name == RoleName.ActingDepartmentHead);
-            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.FirstOrDefault();
+            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.FirstOrDefault(m=>m.DepartmentId==user.DepartmentId);
             DelegateDepHeadApiModel apiModel = new DelegateDepHeadApiModel();
      
             apiModel.DepartmentName = user.Department.DepartmentName;
@@ -151,23 +137,72 @@ namespace Team7ADProjectApi.Controllers
         [Route("api/departmenthead/setdepartmenthead")]
         public IHttpActionResult DelegateDepartmentHead(DelegateDepHeadApiModel depFromJson)
         {
+            string status = "Fail to delegate. Approve all request before delegating.";
             AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == depFromJson.UserId);
-            AspNetUsers delegatedDepHead = _context.AspNetUsers.FirstOrDefault(m => m.EmployeeName == depFromJson.DelegatedDepartmentHeadName);
-            DelegationOfAuthority doaInDb = new DelegationOfAuthority
+            //check if there is any request pending approval, if yes, disallow them from changing
+            bool anyPendingRequest = _context.StationeryRequest.Any(m =>
+                m.DepartmentId == user.DepartmentId && m.Status == "Pending Approval");
+            //StationeryRequest sr = _context.StationeryRequest.FirstOrDefault(m =>m.DepartmentId == user.DepartmentId && m.Status == "Pending Approval");
+            if (!anyPendingRequest)
+            //if (sr==null)
             {
-                DOAId = GenerateDelegationOfAuthorityId(),
-                DelegatedBy = user.Id,
-                DelegatedTo = delegatedDepHead.Id,
-                StartDate = depFromJson.StartDate,
-                EndDate = depFromJson.EndDate,
-                DepartmentId = user.DepartmentId
-            };
 
-            _context.DelegationOfAuthority.Add(doaInDb);
-            ApplicationUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            userManager.AddToRole(doaInDb.DelegatedTo, RoleName.ActingDepartmentHead);
+                AspNetUsers delegatedDepHead = _context.AspNetUsers.FirstOrDefault(m => m.EmployeeName == depFromJson.DelegatedDepartmentHeadName);
+                DelegationOfAuthority doaInDb = new DelegationOfAuthority
+                {
+                    DOAId = GenerateDelegationOfAuthorityId(),
+                    DelegatedBy = user.Id,
+                    DelegatedTo = delegatedDepHead.Id,
+                    StartDate = depFromJson.StartDate,
+                    EndDate = depFromJson.EndDate,
+                    DepartmentId = user.DepartmentId
+                };
+
+                _context.DelegationOfAuthority.Add(doaInDb);
+                ApplicationUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                userManager.AddToRole(doaInDb.DelegatedTo, RoleName.ActingDepartmentHead);
+                _context.SaveChanges();
+                status = "Successfully delegated.";
+
+                //emailing the delegated head
+                //string delHeadEmail = _context.Department.FirstOrDefault(m => m.DepartmentId == pair.Key).AspNetUsers3.Email;
+                string recipient = "team7logicdb@gmail.com"; //dummy email used
+                string title = "You've been delegated as Acting head department from " + depFromJson.StartDate +
+                               " to " + depFromJson.EndDate;
+                string body =
+                    "Dear employee, you have been delegated as Acting head department for the period stated above. Kindly approve/reject all request while the head is out of the office.";
+                Email.Send(recipient, title, body);
+            }
+
+            return Ok(status);
+        }
+
+        [Authorize(Roles = RoleName.DepartmentHead)]
+        [HttpPost]
+        [Route("api/departmenthead/revoke/")]
+        public IHttpActionResult RevokeHead()
+        {
+            string status = "Fail to revoke.";
+            string currentUserId = User.Identity.GetUserId();
+
+            //removing user from role
+            AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == currentUserId);
+            AspNetRoles depHeadRoleList = _context.AspNetRoles.FirstOrDefault(m => m.Name == RoleName.ActingDepartmentHead);
+            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.FirstOrDefault(m => m.DepartmentId == user.DepartmentId);
+
+            //Changing the date of Delegation of authority to cut short
+            DelegationOfAuthority doaInDb = _context.DelegationOfAuthority.OrderByDescending(m => m.DOAId)
+                .FirstOrDefault(m => m.DelegatedTo == delegatedDepHead.Id);
+            doaInDb.EndDate=DateTime.Today.AddDays(-1);
+
+            //removing delegate head from role
+            UserManager<ApplicationUser> userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            userManager.AddToRole(delegatedDepHead.Id, "Employee");
+            userManager.RemoveFromRole(delegatedDepHead.Id, "Acting Department Head");
             _context.SaveChanges();
-            return Ok();
+            status = "Successfully revoked.";
+
+            return Ok(status);
         }
 
         public int GenerateDelegationOfAuthorityId()

@@ -386,30 +386,11 @@ namespace Team7ADProjectApi
 
         public List<StationeryRequestApiModel> GetAllStationeryRequestList(string userid)
         {
-            //var result = from m in context.TransactionDetail
-            //             join x in context.StationeryRequest 
-            //             on m.TransactionRef equals x.RequestId
-            //             join y in context.AspNetUsers
-            //             on x.RequestedBy equals y.Id
-            //             join z in context.Department
-            //             on y.DepartmentId equals z.DepartmentId
-            //             where y.Id == userid
-            //             //&&x.Status== "Pending Approval"
-            //             select new StationeryRequestApiModel {
-            //                 RequestId = x.RequestId,
-            //                 RequestedBy = x.AspNetUsers1.EmployeeName,
-            //                 RequestDate = x.RequestDate,
-            //                 ApprovedBy=x.ApprovedBy,
-            //                 DepartmentId=x.DepartmentId,
-            //                 Status=x.Status,               
-            //             };
+            string depid = GetUserDepId(userid);
             var result = from x in context.StationeryRequest
                          join y in context.AspNetUsers
                          on x.RequestedBy equals y.Id
-                         join z in context.Department
-                         on y.DepartmentId equals z.DepartmentId
-                         where y.Id == userid
-                         //&&x.Status== "Pending Approval"
+                         where y.DepartmentId==depid
                          select new StationeryRequestApiModel
                          {
                              RequestId = x.RequestId,
@@ -456,15 +437,39 @@ namespace Team7ADProjectApi
         {
             return context.StationeryRequest.Where(x => x.RequestId == rid).FirstOrDefault();
         }
-
-        //Approve Req
-        public bool ApproveReq(StationeryRequestApiModel req)
+        //Get user DepartmentID
+        public string GetUserDepId(string userid)
         {
+            var user = from u in context.AspNetUsers where u.Id == userid select u;
+            AspNetUsers aspNetUser = user.First();
+            string depId = aspNetUser.DepartmentId;
+            return depId;
+        }
+        //Approve Req
+        public bool ApproveReq(StationeryRequestApiModel req,string userid)
+        {
+            string depid = GetUserDepId(userid);
+            Department department = (from d in context.Department where d.DepartmentId == depid select d).FirstOrDefault();
             StationeryRequest stationeryRequest = RetrieveReq(req.RequestId);
             if (stationeryRequest != null)
             {
                 stationeryRequest.ApprovedBy = req.ApprovedBy;
                 stationeryRequest.Status = "Pending Disbursement";
+                DateTime nextMonday = DateTime.Today.AddDays(((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday) + 7);
+                int monday = Convert.ToInt32(nextMonday);
+                //S1:postpone has expired so if the day is before friday,collection date should be set to next monday
+                if (DateTime.Today>department.NextAvailableDate&&DateTime.Now.DayOfWeek<DayOfWeek.Friday)
+                { stationeryRequest.CollectionDate = nextMonday; }
+                //S2： postpone has expired,if request is raised in Friday or after Friday,date should be set to next next monday
+                if (DateTime.Today > department.NextAvailableDate && DateTime.Now.DayOfWeek > DayOfWeek.Friday)
+                { stationeryRequest.CollectionDate =Convert.ToDateTime(monday+7); }
+                int today = Convert.ToInt32(DateTime.Today);
+                int nextAD = Convert.ToInt32(department.NextAvailableDate);
+                //S3:postpone is avaliable so if the day is before friday,collection date should be set to postpone date
+                if (today< nextAD-3)
+                { stationeryRequest.CollectionDate =department.NextAvailableDate; }
+                if ( nextAD - 3<=today&&today<nextAD)
+                { stationeryRequest.CollectionDate = Convert.ToDateTime(nextAD+7); }
                 context.SaveChanges();
                 return true;
             }
@@ -492,57 +497,90 @@ namespace Team7ADProjectApi
 
         #region Author:Lynn Lynn Oo
         //for List_View
-        public List<ReturntoWarehouseApiModel> GetItemList()
-        {
-            var showList = from x in context.StationeryRequest
-                           join y in context.TransactionDetail on x.RequestId equals y.TransactionRef
-                           join z in context.Stationery on y.ItemId equals z.ItemId
-                           join d in context.Department on x.DepartmentId equals d.DepartmentId
-                           join v in context.CollectionPoint on d.CollectionPointId equals v.CollectionPointId
-                           where (x.Status == "Void" || x.Status == "Partially Returned")
+        //public List<ReturntoWarehouseApiModel> GetItemList()
+        //{
+            //List<ReturntoWarehouseApiModel> apiModels = new List<ReturntoWarehouseApiModel>();
+            //List<StationeryRequest> requests = context.StationeryRequest.Where(m => m.Status == "Void" || m.Status == "Partially Returned").ToList();
+            //foreach (StationeryRequest current in requests)
+            //{
+            //    ReturntoWarehouseApiModel apiModel = new ReturntoWarehouseApiModel
+            //    {
+            //        RequestId = current.RequestId,
+            //        TransactionDetails = current.TransactionDetail.ToList()
+            //    };
+            //    apiModels.Add(apiModel);
+            //}
+            //return apiModels;
+            
+            //var showList = from x in context.StationeryRequest
+            //               join y in context.TransactionDetail on x.RequestId equals y.TransactionRef
+            //               join z in context.Stationery on y.ItemId equals z.ItemId
+            //               join d in context.Department on x.DepartmentId equals d.DepartmentId
+            //               join v in context.CollectionPoint on d.CollectionPointId equals v.CollectionPointId
+            //               where (x.Status == "Void" || x.Status == "Partially Returned"||x.RequestId==y.TransactionRef)
 
-                           select new ReturntoWarehouseApiModel
-                           {
-                               RequestId = x.RequestId,
-                               ItemId = z.ItemId,
-                               Description = z.Description,
-                               Quantity = y.Quantity,
-                               Department = d.DepartmentName,
-                               Location = v.CollectionDescription,
-                           };
-            return showList.ToList();
-        }
+            //               select new ReturntoWarehouseApiModel
+            //               {
+            //                   RequestId = x.RequestId,
+            //                   ItemId = z.ItemId,
+            //                   Description = z.Description,
+            //                   Quantity = y.Quantity,
+            //                   Department = d.DepartmentName,
+            //                   Location = v.CollectionDescription
+            //               };
+            //return showList.ToList();
+        //}
 
         
-        public string Return(ReturntoWarehouseApiModel apiModel)
-        {
-            TransactionDetail transactionInDb = context.TransactionDetail.FirstOrDefault(m => m.TransactionRef == apiModel.RequestId && m.ItemId == apiModel.ItemId && m.Remarks == "Void");
-            if (transactionInDb.StationeryRequest.Status == "Void")
-            {
-                string status = "fail";
-                transactionInDb.Stationery.QuantityWarehouse += transactionInDb.Stationery.QuantityTransit;
-                transactionInDb.Stationery.QuantityTransit -= transactionInDb.Stationery.QuantityTransit;
-                transactionInDb.Remarks = "Returned";
-                //check if all items are returned for stationery request
-                StationeryRequest stationeryRequestInDb = context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
-                bool allReturned = true;
-                foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
-                {
-                    if (current.Remarks != "Returned")
-                    {
-                        stationeryRequestInDb.Status = "Partially Returned";
-                        allReturned = false;
-                        break;
-                    }
-                }
-                if (allReturned)
-                    stationeryRequestInDb.Status = "Returned";
-                context.SaveChanges();
-                status = "success";
-                return status;
-            }
-            return "error";
-        }
+        //public string ReturnTo(ReturntoWarehouseApiModel apiModel)
+        //{
+           
+        //    TransactionDetail transactionInDb = context.TransactionDetail.FirstOrDefault(m => m.TransactionRef == apiModel.RequestId && m.ItemId == apiModel.ItemId && m.Remarks == "Void");
+        //    // Console.WriteLine("ttttttttttttttttttttttttteeeeeeeeeeeeeeeeesssssssssssssssttttttttttttt");
+        //    if (transactionInDb == null)
+        //        return "error";
+
+        //    else
+        //    {
+        //        string status = "fail";
+        //        var stationer = context.StationeryRequest.Where(x => x.RequestId == transactionInDb.TransactionRef).First();
+        //        if (stationer.Status == "Void")
+        //                {
+        //            var item = context.Stationery.Where(x => x.ItemId == transactionInDb.ItemId).FirstOrDefault();
+        //                  item.QuantityWarehouse += transactionInDb.Stationery.QuantityTransit;
+        //                  item.QuantityTransit -= transactionInDb.Stationery.QuantityTransit;
+        //                   transactionInDb.Remarks = "Returned";
+        //            stationer.Status = "Returned";
+
+        //            //check if all items are returned for stationery request
+        //            //       StationeryRequest stationeryRequestInDb = context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
+        //            //       bool allReturned = true;
+        //            //       foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
+        //            //        {
+        //            //           if (current.Remarks != "Returned")
+        //            //            {
+        //            //              stationeryRequestInDb.Status = "Partially Returned";
+        //            //              allReturned = false;
+        //            //              break;
+        //            //            }
+        //            //        }
+        //            //if (allReturned)
+        //            //{
+        //            //    stationeryRequestInDb.Status = "Returned";
+        //            //    context.SaveChanges();
+        //            //    status = "success";
+
+        //            //}
+        //            context.SaveChanges();
+        //            status = "success";
+        //        }
+        //        return status;
+
+        //    }
+        //   // var stationer = context.StationeryRequest.Where(x => x.RequestId == transactionInDb.TransactionRef).First();
+            
+        ////
+        //}
 
     }
     #endregion

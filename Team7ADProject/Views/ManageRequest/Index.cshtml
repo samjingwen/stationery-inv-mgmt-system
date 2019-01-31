@@ -3,150 +3,150 @@
     ViewBag.Title = "Requisition Requests";
     
 }
+<div class="custcontainer">
+    <h2>Index</h2>
 
-<h2>Index</h2>
-
-<div class="card-body">
-    @if (ViewBag.ShowItems)
-    {
-       
-        int j = 0; int i = 0;
-        foreach (var cp in Model)
+    <div class="card-body">
+        @if (ViewBag.ShowItems)
         {
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne" style="background-color: dimgray;height:50px;display:block;padding-top:14px;">
-                  
-                    <h4 class="panel-title">
 
-                        <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" class="trigger collapsed">
-                            <span style="color:azure">Raised by</span> @cp.Empname
-                        </a>
+            int j = 0; int i = 0;
+            foreach (var cp in Model)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne" style="background-color: dimgray;height:50px;display:block;padding-top:14px;">
 
-                        <span style="display: block;float:right;margin-left:10px">
-                            <button data-stationery-id="@cp.RequestID" style="margin-top:-7px" class="js-approve btn btn-primary">Approve</button>
-                            <span id="rejectModal">
-                                <button data-stationery-id="@cp.RequestID" style="margin-top:-7px" class="js-reject btn btn-primary">Reject Request</button>
+                        <h4 class="panel-title">
+
+                            <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" class="trigger collapsed">
+                                <span style="color:azure">Raised by</span> @cp.Empname
+                            </a>
+
+                            <span style="display: block;float:right;margin-left:10px">
+                                <button data-stationery-id="@cp.RequestID" style="margin-top:-7px" class="js-approve btn btn-primary greenBtn">Approve</button>
+                                <span id="rejectModal">
+                                    <button data-stationery-id="@cp.RequestID" style="margin-top:-7px" class="js-reject btn btn-primary redBtn">Reject Request</button>
+                                </span>
                             </span>
-                        </span>
-                        <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j" >
+                            <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j">
 
-                            <span style="color:azure ;float:right;text-decoration:underline;margin-left:15px">   View Requested Items</span>
-                        </a>
+                                <span style="color:azure ;float:right;text-decoration:underline;margin-left:15px">   View Requested Items</span>
+                            </a>
                             <a id="ah" role="button" data-toggle="collapse" href="#collapse_@j" aria-expanded="true" aria-controls="collapse_@j">
                                 <span style="color:azure ;float:right">Requested Date :@cp.RequestDate  </span>
 
                             </a>
-                    </h4>
-                </div>
-                <div id="collapse_@j" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body">
+                        </h4>
+                    </div>
+                    <div id="collapse_@j" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
 
-                        <table class="table table-bordered table-hover">
-                            <tr>
-                                <th>No.</th>
-                                <th>Item Description</th>
-                                <th>Category</th>
-                                <th>Quantity</th>
-
-                            </tr>
-                            @{ int ii = 1;}
-
-                            @foreach (var item in cp.Itemlist)
-                            {
-
+                            <table class="table table-bordered table-hover">
                                 <tr>
-                                    <td>@(ii++)</td>
-                                    <td>@item.Description</td>
-                                    <td>@item.Category</td>
-                                    <td>@item.QuantityTransit</td>
-                                  
+                                    <th>No.</th>
+                                    <th>Item Description</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+
                                 </tr>
-                            }
-                        </table>
+                                @{ int ii = 1;}
 
-                    </div>
-                </div>
-
-            </div>
-                                        j++;
-                                    }
-
-                                }
-
-                                else
+                                @foreach (var item in cp.Itemlist)
                                 {
-        <h5>There are no requests yet.</h5>
 
+                                    <tr>
+                                        <td>@(ii++)</td>
+                                        <td>@item.Description</td>
+                                        <td>@item.Category</td>
+                                        <td>@item.QuantityTransit</td>
+
+                                    </tr>
                                 }
-</div>
+                            </table>
 
-<div class="modal fade" id="reason">
-    <div class="modal-dialog modal-lg" style=" width: 900px !important;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <a href="#" class="close" data-dismiss="modal">&times;</a>
-                <h4>Reason for reject</h4>
-            </div>
-
-            <form id="NewOrderForm">
-                <div class="modal-body">
-                 
-                    <div class="form-horizontal">
-                        <input type="hidden" id="RequestId" />
-                        <div class="form-group">
-                            <label class="control-label col-md-2">
-                                Comment
-                            </label>
-                            <div>
-                              @Html.TextArea("comment", "Reason for reject", new { @class = "form-control" })
-                            </div>
                         </div>
-                        
-                </div>
-              </div>
-                <div class="modal-footer">
-                    <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="saveReject" type="submit" class="btn btn-danger">Reject Request</button>
-                </div>
-            </form>
-
-        </div>
-        </div>
-    </div>
-<div class="modal fade" id="reason1">
-    <div class="modal-dialog modal-lg" style=" width: 900px !important;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <a href="#" class="close" data-dismiss="modal">&times;</a>
-                <h4>Reason for Approve</h4>
-            </div>
-
-            <form id="NewOrderForm">
-                <div class="modal-body">
-
-                    <div class="form-horizontal">
-                        <input type="hidden" id="RequestId" />
-                        <div class="form-group">
-                            <label class="control-label col-md-2">
-                                Comment
-                            </label>
-                            <div>
-                                @Html.TextArea("commentapp", "Reason for approve", new { @class = "form-control" })
-                            </div>
-                        </div>
-
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="saveAprove" type="submit" class="btn btn-danger">Approve Request</button>
-                </div>
-            </form>
 
+                </div>
+                j++;
+            }
+
+        }
+
+        else
+        {
+            <h5>There are no requests yet.</h5>
+
+        }
+    </div>
+
+    <div class="modal fade" id="reason">
+        <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4>Reason for reject</h4>
+                </div>
+
+                <form id="NewOrderForm">
+                    <div class="modal-body">
+
+                        <div class="form-horizontal">
+                            <input type="hidden" id="RequestId" />
+                            <div class="form-group">
+                                <label class="control-label col-md-2">
+                                    Comment
+                                </label>
+                                <div>
+                                    @Html.TextArea("comment", "Reason for reject", new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="saveReject" type="submit" class="redBtn">Reject Request</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="reason1">
+        <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4>Reason for Approve</h4>
+                </div>
+
+                <form id="NewOrderForm">
+                    <div class="modal-body">
+
+                        <div class="form-horizontal">
+                            <input type="hidden" id="RequestId" />
+                            <div class="form-group">
+                                <label class="control-label col-md-2">
+                                    Comment
+                                </label>
+                                <div>
+                                    @Html.TextArea("commentapp", "Reason for approve", new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="saveAprove" type="submit" class="greenBtn">Approve Request</button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
 </div>
-
             @section Scripts {
                <link href="~/Content/accordion.css" rel="stylesheet" />
 
@@ -159,7 +159,7 @@
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',
                             type: 'POST',
-                            url: "Edit",
+                            url: "../ManageRequest/Edit",
                             data: data,
                             success: function (result) {
                                 //alert(result);
