@@ -43,6 +43,10 @@ namespace Team7ADProjectApi.Entities
         [StringLength(128)]
         public string DepartmentHeadId { get; set; }
 
+
+        [Column(TypeName = "date")]
+        public DateTime? NextAvailableDate { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
 
