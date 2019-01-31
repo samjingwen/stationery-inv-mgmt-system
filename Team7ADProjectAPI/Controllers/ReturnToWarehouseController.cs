@@ -84,7 +84,7 @@ namespace Team7ADProjectApi.Controllers
             bool allReturned = true;
             foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
             {
-                if (current.Remarks != "Void")
+                if (current.Remarks == "Void")
                 {
                     allReturned = false;
                     break;
@@ -128,7 +128,7 @@ namespace Team7ADProjectApi.Controllers
                 bool allReturned = true;
                 foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
                 {
-                    if (current.Remarks != "Void")
+                    if (current.Remarks == "Void")
                     {
                         allReturned = false;
                         break;
