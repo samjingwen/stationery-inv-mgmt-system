@@ -22,27 +22,38 @@
                 @Html.DisplayNameFor(model => model.ContactNo)
             </th>
             <th>
+                Status
+            </th>
+            <th>
 
             </th>
         </tr>
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SupplierName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContactName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContactNo)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.SupplierId })
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupplierName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNo)
+            </td>
+            @if (item.Status.Equals("0"))
+            {
+                <td>Inactive</td>
+            }
+            else
+            {
+                <td>Active</td>
+            }
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.SupplierId })
 
-                </td>
-            </tr>
+            </td>
+        </tr>
         }
 
     </table>

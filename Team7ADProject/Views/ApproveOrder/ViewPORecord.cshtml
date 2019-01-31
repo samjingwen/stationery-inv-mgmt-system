@@ -36,13 +36,13 @@
                                 @{
                                     string className = "";
                                     if (po.Status == "Completed")
-                                    { className = "action - button shadow animate blue"; }
+                                    { className = "action"; }
                                     if (po.Status == "Pending Approval")
-                                    { className = "action - button shadow animate red"; }
+                                    { className = "action blueBtn"; }
                                     if (po.Status == "Pending Delivery")
-                                    { className = "action - button shadow animate yellow"; }
+                                    { className = "action"; }
                                     if (po.Status == "Partially Fulfilled")
-                                    { className = "action - button shadow animate green"; }
+                                    { className = "action"; }
                                 }
                                 <td>@Html.ActionLink(po.Status, "PODetails", "ApproveOrder", new { poNo = po.PONo }, new { @class = className }) </td>
                             </tr>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 using Team7ADProjectApi.ViewModels;
 using Team7ADProjectApi.Entities;
 using Team7ADProjectApi.Models;
@@ -76,13 +77,14 @@ namespace Team7ADProjectApi.Controllers
                     m.ItemId == apiModel.ItemId && m.Quantity == apiModel.Quantity);
             transactionDetailInDb.Remarks = "Returned";
             _context.SaveChanges();
+            status = "Successfully returned";
             stationeryRequestInDb = _context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
 
             //Checking if all items are returned
             bool allReturned = true;
             foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
             {
-                if (current.Remarks != "Void")
+                if (current.Remarks == "Void")
                 {
                     allReturned = false;
                     break;
@@ -96,10 +98,55 @@ namespace Team7ADProjectApi.Controllers
                 Disbursement disbursementInDb =
                     _context.Disbursement.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
                 disbursementInDb.Status = "Returned";
+                _context.SaveChanges();
             }
             return Ok(status);
         }
 
+        [Route("~/api/returntowarehouse/returnall")]
+        [HttpPost]
+        [Authorize(Roles = RoleName.StoreClerk)]
+        public IHttpActionResult ReturnAllItem(List<ReturnToWarehouseSetApiModel> apiModels)
+        {
+            List<string> statusList = new List<string>();
+            foreach (ReturnToWarehouseSetApiModel apiModel in apiModels)
+            {
+                string status = "fail";
+                StationeryRequest stationeryRequestInDb =
+                    _context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
+
+                TransactionDetail transactionDetailInDb =
+                    stationeryRequestInDb.TransactionDetail.FirstOrDefault(m =>
+                        m.ItemId == apiModel.ItemId && m.Quantity == apiModel.Quantity);
+                transactionDetailInDb.Remarks = "Returned";
+                _context.SaveChanges();
+                status = "Successfully added";
+                statusList.Add(status);
+                stationeryRequestInDb = _context.StationeryRequest.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
+
+                //Checking if all items are returned
+                bool allReturned = true;
+                foreach (TransactionDetail current in stationeryRequestInDb.TransactionDetail)
+                {
+                    if (current.Remarks == "Void")
+                    {
+                        allReturned = false;
+                        break;
+                    }
+                }
+
+                if (allReturned)
+                {
+                    stationeryRequestInDb.Status = "Returned";
+
+                    Disbursement disbursementInDb =
+                        _context.Disbursement.FirstOrDefault(m => m.RequestId == apiModel.RequestId);
+                    disbursementInDb.Status = "Returned";
+                    _context.SaveChanges();
+                }           
+            }
+            return Ok(statusList);
+        }
         #endregion
     }
 }
