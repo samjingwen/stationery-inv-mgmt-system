@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 
-namespace Team7ADProject.Entities
+namespace Team7ADProjectApi.Entities
 {
     //Author: Teh Li Heng 18/1/2019
     //Allow sending of email by using async
