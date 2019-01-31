@@ -68,7 +68,7 @@
                             @Html.DisplayFor(x => x[i].requestList[j].Quantity)
                         </td>
                         <td>
-                            @Html.EditorFor(x => x[i].requestList[j].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].requestList[j].Quantity, @class = "ret" + Model[i].ItemId } })
+                            @Html.EditorFor(x => x[i].requestList[j].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].QtyInStock > Model[i].requestList[j].Quantity ? Model[i].requestList[j].Quantity : Model[i].QtyInStock, @class = "ret" + Model[i].ItemId } })
                         </td>
                     </tr>
                 }
