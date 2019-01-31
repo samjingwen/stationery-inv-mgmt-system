@@ -117,6 +117,12 @@ namespace Team7ADProject.Service
             return model;
         }
 
+        public string GetUserEmail(string id)
+        {
+            LogicDB context = new LogicDB();
+            return context.AspNetUsers.FirstOrDefault(x => x.Id == id).Email;
+        }
+
         public string GetNewRetrievalId()
         {
             LogicDB context = new LogicDB();
