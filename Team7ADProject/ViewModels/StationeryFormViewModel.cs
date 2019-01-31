@@ -55,7 +55,7 @@ namespace Team7ADProject.ViewModels
 
         [Column(TypeName = "numeric")]
         [Display(Name = "Price")]
-        [Range(0.0, Double.MaxValue,ErrorMessage = "Please enter a valid price.")]
+        [Range(0.0, 9999, ErrorMessage = "Please enter a valid price.")]
         public decimal FirstSuppPrice { get; set; }
 
         [Required]
@@ -65,7 +65,7 @@ namespace Team7ADProject.ViewModels
 
         [Column(TypeName = "numeric")]
         [Display(Name = "Price")]
-        [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
+        [Range(0.0, 9999, ErrorMessage = "Please enter a valid price.")]
         public decimal SecondSuppPrice { get; set; }
 
         [Required]
@@ -75,7 +75,7 @@ namespace Team7ADProject.ViewModels
 
         [Display(Name = "Price")]
         [Column(TypeName = "numeric")]
-        [Range(0.0, Double.MaxValue, ErrorMessage = "Please enter a valid price.")]
+        [Range(0.0, 9999, ErrorMessage = "Please enter a valid price.")]
         public decimal ThirdSuppPrice { get; set; }
         public IEnumerable<Supplier> Suppliers { get; set; }
 
@@ -89,7 +89,7 @@ namespace Team7ADProject.ViewModels
         {
             get
             {
-                return ItemId != null ? "Edit Stationery" : "New Stationery";
+                return ItemId != "" ? "Edit Stationery" : "New Stationery";
             }
         }
         public StationeryFormViewModel(Stationery stationery)

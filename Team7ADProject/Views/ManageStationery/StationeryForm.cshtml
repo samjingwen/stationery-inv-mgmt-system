@@ -59,13 +59,16 @@
                         @Html.ValidationMessageFor(m => m.UnitOfMeasure)
                     </td>
                 </tr>
-                <tr>
-                    <td>@Html.LabelFor(m => m.QuantityWarehouse)</td>
-                    <td>
-                        @Html.TextBoxFor(m => m.QuantityWarehouse, new { @class = "form-control", @type = "number", @min = "0", @step = "1", @value = "1'" })
-                        @Html.ValidationMessageFor(m => m.QuantityWarehouse)
-                    </td>
-                </tr>
+                @if (@Model.Title == "New Stationery")
+                {
+                    <tr>
+                        <td>@Html.LabelFor(m => m.QuantityWarehouse)</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.QuantityWarehouse, new {@class = "form-control", @type = "number", @min = "0", @step = "1", @value = "1'"})
+                            @Html.ValidationMessageFor(m => m.QuantityWarehouse)
+                        </td>
+                    </tr>
+                }
                 <tr>
                     <td>@Html.LabelFor(m => m.Location)</td>
                     <td>

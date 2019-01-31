@@ -325,6 +325,7 @@
     <Compile Include="ViewModels\ChargeBack\DepartmentChargeBackViewModel.cs" />
     <Compile Include="ViewModels\PoDetailsViewModel.cs" />
     <Compile Include="ViewModels\StationeryRetrievalViewModel.cs" />
+    <Compile Include="ViewModels\SupplierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\accordion.css" />

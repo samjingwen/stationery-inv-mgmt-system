@@ -93,12 +93,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <label class="control-label col-md-3" style="width:100%">Delivery Order No</label>
                     </td>
                     <td>
-                        <input type="text" id="DelOrderNo" class="form-control" name="DelOrderNo">
-                    </td>
-                </tr>
+                        <a id="showDO" class="greenBtn pull-right">Show DO Details</a>
+                    </td>d                </tr>
             </table>
 
             <table id="detailsTable" class="table">
@@ -251,51 +249,57 @@
     </script>
     @*script for popup*@
     <script>
-        //Show Modal.
-        function addNewItem() {
-            $("#newItemModal").modal();
+        //after select supplier all the do under this supplier  and not billed ones will be shown
+        $("#dropdown").change(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '../api/deliveryorder/' + $dropdown.val(),
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                   // var detailsTableBody = $("#detailsTable tbody");
+                    var form = $("#invoiceForm")
+                    var elems = [];
+
+                  
+                    for (var i in result) {
+                        <input type="checkbox" name="vehicle1" value="Bike"> </input>
+                        var dos = '<input type="checkbox" name="' + i.DelOrderNo + '" value=' + i.dono + '">' + i.DelOrderNo + '</input>';
+                        elems.push(i.dono);
+                        form.append(dos);
+                        //var doItem = '<tr><td>' + i.itemid + '</td><td>' + i.description + '</td><td>' + i.name + '</td><td>' + category + '</td><td>' + i.quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+                       // detailsTableBody.append(doItem);
+                    }
+                    $('#input_hidden_field').val(JSON.stringify(elems));
+                }
+            });
+        });
+        var value = $('#input_hidden_field').val(); //retrieve array
+        value = JSON.parse(value);
+        for (int i = 0; i < value.length; i++)
+        {
+            $('input[name='+value[i]+']').change(function () {
+                if (this.checked) {
+                    retriveitems(value[i]);
+                }
+            });
         }
-        //Validation for modal quantity
-        $("#quantity").change(function () {
-            $("#quantity").css("borderColor", "")
+        function retriveitems(doid) {
+            $.ajax({
+            url: '../api/deliveryorder/select' + doid,
+                type: 'GET',
+                    dataType: 'json',
+                        success: function (result) {
+                            var detailsTableBody = $("#detailsTable tbody");
+                            for (var i in result) {
+                                var doItem = '<tr><td>' +i.itemid + '</td><td>' + i.description + '</td><td>' + i.name + '</td><td>' + category + '</td><td>' + i.quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+                                detailsTableBody.append(doItem);
+                            }
+                        }
         });
-        //Add Multiple Items.
-        $("#addToList").click(function (e) {
-            e.preventDefault();
 
-            if ($.trim($("#category").val()) == "Select Category") {
-                $("#category").css("borderColor", "red");
-                return;
-            }
-            if ($.trim($("#description").val()) == "Select Item") {
-                $("#description").css("borderColor", "red");
-                return;
-            }
-            if ($.trim($("#quantity").val()) == "") {
-                $("#quantity").css("borderColor", "red");
-                return;
-            }
-            var itemid = $dropdown2.val(),
-                description = $("#description").val(),
-                category = $("#category").val(),
-                quantity = $("#quantity").val(),
-                unitOfMeasure = $("#uom").val(),
-                name = $("#description option:selected").text(),
-                detailsTableBody = $("#detailsTable tbody");
+        }
 
-            var requestItem = '<tr><td style="display:none;">' + itemid + '</td><td>' + description + '</td><td>' + name + '</td><td>' + category + '</td><td>' + quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
-            detailsTableBody.append(requestItem);
-            loadItem();
-        });
-        // After Add A New Order In The List, If You Want, You Can Remove It.
-        $(document).on('click', 'a.deleteItem', function (e) {
-            e.preventDefault();
-            $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800);
-        });
-        //
-        ///
-        /////
-        //Collect Multiple TD For Pass To Controller
         $("#saveInvoice").click(function (e) {
             e.preventDefault();
             //

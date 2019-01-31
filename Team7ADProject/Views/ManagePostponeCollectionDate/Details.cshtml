@@ -9,27 +9,8 @@
     <center><h2><b>Details</b></h2></center>
 
     @*Author:Lynn Lynn Oo*@
-    @* Design *@
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 80%;
-        }
-
-        td, th {
-            border: 1px solid #000000;
-            text-align: center;
-            padding: 10px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #5b94d1;
-        }
-    </style>
-    @*Design*@
-
-
-    <table border="1" width="50" class="table breadcrumb table-bordered table-striped table-hover">
+   
+    <table border="1" width="50" class="cusTable">
         <col style="width:8%">
         <col style="width:10%">
         <col style="width:10%">
@@ -68,7 +49,7 @@
                     @Html.DisplayFor(modelItem => item.Stationery.UnitOfMeasure)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TransactionDate)
+                    @String.Format("{0:dd MMM yyyy}", item.TransactionDate)
                 </td>
             </tr>
         }

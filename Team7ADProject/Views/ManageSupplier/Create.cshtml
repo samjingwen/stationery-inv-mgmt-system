@@ -1,10 +1,10 @@
-﻿@model Team7ADProject.Entities.Supplier
+﻿@model Team7ADProject.ViewModels.SupplierViewModel
 
 @{
     ViewBag.Title = "Create";
 }
 <div class="custcontainer">
-    <h2>Create New</h2>
+    <h2>Create New Supplier</h2>
 
 
     @using (Html.BeginForm())
@@ -12,7 +12,6 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>Supplier</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
@@ -74,7 +73,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.RadioButtonFor(model => model.Status, "1") Active
+                    @Html.RadioButtonFor(model => model.Status, "0") Inactive
                     @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -101,4 +101,17 @@
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @if (ViewBag.Error1 != null)
+    {
+        <script>
+
+$(document).ready(function(){
+
+alert('@ViewBag.Error1');
+
+});
+
+        </script>
+
+    }
 }
