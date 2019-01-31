@@ -219,12 +219,12 @@ namespace Team7ADProject.Service
 
                             //Less off from stationery
 
-                            //var item = context.Stationery.FirstOrDefault(x => x.ItemId == sr.ItemId);
-                            //if (item != null)
-                            //{
-                            //    item.QuantityWarehouse -= retQty;
-                            //    item.QuantityTransit += retQty;
-                            //}
+                            var item = context.Stationery.FirstOrDefault(x => x.ItemId == sr.ItemId);
+                            if (item != null)
+                            {
+                                item.QuantityWarehouse -= retQty;
+                                item.QuantityTransit += retQty;
+                            }
 
 
                         }
