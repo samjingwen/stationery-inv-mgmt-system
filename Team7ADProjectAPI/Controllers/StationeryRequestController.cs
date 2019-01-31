@@ -39,10 +39,10 @@ namespace Team7ADProjectApi.Controllers
         #region Approve Req
         [HttpPost]
         [Route("api/stationeryrequest/approve")]
-        public bool ApproveReq([FromBody]StationeryRequestApiModel req)
+        public bool ApproveReq([FromBody]StationeryRequestApiModel req,[FromBody] string userid)
         {
             GlobalClass gc = new GlobalClass();
-            return gc.ApproveReq(req);
+            return gc.ApproveReq(req,userid);
         }
         #endregion
 
