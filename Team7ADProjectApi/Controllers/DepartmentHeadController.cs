@@ -100,7 +100,7 @@ namespace Team7ADProjectApi.Controllers
         {
             AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == id);
             AspNetRoles depHeadRoleList = _context.AspNetRoles.FirstOrDefault(m => m.Name == RoleName.ActingDepartmentHead);
-            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.FirstOrDefault();
+            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.FirstOrDefault(m=>m.DepartmentId==user.DepartmentId);
             DelegateDepHeadApiModel apiModel = new DelegateDepHeadApiModel();
      
             apiModel.DepartmentName = user.Department.DepartmentName;
@@ -179,20 +179,26 @@ namespace Team7ADProjectApi.Controllers
 
         [Authorize(Roles = RoleName.DepartmentHead)]
         [HttpPost]
-        [Route("api/departmenthead/revoke/{id}")]
-        public IHttpActionResult RevokeHead(string id)
+        [Route("api/departmenthead/revoke/")]
+        public IHttpActionResult RevokeHead()
         {
             string status = "Fail to revoke.";
+            string currentUserId = User.Identity.GetUserId();
 
             //removing user from role
-            UserManager<ApplicationUser> userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            userManager.AddToRole(id, RoleName.Employee);
-            userManager.RemoveFromRole(id, RoleName.ActingDepartmentHead);
+            AspNetUsers user = _context.AspNetUsers.FirstOrDefault(m => m.Id == currentUserId);
+            AspNetRoles depHeadRoleList = _context.AspNetRoles.FirstOrDefault(m => m.Name == RoleName.ActingDepartmentHead);
+            AspNetUsers delegatedDepHead = depHeadRoleList.AspNetUsers.FirstOrDefault(m => m.DepartmentId == user.DepartmentId);
 
             //Changing the date of Delegation of authority to cut short
             DelegationOfAuthority doaInDb = _context.DelegationOfAuthority.OrderByDescending(m => m.DOAId)
-                .FirstOrDefault(m => m.DelegatedTo == id);
+                .FirstOrDefault(m => m.DelegatedTo == delegatedDepHead.Id);
             doaInDb.EndDate=DateTime.Today.AddDays(-1);
+
+            //removing delegate head from role
+            UserManager<ApplicationUser> userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            userManager.AddToRole(delegatedDepHead.Id, "Employee");
+            userManager.RemoveFromRole(delegatedDepHead.Id, "Acting Department Head");
             _context.SaveChanges();
             status = "Successfully revoked.";
 
