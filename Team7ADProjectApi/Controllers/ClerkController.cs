@@ -219,7 +219,7 @@ namespace Team7ADProjectApi.Controllers
             apiModelToSet.ApiModelList.RemoveAll(m => m.NewQuantity == 0 && m.Remarks == "");
 
             //This controller method will generate stationery retrieval, disbursement, stock adjustment
-            string currentUserId = User.Identity.GetUserId(); //need to check if this works
+            string currentUserId = User.Identity.GetUserId();
             string newRetrievalId = GenerateRetrievalId();
             //create a new stationery retrieval with pending delivery
             StationeryRetrieval retrievalInDb = new StationeryRetrieval

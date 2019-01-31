@@ -1,59 +1,95 @@
-﻿@model IEnumerable<Team7ADProject.Entities.StationeryRequest>
+﻿@model IEnumerable<Team7ADProject.Entities.Department>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<div class="custcontainer">
+
+<div id="DeptPpTable">
     <h2>Postpone Collection Date</h2>
+    <a class="btn btn-default btn-sm" style="margin-bottom:10px;" onclick="Postpone('@Url.Action("Postpone", "ManagePostponeCollectionDate", new { id="ALL"})')">Postpone All</a>
 
-    @*Author:Lynn Lynn Oo*@
-
-    <table class="cusTable">
-
-        <tr>
-            <th>No.</th>
-            <th>Request By</th>
-            <th>Department ID</th>
-            <th>Request ID</th>
-            <th>Details</th>
-            <th>Status</th>
-            <th>Collection Date</th>
-            <th>Postpone</th>
-        </tr>
-        @{ int i = 1;}
-        @foreach (var item in Model)
-        {
+    <table id="DeptTable" class="cusTable">
+        <thead>
             <tr>
-                <td>@(i++)</td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AspNetUsers1.EmployeeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DepartmentId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RequestId)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.RequestId })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @String.Format("{0:dd MMM yyyy}", item.CollectionDate)
-                </td>
-                <td>
-
-                                    @{
-                                    string url = Url.Action("Postpone", new { id = item.RequestId });
-                                }
-                    <input type="button" class="blueBtn pull-right" value="POSTPONE" onclick="window.location.href('@url')" />
-                </td>
+                <th>
+                    @Html.Label("Department")
+                </th>
+                <th>
+                    @Html.Label("Next Collection Date")
+                </th>
+                <th></th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DepartmentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NextAvailableDate)
+                    </td>
+                    <td>
+                        <a class="btn btn-default btn-sm" onclick="Postpone('@Url.Action("Postpone", "ManagePostponeCollectionDate", new { id=@item.DepartmentId})')"><i class="fa fa-clock-o fa-lg"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+@section scripts{
+    <script>
+        function Postpone(url) {
+            bootbox.confirm({
+                message: "Confirm to postpone?",
+                size: 'small',
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        success: function (response) {
+                            if (response.success) {
+                                $("#DeptPpTable").html(response.html);
+                                $.notify(response.message, {
+                                    globalPosition: "top center",
+                                    className: "success"
+                                })
+                            }
+                            else {
+                                $.notify(response.message, {
+                                    globalPosition: "top center",
+                                    className: "error"
+                                })
+                            }
+                        }
+
+                    });
+
+
+                }
+            });
         }
 
-    </table>
+    </script>
 
-</div>
+}
+
+
+
+
