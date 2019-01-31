@@ -31,7 +31,7 @@
                         @Html.DisplayFor(modelItem => item.NextAvailableDate)
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-sm" onclick="Postpone('@Url.Action("Postpone", "ManagePostponeCollectionDate", new { id=@item.DepartmentId})')"><i class="fa fa-clock-o fa-lg"></i></a>
+                        <a class="btn btn-default btn-sm" onclick="Postpone('@Url.Action("Postpone", "ManagePostponeCollectionDate", new { id=@item.DepartmentId})')"><i class="fa fa-clock-o fa-lg"></i></a>
                     </td>
                 </tr>
             }
