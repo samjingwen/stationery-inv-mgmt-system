@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
     var cpName = ViewBag.cpName;
     var cpId = ViewBag.cpId;
+    string oldPath = "";
 }
 <div class="custcontainer">
     <h2>Current Collection Point: @cpName</h2>
@@ -26,7 +27,7 @@
 
                         @if (cpId == cp.CollectionPointId)
                         {
-
+                            oldPath = cp.CPImagePath;
                             <input type="radio" id="@cp.CollectionPointId" name="selectedCP"
                                    value="@cp.CollectionPointId" checked="checked">
                         }
@@ -50,7 +51,7 @@
 
             </div>
             <div class="col-md-9">
-                <img id="cpImage" class="cpimg" src="~/Content/images/CollPoint/cpImage_1.png" />
+                <img id="cpImage" class="cpimg" src="@oldPath" />
             </div>
 
         }
@@ -77,7 +78,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            var cpImg = document.getElementById('cpImage')
+            var cpImg = document.getElementById('cpImage');
 
             $('input[type=radio][name=selectedCP]').change(function () {
                 var id = 'cp_' + this.value;

@@ -41,6 +41,7 @@ namespace Team7ADProject.Controllers
 
             //Update database
             bool isSuccess = srService.SaveAndDisburse(model, userId);
+            Email.LowStockEmail();
             if (isSuccess)
                 return View(disbList);
             else
