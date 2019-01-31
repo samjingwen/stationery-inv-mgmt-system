@@ -42,10 +42,38 @@ namespace Team7ADProjectApi.Providers
                 return;
             }
 
-            //Check doa for list of valid acting department heads
+            //Check doa for list of acting department heads
             LogicDB dbContext = new LogicDB();
             var todayDate = DateTime.Now.Date;
             ApplicationDbContext appDb = new ApplicationDbContext();
+
+            //check doa for list of invalid acting department heads
+            var doaExpList = dbContext.DelegationOfAuthority.Where(x => x.StartDate > todayDate || x.EndDate < todayDate).ToList();
+            foreach (var doaExp in doaExpList)
+            {
+                if (userManager.IsInRole(doaExp.DelegatedTo, "Acting Department Head"))
+                {
+                    using (var dbContextTransaction = appDb.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            userManager.AddToRole(doaExp.DelegatedTo, "Employee");
+                            userManager.RemoveFromRole(doaExp.DelegatedTo, "Acting Department Head");
+                            dbContextTransaction.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            dbContextTransaction.Rollback();
+                        }
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            //Check for valid
             var doaList = dbContext.DelegationOfAuthority.Where(x => x.StartDate <= todayDate && x.EndDate >= todayDate).ToList();
             foreach (var doa in doaList)
             {
@@ -74,31 +102,7 @@ namespace Team7ADProjectApi.Providers
                     }
                 }
             }
-            //check doa for list of invalid acting department heads
-            var doaExpList = dbContext.DelegationOfAuthority.Where(x => x.StartDate > todayDate || x.EndDate < todayDate).ToList();
-            foreach (var doaExp in doaExpList)
-            {
-                if (userManager.IsInRole(doaExp.DelegatedTo, "Acting Department Head"))
-                {
-                    using (var dbContextTransaction = appDb.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            userManager.AddToRole(doaExp.DelegatedTo, "Employee");
-                            userManager.RemoveFromRole(doaExp.DelegatedTo, "Acting Department Head");
-                            dbContextTransaction.Commit();
-                        }
-                        catch (Exception)
-                        {
-                            dbContextTransaction.Rollback();
-                        }
-                    }
-                }
-                else
-                {
-                    continue;
-                }
-            }
+            
 
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                OAuthDefaults.AuthenticationType);
