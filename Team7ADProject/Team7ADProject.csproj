@@ -627,7 +627,6 @@
     <Content Include="Views\ApproveAdjustment\Index.cshtml" />
     <Content Include="Views\ApproveAdjustment\AdjDetails.cshtml" />
     <Content Include="Views\ManageRequest\Index.cshtml" />
-    <Content Include="Views\ManagePostponeCollectionDate\Details.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDateDepartment\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />

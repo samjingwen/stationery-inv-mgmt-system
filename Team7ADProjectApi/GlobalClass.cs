@@ -455,7 +455,21 @@ namespace Team7ADProjectApi
             {
                 stationeryRequest.ApprovedBy = req.ApprovedBy;
                 stationeryRequest.Status = "Pending Disbursement";
-                //if(DateTime.Today>department)
+                DateTime nextMonday = DateTime.Today.AddDays(((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday) + 7);
+                int monday = Convert.ToInt32(nextMonday);
+                //S1:postpone has expired so if the day is before friday,collection date should be set to next monday
+                if (DateTime.Today>department.NextAvailableDate&&DateTime.Now.DayOfWeek<DayOfWeek.Friday)
+                { stationeryRequest.CollectionDate = nextMonday; }
+                //S2： postpone has expired,if request is raised in Friday or after Friday,date should be set to next next monday
+                if (DateTime.Today > department.NextAvailableDate && DateTime.Now.DayOfWeek > DayOfWeek.Friday)
+                { stationeryRequest.CollectionDate =Convert.ToDateTime(monday+7); }
+                int today = Convert.ToInt32(DateTime.Today);
+                int nextAD = Convert.ToInt32(department.NextAvailableDate);
+                //S3:postpone is avaliable so if the day is before friday,collection date should be set to postpone date
+                if (today< nextAD-3)
+                { stationeryRequest.CollectionDate =department.NextAvailableDate; }
+                if ( nextAD - 3<=today&&today<nextAD)
+                { stationeryRequest.CollectionDate = Convert.ToDateTime(nextAD+7); }
                 context.SaveChanges();
                 return true;
             }

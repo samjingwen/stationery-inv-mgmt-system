@@ -135,14 +135,10 @@ namespace Team7ADProject.Controllers
                                 catch (Exception)
                                 {
                                     dbContextTransaction.Rollback();
-
                                 }
                             }
                         }
                     }
-                    
-
-
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
