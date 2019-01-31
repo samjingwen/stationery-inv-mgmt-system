@@ -4,69 +4,12 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*Select Items(modal for items)*@
-<div class="custcontainer">
-    <h2>Validate Invoice</h2>
-    <div class="modal fade" id="newItemModal">
-        <div class="modal-dialog modal-lg" style=" width: 900px !important;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <a href="#" class="close" data-dismiss="modal">&times;</a>
-                    <h4>Add New Item</h4>
-                </div>
-                <form id="NewItemForm">
-                    <div class="modal-body">
-                        @*Item Details*@
-                        <h5 style="margin-top:10px;color:#ff6347">Item Details</h5>
-                        <hr />
-                        <div class="form-horizontal">
-                            <div class="form-group">
-                                <label class="control-label col-md-2">
-                                    Product Category
-                                </label>
-                                <div class="col-md-4">
-                                    <select class="form-control" name="category" id="category"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">
-                                    Item Description
-                                </label>
-                                <div class="col-md-4">
-                                    <select class="form-control table2" name="description" id="description"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">
-                                    Unit of measure
-                                </label>
-                                <div class="col-md-4">
-                                    <input type="text" id="uom" readonly="readonly" class="form-control" name="uom">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">
-                                    Quantity
-                                </label>
-                                <div class="col-md-4">
-                                    <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" min="1" />
-                                </div>
-                                <div class="col-md-2 col-lg-offset-4">
-                                    <a id="addToList" class="greenBtn pull-right">Add To List</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
 
     @*Invoice Information*@
     <div class="form-group">
         <form name="invoiceForm">
-            <table>
+            <table id="doTable">
                 <tr>
                     <td>
                         <label class="control-label col-md-3" style="width:100%">Invoice No</label>
@@ -91,12 +34,13 @@
                         <input type="text" id="InvoiceAmount" class="form-control" name="InvoiceAmount">
                     </td>
                 </tr>
+                <tbody></tbody>
                 <tr>
-                    <td>
-                    </td>
+                    <td></td>
                     <td>
                         <a id="showDO" class="greenBtn pull-right">Show DO Details</a>
-                    </td>d                </tr>
+                    </td>
+                </tr>
             </table>
 
             <table id="detailsTable" class="table">
@@ -117,9 +61,6 @@
     <button style="margin-right:10px" id="saveInvoice" class="greenBtn pull-right">  Save  </button>
     <button style="margin-right:10px" class="blueBtn pull-right" onclick="addNewItem()">Add Item</button>
 
-
-
-</div>
 
 @section scripts
               {
@@ -250,40 +191,39 @@
     @*script for popup*@
     <script>
         //after select supplier all the do under this supplier  and not billed ones will be shown
-        $("#dropdown").change(function (e) {
+        $dropdown0.change(function (e) {
             e.preventDefault();
             $.ajax({
-                url: '../api/deliveryorder/' + $dropdown.val(),
+                url: '../api/deliveryorder/' + $dropdown0.val(),
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
                    // var detailsTableBody = $("#detailsTable tbody");
-                    var form = $("#invoiceForm")
+                    var form = $("#detailsTable tbody");
                     var elems = [];
-
                   
                     for (var i in result) {
-                        <input type="checkbox" name="vehicle1" value="Bike"> </input>
-                        var dos = '<input type="checkbox" name="' + i.DelOrderNo + '" value=' + i.dono + '">' + i.DelOrderNo + '</input>';
+                        var doItem = '<tr><td>' + i.itemid + '</td><td>' + i.description + '</td><td>' + i.name + '</td><td>' + category + '</td><td>' + i.quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+                        var dos = '<tr>' +'<input type="checkbox" name="' + i.DelOrderNo + '" value=' + i.dono + '">' + i.DelOrderNo + '<br></tr>';
                         elems.push(i.dono);
                         form.append(dos);
-                        //var doItem = '<tr><td>' + i.itemid + '</td><td>' + i.description + '</td><td>' + i.name + '</td><td>' + category + '</td><td>' + i.quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
-                       // detailsTableBody.append(doItem);
                     }
                     $('#input_hidden_field').val(JSON.stringify(elems));
                 }
             });
         });
-        var value = $('#input_hidden_field').val(); //retrieve array
-        value = JSON.parse(value);
-        for (int i = 0; i < value.length; i++)
-        {
-            $('input[name='+value[i]+']').change(function () {
-                if (this.checked) {
-                    retriveitems(value[i]);
-                }
-            });
-        }
+
+        //var value = $('#input_hidden_field').val(); //retrieve array
+        //value = JSON.parse(value);
+        //var i;
+        //for ( i = 0; i < value.length; i++)
+        //{
+        //    $('input[name='+value[i]+']').change(function () {
+        //        if (this.checked) {
+        //            retriveitems(value[i]);
+        //        }
+        //    });
+        //}
         function retriveitems(doid) {
             $.ajax({
             url: '../api/deliveryorder/select' + doid,
