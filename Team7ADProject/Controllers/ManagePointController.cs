@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -95,12 +96,10 @@ namespace Team7ADProject.Controllers
                 return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "ViewAll", db.CollectionPoint.ToList()), message = "Submitted Successfully" }, JsonRequestBehavior.AllowGet);
 
             }
-
-
+           
             catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
-
             }
         }
 
@@ -112,6 +111,10 @@ namespace Team7ADProject.Controllers
                 db.CollectionPoint.Remove(cp);
                 db.SaveChanges();
                 return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "ViewAll", db.CollectionPoint.ToList()), message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (DbUpdateException)
+            {
+                return Json(new { success = false, message = "Please advise all departments to change collection point before removing." }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
