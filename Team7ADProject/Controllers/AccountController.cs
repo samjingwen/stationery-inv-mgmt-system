@@ -81,11 +81,37 @@ namespace Team7ADProject.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    //Check doa for list of valid acting department heads
+                    //Check doa for list of acting department heads
                     LogicDB context = new LogicDB();
                     var todayDate = DateTime.Now.Date;
                     ApplicationDbContext appDb = new ApplicationDbContext();
                     UserManager<ApplicationUser> _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                    //check doa for list of invalid acting department heads
+                    var doaExpList = context.DelegationOfAuthority.Where(x => x.StartDate > todayDate || x.EndDate < todayDate).ToList();
+                    foreach (var doaExp in doaExpList)
+                    {
+                        if (_userManager.IsInRole(doaExp.DelegatedTo, "Acting Department Head"))
+                        {
+                            using (var dbContextTransaction = appDb.Database.BeginTransaction())
+                            {
+                                try
+                                {
+                                    _userManager.AddToRole(doaExp.DelegatedTo, "Employee");
+                                    _userManager.RemoveFromRole(doaExp.DelegatedTo, "Acting Department Head");
+                                    dbContextTransaction.Commit();
+                                }
+                                catch (Exception)
+                                {
+                                    dbContextTransaction.Rollback();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    //Valid list of doa
                     var doaList = context.DelegationOfAuthority.Where(x => x.StartDate <= todayDate && x.EndDate >= todayDate).ToList();
                     foreach(var doa in doaList)
                     {
@@ -114,31 +140,7 @@ namespace Team7ADProject.Controllers
                             }
                         }
                     }
-                    //check doa for list of invalid acting department heads
-                    var doaExpList = context.DelegationOfAuthority.Where(x => x.StartDate > todayDate || x.EndDate < todayDate).ToList();
-                    foreach(var doaExp in doaExpList)
-                    {
-                        if (_userManager.IsInRole(doaExp.DelegatedTo, "Acting Department Head"))
-                        {
-                            using (var dbContextTransaction = appDb.Database.BeginTransaction())
-                            {
-                                try
-                                {
-                                    _userManager.AddToRole(doaExp.DelegatedTo, "Employee");
-                                    _userManager.RemoveFromRole(doaExp.DelegatedTo, "Acting Department Head");
-                                    dbContextTransaction.Commit();
-                                }
-                                catch (Exception)
-                                {
-                                    dbContextTransaction.Rollback();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
+                    
 
 
                     return RedirectToLocal(returnUrl);

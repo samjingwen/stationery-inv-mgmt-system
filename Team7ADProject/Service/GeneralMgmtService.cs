@@ -105,6 +105,17 @@ namespace Team7ADProject.Service
                          where x.DepartmentId == deptId && x.Id != y.DepartmentHeadId && x.Id != y.DepartmentRepId
                          select x).ToList();
 
+            //Check if any employee is already an acting department head, remove from list if so
+            var modQuery = new List<AspNetUsers>(query);
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            foreach (var i in modQuery)
+            {
+                if (manager.IsInRole(i.Id, "Acting Department Head"))
+                {
+                    query.Remove(i);
+                }
+            }
+
             var users = query.Select(u => new SelectListItem
             {
                 Value = u.Id,
