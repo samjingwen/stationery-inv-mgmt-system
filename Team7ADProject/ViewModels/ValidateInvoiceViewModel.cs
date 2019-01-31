@@ -11,17 +11,16 @@ namespace Team7ADProject.ViewModels
     {
         [Required]
         public string InvoiceNo { get; set; }
-        [Required]
         public string SupplierId { get; set; }
-        [Required]
-        public List<string> DelOrderNo { get; set; }
+        public decimal InvoiceAmt { get; set; }
+        public List<DelOrderDetailsViewModel> DelOrderDetails { get; set; }
     }
 
     public class DelOrderDetailsViewModel
     {
         public string DelOrderNo { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
 
         public bool isSelected { get; set; }

@@ -54,7 +54,7 @@ namespace Team7ADProject.Controllers
             try
             {
                 var query = pService.GetSupplierDelOrder(id);
-                if (query.Count > 0)
+                if (query.DelOrderDetails.Count > 0)
                 {
                     return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "GetSupplierDO", query) }, JsonRequestBehavior.AllowGet);
                 }
@@ -71,17 +71,10 @@ namespace Team7ADProject.Controllers
 
         //Create new Invoice and TransactionDetails
         [HttpPost]
-        public ActionResult Validate(List<DelOrderDetailsViewModel> model)
+        public ActionResult Validate(ValidateInvoiceViewModel model)
         {
-
-
-
-            return View();
-
-
-
-
-
+            pService.CreateInvoice(model);
+            return RedirectToAction("Index");
         }
         
         #endregion

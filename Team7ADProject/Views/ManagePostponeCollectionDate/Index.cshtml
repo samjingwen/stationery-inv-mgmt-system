@@ -59,27 +59,31 @@
                         className: 'btn-danger'
                     }
                 },
-                callback: function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: url,
-                        success: function (response) {
-                            if (response.success) {
-                                $("#DeptPpTable").html(response.html);
-                                $.notify(response.message, {
-                                    globalPosition: "top center",
-                                    className: "success"
-                                })
+                callback: function (result) {
+                    if (result) {
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            success: function (response) {
+                                if (response.success) {
+                                    $("#DeptPpTable").html(response.html);
+                                    $.notify(response.message, {
+                                        globalPosition: "top center",
+                                        className: "success"
+                                    })
+                                }
+                                else {
+                                    $.notify(response.message, {
+                                        globalPosition: "top center",
+                                        className: "error"
+                                    })
+                                }
                             }
-                            else {
-                                $.notify(response.message, {
-                                    globalPosition: "top center",
-                                    className: "error"
-                                })
-                            }
-                        }
 
-                    });
+                        });
+
+                    }
+                    
 
 
                 }

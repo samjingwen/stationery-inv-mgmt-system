@@ -1,4 +1,4 @@
-﻿@model List<Team7ADProject.ViewModels.DelOrderDetailsViewModel>
+﻿@model Team7ADProject.ViewModels.ValidateInvoiceViewModel
 @{
     ViewBag.Title = "GetSupplierDO";
     Layout = null;
@@ -27,32 +27,33 @@
         </tr>
     </thead>
     <tbody>
-        @for (int i = 0; i < Model.Count; i++)
+        @for (int i = 0; i < Model.DelOrderDetails.Count; i++)
         {
             <tr>
                 <td>
-                    @Html.CheckBoxFor(x => x[i].isSelected)
+                    @Html.CheckBoxFor(x => x.DelOrderDetails[i].isSelected)
                 </td>
                 <td>
-                    @Html.DisplayFor(x => x[i].DelOrderNo)
+                    @Html.DisplayFor(x => x.DelOrderDetails[i].DelOrderNo)
+                    @Html.HiddenFor(x => x.DelOrderDetails[i].DelOrderNo)
                 </td>
                 <td>
-                    @Html.DisplayFor(x => x[i].Date)
+                    @Html.DisplayFor(x => x.DelOrderDetails[i].Date)
                 </td>
                 <td></td>
                 <td></td>
             </tr>
-            for (int j = 0; j < Model[i].Details.Count; j++)
+            for (int j = 0; j < Model.DelOrderDetails[i].Details.Count; j++)
             {
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td>
-                        @Html.DisplayFor(x => x[i].Details[j].Description)
+                        @Html.DisplayFor(x => x.DelOrderDetails[i].Details[j].Description)
                     </td>
                     <td>
-                        @Html.DisplayFor(x => x[i].Details[j].Quantity)
+                        @Html.DisplayFor(x => x.DelOrderDetails[i].Details[j].Quantity)
                     </td>
 
                 </tr>

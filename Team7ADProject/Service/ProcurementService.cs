@@ -122,7 +122,7 @@ namespace Team7ADProject.Service
         }
 
 
-        public List<DelOrderDetailsViewModel> GetSupplierDelOrder(string supplierId)
+        public ValidateInvoiceViewModel GetSupplierDelOrder(string supplierId)
         {
             var query = (from x in context.DeliveryOrder
                          where x.SupplierId == supplierId && x.Status != "BILLED"
@@ -132,19 +132,55 @@ namespace Team7ADProject.Service
                              DelOrderNo = x.DelOrderNo,
                              Date = x.Date,
                          }).ToList();
-            return query;
+            ValidateInvoiceViewModel model = new ValidateInvoiceViewModel
+                                        {
+                                            DelOrderDetails = query
+                                        };
+
+            return model;
         }
 
-        
+        public string GetDelOrderId(string DelOrderNo)
+        {
+            return context.DeliveryOrder.FirstOrDefault(x => x.DelOrderNo == DelOrderNo).DelOrderId;
+        }
        
         
 
-        public void CreateInvoice()
+        public void CreateInvoice(ValidateInvoiceViewModel model)
         {
-            
-
-
-
+            string invoiceNo = model.InvoiceNo;
+            DateTime invoiceDate = DateTime.Now;
+            string supplierId = model.SupplierId;
+            decimal invoiceAmt = model.InvoiceAmt;
+            using(var dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    foreach (var item in model.DelOrderDetails)
+                    {
+                        if (item.isSelected)
+                        {
+                            string invoiceId = GenerateInvoiceId();
+                            string delOrderId = GetDelOrderId(item.DelOrderNo);
+                            Invoice newInvoice = new Invoice();
+                            newInvoice.InvoiceId = invoiceId;
+                            newInvoice.InvoiceNo = invoiceNo;
+                            newInvoice.SupplierId = supplierId;
+                            newInvoice.InvoiceAmount = invoiceAmt;
+                            newInvoice.InvoiceDate = invoiceDate;
+                            newInvoice.DelOrderId = delOrderId;
+                            context.Invoice.Add(newInvoice);
+                            context.SaveChanges();
+                        }
+                    }
+                    dbContextTransaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    dbContextTransaction.Rollback();
+                }
+            }
         }
 
 
@@ -154,8 +190,8 @@ namespace Team7ADProject.Service
             Invoice lastItem = context.Invoice.OrderByDescending(m => m.InvoiceId).First();
             string lastRequestIdWithoutPrefix = lastItem.InvoiceId.Substring(3);
             int newRequestIdWithoutPrefixInt = Int32.Parse(lastRequestIdWithoutPrefix) + 1;
-            string newRequestIdWithoutPrefixString = newRequestIdWithoutPrefixInt.ToString();
-            string requestId = "SID0000" + newRequestIdWithoutPrefixString;
+            string newRequestIdWithoutPrefixString = newRequestIdWithoutPrefixInt.ToString("0000000");
+            string requestId = "SID" + newRequestIdWithoutPrefixString;
             return requestId;
         }
     }
