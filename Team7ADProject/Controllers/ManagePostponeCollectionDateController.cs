@@ -18,31 +18,26 @@ namespace Team7ADProject.Controllers
         {
             _context = new LogicDB();
         }
-        // GET: ManagePostponeCollectionDate
+
         public ActionResult Index()
         {
-            //string userid = User.Identity.GetUserId();
-            //string depId = _context.AspNetUsers.Where(x => x.Id == userid).Select(x => x.DepartmentId).First();
-            //Store Supervisor can see all the Pending Disbursement of all depts
-            List<StationeryRequest> pendingDisbursements = _context.StationeryRequest.Where(x => x.Status == "Pending Disbursement" /*&& x.DepartmentId==depId*/).ToList();
-            return View(pendingDisbursements);
-
+            List<Department> deptList = _context.Department.ToList();
+            return View(deptList);
         }
 
-        //GET: ManagePostponeCollectionDate/Details
-       
-        public ActionResult Details(string id)
+        public ActionResult Postpone(string id = null)
         {
-            List<TransactionDetail> ItemsByID = _context.TransactionDetail.Where(x => x.TransactionRef == id).ToList();
-            return View(ItemsByID);
-        }
-
-        public ActionResult Postpone(string id)
-        {
-            StationeryRequest current = _context.StationeryRequest.First(m => m.RequestId == id);
-            current.CollectionDate = current.CollectionDate.Value.AddDays(7);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Department dept = _context.Department.FirstOrDefault(x => x.DepartmentId == id);
+                dept.NextAvailableDate = ((DateTime)dept.NextAvailableDate).AddDays(7);
+                _context.SaveChanges();
+                return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "Index", _context.Department.ToList()), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
         #endregion
     }

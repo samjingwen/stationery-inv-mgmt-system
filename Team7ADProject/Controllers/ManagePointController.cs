@@ -114,7 +114,7 @@ namespace Team7ADProject.Controllers
             }
             catch (DbUpdateException)
             {
-                return Json(new { success = false, message = "Please advise all departments to change collection point before removing." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = "Please advise all departments to change collection point before deletion." }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
