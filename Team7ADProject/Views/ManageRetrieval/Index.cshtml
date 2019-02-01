@@ -70,7 +70,7 @@
                                 @Html.DisplayFor(x => x[i].requestList[j].Quantity)
                             </td>
                             <td width="200px">
-                                @Html.EditorFor(x => x[i].requestList[j].RetrievedQty, new { htmlAttributes = new { min = 0, max = Model[i].QtyInStock > Model[i].requestList[j].Quantity ? Model[i].requestList[j].Quantity : Model[i].QtyInStock, @class = "ret" + Model[i].ItemId } })
+                                @Html.EditorFor(x => x[i].requestList[j].RetrievedQty, new { htmlAttributes = new { step = 1, min = 0, max = Model[i].QtyInStock > Model[i].requestList[j].Quantity ? Model[i].requestList[j].Quantity : Model[i].QtyInStock, @class = "ret" + Model[i].ItemId } })
                                 @Html.ValidationMessageFor(x => x[i].requestList[j].RetrievedQty, "", new { @class = "text-danger" })
                             </td>
                         </tr>
@@ -130,9 +130,6 @@
     </script>
     <script>
         $(document).ready(function () {
-            
-
-
             $('input[type=number]').change(function () {
                 var name = this.className.split(' ')[0];
                 var elements = document.getElementsByClassName(name);
@@ -174,6 +171,7 @@
                 }
                 if (isValid) {
                     form.submit();
+                    return true;
                 }
                 else {
                     
@@ -185,12 +183,6 @@
                 }
             };
         });
-
-
-
-
-
     </script>
-
 
 }
