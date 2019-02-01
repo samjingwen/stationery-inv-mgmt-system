@@ -22,8 +22,12 @@ namespace Team7ADProject.Controllers
 
         // GET: DelegateHead
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(int id = 0)
         {
+            if (id == 1)
+                ViewBag.successHandler = 1;
+            else if (id == 2)
+                ViewBag.successHandler = 2;
             string userId = User.Identity.GetUserId();
             DelegateHeadViewModel viewModel = new DelegateHeadViewModel(userId);
             ViewBag.DepName = viewModel.DepartmentName;
@@ -62,7 +66,7 @@ namespace Team7ADProject.Controllers
             string content = string.Format("Your appointment will start on {0} and end on {1}", model.StartDate.ToShortDateString(), model.EndDate.ToShortDateString());
             Email.Send(email, subject, content);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = 1 });
         }
 
         public ActionResult Revoke()
@@ -80,7 +84,7 @@ namespace Team7ADProject.Controllers
 
             gmService.RevokeDelegateHead(userId);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = 2 });
         }
 
 
