@@ -68,7 +68,7 @@ namespace Team7ADProject.ViewModels
         #region From Trasaction Details
 
         [Required]
-        [RegularExpression(@"^\d+", ErrorMessage = "Please enter a valid quantity.")]
+        [RegularExpression(@"^\d*$", ErrorMessage = "Please enter a valid quantity.")]
         public int Quantity { get; set; }
 
         [Column(TypeName = "numeric")]
