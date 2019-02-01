@@ -1,14 +1,15 @@
 ﻿@model Team7ADProject.ViewModels.SideBarViewModel
 <script>
-    $("menuBox").click(function () {
+    $(".menuBox").click(function () {
         window.location = $(this).find("a").attr("href");
         return false;
-    })
-
+    });
+       
+   
 </script>
 
 <div>
-    <div class="menuBox">
+    <div class="menuBox" onmouseover="this.style.cursor='pointer'" onmouseout="this.style.cursor='default'">
         
         <div style="padding-left:25%; padding-top:7%;">
             <p><img src="~/Content/images/Logo2.png" style="height:65%; width:65%; opacity:0.4;" /></p>
