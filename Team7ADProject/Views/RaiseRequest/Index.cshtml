@@ -233,7 +233,19 @@
         $("#addToList").click(function (e) {
             e.preventDefault();
 
-            if ($.trim($("#category").val()) == "" || $.trim($("#description").val()) == "" || $.trim($("#quantity").val()) == "") return;
+            if ($.trim($("#category").val()) == "" || $.trim($("#category").val()) == "Select Category" ||
+                $.trim($("#description").val()) == "" || $.trim($("#description").val()) == "Select Item" ||
+                $.trim($("#quantity").val()) == "") {
+                bootbox.alert("Error! Please confirm the selections!");
+                return;
+            }
+
+            if ($.trim($("#quantity").val()) < 1 || $.trim($("#quantity").val()) > 10000 || $.trim($("#quantity").val()) % 1 != 0 ) {
+                bootbox.alert("Error! Please select the valid quantity!");
+                return;
+            }
+                
+             
 
             var description = $("#description").val(),
                 category = $("#category").val(),
