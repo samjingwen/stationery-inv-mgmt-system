@@ -47,6 +47,14 @@ namespace Team7ADProject.ViewModels
             }
         }
 
+        public string DepartmentRepId
+        {
+            get
+            {
+                return context.Department.FirstOrDefault(x => x.DepartmentHeadId == DeptHeadId).DepartmentRepId;
+            }
+        }
+
         [Required]
         public string SelectedUser { get; set; }
 
@@ -56,8 +64,7 @@ namespace Team7ADProject.ViewModels
             {
                 if (DeptHeadId != null)
                 {
-                    return context.AspNetUsers.Where(x => x.DepartmentId == DepartmentId && x.Id != DeptHeadId).ToList();
-                    
+                    return context.AspNetUsers.Where(x => x.DepartmentId == DepartmentId && x.Id != DeptHeadId && x.Id != DepartmentRepId).ToList();
                 }
                 else
                     return null;

@@ -24,12 +24,9 @@ namespace Team7ADProject.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-
-
             string userId = User.Identity.GetUserId();
             DelegateHeadViewModel viewModel = new DelegateHeadViewModel(userId);
             ViewBag.DepName = viewModel.DepartmentName;
-
 
             ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationDbContext context = new ApplicationDbContext();
@@ -54,6 +51,7 @@ namespace Team7ADProject.Controllers
             ApplicationDbContext context = new ApplicationDbContext();
 
             manager.AddToRole(model.SelectedUser, "Acting Department Head");
+            manager.RemoveFromRole(model.SelectedUser, "Employee");
 
             string userId = User.Identity.GetUserId();
             model.DeptHeadId = userId;
@@ -72,8 +70,17 @@ namespace Team7ADProject.Controllers
             string userId = User.Identity.GetUserId();
             string[] delHead = gmService.GetDelegatedHead(userId);
 
-            return RedirectToAction("Index");
+            ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationDbContext context = new ApplicationDbContext();
+            if (delHead != null)
+            {
+                manager.AddToRole(delHead[0], "Employee");
+                manager.RemoveFromRole(delHead[0], "Acting Department Head");
+            }
 
+            gmService.RevokeDelegateHead(userId);
+
+            return RedirectToAction("Index");
         }
 
 
