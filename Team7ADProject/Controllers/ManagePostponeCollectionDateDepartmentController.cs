@@ -5,61 +5,60 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
+using Team7ADProject.Service;
 using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
+    [RoleAuthorize(Roles = "Department Head, Department Representative")]
     public class ManagePostponeCollectionDateDepartmentController : Controller
     {
         #region Author:Lynn Lynn Oo
 
         LogicDB _context;
+        DisbursementService disbService = DisbursementService.Instance;
+
         public ManagePostponeCollectionDateDepartmentController()
         {
             _context = new LogicDB();
         }
         // GET: ManagePostponeCollectionDateDepartment
-        [RoleAuthorize(Roles = "Department Head, Department Representative")]
         [HttpGet]
         public ActionResult Index()
         {
-            string userid = User.Identity.GetUserId();
-            string depId = _context.AspNetUsers.Where(x => x.Id == userid).Select(x => x.DepartmentId).First();
-            var showinlist = _context.StationeryRequest.Where(x => x.DepartmentId == depId && x.Status == "Pending Disbursement").ToList();
-            List<StationeryRequest> stationery = new List<StationeryRequest>();
-            stationery.AddRange(showinlist);
-            List<PostponeCollectionDateDepartmentViewModel> viewModel = new List<PostponeCollectionDateDepartmentViewModel>();
-            foreach (StationeryRequest current in stationery)
+            string userId = User.Identity.GetUserId();
+            string deptId = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId).DepartmentId;
+            BriefDept dept = disbService.GetBriefDept(deptId);
+            return View(dept);
+        }
+
+        public ActionResult Postpone()
+        {
+            try
             {
-                PostponeCollectionDateDepartmentViewModel viewModeltwo = new PostponeCollectionDateDepartmentViewModel();
-                viewModeltwo.DepartmentID = current.DepartmentId;
-                viewModeltwo.RequestBy = current.AspNetUsers1.EmployeeName;
-                viewModeltwo.RequestID = current.RequestId;
-                viewModeltwo.Status = current.Status;
-                viewModeltwo.CollectionDate = (DateTime)current.CollectionDate;
-                viewModel.Add(viewModeltwo);
+                string userId = User.Identity.GetUserId();
+                var dept = _context.AspNetUsers.FirstOrDefault(x => x.Id == userId).Department;
+                DateTime nextMonday = GlobalClass.GetNextWeekDay((DateTime)dept.NextAvailableDate, DayOfWeek.Monday);
+                DateTime comingMonday = GlobalClass.GetNextWeekDay(DateTime.Now, DayOfWeek.Monday);
+                if (nextMonday > comingMonday)
+                {
+                    dept.NextAvailableDate = nextMonday.AddDays(7);
+                }
+                else
+                {
+                    dept.NextAvailableDate = comingMonday.AddDays(7);
+                }
+
+                _context.SaveChanges();
+                return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "Index", disbService.GetBriefDept(dept.DepartmentId)), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
             }
-            return View(viewModel);
-        }
-        //weeksPostponeDuration
-
-        [RoleAuthorize(Roles = "Department Head, Department Representative")]
-        [HttpPost]
-        public ActionResult Postpone(int weeksPostponeDuration)
-        {
-            //code here
-            return View();
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
-        // GET: ManagePostponeCollectionDateDepartment/Details
-        [RoleAuthorize(Roles = "Department Head, Department Representative")]
-        public ActionResult Details(string id)
-        {
-            List<TransactionDetail> ItemsByID = _context.TransactionDetail.Where(x => x.TransactionRef == id).ToList();
-            return View(ItemsByID);
-        }
 
-        
     }
     #endregion
 }
