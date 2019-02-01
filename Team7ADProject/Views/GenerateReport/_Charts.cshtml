@@ -30,7 +30,7 @@
                 dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.statDP.datapoint))
                 }]
         });
-                
+
         var enttimeChart = new CanvasJS.Chart("DisbEntTime", {
             animationEnabled: true,
             exportEnabled: true,
@@ -73,7 +73,7 @@
             @:namearr.push("@i.label");
             var pt = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(i.datapoint));
             @:dxparr.push(@pt);
-            
+
         };
 
        @foreach(var j in Model.entdata)
@@ -81,7 +81,7 @@
             @:entnamearr.push("@j.label");
             var entpt = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(j.datapoint));
             @:entdxparr.push(@entpt);
-            
+
         };
 
         for (i = 1; i < namearr.length; i++) {
@@ -89,9 +89,9 @@
                 name: namearr[i],
                 showInLegend: true,
                 type: "line",
-                dataPoints: dxparr[i]             
+                dataPoints: dxparr[i]
              };
-        
+
             disbTimeChart.options.data.push(newSeries);
         };
 
@@ -121,7 +121,7 @@
 </div>
 @if (Model.deptID == "STAT")
 {
-<div id="DisbEntTime" style="height: 300px; width: 80%; float:left; padding-top:40px;">
-</div>}
+    <div id="DisbEntTime" style="height: 300px; width: 80%; float:left; padding-top:40px;">
+    </div>            }
 <div id="DisbTime" style="height: 300px; width: 80%; float:left; padding-top:40px;">
 </div>
