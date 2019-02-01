@@ -92,7 +92,7 @@ namespace Team7ADProject.Controllers
             {
                     //for collection date check
                     {
-                        var dep = _context.Department.Where(x => x.DepartmentId == stationery.DepartmentId).FirstOrDefault();
+                        var dep = _context.Department.FirstOrDefault(x => x.DepartmentId == stationery.DepartmentId);
                         if (dep.NextAvailableDate > DateTime.Now)
                         {
                             _context.Entry(stationery).Property("CollectionDate").CurrentValue = dep.NextAvailableDate;
