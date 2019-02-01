@@ -58,18 +58,20 @@
                         if (response.success) {
                             $("#firstTab").html(response.html);
                             refreshAddNewTab($(form).attr('data-restUrl'), true);
-                            $.notify(response.message, {
-                                globalPosition: "top center",
-                                className: "success"
-                            })
+                            $.notify(response.message,
+                                {
+                                    globalPosition: "top center",
+                                    className: "success"
+                                });
                             if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable))
                                 activatejQueryTable();
                         }
                         else {
-                            $.notify(response.message, {
-                                globalPosition: "top center",
-                                className: "error"
-                            })
+                            $.notify(response.message,
+                                {
+                                    globalPosition: "top center",
+                                    className: "error"
+                                });
                         }
                     }
                 }
@@ -141,18 +143,20 @@
                     success: function (response) {
                         if (response.success) {
                             $("#firstTab").html(response.html);
-                            $.notify(response.message, {
-                                globalPosition: "top center",
-                                className: "warn"
-                            })
+                            $.notify(response.message,
+                                {
+                                    globalPosition: "top center",
+                                    className: "warn"
+                                });
                             if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable))
                                 activatejQueryTable();
                         }
                         else {
-                            $.notify(response.message, {
-                                globalPosition: "top center",
-                                className: "error"
-                            })
+                            $.notify(response.message,
+                                {
+                                    globalPosition: "top center",
+                                    className: "error"
+                                });
                         }
                     }
 
