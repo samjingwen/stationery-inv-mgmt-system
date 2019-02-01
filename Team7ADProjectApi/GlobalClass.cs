@@ -91,28 +91,42 @@ namespace Team7ADProjectApi
 
         public bool VoidDisbursement(string disbno)
         {
-            Disbursement disb = context.Disbursement.Where(x => x.DisbursementNo == disbno).FirstOrDefault();
-
-
-
+            var disb = context.Disbursement.Where(x => x.DisbursementNo == disbno).ToList();
+            
             if (disb != null)
             {
-
-                string reqid = disb.RequestId;
+                var onedisb = disb.First();
+                string reqid = onedisb.RequestId;
                 StationeryRequest req = context.StationeryRequest.Find(reqid);
                 if (req != null)
                 {
                     req.Status = "Void";
                 }
-
-                disb.Status = "Void";
-
-                TransactionDetail transactionDetail = context.TransactionDetail.Where(x => x.TransactionRef == disb.DisbursementId).FirstOrDefault();
-                if (transactionDetail != null)
+                foreach(Disbursement dd in disb)
                 {
-                    transactionDetail.Remarks = "Void";
-                }
+                    dd.Status = "Void";
+                    context.SaveChanges();
+                    var transactionDetail = context.TransactionDetail.Where(x => x.TransactionRef == dd.RequestId).ToList();
+                    if (transactionDetail != null)
+                    {
+                        foreach(TransactionDetail detail in transactionDetail)
+                        {
+                            detail.Remarks = "Void";
+                        }
+                      
+                    }
+                    var transactionDetaildisb = context.TransactionDetail.Where(x => x.TransactionRef == dd.DisbursementId).ToList();
+                    if (transactionDetaildisb != null)
+                    {
+                        foreach (TransactionDetail detail in transactionDetaildisb)
+                        {
+                            detail.Remarks = "Void";
+                        }
 
+                    }
+
+                }
+               
                 context.SaveChanges();
                 return true;
             }
