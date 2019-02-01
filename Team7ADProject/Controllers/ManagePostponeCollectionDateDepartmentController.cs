@@ -56,8 +56,6 @@ namespace Team7ADProject.Controllers
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-
-
     }
     #endregion
 }
