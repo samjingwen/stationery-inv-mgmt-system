@@ -14,6 +14,7 @@ namespace Team7ADProjectApi.ViewModels
        public String DepartmentId { get; set; }
         public String Status { get; set; }
         public DateTime RequestDate { get; set; }
+        public String Userid { get; set; }
         public List<RequestTransactionDetailApiModel>  requestTransactionDetailApiModels { get; set; }
     }
 }

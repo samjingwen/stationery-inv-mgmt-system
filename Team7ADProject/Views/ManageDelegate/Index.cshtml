@@ -19,53 +19,78 @@
     <h1>Delegate authority</h1>
 
     <h5>Department Name :  @ViewBag.DepName  </h5>
-    <h5>
-        Delegated Acting Head:
-        @if (delHead == null)
-        {
-            <span>None</span>
-        }
-        else
-        {
-            <span>@delHead[1]</span>
-        }
-    </h5>
-    <br />
 
-    @using (Html.BeginForm("Delegate", "ManageDelegate", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @if (delHead == null)
     {
-        <label>Employee name: </label>
-        @Html.DropDownListFor(model => model.SelectedUser, listItems, "Select Employee")
-        <br />
-        <br />
-        <label for="datepicker">Start Date : </label>
+        <h5>
+            Delegated Acting Head: None
+        </h5>
+    }
+    else
+    {
+        <h5>Delegated Acting Head: @delHead[1]</h5>
+        <h5>Start Date: @delHead[2] </h5>
+        <h5>End Date: @delHead[3] </h5>
+    }
 
-        @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly", @Value = "yy-mm-dd" })
+    <br />
+    @if (delHead == null)
+    {
+        using (Html.BeginForm("Delegate", "ManageDelegate", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <label>Employee name: </label>
+            @Html.DropDownListFor(model => model.SelectedUser, listItems, "Select Employee")
+            <br />
+            <br />
+            <label for="datepicker">Start Date : </label>
 
-        <label for="datepicker">End Date : </label>
+            @Html.TextBoxFor(model => model.StartDate, new { @class = "date-picker", @readonly = "readonly", @Value = "yy-mm-dd" })
 
-        @Html.TextBoxFor(model => model.EndDate, new { @class = "date-picker1", @readonly = "readonly", @Value = "yy-mm-dd" })
-        <br />
-        <br />
-        <input type="submit" value="Submit" class="greenBtn pull-right" />
+            <label for="datepicker">End Date : </label>
+
+            @Html.TextBoxFor(model => model.EndDate, new { @class = "date-picker1", @readonly = "readonly", @Value = "yy-mm-dd" })
+            <br />
+            <br />
+            <input type="submit" value="Submit" class="greenBtn pull-right" />
+        }
+    }
+    else
+    {
+        @Html.ActionLink("Revoke", "Revoke");
     }
 
 </div>
 
 
-@section Scripts {
+@section scripts {
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-
-
-
-
+    <script src="~/Scripts/notify.min.js"></script>
 
     <!-- Code to wire up your DatePicker -->
-    <script type="text/javascript">
+    <script>
+        var successHandler = @ViewBag.successHandler;
+        if (successHandler == 2) {
+            $.notify("Revoked!", {
+                globalPosition: "top center",
+                className: "warn"
+            });
+        }
+        else if (successHandler == 1) {
+            $.notify("Acting Department Head Delegated Successfully!", {
+                globalPosition: "top center",
+                className: "success"
+            });
+        }
+
+    </script>
+
+    <script>
         $(document).ready(function () {
             // This will make every element with the class "date-picker" into a DatePicker element
+
+
 
             $('.date-picker').datepicker({
                 dateFormat: 'yy-mm-dd',
@@ -84,14 +109,10 @@
                 dateFormat: 'yy-mm-dd',
                 showAnim: 'clip',
                 disabled: true,
-
             });
-
-
         });
-
-
     </script>
+
 
 }
 

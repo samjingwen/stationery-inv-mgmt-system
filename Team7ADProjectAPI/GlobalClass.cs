@@ -404,7 +404,7 @@ namespace Team7ADProjectApi
             var result = from x in context.StationeryRequest
                          join y in context.AspNetUsers
                          on x.RequestedBy equals y.Id
-                         where y.DepartmentId==depid
+                         where y.DepartmentId == depid
                          select new StationeryRequestApiModel
                          {
                              RequestId = x.RequestId,
@@ -413,6 +413,7 @@ namespace Team7ADProjectApi
                              ApprovedBy = x.ApprovedBy,
                              DepartmentId = x.DepartmentId,
                              Status = x.Status,
+                             Userid = userid
                          };
                    return result.ToList();
         }
@@ -460,16 +461,30 @@ namespace Team7ADProjectApi
             return depId;
         }
         //Approve Req
-        public bool ApproveReq(StationeryRequestApiModel req,string userid)
+        public bool ApproveReq(StationeryRequestApiModel req)
         {
-            string depid = GetUserDepId(userid);
-            Department department = (from d in context.Department where d.DepartmentId == depid select d).FirstOrDefault();
+            string depid = GetUserDepId(req.Userid);
+            var dep = from d in context.Department where d.DepartmentId == depid select d;
+                                   Department department= dep.FirstOrDefault();
             StationeryRequest stationeryRequest = RetrieveReq(req.RequestId);
             if (stationeryRequest != null)
             {
                 stationeryRequest.ApprovedBy = req.ApprovedBy;
                 stationeryRequest.Status = "Pending Disbursement";
-                //if(DateTime.Today>department)
+                DateTime nextMonday = DateTime.Today.AddDays(7-((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday));
+                //S1:postpone has expired so if the day is before friday,collection date should be set to next monday
+                if (DateTime.Today > department.NextAvailableDate && DateTime.Now.DayOfWeek < DayOfWeek.Friday)
+                { stationeryRequest.CollectionDate = nextMonday; }
+                DateTime nextAD = (DateTime)department.NextAvailableDate;
+                //S2： postpone has expired,if request is raised in Friday or after Friday,date should be set to next next monday
+                if (DateTime.Today > nextAD && DateTime.Now.DayOfWeek > DayOfWeek.Friday)
+                { stationeryRequest.CollectionDate = nextMonday.AddDays(7); }
+                //S3:postpone is avaliable so if the day is before friday,collection date should be set to postpone date
+                if (DateTime.Today < nextAD.AddDays(-3))
+                { stationeryRequest.CollectionDate = department.NextAvailableDate; }
+                //S4:postpone is avaliable so if the day is before friday,collection date should be set to postpone date +7
+                if (nextAD.AddDays(-3) <= DateTime.Today && DateTime.Today < nextAD)
+                { stationeryRequest.CollectionDate = nextAD.AddDays(7); }
                 context.SaveChanges();
                 return true;
             }

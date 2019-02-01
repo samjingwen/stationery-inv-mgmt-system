@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Team7ADProject.Entities;
+using Team7ADProject.Service;
 using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
@@ -13,36 +14,65 @@ namespace Team7ADProject.Controllers
     public class ManagePostponeCollectionDateController : Controller
     {
         LogicDB _context;
+        DisbursementService disbService = DisbursementService.Instance;
+
         #region Author:Lynn Lynn Oo
         public ManagePostponeCollectionDateController()
         {
             _context = new LogicDB();
         }
-        // GET: ManagePostponeCollectionDate
+
         public ActionResult Index()
         {
-            //string userid = User.Identity.GetUserId();
-            //string depId = _context.AspNetUsers.Where(x => x.Id == userid).Select(x => x.DepartmentId).First();
-            //Store Supervisor can see all the Pending Disbursement of all depts
-            List<StationeryRequest> pendingDisbursements = _context.StationeryRequest.Where(x => x.Status == "Pending Disbursement" /*&& x.DepartmentId==depId*/).ToList();
-            return View(pendingDisbursements);
-
+            List<BriefDept> deptList = disbService.GetBriefDept();
+            return View(deptList);
         }
 
-        //GET: ManagePostponeCollectionDate/Details
-       
-        public ActionResult Details(string id)
+        public ActionResult Postpone(string id = null)
         {
-            List<TransactionDetail> ItemsByID = _context.TransactionDetail.Where(x => x.TransactionRef == id).ToList();
-            return View(ItemsByID);
-        }
+            try
+            {
+                if (id == "ALL")
+                {
+                    var deptList = _context.Department.ToList();
+                    foreach(var dept in deptList)
+                    {
+                        DateTime nextMonday = GlobalClass.GetNextWeekDay((DateTime)dept.NextAvailableDate, DayOfWeek.Monday);
+                        DateTime comingMonday = GlobalClass.GetNextWeekDay(DateTime.Now, DayOfWeek.Monday);
+                        if (nextMonday > comingMonday)
+                        {
+                            dept.NextAvailableDate = nextMonday.AddDays(7);
+                        }
+                        else
+                        {
+                            dept.NextAvailableDate = comingMonday.AddDays(7);
+                        }
+                    }
+                    _context.SaveChanges();
+                    return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "Index", disbService.GetBriefDept()), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    Department dept = _context.Department.FirstOrDefault(x => x.DepartmentId == id);
+                    DateTime nextMonday = GlobalClass.GetNextWeekDay((DateTime)dept.NextAvailableDate, DayOfWeek.Monday);
+                    DateTime comingMonday = GlobalClass.GetNextWeekDay(DateTime.Now, DayOfWeek.Monday);
+                    if (nextMonday > comingMonday)
+                    {
+                        dept.NextAvailableDate = nextMonday.AddDays(7);
+                    }
+                    else
+                    {
+                        dept.NextAvailableDate = comingMonday.AddDays(7);
+                    }
 
-        public ActionResult Postpone(string id)
-        {
-            StationeryRequest current = _context.StationeryRequest.First(m => m.RequestId == id);
-            current.CollectionDate = current.CollectionDate.Value.AddDays(7);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+                    _context.SaveChanges();
+                    return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "Index", disbService.GetBriefDept()), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
         #endregion
     }

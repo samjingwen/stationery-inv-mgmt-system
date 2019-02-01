@@ -1,299 +1,76 @@
-﻿@using Team7ADProject.Entities
-@model Team7ADProject.ViewModels.InvoiceDetailsViewModel
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Validate Invoice</h2>
+<div class="form-group">
+    @using (Html.BeginForm("Validate", "ValidateInvoice", FormMethod.Post, new { @class = "form-horizontal", id = "retForm", role = "form" }))
+    {
+        <label class="control-label">Invoice No</label>
+        <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo" required>
+        <label class="control-label">Invoice Amount</label>
+        <input type="number" min="0.01" step="0.01" max="9999999" id="InvoiceAmt" class="form-control" name="InvoiceAmt">
+        <label class="control-label">Supplier</label>
+        <select class="form-control" name="SupplierId" id="SupplierId"></select>
+        <a id="detailsBtn" class="greenBtn pull-right" onclick="alert('Please select a supplier.')">Show Details</a>
+        <br />
+        <br />
 
-    @*Invoice Information*@
-    <div class="form-group">
-        <form name="invoiceForm">
-            <table id="doTable">
-                <tr>
-                    <td>
-                        <label class="control-label col-md-3" style="width:100%">Invoice No</label>
-                    </td>
-                    <td>
-                        <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label class="control-label col-md-3" style="width:100%">Supplier ID</label>
-                    </td>
-                    <td>
-                        <select class="form-control" name="SupplierId" id="SupplierId"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label class="control-label col-md-3" style="width:100%">Invoice Amount</label>
-                    </td>
-                    <td>
-                        <input type="text" id="InvoiceAmount" class="form-control" name="InvoiceAmount">
-                    </td>
-                </tr>
-                <tbody></tbody>
-                <tr>
-                    <td></td>
-                    <td>
-                        <a id="showDO" class="greenBtn pull-right">Show DO Details</a>
-                    </td>
-                </tr>
-            </table>
+        <div id="SupplierDOTable">
+        </div>
 
-            <table id="detailsTable" class="table">
-                <thead>
-                    <tr>
-                        <th style="width:30%">Item ID</th>
-                        <th style="width:30%">Item Description</th>
-                        <th style="width:20%">Product Category</th>
-                        <th style="width:15%">Quantity</th>
-                        <th style="width:10%"></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </form>
-    </div>
-    @Html.AntiForgeryToken()
-    <button style="margin-right:10px" id="saveInvoice" class="greenBtn pull-right">  Save  </button>
-    <button style="margin-right:10px" class="blueBtn pull-right" onclick="addNewItem()">Add Item</button>
+    }
+</div>
 
-
-@section scripts
-              {
-    @*@*invoice validation*@
+@section scripts{
     <script>
-        $("#saveInvoice").click(function (e) {
-            e.preventDefault();
-
-            var InvoiceNo = document.forms["invoiceForm"]["InvoiceNo"];
-            if (InvoiceNo.value == "") {
-                $("#InvoiceNo").css("borderColor", "red");
-                InvoiceNo.focus();
-                return false;
-            }
-            var SupplierId = document.forms["invoiceForm"]["SupplierId"];
-            if (SupplierId.value == "Select Supplier") {
-                $("#SupplierId").css("borderColor", "red");
-                SupplierId.focus();
-                return false;
-            }
-            var InvoiceAmount = document.forms["invoiceForm"]["InvoiceAmount"];
-            if (InvoiceAmount.value == "") {
-                $("#InvoiceAmount").css("borderColor", "red");
-                InvoiceAmount.focus();
-                return false;
-            }
-            var DelOrderNo = document.forms["invoiceForm"]["DelOrderNo"];
-            if (DelOrderNo.value == "") {
-                //alert("DelOrder Id must be filled out");
-                $("#DelOrderNo").css("borderColor", "red");
-                DelOrderNo.focus();
-                return false;
-            }
-            return true;
+        $(document).ready(function () {
+            let dropdown = $('#SupplierId');
+            dropdown.empty();
+            dropdown.append('<option selected="true" disabled>Choose Supplier</option>');
+            dropdown.prop('selectedIndex', 0);
+            const url = '../ValidateInvoice/GetSuppliers/';
+            // Populate dropdown with suppliers
+            $.getJSON(url, function (data) {
+                $.each(data.suppliers, function (key, entry) {
+                    dropdown.append($('<option></option>').attr('value', entry.SupplierId).text(entry.SupplierName));
+                })
+            });
         });
 
-        $("#InvoiceNo").change(function () {
-            $("#InvoiceNo").css("borderColor", "")
-        });
         $("#SupplierId").change(function () {
+            $('#SupplierDOTable').empty();
+            var selected = this.value;
+            var url = '/ValidateInvoice/RenderTable/' + selected;
+            document.getElementById('detailsBtn').onclick = function () { GetData(url) };
+        }); 
 
-            $("#SupplierId").css("borderColor", "")
-        });
-        $("#InvoiceAmount").change(function () {
-
-            $("#InvoiceAmount").css("borderColor", "")
-        });
-        $("#DelOrderNo").change(function () {
-
-            $("#DelOrderNo").css("borderColor", "")
-        });
-
-    </script>
-
-    @*load suppilerlist for invoice*@
-    <script>
-        var $dropdown0 = $("select[name='SupplierId']");
-        loadSupplierId();
-        function loadSupplierId() {
-            $dropdown0.empty();
-            $dropdown0.append('<option>Select Supplier</option>');
-            $dropdown0.prop('selectedIndex', 0);
+        function GetData(url) {
             $.ajax({
-                url: '../api/stationeries/suppliers/',
-                type: 'GET',
-                dataType: 'json',
-                success: function (j) {
-                    $.each(j, function (i, value) {
-                        $dropdown0.append($('<option>').text(value).attr('value', value));
-                    });
-                }
-            });
-        }
-    </script>
-    @*load dropdown list in modal*@
-    <script>
-        var $dropdown1 = $("select[name='category']");
-        var $dropdown2 = $("select[name='description']");
-        loadItem();
-        function loadItem() {
-            $dropdown1.empty();
-            $dropdown2.empty();
-            $('#quantity').val("");
-            $dropdown1.append('<option>Select Category</option>');
-            $dropdown2.append('<option>Select Item</option>');
-            $dropdown1.prop('selectedIndex', 0);
-            $dropdown2.prop('selectedIndex', 0);
-            $.ajax({
-                url: '../api/stationeries/categories/',
-                type: 'GET',
-                dataType: 'json',
-                success: function (j) {
-                    $.each(j, function (i, value) {
-                        $dropdown1.append($('<option>').text(value).attr('value', value));
-                    });
-                }
-            });
-        }
-        //Load 2nd list
-        $dropdown1.change(function () {
-            $dropdown2.empty();
-            $dropdown2.append('<option>Select Item</option>');
-            $("#category").css("borderColor", "")
-            $.ajax({
-                url: '../api/stationeries/categories/' + $dropdown1.val(),
-                type: 'GET',
-                dataType: 'json',
-                success: function (json) {
-                    $.each(json, function (i, value) {
-                        $dropdown2.append('<option value="' + value.Id + '">' + value.ItemDescription + '</option>');
-                    });
-                }
-            });
-        });
-        //Load unit of measure
-        $dropdown2.change(function () {
-            $("#description").css("borderColor", "")
-            $.ajax({
-                url: '../api/stationeries/item/' + $dropdown2.val(),
-                type: 'GET',
-                dataType: 'json',
-                success: function (json) {
-                    $("#uom").val(json);
-                }
-            });
-        });
-    </script>
-    @*script for popup*@
-    <script>
-        //after select supplier all the do under this supplier  and not billed ones will be shown
-        $dropdown0.change(function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: '../api/deliveryorder/' + $dropdown0.val(),
-                type: 'GET',
-                dataType: 'json',
-                success: function (result) {
-                   // var detailsTableBody = $("#detailsTable tbody");
-                    var form = $("#detailsTable tbody");
-                    var elems = [];
-                  
-                    for (var i in result) {
-                        var doItem = '<tr><td>' + i.itemid + '</td><td>' + i.description + '</td><td>' + i.name + '</td><td>' + category + '</td><td>' + i.quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
-                        var dos = '<tr>' +'<input type="checkbox" name="' + i.DelOrderNo + '" value=' + i.dono + '">' + i.DelOrderNo + '<br></tr>';
-                        elems.push(i.dono);
-                        form.append(dos);
+                type: 'POST',
+                url: url,
+                success: function (response) {
+                    if (response.success) {
+                        $("#SupplierDOTable").html(response.html);
                     }
-                    $('#input_hidden_field').val(JSON.stringify(elems));
+                    else {
+                        $.notify(response.message, {
+                            globalPosition: "top center",
+                            className: "error"
+                        })
+                    }
                 }
+
             });
-        });
-
-        //var value = $('#input_hidden_field').val(); //retrieve array
-        //value = JSON.parse(value);
-        //var i;
-        //for ( i = 0; i < value.length; i++)
-        //{
-        //    $('input[name='+value[i]+']').change(function () {
-        //        if (this.checked) {
-        //            retriveitems(value[i]);
-        //        }
-        //    });
-        //}
-        function retriveitems(doid) {
-            $.ajax({
-            url: '../api/deliveryorder/select' + doid,
-                type: 'GET',
-                    dataType: 'json',
-                        success: function (result) {
-                            var detailsTableBody = $("#detailsTable tbody");
-                            for (var i in result) {
-                                var doItem = '<tr><td>' +i.itemid + '</td><td>' + i.description + '</td><td>' + i.name + '</td><td>' + category + '</td><td>' + i.quantity + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
-                                detailsTableBody.append(doItem);
-                            }
-                        }
-        });
-
         }
 
-        $("#saveInvoice").click(function (e) {
-            e.preventDefault();
-            //
-            var requestArr = [];
-            requestArr.length = 0;
-            var invoiceArr = [];
-            invoiceArr.length = 0;
-            invoiceArr.push({
-                invoiceno: $("#InvoiceNo").val(),
-                supplierid: $("#SupplierId").val(),
-                invoiceamount: $("#InvoiceAmount").val(),
-                delorderno: $("#DelOrderNo").val()
-            });
-            $.each($("#detailsTable tbody tr"), function () {
-                requestArr.push({
-                    itemid: $(this).find('td:eq(0)').html(),
-                    quantity: $(this).find('td:eq(4)').html(),
-                    transactionref: $("#InvoiceId").val(),
-                });
-            });
 
 
-            var data = JSON.stringify({
-                invoice: invoiceArr,
-                requests: requestArr
-            });
+        
 
-            //After Click Save Button Pass All Data View To Controller For Save Database
-            //
-            function saveInvoice(data) {
-                return $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'POST',
-                    url: "../ValidateInvoice/Create",
-                    data: data,
-                    success: function (result) {
-                        alert(result);
-                        if (result == "Success! Invoice Is Complete!") {
-                            location.reload();
-                        }
-                    },
-                    error: function () {
-                        alert("Can not Create!Please check");
-                    }
-                });
-            }
-            //
-            $.when(saveInvoice(data)).then(function (response) {
-                console.log(response);
-            }).fail(function (err) {
-                console.log(err);
-            });
-        });
+
+
     </script>
 
 

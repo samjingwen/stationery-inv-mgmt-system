@@ -20,8 +20,10 @@ namespace Team7ADProject.Controllers
 
 
         #region Sam Jing Wen
-        public ActionResult Index()
+        public ActionResult Index(int id = 0)
         {
+            if (id == 1)
+                ViewBag.successHandler = 1;
             string userId = User.Identity.GetUserId();
             string deptId = gmService.GetDeptIdOfUser(userId);
 
@@ -55,7 +57,7 @@ namespace Team7ADProject.Controllers
             //Assign new employee to Department Rep
             manager.RemoveFromRole(model.UserId, "Employee");
             manager.AddToRole(model.UserId, "Department Representative");
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = 1 });
         }
 
         #endregion

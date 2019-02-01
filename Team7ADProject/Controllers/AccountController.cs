@@ -87,7 +87,7 @@ namespace Team7ADProject.Controllers
                     ApplicationDbContext appDb = new ApplicationDbContext();
                     UserManager<ApplicationUser> _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                     //check doa for list of invalid acting department heads
-                    var doaExpList = context.DelegationOfAuthority.Where(x => x.StartDate > todayDate || x.EndDate < todayDate).ToList();
+                    var doaExpList = context.DelegationOfAuthority.Where(x => x.StartDate > todayDate || x.EndDate < todayDate || x.Status == "VOID").ToList();
                     foreach (var doaExp in doaExpList)
                     {
                         if (_userManager.IsInRole(doaExp.DelegatedTo, "Acting Department Head"))
@@ -112,7 +112,7 @@ namespace Team7ADProject.Controllers
                         }
                     }
                     //Valid list of doa
-                    var doaList = context.DelegationOfAuthority.Where(x => x.StartDate <= todayDate && x.EndDate >= todayDate).ToList();
+                    var doaList = context.DelegationOfAuthority.Where(x => x.StartDate <= todayDate && x.EndDate >= todayDate).Where(x => x.Status != "VOID").ToList();
                     foreach(var doa in doaList)
                     {
                         if (_userManager.IsInRole(doa.DelegatedTo, "Acting Department Head"))
@@ -135,14 +135,10 @@ namespace Team7ADProject.Controllers
                                 catch (Exception)
                                 {
                                     dbContextTransaction.Rollback();
-
                                 }
                             }
                         }
                     }
-                    
-
-
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

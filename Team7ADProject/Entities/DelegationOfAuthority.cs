@@ -30,6 +30,9 @@ namespace Team7ADProject.Entities
         [StringLength(4)]
         public string DepartmentId { get; set; }
 
+        [StringLength(10)]
+        public string Status { get; set; }
+
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         public virtual AspNetUsers AspNetUsers1 { get; set; }

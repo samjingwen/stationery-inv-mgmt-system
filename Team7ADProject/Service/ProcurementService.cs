@@ -122,101 +122,67 @@ namespace Team7ADProject.Service
         }
 
 
-        
-
-        public bool CheckInvoice(InvoiceViewModel[] invoice, TransactionDetail[] details)
+        public ValidateInvoiceViewModel GetSupplierDelOrder(string supplierId)
         {
-            //return false if delivery order no does not exists or status is billed
-            String delOrderNo = invoice[0].DelOrderNo;
-            var deliveryOrder = context.DeliveryOrder.FirstOrDefault(x => x.DelOrderNo == delOrderNo);
-            if (deliveryOrder.Status == "BILLED" || deliveryOrder == null)
-                return false;
+            var query = (from x in context.DeliveryOrder
+                         where x.SupplierId == supplierId && x.Status != "BILLED"
+                         orderby x.DelOrderId
+                         select new DelOrderDetailsViewModel
+                         {
+                             DelOrderNo = x.DelOrderNo,
+                             Date = x.Date,
+                         }).ToList();
+            ValidateInvoiceViewModel model = new ValidateInvoiceViewModel
+                                        {
+                                            DelOrderDetails = query
+                                        };
 
-            var delOrder = from x in context.DeliveryOrder
-                           join y in context.TransactionDetail
-                           on x.DelOrderId equals y.TransactionRef
-                           where x.DelOrderNo.Equals(delOrderNo, StringComparison.CurrentCultureIgnoreCase)
-                           group y by y.ItemId into g
-                           select new ItemsAndQtyViewModel
-                           { ItemId = g.Key, Quantity = g.Sum(x => x.Quantity) };
-
-            var modDetails = from x in details
-                             group x by x.ItemId into g
-                             select new ItemsAndQtyViewModel
-                             {
-                                 ItemId = g.Key,
-                                 Quantity = g.Sum(x => x.Quantity)
-                             };
-
-            return CompareItems(modDetails.ToList(), delOrder.ToList());
+            return model;
         }
 
-        
-        public bool CompareItems(List<ItemsAndQtyViewModel> detail1, List<ItemsAndQtyViewModel> detail2)
+        public string GetDelOrderId(string DelOrderNo)
         {
-            foreach(var i in detail1)
-            {
-                var query = detail2.FirstOrDefault(x => x.ItemId == i.ItemId);
-                if (query == null)
-                {
-                    continue;
-                }
-                else
-                {
-                    query.Quantity -= i.Quantity;
-                    if (query.Quantity == 0)
-                    {
-                        detail2.Remove(query);
-                    }
-                    else if (query.Quantity > 0)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-            if (detail2.Count() <= 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return context.DeliveryOrder.FirstOrDefault(x => x.DelOrderNo == DelOrderNo).DelOrderId;
         }
+       
+        
 
-        public void CreateInvoice(InvoiceViewModel[] invoice, TransactionDetail[] details)
+        public void CreateInvoice(ValidateInvoiceViewModel model)
         {
-            string invoiceId = GenerateInvoiceId();
-            string delOrderNo = invoice[0].DelOrderNo;
-            var delOrder = context.DeliveryOrder.FirstOrDefault(x => x.DelOrderNo == delOrderNo);
-            delOrder.Status = "BILLED";
-            string delOrderId = delOrder.DelOrderId;
-            //Create Invoice
-            Invoice newInvoice = new Invoice();
-            newInvoice.InvoiceId = invoiceId;
-            newInvoice.InvoiceNo = invoice[0].InvoiceNo;
-            newInvoice.InvoiceAmount = invoice[0].InvoiceAmount;
-            newInvoice.SupplierId = invoice[0].SupplierId;
-            newInvoice.InvoiceDate = DateTime.Today;
-            newInvoice.DelOrderId = delOrderId;
-            context.Invoice.Add(newInvoice);
-            //create TD
-            foreach (var item in details)
+            string invoiceNo = model.InvoiceNo;
+            DateTime invoiceDate = DateTime.Now;
+            string supplierId = model.SupplierId;
+            decimal invoiceAmt = model.InvoiceAmt;
+            using(var dbContextTransaction = context.Database.BeginTransaction())
             {
-                TransactionDetail transactionDetail = new TransactionDetail();
-                transactionDetail.TransactionId = GenerateTransactionDetailId();
-                transactionDetail.TransactionRef = invoiceId;
-                transactionDetail.TransactionDate = DateTime.Today;
-                transactionDetail.ItemId = item.ItemId;
-                transactionDetail.Remarks = "Confirmed Invoice";
-                transactionDetail.Quantity = item.Quantity;
-                context.TransactionDetail.Add(transactionDetail);
+                try
+                {
+                    foreach (var item in model.DelOrderDetails)
+                    {
+                        if (item.isSelected)
+                        {
+                            string invoiceId = GenerateInvoiceId();
+                            string delOrderId = GetDelOrderId(item.DelOrderNo);
+                            var query = context.DeliveryOrder.FirstOrDefault(x => x.DelOrderId == delOrderId);
+                            query.Status = "BILLED";
+                            Invoice newInvoice = new Invoice();
+                            newInvoice.InvoiceId = invoiceId;
+                            newInvoice.InvoiceNo = invoiceNo;
+                            newInvoice.SupplierId = supplierId;
+                            newInvoice.InvoiceAmount = invoiceAmt;
+                            newInvoice.InvoiceDate = invoiceDate;
+                            newInvoice.DelOrderId = delOrderId;
+                            context.Invoice.Add(newInvoice);
+                            context.SaveChanges();
+                        }
+                    }
+                    dbContextTransaction.Commit();
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                }
             }
-            context.SaveChanges();
         }
 
 
@@ -226,18 +192,9 @@ namespace Team7ADProject.Service
             Invoice lastItem = context.Invoice.OrderByDescending(m => m.InvoiceId).First();
             string lastRequestIdWithoutPrefix = lastItem.InvoiceId.Substring(3);
             int newRequestIdWithoutPrefixInt = Int32.Parse(lastRequestIdWithoutPrefix) + 1;
-            string newRequestIdWithoutPrefixString = newRequestIdWithoutPrefixInt.ToString();
-            string requestId = "SID0000" + newRequestIdWithoutPrefixString;
+            string newRequestIdWithoutPrefixString = newRequestIdWithoutPrefixInt.ToString("0000000");
+            string requestId = "SID" + newRequestIdWithoutPrefixString;
             return requestId;
         }
-        //Gernerate TDid
-        public int GenerateTransactionDetailId()
-        {
-            TransactionDetail lastItem = context.TransactionDetail.OrderByDescending(m => m.TransactionId).First();
-            int lastRequestId = lastItem.TransactionId;
-            int newRequestId = lastRequestId + 1;
-            return newRequestId;
-        }
-
     }
 }

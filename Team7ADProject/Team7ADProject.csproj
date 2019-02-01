@@ -231,6 +231,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\InvoiceController.cs" />
     <Compile Include="Controllers\Api\StationeriesController.cs" />
     <Compile Include="Controllers\ApproveAdjustmentController.cs" />
     <Compile Include="Controllers\ApproveOrderController.cs" />
@@ -297,6 +298,7 @@
     <Compile Include="Validation\UniqueSupplier.cs" />
     <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\Api\AdjustmentApiViewModel.cs" />
+    <Compile Include="ViewModels\Api\DeliveryOrderDTO.cs" />
     <Compile Include="ViewModels\Api\RaiseRequestDTO.cs" />
     <Compile Include="ViewModels\AdjustmentViewModel.cs" />
     <Compile Include="ViewModels\Api\ReturntoWarehouseApiViewModel.cs" />
@@ -309,8 +311,8 @@
     <Compile Include="ViewModels\GenerateReport\GenerateReportViewModel.cs" />
     <Compile Include="ViewModels\GenerateReport\StringDoubleDPViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
-    <Compile Include="ViewModels\InvoiceDetailsViewModel.cs" />
-    <Compile Include="ViewModels\InvoiceViewModel.cs" />
+    <Compile Include="ViewModels\SupplierViewModel.cs" />
+    <Compile Include="ViewModels\ValidateInvoiceViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
     <Compile Include="ViewModels\PostponeCollectionDate%28Department%29\PostponeCollectionDateDepartmentViewModel.cs" />
     <Compile Include="ViewModels\PostponeCollectionDate%28Store%29\PostponeCollDateDetailsViewModel.cs" />
@@ -538,6 +540,7 @@
     <Content Include="Content\login\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
     <Content Include="Content\login\vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="Content\login\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Team7ADProject20190129031837 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -627,7 +630,6 @@
     <Content Include="Views\ApproveAdjustment\Index.cshtml" />
     <Content Include="Views\ApproveAdjustment\AdjDetails.cshtml" />
     <Content Include="Views\ManageRequest\Index.cshtml" />
-    <Content Include="Views\ManagePostponeCollectionDate\Details.cshtml" />
     <Content Include="Views\ManagePostponeCollectionDateDepartment\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
@@ -641,6 +643,7 @@
     <Content Include="Views\Home\_MenuBox.cshtml" />
     <Content Include="Views\ManageDelegate\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\ViewDisbursement.cshtml" />
+    <Content Include="Views\ValidateInvoice\GetSupplierDO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Email\" />
