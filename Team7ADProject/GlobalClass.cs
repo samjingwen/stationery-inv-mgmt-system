@@ -22,6 +22,12 @@ namespace Team7ADProject
                 return sw.GetStringBuilder().ToString();
             }
         }
+
+        public static DateTime GetNextWeekDay(DateTime start, DayOfWeek day)
+        {
+            int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
+            return start.AddDays(daysToAdd);
+        }
     }
 
     public class RoleAuthorizeAttribute : AuthorizeAttribute
@@ -35,5 +41,6 @@ namespace Team7ADProject
         }
     }
 
+    
 
 }

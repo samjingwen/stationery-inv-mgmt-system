@@ -163,6 +163,8 @@ namespace Team7ADProject.Service
                         {
                             string invoiceId = GenerateInvoiceId();
                             string delOrderId = GetDelOrderId(item.DelOrderNo);
+                            var query = context.DeliveryOrder.FirstOrDefault(x => x.DelOrderId == delOrderId);
+                            query.Status = "BILLED";
                             Invoice newInvoice = new Invoice();
                             newInvoice.InvoiceId = invoiceId;
                             newInvoice.InvoiceNo = invoiceNo;
@@ -176,7 +178,7 @@ namespace Team7ADProject.Service
                     }
                     dbContextTransaction.Commit();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     dbContextTransaction.Rollback();
                 }
