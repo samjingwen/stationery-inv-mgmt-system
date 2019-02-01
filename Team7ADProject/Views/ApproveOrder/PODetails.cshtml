@@ -1,10 +1,8 @@
 ﻿@model Team7ADProject.ViewModels.PoDetailsViewModel
-@using Team7ADProject.Entities
 @{
-                /**/
 
-                ViewBag.Title = "PODetails";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "PODetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Purchase Order Detail</h2>
@@ -55,20 +53,27 @@
                 </tbody>
             </table>
             @if (@Model.PurchaseOrder.Status == "Pending Approval")
-            {@Html.ActionLink("Approve", "Approve", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "greenBtn pull-right", onclick = "ApproveAlert()" })
+            {@Html.ActionLink("Approve", "Approve", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "greenBtn pull-right", @id = "approve" })
 
-            @Html.ActionLink("Reject", "Reject", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "redBtn pull-right", onclick = "RejectAlert" })}
+            @Html.ActionLink("Reject", "Reject", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "redBtn pull-right", @id = "reject" })}
             <br />
         </div>
     </div>
 </div>
 <script>
-    function ApproveAlert() {
-        alert("Approved Successfully")
-    }
-    function RejectAlert() {
-        alert("Rejected Successfully")
-    }
+    $('#approve').on('click', function (e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        bootbox.alert('Approved Successfully.', function () {
+            window.location.href = href;
+        });
+    });
+    $('#reject').on('click', function (e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        bootbox.alert('Rejected Successfully.', function () {
+            window.location.href = href;
+        });
 </script>
 
 

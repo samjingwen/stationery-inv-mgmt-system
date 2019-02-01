@@ -67,14 +67,14 @@
                 @{
                     if ((@Model.StockAdjustment.ApprovedBy == null) && (Math.Abs(amount.Value) <= 250) && (User.IsInRole("Store Supervisor")))
                     {
-                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @id="approve" ,@style = "width:80px"@*, onclick = "ApproveAlert()"*@})
-                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @id="reject", @style = "width:80px"@*, onclick = "RejectAlert()"*@})
+                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @id="approve" ,@style = "width:80px"})
+                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @id="reject", @style = "width:80px"})
                     }
 
                     if ((@Model.StockAdjustment.ApprovedBy == null) && (User.IsInRole("Store Manager")))
                     {
-                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @id = "approve", @style = "width:80px"@*, onclick = "ApproveAlert()"*@})
-                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @id = "reject", @style = "width:80px"@*, onclick = "RejectAlert()"*@})
+                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @id = "approve", @style = "width:80px"})
+                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @id = "reject", @style = "width:80px"})
                     }
                 }
             </div>
