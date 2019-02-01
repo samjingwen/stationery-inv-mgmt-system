@@ -73,25 +73,66 @@ namespace Team7ADProject.Controllers
         public ActionResult Edit(StationeryRequest requests)
         {
             string result = null;
+            
             if (requests != null)
             {
                 result = "data include";
-            }
+            
             string userId = User.Identity.GetUserId();
 
             var stationery = _context.StationeryRequest.Find(requests.RequestId);
+
+               
+
+            var stationerytran = _context.TransactionDetail.Where(x=> x.TransactionRef == requests.RequestId).ToList();
             if (stationery == null)
                 return HttpNotFound();
 
             else
             {
+                    //for collection date check
+                    {
+                        var dep = _context.Department.Where(x => x.DepartmentId == stationery.DepartmentId).FirstOrDefault();
+                        if (dep.NextAvailableDate > DateTime.Now)
+                        {
+                            _context.Entry(stationery).Property("CollectionDate").CurrentValue = dep.NextAvailableDate;
+                        }
+                        else
+                        {
+                            DateTime nextMon = Next(DateTime.Today, DayOfWeek.Monday);
+                            _context.Entry(stationery).Property("CollectionDate").CurrentValue = nextMon;
+                        }
+                        
+                    }
                 _context.Entry(stationery).Property("Status").CurrentValue = requests.Status;
                 _context.Entry(stationery).Property("ApprovedBy").CurrentValue = userId;
                 _context.Entry(stationery).Property("Comment").CurrentValue = requests.Comment;
                 _context.SaveChanges();
             }
+            if (stationerytran == null)
+                return HttpNotFound();
+
+            else
+            {
+                foreach(TransactionDetail detail in stationerytran)
+                {
+                    _context.Entry(detail).Property("Remarks").CurrentValue = requests.Status;
+
+                }
+
+                _context.SaveChanges();
+            }
+            }
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public DateTime Next(DateTime from, DayOfWeek dayOfWeek)
+        {
+            int start = (int)from.DayOfWeek;
+            int target = (int)dayOfWeek;
+            if (target <= start)
+                target += 7;
+            return from.AddDays(target - start);
         }
         #endregion
     }
