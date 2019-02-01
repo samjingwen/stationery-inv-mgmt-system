@@ -48,7 +48,6 @@ namespace Team7ADProject.Controllers
                 {
                     dept.NextAvailableDate = comingMonday.AddDays(7);
                 }
-
                 _context.SaveChanges();
                 return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "Index", disbService.GetBriefDept(dept.DepartmentId)), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
             }

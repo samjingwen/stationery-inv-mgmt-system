@@ -49,7 +49,7 @@ namespace Team7ADProject.Controllers
                         }
                     }
                     _context.SaveChanges();
-                    return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "Index", _context.Department.ToList()), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "Index", disbService.GetBriefDept()), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
