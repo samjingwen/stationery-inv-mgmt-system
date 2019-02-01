@@ -3,94 +3,123 @@
 @{
                 /**/
 
+                /**/
+
                 ViewBag.Title = "Stock Adjustment Details";
                 Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="custcontainer">
-        <div class="row">
-            <div>
-                <table>
-                    <tr>
-                        <td> Stock Adjustment ID :</td>
-                        <td> @Html.Label(Model.StockAdjustment.StockAdjId)</td>
-                    </tr>
-                    <tr>
-                        <td> Employee Name :</td>
-                        <td> @Html.Label(Model.StockAdjustment.AspNetUsers1.EmployeeName)</td>
-                    </tr>
-                    <tr>
-                        <td> Date :</td>
-                        <td> @String.Format("{0:dd MMM yyyy}", Model.StockAdjustment.Date)</td>
-                    </tr>
-                </table>
+<div class="custcontainer">
+    <div class="row">
+        <div>
+            <table>
+                <tr>
+                    <td> Stock Adjustment ID :</td>
+                    <td> @Html.Label(Model.StockAdjustment.StockAdjId)</td>
+                </tr>
+                <tr>
+                    <td> Employee Name :</td>
+                    <td> @Html.Label(Model.StockAdjustment.AspNetUsers1.EmployeeName)</td>
+                </tr>
+                <tr>
+                    <td> Date :</td>
+                    <td> @String.Format("{0:dd MMM yyyy}", Model.StockAdjustment.Date)</td>
+                </tr>
+            </table>
 
-                <table class="table table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Item No</th>
-                            <th>Description</th>
-                            <th>Adjustment Quantity</th>
-                            <th>Price</th>
-                            <th>Amount</th>
-                            <th>Remarks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            decimal? amount = 0;
-                            decimal? unitamount = 0;
-
-                            foreach (var adj in Model.AdjustmentDetails)
-                            {
-                                unitamount = (Math.Abs(adj.Quantity) * adj.UnitPrice);
-                                <tr>
-                                    <td>@adj.ItemId</td>
-                                    <td>@adj.Stationery.Description</td>
-                                    <td>@adj.Quantity</td>
-                                    <td>$@adj.UnitPrice.ToString()</td>
-                                    <td>$@unitamount</td>
-                                    <td>@adj.Remarks</td>
-                                </tr>
-                                amount += unitamount;
-                            }
-                        }
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total</strong></td>
-                            <td><strong>$@amount</strong></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="modal-footer">
+            <table class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th>Item No</th>
+                        <th>Description</th>
+                        <th>Adjustment Quantity</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
                     @{
-                        if ((@Model.StockAdjustment.ApprovedBy == null) && (Math.Abs(amount.Value) <= 250) && (User.IsInRole("Store Supervisor")))
-                        {
-                            @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @style = "width:80px", onclick = "ApproveAlert()" })
-                            @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @style = "width:80px", onclick = "RejectAlert()" })
-                        }
+                        decimal? amount = 0;
+                        decimal? unitamount = 0;
 
-                        if ((@Model.StockAdjustment.ApprovedBy == null) && (User.IsInRole("Store Manager")))
+                        foreach (var adj in Model.AdjustmentDetails)
                         {
-                            @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @style = "width:80px", onclick = "ApproveAlert()" })
-                            @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @style = "width:80px", onclick = "RejectAlert()" })
+                            unitamount = (Math.Abs(adj.Quantity) * adj.UnitPrice);
+                            <tr>
+                                <td>@adj.ItemId</td>
+                                <td>@adj.Stationery.Description</td>
+                                <td>@adj.Quantity</td>
+                                <td>$@adj.UnitPrice.ToString()</td>
+                                <td>$@unitamount</td>
+                                <td>@adj.Remarks</td>
+                            </tr>
+                            amount += unitamount;
                         }
                     }
-                </div>
-                    <br />
-                </div>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total</strong></td>
+                        <td><strong>$@amount</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="modal-footer">
+                @{
+                    if ((@Model.StockAdjustment.ApprovedBy == null) && (Math.Abs(amount.Value) <= 250) && (User.IsInRole("Store Supervisor")))
+                    {
+                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @id="approve" ,@style = "width:80px"@*, onclick = "ApproveAlert()"*@ })
+                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @id="reject", @style = "width:80px"@*, onclick = "RejectAlert()"*@ })
+                    }
+
+                    if ((@Model.StockAdjustment.ApprovedBy == null) && (User.IsInRole("Store Manager")))
+                    {
+                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @id = "approve", @style = "width:80px"@*, onclick = "ApproveAlert()"*@ })
+                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @id = "reject", @style = "width:80px"@*, onclick = "RejectAlert()"*@ })
+                    }
+                }
             </div>
+            <br />
+        </div>
     </div>
-    <script>
-            function ApproveAlert() {
-                alert("Approved Successfully.")
-            }
-            function RejectAlert() {
-                alert("Rejected Successfully.")
-            }
-    </script>
+</div>
+<script>
+    $('#approve').on('click', function(e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        bootbox.alert('Approved Successfully.',function() {
+            window.location.href = href;
+        });
+    });
+    $('#reject').on('click', function(e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        bootbox.alert('Rejected Successfully.',function() {
+                window.location.href = href;
+            });
+    });
+
+    //function ApproveAlert() {
+    //    bootbox.alert({
+    //        message: 'Approved Successfully.',
+    //        size: 'small',
+    //        onEscape: function() {
+    //            location.reload();
+    //        }
+    //    }); 
+    //}
+    //function RejectAlert() {
+    //    bootbox.alert({
+    //        message: 'Approved Successfully.',
+    //        size: 'small',
+    //        onEscape: function() {
+    //            location.reload();
+    //        }
+    //    }); 
+    //}
+</script>
 
