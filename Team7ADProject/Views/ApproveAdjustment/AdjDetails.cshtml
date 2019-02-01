@@ -1,12 +1,7 @@
 ﻿@model Team7ADProject.ViewModels.AdjustmentDetailsViewModel
-@using Team7ADProject.Entities
 @{
-                /**/
-
-                /**/
-
-                ViewBag.Title = "Stock Adjustment Details";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Stock Adjustment Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="custcontainer">
@@ -72,14 +67,14 @@
                 @{
                     if ((@Model.StockAdjustment.ApprovedBy == null) && (Math.Abs(amount.Value) <= 250) && (User.IsInRole("Store Supervisor")))
                     {
-                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @id="approve" ,@style = "width:80px"@*, onclick = "ApproveAlert()"*@ })
-                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @id="reject", @style = "width:80px"@*, onclick = "RejectAlert()"*@ })
+                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @id="approve" ,@style = "width:80px"@*, onclick = "ApproveAlert()"*@})
+                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @id="reject", @style = "width:80px"@*, onclick = "RejectAlert()"*@})
                     }
 
                     if ((@Model.StockAdjustment.ApprovedBy == null) && (User.IsInRole("Store Manager")))
                     {
-                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @id = "approve", @style = "width:80px"@*, onclick = "ApproveAlert()"*@ })
-                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @id = "reject", @style = "width:80px"@*, onclick = "RejectAlert()"*@ })
+                        @Html.ActionLink("Approve", "Approve", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "greenBtn pull-right", @id = "approve", @style = "width:80px"@*, onclick = "ApproveAlert()"*@})
+                        @Html.ActionLink("Reject", "Reject", "ApproveAdjustment", new { stockAdjId = Model.StockAdjustment.StockAdjId }, new { @class = "redBtn pull-right", @id = "reject", @style = "width:80px"@*, onclick = "RejectAlert()"*@})
                     }
                 }
             </div>
@@ -88,38 +83,19 @@
     </div>
 </div>
 <script>
-    $('#approve').on('click', function(e) {
+    $('#approve').on('click', function (e) {
         e.preventDefault();
         var href = $(this).attr('href');
-        bootbox.alert('Approved Successfully.',function() {
+        bootbox.alert('Approved Successfully.', function () {
             window.location.href = href;
         });
     });
-    $('#reject').on('click', function(e) {
+    $('#reject').on('click', function (e) {
         e.preventDefault();
         var href = $(this).attr('href');
-        bootbox.alert('Rejected Successfully.',function() {
-                window.location.href = href;
-            });
+        bootbox.alert('Rejected Successfully.', function () {
+            window.location.href = href;
+        });
     });
-
-    //function ApproveAlert() {
-    //    bootbox.alert({
-    //        message: 'Approved Successfully.',
-    //        size: 'small',
-    //        onEscape: function() {
-    //            location.reload();
-    //        }
-    //    }); 
-    //}
-    //function RejectAlert() {
-    //    bootbox.alert({
-    //        message: 'Approved Successfully.',
-    //        size: 'small',
-    //        onEscape: function() {
-    //            location.reload();
-    //        }
-    //    }); 
-    //}
 </script>
 

@@ -1,72 +1,74 @@
 ﻿@model Team7ADProject.ViewModels.PoDetailsViewModel
 @using Team7ADProject.Entities
 @{
-    ViewBag.Title = "PODetails";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "PODetails";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Purchase Order Detail</h2>
 
 
-    <div class="custcontainer">
-        <div class="row">
-            <div>
-                @Html.LabelFor(m => m.PurchaseOrder.PONo) :
-                @Html.Label(Model.PurchaseOrder.PONo)<br />
+<div class="custcontainer">
+    <div class="row">
+        <div>
+            @Html.LabelFor(m => m.PurchaseOrder.PONo) :
+            @Html.Label(Model.PurchaseOrder.PONo)<br />
 
 
-                @Html.LabelFor(m => m.PurchaseOrder.Supplier.SupplierName) :
-                @Html.Label(Model.PurchaseOrder.Supplier.SupplierName)<br />
+            @Html.LabelFor(m => m.PurchaseOrder.Supplier.SupplierName) :
+            @Html.Label(Model.PurchaseOrder.Supplier.SupplierName)<br />
 
-                @Html.LabelFor(m => m.PurchaseOrder.Date) :
-                @Html.Label(Model.PurchaseOrder.Date.ToString("dd MMMM yyyy"))<br />
-                <table class="table">
-                    <thead>
+            @Html.LabelFor(m => m.PurchaseOrder.Date) :
+            @Html.Label(Model.PurchaseOrder.Date.ToString("dd MMMM yyyy"))<br />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Item No</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var po in Model.PODetails)
+                    {
                         <tr>
-                            <th>Item No</th>
-                            <th>Description</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Amount</th>
+                            <td>@po.ItemId</td>
+                            <td>@po.Stationery.Description</td>
+                            <td>@po.Quantity</td>
+                            <td>$@po.UnitPrice.ToString()</td>
+                            <td>$@(po.Quantity * po.UnitPrice)</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var po in Model.PODetails)
-                        {
-                            <tr>
-                                <td>@po.ItemId</td>
-                                <td>@po.Stationery.Description</td>
-                                <td>@po.Quantity</td>
-                                <td>$@po.UnitPrice.ToString()</td>
-                                <td>$@(po.Quantity * po.UnitPrice)</td>
-                            </tr>
-                        }
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total:</strong></td> 
-                            <td>
-                                <strong>$@Model.PurchaseOrder.Amount</strong>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                @if (@Model.PurchaseOrder.Status == "Pending Approval")
-                {@Html.ActionLink("Approve", "Approve", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "greenBtn pull-right", onclick = "ApproveAlert()" })
-                   
-                @Html.ActionLink("Reject", "Reject", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "redBtn pull-right", onclick = "RejectAlert" })}
-                <br />
-            </div>
+                    }
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total:</strong></td>
+                        <td>
+                            <strong>$@Model.PurchaseOrder.Amount</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @if (@Model.PurchaseOrder.Status == "Pending Approval")
+            {@Html.ActionLink("Approve", "Approve", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "greenBtn pull-right", onclick = "ApproveAlert()" })
+
+            @Html.ActionLink("Reject", "Reject", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "redBtn pull-right", onclick = "RejectAlert" })}
+            <br />
         </div>
     </div>
-    <script>
-        function ApproveAlert() {
-            alert("Approved Successfully")
-        }
-        function RejectAlert() {
-            alert("Rejected Successfully")
-        }
-    </script>
+</div>
+<script>
+    function ApproveAlert() {
+        alert("Approved Successfully")
+    }
+    function RejectAlert() {
+        alert("Rejected Successfully")
+    }
+</script>
 
 
