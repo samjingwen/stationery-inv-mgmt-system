@@ -30,7 +30,7 @@ namespace Team7ADProject.ViewModels
             get
             {
                 if (DeptHeadId != null)
-                    return context.Department.Where(x => x.DepartmentHeadId == DeptHeadId).FirstOrDefault().DepartmentName;
+                    return context.Department.FirstOrDefault(x => x.DepartmentHeadId == DeptHeadId).DepartmentName;
                 else
                     return null;
             }

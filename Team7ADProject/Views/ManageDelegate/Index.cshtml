@@ -63,10 +63,10 @@
 
 
 @section scripts {
-    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    @*<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />*@
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-    <script src="~/Scripts/notify.min.js"></script>
+    @*<script src="~/Scripts/notify.min.js"></script>*@
 
     <!-- Code to wire up your DatePicker -->
     <script>
@@ -90,8 +90,6 @@
         $(document).ready(function () {
             // This will make every element with the class "date-picker" into a DatePicker element
 
-
-
             $('.date-picker').datepicker({
                 dateFormat: 'yy-mm-dd',
                 showAnim: 'clip',
@@ -108,7 +106,7 @@
             $(".date-picker1").datepicker({
                 dateFormat: 'yy-mm-dd',
                 showAnim: 'clip',
-                disabled: true,
+                disabled: true
             });
         });
     </script>
