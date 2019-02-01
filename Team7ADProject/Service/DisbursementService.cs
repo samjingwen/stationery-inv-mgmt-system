@@ -196,5 +196,16 @@ namespace Team7ADProject.Service
             return dt;
         }
 
+        public List<BriefDept> GetBriefDept()
+        {
+            List<BriefDept> deptList = (from x in context.Department
+                                        select new BriefDept
+                                        {
+                                            DepartmentId = x.DepartmentId,
+                                            DepartmentName = x.DepartmentName
+                                        }).ToList();
+            return deptList;
+        }
+
     }
 }

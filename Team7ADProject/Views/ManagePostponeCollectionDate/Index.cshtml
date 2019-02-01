@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Team7ADProject.Entities.Department>
+﻿@model List<Team7ADProject.ViewModels.BriefDept>
 
 @{
     ViewBag.Title = "Index";
@@ -22,17 +22,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @for(int i = 0; i < Model.Count; i++)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DepartmentName)
+                        @Html.DisplayFor(x => x[i].DepartmentName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.NextAvailableDate)
+                        @Html.DisplayFor(x => x[i].CollectionDate)
                     </td>
                     <td>
-                        <a class="btn btn-default btn-sm" onclick="Postpone('@Url.Action("Postpone", "ManagePostponeCollectionDate", new { id=@item.DepartmentId})')"><i class="fa fa-clock-o fa-lg"></i></a>
+                        <a class="btn btn-default btn-sm" onclick="Postpone('@Url.Action("Postpone", "ManagePostponeCollectionDate", new { id=Model[i].DepartmentId})')"><i class="fa fa-clock-o fa-lg"></i></a>
                     </td>
                 </tr>
             }
