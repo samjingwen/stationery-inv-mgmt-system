@@ -4,53 +4,11 @@
     ViewBag.Title = "ChargeBack";
 }
 <head>
-    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    @*<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />*@
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-
-
-    <script>
-        $(function () {
-            $("#fromDTP").datepicker({
-                required: true,
-                yearRange: "2017:+0",
-                dateFormat: 'dd MM yy',
-                message: "This is a required field",
-                maxDate: '0',
-                defaultDate: "01 January 2017",
-                changeMonth: true,
-                changeYear: true,
-                showOn: "both",
-                onSelect: function (dateText, inst) {
-                    $("#toDTP").datepicker("option", "minDate", $("#fromDTP").datepicker("getDate"));
-                }
-            }
-            );
-
-            $("#toDTP").datepicker({
-                required: true,
-                dateFormat: 'dd MM yy',
-                minDate: "01 January 2017",
-                message: "This is a required field",
-                maxDate: '0',
-                changeMonth: true,
-                changeYear: true,
-                showOn: "both"
-            });
-
-            $("#toDTP").validate();
-            $("#fromDTP").validate();
-
-            $("[type=date]").datepicker({
-                onClose: function () {
-                    $(this).valid();
-                }
-            });
-        });
-
-    </script>
+    @*<script src="~/Scripts/jquery.validate.js"></script>*@
 </head>
 <div class="custcontainer">
     <h2>Department Charge Back</h2>
@@ -60,7 +18,7 @@
         foreach (var item in Model.Select(x => x.TransactionDetail))
         {
             var q = item.Where(x => x.Disbursement.DisbursementId == x.TransactionRef).
-                 Sum(x => x.Quantity * x.UnitPrice);
+                Sum(x => x.Quantity * x.UnitPrice);
             total = total + (decimal)q;
         }
     }
@@ -71,7 +29,7 @@
                 View charge back from <input type="text" name="fromDTP" id="fromDTP" required placeholder="Please select a date" onkeypress="return false;"> to
                 <input type="text" name="toDTP" id="toDTP" required placeholder="Please select a date" onkeypress="return false;">.
             </p>
-            <p><input type="submit" id="submitBtn" value="View" class="greenBtn pull-right"/></p>
+            <p><input type="submit" id="submitBtn" value="View" class="greenBtn pull-right" /></p>
             <p><button type="submit" id="exportBtn" formaction='@Url.Action("ExportRpt","ChargeBack")' class="blueBtn" formmethod="post">Export Report</button></p>
         </form>
     </div>
@@ -80,11 +38,11 @@
 
     <hr />
     <p>
-        Total charge back for the department is @String.Format("{0:c}", total)
+        Total charge back for the department is @($"{total:c}")
     </p>
     <hr />
     <div>
-        @if (Model.ToList().Count() > 0)
+        @if (Model.ToList().Any())
         {
             <table class="table">
                 <tr>
@@ -108,12 +66,10 @@
                             @item.Data.AcknowledgedBy
                         </td>
                         <td>
-                            @String.Format("{0:dd MMM yyyy}", item.Data.Date)
+                            @($"{item.Data.Date:dd MMM yyyy}")
                         </td>
                         <td>
-                            @String.Format("{0:c}",
-                        item.Data.TransactionDetail.Where(x => x.TransactionRef == item.Data.DisbursementId).
-                        Sum(x => x.Quantity * x.UnitPrice))
+                            @($"{item.Data.TransactionDetail.Where(x => x.TransactionRef == item.Data.DisbursementId).Sum(x => x.Quantity * x.UnitPrice):c}")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Data.Status)
@@ -129,3 +85,43 @@
 
     </div>
 </div>
+<script>
+    $(function () {
+        $("#fromDTP").datepicker({
+            required: true,
+            yearRange: "2017:+0",
+            dateFormat: 'dd MM yy',
+            message: "This is a required field",
+            maxDate: '0',
+            defaultDate: "01 January 2017",
+            changeMonth: true,
+            changeYear: true,
+            showOn: "both",
+            onSelect: function (dateText, inst) {
+                $("#toDTP").datepicker("option", "minDate", $("#fromDTP").datepicker("getDate"));
+            }
+        }
+        );
+
+        $("#toDTP").datepicker({
+            required: true,
+            dateFormat: 'dd MM yy',
+            minDate: "01 January 2017",
+            message: "This is a required field",
+            maxDate: '0',
+            changeMonth: true,
+            changeYear: true,
+            showOn: "both"
+        });
+
+        $("#toDTP").validate();
+        $("#fromDTP").validate();
+
+        $("[type=date]").datepicker({
+            onClose: function () {
+                $(this).valid();
+            }
+        });
+    });
+
+</script>

@@ -311,6 +311,7 @@
     <Compile Include="ViewModels\GenerateReport\GenerateReportViewModel.cs" />
     <Compile Include="ViewModels\GenerateReport\StringDoubleDPViewModel.cs" />
     <Compile Include="ViewModels\HistoryDetailViewModel.cs" />
+    <Compile Include="ViewModels\StationeryViewModel.cs" />
     <Compile Include="ViewModels\SupplierViewModel.cs" />
     <Compile Include="ViewModels\ValidateInvoiceViewModel.cs" />
     <Compile Include="ViewModels\ManageRepViewModel.cs" />
@@ -644,10 +645,9 @@
     <Content Include="Views\ManageDelegate\Index.cshtml" />
     <Content Include="Views\ManageRetrieval\ViewDisbursement.cshtml" />
     <Content Include="Views\ValidateInvoice\GetSupplierDO.cshtml" />
+    <Content Include="Views\ManageStationery\ViewStationery.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Email\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

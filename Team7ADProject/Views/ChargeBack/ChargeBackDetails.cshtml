@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th>Disbursement Date</th>
-                <td>@String.Format("{0:dd MMM yyyy}", Model.First().DisbDate)</td>
+                <td>@($"{Model.First().DisbDate:dd MMM yyyy}")</td>
             </tr>
             <tr>
                 <th>Acknowledged By</th>
@@ -51,7 +51,7 @@
         {
             <tr>
                 <td>@item.RequestId</td>
-                <td>@String.Format("{0:dd MMM yyyy}", item.RequestDate)</td>
+                <td>@($"{item.RequestDate:dd MMM yyyy}")</td>
                 <td>@item.RequestedBy</td>
                 <td>@item.ReqStatus</td>
                 <td>@item.ItemDesc</td>
@@ -68,7 +68,7 @@
             <td><b>Total:</b></td>
             <td>
                 <b>
-                    @String.Format("{0:c}", total)
+                    @($"{total:c}")
                 </b>
             </td>
         </tr>

@@ -63,31 +63,28 @@
                             success: function (response) {
                                 if (response.success) {
                                     $("#DeptPpTable").html(response.html);
-                                    $.notify(response.message, {
-                                        globalPosition: "top center",
-                                        className: "success"
-                                    })
+                                    $.notify(response.message,
+                                        {
+                                            globalPosition: "top center",
+                                            className: "success"
+                                        });
                                 }
                                 else {
-                                    $.notify(response.message, {
-                                        globalPosition: "top center",
-                                        className: "error"
-                                    })
+                                    $.notify(response.message,
+                                        {
+                                            globalPosition: "top center",
+                                            className: "error"
+                                        });
                                 }
                             }
 
                         });
 
                     }
-
-
-
                 }
             });
         }
-
     </script>
-
 }
 
 

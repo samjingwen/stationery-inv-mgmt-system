@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Team7ADProject.ViewModels.RequestedItemViewModel>
 @{
     ViewBag.Title = "Requisition Requests";
-    
+
 }
 <div class="custcontainer">
     <h2>Index</h2>
@@ -147,115 +147,114 @@
         </div>
     </div>
 </div>
-            @section Scripts {
-               <link href="~/Content/accordion.css" rel="stylesheet" />
+@section Scripts {
+    <link href="~/Content/accordion.css" rel="stylesheet" />
 
-                <script>
-                   
-                  
-                    //After Click Save Button Pass All Data View To Controller For Edit Database
-                    function editRequest(data) {
-                        return $.ajax({
-                            contentType: 'application/json; charset=utf-8',
-                            dataType: 'json',
-                            type: 'POST',
-                            url: "../ManageRequest/Edit",
-                            data: data,
-                            success: function (result) {
-                                //alert(result);
-                                location.reload();
-                            },
-                            error: function () {
-                                alert("Error!");
-                            }
-                        });
-                    }
-
-                    
-                    //Collect Multiple Order List For Pass To Controller
-                    $("#saveReject").click(function (e) {
-                        e.preventDefault();
-                       // rejectRequest();
-                        var requestArr = [];
-                      
-                        var value = $("#comment").val();
-
-                       // window.alert("para is :" + button.attr("data-stationery-id"));
-                        var myobj = {
-                            RequestId: attr,
-                            RequestedBy: null,
-                            ApprovedBy: null,
-                            DepartmentId: null,
-                            Status: "Rejected",
-                            Comment: value,
-                            RequestDate: null,
-                            CollectionDate: null
-                        }
-                      
-                        var data = JSON.stringify({
-                            requests: myobj
-                        });
-
-                        $.when(editRequest(data)).then(function (response) {
-                            console.log(response);
-                        }).fail(function (err) {
-                            console.log(err);
-                        });
-                    });
-                    $("#saveAprove").click(function (e) {
-                        e.preventDefault();
-                        // rejectRequest();
-                        var requestArr = [];
-
-                        var value = $("#commentapp").val();
-                        
-                        var myobj = {
-                            RequestId: attr,
-                            RequestedBy: null,
-                            ApprovedBy: null,
-                            DepartmentId: null,
-                            Status: "Pending Disbursement",
-                            Comment: value,
-                            RequestDate: null,
-                            CollectionDate: null
-                        }
-
-                        var data = JSON.stringify({
-                            requests: myobj
-                        });
-
-                        $.when(editRequest(data)).then(function (response) {
-                            console.log(response);
-                        }).fail(function (err) {
-                            console.log(err);
-                        });
-                    });
+    <script>
 
 
-                    var attr;
-                    ////////////////////////////////////////////
+        //After Click Save Button Pass All Data View To Controller For Edit Database
+        function editRequest(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "../ManageRequest/Edit",
+                data: data,
+                success: function (result) {
+                    //alert(result);
+                    location.reload();
+                },
+                error: function () {
+                    alert("Error!");
+                }
+            });
+        }
 
-                    $(document).ready(function () {
-                        $(".panel-title .js-reject").on("click",
-                            function () {
-                                var button = $(this);
-                               attr = button.attr("data-stationery-id");
-                               // window.alert(attr);
-                             $("#reason").modal();
-                               
-                            });
-                    })
-                    $(document).ready(function () {
-                        $(".panel-title .js-approve").on("click",
-                            function () {
-                                var button = $(this);
-                                attr = button.attr("data-stationery-id");
-                                // window.alert(attr);
-                                $("#reason1").modal();
 
-                            });
-                    })
-                    
-                </script>
+        $("#saveReject").click(function (e) {
+            e.preventDefault();
+            // rejectRequest();
+            var requestArr = [];
+
+            var value = $("#comment").val();
+
+            // window.alert("para is :" + button.attr("data-stationery-id"));
+            var myobj = {
+                RequestId: attr,
+                RequestedBy: null,
+                ApprovedBy: null,
+                DepartmentId: null,
+                Status: "Rejected",
+                Comment: value,
+                RequestDate: null,
+                CollectionDate: null
             }
+
+            var data = JSON.stringify({
+                requests: myobj
+            });
+
+            $.when(editRequest(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+        $("#saveAprove").click(function (e) {
+            e.preventDefault();
+            // rejectRequest();
+            var requestArr = [];
+
+            var value = $("#commentapp").val();
+
+            var myobj = {
+                RequestId: attr,
+                RequestedBy: null,
+                ApprovedBy: null,
+                DepartmentId: null,
+                Status: "Pending Disbursement",
+                Comment: value,
+                RequestDate: null,
+                CollectionDate: null
+            }
+
+            var data = JSON.stringify({
+                requests: myobj
+            });
+
+            $.when(editRequest(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+
+
+        var attr;
+        ////////////////////////////////////////////
+
+        $(document).ready(function () {
+            $(".panel-title .js-reject").on("click",
+                function () {
+                    var button = $(this);
+                    attr = button.attr("data-stationery-id");
+                    // window.alert(attr);
+                    $("#reason").modal();
+
+                });
+        });
+        $(document).ready(function () {
+            $(".panel-title .js-approve").on("click",
+                function () {
+                    var button = $(this);
+                    attr = button.attr("data-stationery-id");
+                    // window.alert(attr);
+                    $("#reason1").modal();
+
+                });
+        });
+
+    </script>
+}
 
