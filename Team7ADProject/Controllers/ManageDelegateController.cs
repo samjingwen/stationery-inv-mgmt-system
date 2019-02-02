@@ -28,6 +28,8 @@ namespace Team7ADProject.Controllers
                 ViewBag.successHandler = 1;
             else if (id == 2)
                 ViewBag.successHandler = 2;
+            else if (id == 3)
+                ViewBag.successHandler = 3;
             string userId = User.Identity.GetUserId();
             DelegateHeadViewModel viewModel = new DelegateHeadViewModel(userId);
             ViewBag.DepName = viewModel.DepartmentName;
@@ -51,13 +53,19 @@ namespace Team7ADProject.Controllers
         [HttpPost]
         public ActionResult Delegate(DelegateHeadViewModel model)
         {
+            string userId = User.Identity.GetUserId();
+
+            if (!gmService.IsAllRequestsApproved(userId))
+            {
+                return RedirectToAction("Index", new { id = 3 });
+            }
+
             ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationDbContext context = new ApplicationDbContext();
 
             manager.AddToRole(model.SelectedUser, "Acting Department Head");
             manager.RemoveFromRole(model.SelectedUser, "Employee");
 
-            string userId = User.Identity.GetUserId();
             model.DeptHeadId = userId;
 
             gmService.AssignDelegateHead(userId, model.SelectedUser, model.DepartmentId, model.StartDate, model.EndDate);

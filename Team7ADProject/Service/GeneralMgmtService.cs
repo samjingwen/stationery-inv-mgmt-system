@@ -147,9 +147,10 @@ namespace Team7ADProject.Service
             LogicDB context = new LogicDB();
             return context.AspNetUsers.FirstOrDefault(x => x.Id == id).Email;
         }
-        public bool IsAllRequestsApproved(string deptId)
+        public bool IsAllRequestsApproved(string depHeadId)
         {
-            var query = context.StationeryRequest.Where(x => x.DepartmentId == deptId && x.ApprovedBy == null).Count();
+            var user = context.AspNetUsers.FirstOrDefault(x => x.Id == depHeadId);
+            var query = context.StationeryRequest.Where(x => x.DepartmentId == user.DepartmentId && x.ApprovedBy == null).Count();
             if (query > 0)
                 return false;
             else
