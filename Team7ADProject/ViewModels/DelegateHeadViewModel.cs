@@ -21,7 +21,13 @@ namespace Team7ADProject.ViewModels
 
         public DelegateHeadViewModel() { }
 
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate
+        {
+            get
+            {
+                return DateTime.Now;
+            }
+        }
 
         public DateTime EndDate { get; set; }
 
