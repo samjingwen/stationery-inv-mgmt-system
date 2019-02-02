@@ -22,14 +22,17 @@ namespace Team7ADProject.Controllers
 
         // GET: DelegateHead
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(int id = 0)
         {
-
-
+            if (id == 1)
+                ViewBag.successHandler = 1;
+            else if (id == 2)
+                ViewBag.successHandler = 2;
+            else if (id == 3)
+                ViewBag.successHandler = 3;
             string userId = User.Identity.GetUserId();
             DelegateHeadViewModel viewModel = new DelegateHeadViewModel(userId);
             ViewBag.DepName = viewModel.DepartmentName;
-
 
             ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationDbContext context = new ApplicationDbContext();
@@ -50,12 +53,19 @@ namespace Team7ADProject.Controllers
         [HttpPost]
         public ActionResult Delegate(DelegateHeadViewModel model)
         {
+            string userId = User.Identity.GetUserId();
+
+            if (!gmService.IsAllRequestsApproved(userId))
+            {
+                return RedirectToAction("Index", new { id = 3 });
+            }
+
             ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationDbContext context = new ApplicationDbContext();
 
             manager.AddToRole(model.SelectedUser, "Acting Department Head");
+            manager.RemoveFromRole(model.SelectedUser, "Employee");
 
-            string userId = User.Identity.GetUserId();
             model.DeptHeadId = userId;
 
             gmService.AssignDelegateHead(userId, model.SelectedUser, model.DepartmentId, model.StartDate, model.EndDate);
@@ -64,7 +74,7 @@ namespace Team7ADProject.Controllers
             string content = string.Format("Your appointment will start on {0} and end on {1}", model.StartDate.ToShortDateString(), model.EndDate.ToShortDateString());
             Email.Send(email, subject, content);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = 1 });
         }
 
         public ActionResult Revoke()
@@ -72,8 +82,17 @@ namespace Team7ADProject.Controllers
             string userId = User.Identity.GetUserId();
             string[] delHead = gmService.GetDelegatedHead(userId);
 
-            return RedirectToAction("Index");
+            ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationDbContext context = new ApplicationDbContext();
+            if (delHead != null)
+            {
+                manager.AddToRole(delHead[0], "Employee");
+                manager.RemoveFromRole(delHead[0], "Acting Department Head");
+            }
 
+            gmService.RevokeDelegateHead(userId);
+
+            return RedirectToAction("Index", new { id = 2 });
         }
 
 

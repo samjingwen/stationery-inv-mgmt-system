@@ -60,7 +60,7 @@
                             @Html.DisplayNameFor(model => model.Request.RequestDate):
                         </td>
                         <td>
-                            @String.Format("{0:dd MMM yyyy}",Model.Request.RequestDate)
+                            @($"{Model.Request.RequestDate:dd MMM yyyy}")
                         </td>
                     </tr>
                 </table>
@@ -78,8 +78,8 @@
                             @Html.DisplayNameFor(model => model.Details.First().Remarks)
                         </th>
                         @*<th>
-                            Request Date
-                        </th>*@
+                                Request Date
+                            </th>*@
                     </tr>
                     @foreach (var item in Model.Details)
                     {
@@ -94,8 +94,8 @@
                                 @Html.DisplayFor(modelItem => item.Remarks)
                             </td>
                             @*<td>
-                                @String.Format("{0:dd MMM yyyy}", item.TransactionDate)
-                            </td>*@
+                                    @String.Format("{0:dd MMM yyyy}", item.TransactionDate)
+                                </td>*@
                         </tr>
                     }
                 </table>

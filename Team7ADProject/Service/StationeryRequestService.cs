@@ -328,10 +328,6 @@ namespace Team7ADProject.Service
                             content += string.Format("{0}\t\t\t\t\t\t{1}{2}", entry.Key, entry.Value, Environment.NewLine);
                         }
                         Email.Send(email, subject, content);
-
-
-
-
                     }
 
                     dbContextTransaction.Commit();

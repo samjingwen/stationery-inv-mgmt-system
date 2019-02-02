@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            @for(int i = 0; i < Model.Count; i++)
+            @for (int i = 0; i < Model.Count; i++)
             {
                 <tr>
                     <td>
@@ -47,7 +47,7 @@
     <script>
         function Postpone(url) {
             bootbox.confirm({
-                message: "Confirm to postpone?",
+                message: "Postpone the collection date of department?",
                 size: 'small',
                 buttons: {
                     confirm: {
@@ -67,31 +67,26 @@
                             success: function (response) {
                                 if (response.success) {
                                     $("#DeptPpTable").html(response.html);
-                                    $.notify(response.message, {
-                                        globalPosition: "top center",
-                                        className: "success"
-                                    })
+                                    $.notify(response.message,
+                                        {
+                                            globalPosition: "top center",
+                                            className: "success"
+                                        });
                                 }
                                 else {
-                                    $.notify(response.message, {
-                                        globalPosition: "top center",
-                                        className: "error"
-                                    })
+                                    $.notify(response.message,
+                                        {
+                                            globalPosition: "top center",
+                                            className: "error"
+                                        });
                                 }
                             }
-
                         });
-
                     }
-                    
-
-
                 }
             });
         }
-
     </script>
-
 }
 
 

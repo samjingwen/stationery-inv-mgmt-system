@@ -8,15 +8,17 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Team7ADProject.Entities;
 using Team7ADProject.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace Team7ADProject.Controllers
 {
     //Author: Teh Li Heng 15/1/2019
+    //Author Elaine Chan 1/2/2019
     //CRUD operation for stationery completed with validation
 
     #region Teh Li Heng
     //For SC to change stationeries information
-    [RoleAuthorize(Roles = "Store Manager, Store Supervisor")]
+    
     public class ManageStationeryController : Controller
     {
         private LogicDB _context;
@@ -26,12 +28,14 @@ namespace Team7ADProject.Controllers
             _context = new LogicDB();
         }
         // GET: ManageStationery
+        [RoleAuthorize(Roles = "Store Manager, Store Supervisor")]
         public ActionResult Index()
         {
             var stationeries = _context.Stationery.Where(m=>m.ActiveState==true).ToList();
             return View(stationeries);
         }
 
+        [RoleAuthorize(Roles = "Store Manager, Store Supervisor")]
         public ActionResult Edit(string id)
         {
             var stationery = _context.Stationery.SingleOrDefault(c => c.ItemId == id);
@@ -48,6 +52,7 @@ namespace Team7ADProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RoleAuthorize(Roles = "Store Manager, Store Supervisor")]
         public ActionResult Save(Stationery stationery)
         {
             string a = stationery.ItemId;
@@ -101,6 +106,7 @@ namespace Team7ADProject.Controllers
             return RedirectToAction("Index", "ManageStationery");
         }
 
+        [RoleAuthorize(Roles = "Store Manager, Store Supervisor")]
         public ActionResult New()
         {
             var viewModel = new StationeryFormViewModel()
@@ -113,6 +119,7 @@ namespace Team7ADProject.Controllers
             return View("StationeryForm", viewModel);
         }
 
+        [RoleAuthorize(Roles = "Store Manager, Store Supervisor")]
         public string GenerateItemId(string description)
         {
             description += " ";
@@ -152,6 +159,34 @@ namespace Team7ADProject.Controllers
 
             return firstCharacter + secondAndThirdCharacter + fourthCharacter;
         }
+
+        #endregion
+
+        #region Elaine Chan
+
+        [RoleAuthorize(Roles = "Store Manager, Store Supervisor, Store Clerk")]
+        public ActionResult ViewStationery()
+        {
+           
+
+            var stationeryList = _context.Stationery.Where(x => x.ActiveState == true).ToList().Select(x => new StationeryViewModel()
+            {
+                ItemId = x.ItemId,
+                Category = x.Category,
+                Description = x.Description,
+                ReorderLevel = x.ReorderLevel,
+                ReorderQuantity = x.ReorderQuantity,
+                UnitOfMeasure = x.UnitOfMeasure,
+                QuantityWarehouse = x.QuantityWarehouse,
+                QuantityTransit = x.QuantityTransit,
+                Location = x.Location
+
+            });
+
+            return View(stationeryList);
+        }
+
+        #endregion
     }
-    #endregion
+
 }

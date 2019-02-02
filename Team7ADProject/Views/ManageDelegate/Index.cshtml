@@ -62,17 +62,37 @@
 </div>
 
 
-@section Scripts {
-    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+@section scripts {
+    @*<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />*@
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-
-
-
-
+    @*<script src="~/Scripts/notify.min.js"></script>*@
 
     <!-- Code to wire up your DatePicker -->
-    <script type="text/javascript">
+    <script>
+        var successHandler = @ViewBag.successHandler;
+        if (successHandler == 2) {
+            $.notify("Revoked!", {
+                globalPosition: "top center",
+                className: "warn"
+            });
+        }
+        else if (successHandler == 1) {
+            $.notify("Acting Department Head Delegated Successfully!", {
+                globalPosition: "top center",
+                className: "success"
+            });
+        }
+        else if (successHandler == 3) {
+            $.notify("Please approve all requests before delegating.", {
+                globalPosition: "top center",
+                className: "error"
+            });
+        }
+
+    </script>
+
+    <script>
         $(document).ready(function () {
             // This will make every element with the class "date-picker" into a DatePicker element
 
@@ -87,20 +107,16 @@
                 }
             });
 
-            $(".date-picker").datepicker("option", { minDate: + 1 });
+            $(".date-picker").datepicker("option", { minDate: + 0 });
 
             $(".date-picker1").datepicker({
                 dateFormat: 'yy-mm-dd',
                 showAnim: 'clip',
-                disabled: true,
-
+                disabled: true
             });
-
-
         });
-
-
     </script>
+
 
 }
 

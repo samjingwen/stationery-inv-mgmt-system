@@ -39,7 +39,7 @@ namespace Team7ADProject.Controllers
             ManagePointViewModel model = new ManagePointViewModel();
             if (id != 0)
             {
-                var query = db.CollectionPoint.Where(x => x.CollectionPointId == id).FirstOrDefault();
+                var query = db.CollectionPoint.FirstOrDefault(x => x.CollectionPointId == id);
                 model.CollectionPointId = query.CollectionPointId;
                 model.CollectionDescription = query.CollectionDescription;
                 model.CPImagePath = query.CPImagePath;
@@ -84,7 +84,7 @@ namespace Team7ADProject.Controllers
                 }
                 else
                 {
-                    var oldCP = db.CollectionPoint.Where(x => x.CollectionPointId == collectionPoint.CollectionPointId).FirstOrDefault();
+                    var oldCP = db.CollectionPoint.FirstOrDefault(x => x.CollectionPointId == collectionPoint.CollectionPointId);
                     oldCP.CollectionDescription = cp.CollectionDescription;
                     if (collectionPoint.ImageUpload != null)
                         oldCP.CPImagePath = cp.CPImagePath;
@@ -107,7 +107,7 @@ namespace Team7ADProject.Controllers
         {
             try
             {
-                CollectionPoint cp = db.CollectionPoint.Where(x => x.CollectionPointId == id).FirstOrDefault();
+                CollectionPoint cp = db.CollectionPoint.FirstOrDefault(x => x.CollectionPointId == id);
                 db.CollectionPoint.Remove(cp);
                 db.SaveChanges();
                 return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "ViewAll", db.CollectionPoint.ToList()), message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
@@ -121,14 +121,6 @@ namespace Team7ADProject.Controllers
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-
-
-
-
-
-
-
-
     }
     #endregion
 

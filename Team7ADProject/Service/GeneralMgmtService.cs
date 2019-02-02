@@ -53,12 +53,20 @@ namespace Team7ADProject.Service
             context.SaveChanges();
         }
 
+        public void RevokeDelegateHead(string userId)
+        {
+            DateTime todayDate = DateTime.Now.Date;
+            var query = context.DelegationOfAuthority.Where(x => x.EndDate >= todayDate && x.DelegatedBy == userId).Where(x => x.Status != "VOID").FirstOrDefault();
+            query.Status = "VOID";
+            context.SaveChanges();
+        }
+
         public string[] GetDelegatedHead(string userId)
         {
             DateTime todayDate = DateTime.Now.Date;
             LogicDB context = new LogicDB();
 
-            var query = context.DelegationOfAuthority.Where(x => x.EndDate >= todayDate && x.DelegatedBy == userId).FirstOrDefault();
+            var query = context.DelegationOfAuthority.Where(x => x.EndDate >= todayDate && x.DelegatedBy == userId).Where(x => x.Status != "VOID").FirstOrDefault();
 
             if (query == null)
             {
@@ -138,6 +146,15 @@ namespace Team7ADProject.Service
         {
             LogicDB context = new LogicDB();
             return context.AspNetUsers.FirstOrDefault(x => x.Id == id).Email;
+        }
+        public bool IsAllRequestsApproved(string depHeadId)
+        {
+            var user = context.AspNetUsers.FirstOrDefault(x => x.Id == depHeadId);
+            var query = context.StationeryRequest.Where(x => x.DepartmentId == user.DepartmentId && x.ApprovedBy == null).Count();
+            if (query > 0)
+                return false;
+            else
+                return true;
         }
     }
 }

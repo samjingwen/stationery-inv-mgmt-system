@@ -24,7 +24,8 @@ namespace Team7ADProject.ViewModels
 
             //Store Supervisor
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Management", Title = "Stock Adjustment", Action = "Index", Controller = "ApproveAdjustment", IsAction = true });
-            menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Management", Title = "Inventory Management", Action = "Index", Controller = "ManageStationery", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Management", Title = "Stationery Management", Action = "Index", Controller = "ManageStationery", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Management", Title = "Stationery Listing", Action = "ViewStationery", Controller = "ManageStationery", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Collection Management", Title = "Collection Point", Action = "Index", Controller = "ManagePoint", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Collection Management", Title = "Collection Date", Action = "Index", Controller = "ManagePostponeCollectionDate", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", Title = "Reporting", Action = "GenerateDashboard", Controller = "GenerateReport", IsAction = true });
@@ -33,11 +34,13 @@ namespace Team7ADProject.ViewModels
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Management", Title = "Procurement", Action = "ViewPORecord", Controller = "ApproveOrder", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Management", Title = "Stock Adjustment", Action = "Index", Controller = "ApproveAdjustment", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Management", Title = "Supplier Management", Action = "Index", Controller = "ManageSupplier", IsAction = true });
-            menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Management", Title = "Inventory Management", Action = "Index", Controller = "ManageStationery", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Management", Title = "Stationery Management", Action = "Index", Controller = "ManageStationery", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Management", Title = "Stationery Listing", Action = "ViewStationery", Controller = "ManageStationery", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", Title = "Collection Point", Action = "Index", Controller = "ManagePoint", IsAction = true });
 
             //Store Clerk
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", Title = "Collection Point", Action = "Index", Controller = "ManagePoint", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Stationery Listing", Action = "ViewStationery", Controller = "ManageStationery", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Purchase Orders", Action = "Index", Controller = "RaiseOrder", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Raise Stock Adjustment", Action = "Index", Controller = "RaiseAdjustment", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Clerk", SubMenu = "Stationery Management", Title = "Stationery Retrievals", Action = "Index", Controller = "ManageRetrieval", IsAction = true });

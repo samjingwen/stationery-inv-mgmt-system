@@ -15,7 +15,6 @@
         @using (Html.BeginForm("UpdateCollectionPoint", "CollectionPoint", FormMethod.Post))
         {
 
-
             <div class="col-md-3" id="radio">
                 @foreach (var cp in Model.CollectionPoints)
                 {
@@ -37,9 +36,6 @@
                                    value="@cp.CollectionPointId">
                         }
 
-
-
-
                         <span style="padding-left:5px; width:100px; display:inline-block">@cp.CollectionDescription</span>
                         <span style="width:100px; display:inline">@cp.Time.ToShortTimeString()</span>
                     </label>
@@ -55,9 +51,6 @@
             </div>
 
         }
-
-
-
     </div>
 </div>
 @section scripts{
@@ -88,14 +81,5 @@
 
             });
         });
-
-
-
-
-
     </script>
-
-
-
-
 }

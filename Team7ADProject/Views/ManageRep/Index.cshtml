@@ -5,13 +5,13 @@
 }
 
 <div class="custcontainer">
-    <h2>Assign Rep</h2>
+    <h2>Assign Department Representative</h2>
 
 
 
-    @using (Html.BeginForm("ManageRep", "ManageRep", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("ManageRep", "ManageRep", FormMethod.Post, new { @class = "form-horizontal", @id = "manageRepForm", role = "form" }))
     {
-        <h4>Manage Rep</h4>
+        <h4>Manage Representative</h4>
         <hr />
         <br />
         <div>Current Representative: @ViewBag.empRep</div>
@@ -27,26 +27,15 @@
     }
 </div>
 
-<script type="text/javascript">
-    $('form').submit(function(e) {
-        var currentForm = this;
-        e.preventDefault();
-        bootbox.confirm({
-            message: "Are you sure",
-            size: 'small',
-            buttons: {
-                confirm: {
-                    label: 'Yes',
-                    className: 'btn-success'
-                },
-                cancel: {
-                    label: 'No',
-                    className: 'btn-danger'
-                }
-            },
-            callback: function (result) {
-                currentForm.submit();
-            }
-        });
-    });
-</script>
+
+@section scripts{
+    <script>
+    var successHandler = @ViewBag.successHandler;
+        if (successHandler == 1) {
+            $.notify("Department Representative assigned successfully!", {
+                globalPosition: "top center",
+                className: "success"
+            });
+        }
+    </script>
+}
