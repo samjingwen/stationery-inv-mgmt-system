@@ -62,7 +62,7 @@ namespace Team7ADProject.Controllers
 
             ApplicationUserManager manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationDbContext context = new ApplicationDbContext();
-
+            
             manager.AddToRole(model.SelectedUser, "Acting Department Head");
             manager.RemoveFromRole(model.SelectedUser, "Employee");
 
