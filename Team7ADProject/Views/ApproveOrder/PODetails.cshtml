@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Purchase Order Detail</h2>
+<h2>Purchase Order Details</h2>
 
 
     <div class="custcontainer">
@@ -53,9 +53,9 @@
                     </tbody>
                 </table>
                 @if (@Model.PurchaseOrder.Status == "Pending Approval")
-                {@Html.ActionLink("Approve", "Approve", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "greenBtn pull-right", onclick = "ApproveAlert()" })
-                   
-                @Html.ActionLink("Reject", "Reject", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "redBtn pull-right", onclick = "RejectAlert" })}
+                {@Html.ActionLink("Approve", "Approve", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "greenBtn pull-right", @style = "width:80px", onclick = "ApproveAlert()" })
+                 
+                @Html.ActionLink("Reject", "Reject", "ApproveOrder", new { poNo = Model.PurchaseOrder.PONo }, new { @class = "redBtn pull-right", @style = "width:80px", onclick = "RejectAlert" })}
                 <br />
             </div>
         </div>
