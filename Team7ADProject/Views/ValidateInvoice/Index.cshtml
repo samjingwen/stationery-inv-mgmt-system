@@ -44,6 +44,7 @@
 
         $("#SupplierId").change(function () {
             $('#SupplierDOTable').empty();
+            document.getElementById('InvoiceAmt').value = 0;
             var selected = this.value;
             var url = '/ValidateInvoice/RenderTable/' + selected;
             document.getElementById('detailsBtn').onclick = function () { GetData(url) };
