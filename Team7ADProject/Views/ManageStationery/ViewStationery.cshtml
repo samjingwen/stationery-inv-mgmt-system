@@ -5,21 +5,6 @@
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    @*<script>
-            $("#stattable").DataTable();
-
-            var table = document.getElementById('stattable');
-            var tbody = table.getElementsByTagName('tbody')[0];
-            var cells = tbody.getElementsByTagName('td');
-
-
-            for (var i = 0, len = cells.length; i < len; i++) {
-                if (parseInt(cells[i].innerHTML, 6) > parseInt(cells[i].innerHTML, 4)) {
-                    cells[i].style.color = 'red';
-                }
-            }
-
-        </script>*@
 
     <script>
         $("#stattable").DataTable();
@@ -28,9 +13,8 @@
         var cells = tbody.getElementsByTagName('td');
 
         for (var j = 0; j < table.rows.length; j++) {      
-                if (parseInt(table.rows[j].cells[6].innerHTML) < parseInt(table.rows[j].cells[4].innerHTML)) {
+                if (parseInt(table.rows[j].cells[0].innerHTML) < 0) {
                     table.rows[j].style.color = 'red';                  // to highlight the entire row
-                    //table.rows[j].cells[6].style.color = 'red';       // to highlight only the warehouse qty
             }
 
         }
@@ -55,6 +39,7 @@
     <table class="cusTable" id="stattable">
         <thead>
             <tr>
+                <th hidden></th>
                 <th>Item Code</th>
                 <th>Category</th>
                 <th>Description</th>
@@ -72,6 +57,7 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td hidden>@(@item.QuantityWarehouse - @item.ReorderLevel)</td>
                     <td>@item.ItemId</td>
                     <td>@item.Category</td>
                     <td>@item.Description</td>
