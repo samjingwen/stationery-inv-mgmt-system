@@ -11,7 +11,7 @@ namespace Team7ADProject.Controllers
 {
     //Author: Teh Li Heng 17/1/2019
     //Raise new requests into a list of editable object and save all at once (implemented js and ajax)
-    [RoleAuthorize(Roles = "Employee, Department Representative, Store Clerk, Store Supervisor")]
+    [RoleAuthorize(Roles = "Employee, Department Representative")]
     public class RaiseRequestController : Controller
     {
         #region Teh Li Heng
