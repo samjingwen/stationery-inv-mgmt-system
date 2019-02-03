@@ -16,7 +16,7 @@ namespace Team7ADProject.Controllers
 {
     //Author: Elaine Chan
     //For generating charge back and viewing charge back
-    [RoleAuthorize(Roles = "Department Head")]
+    [RoleAuthorize(Roles = "Department Head, Store Manager")]
     public class ChargeBackController : Controller
     {
         #region Author:Elaine
