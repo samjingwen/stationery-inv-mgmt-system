@@ -18,7 +18,7 @@ namespace Team7ADProject.ViewModels
         {
             List<SideBarViewModel> menulist = new List<SideBarViewModel>();
             //All Users
-            menulist.Add(new SideBarViewModel() { Roles = "All", Title = "Index", SubMenu="Index", Action = "Index", Controller = "Home", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "All", Title = "Home", SubMenu="Index", Action = "Index", Controller = "Home", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "All", Title = "About", SubMenu = "Index", Action = "About", Controller = "Home", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "All", Title = "Contact", SubMenu = "Index", Action = "Contact", Controller = "Home", IsAction = true });
 
