@@ -2,28 +2,29 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Validate Invoice</h2>
-<div class="form-group">
-    @using (Html.BeginForm("Validate", "ValidateInvoice", FormMethod.Post, new { @class = "form-horizontal", id = "retForm", role = "form" }))
-    {
-        <label class="control-label">Invoice No</label>
-        <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo" required>
-        <label class="control-label">Invoice Amount</label>
+<div class="custcontainer">
+    <h2>Validate Invoice</h2>
+    <div class="form-group">
+        @using (Html.BeginForm("Validate", "ValidateInvoice", FormMethod.Post, new { @class = "form-horizontal", id = "retForm", role = "form" }))
+        {
+            <label class="control-label">Invoice No</label>
+            <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo" required>
+            <label class="control-label">Invoice Amount</label>
             <div class="input-group">
                 <span class="input-group-addon">$</span>
                 <input type="text" readonly id="InvoiceAmt" class="form-control" style="width:250px;" name="InvoiceAmt" value="0">
             </div>
-        <label class="control-label">Supplier</label>
-        <select class="form-control" name="SupplierId" id="SupplierId"></select>
-        <a id="detailsBtn" class="greenBtn pull-right" onclick="alert('Please select a supplier.')">Show Details</a>
-        <br />
-        <br />
+            <label class="control-label">Supplier</label>
+            <select class="form-control" name="SupplierId" id="SupplierId"></select>
+            <a id="detailsBtn" class="greenBtn pull-right" onclick="alert('Please select a supplier.')">Show Details</a>
+            <br />
+            <br />
 
-        <div id="SupplierDOTable">
-        </div>
+            <div id="SupplierDOTable">
+            </div>
 
-    }
+        }
+    </div>
 </div>
 
 @section scripts{
