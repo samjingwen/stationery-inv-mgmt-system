@@ -60,7 +60,7 @@ namespace Team7ADProject.ViewModels
             //Department Rep
             menulist.Add(new SideBarViewModel() { Roles = "Department Representative", SubMenu = "Collection Management", Title = "Select Collection Point", Action = "Index", Controller = "CollectionPoint", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Department Representative", SubMenu = "Collection Management", Title = "Collection Date", Action = "Index", Controller = "ManagePostponeCollectionDateDepartment", IsAction = true });
-            menulist.Add(new SideBarViewModel() { Roles = "Employee", SubMenu = "Stationery Requisition", Title = "Stationery Requests", Action = "Index", Controller = "RaiseRequest", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Department Representative", SubMenu = "Stationery Requisition", Title = "Stationery Requests", Action = "Index", Controller = "RaiseRequest", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Department Representative", SubMenu = "Stationery Requisition", Title = "Request History", Action = "Index", Controller = "RequisitionHistory", IsAction = true });
 
             //Employee
@@ -69,6 +69,7 @@ namespace Team7ADProject.ViewModels
 
             //Acting Head
             menulist.Add(new SideBarViewModel() { Roles = "Acting Department Head", SubMenu = "Stationery Requisition", Title = "Stationery Requests", Action = "Index", Controller = "ManageRequest", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Acting Department Head", SubMenu = "Stationery Requisition", Title = "Request History", Action = "Index", Controller = "RequisitionHistory", IsAction = true });
 
             return menulist;
         }
