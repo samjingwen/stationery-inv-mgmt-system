@@ -95,25 +95,21 @@
     <script>
         $(document).ready(function () {
             // This will make every element with the class "date-picker" into a DatePicker element
-
-            $('.date-picker').datepicker({
+            $(".date-picker").datepicker({
                 dateFormat: 'yy-mm-dd',
-                showAnim: 'clip',
-                onSelect: function (date) {
-                    $('.date-picker1').datepicker("option", "disabled", false);
-                    $(".date-picker1").datepicker("option", "minDate", date);
-                    $(".date-picker1").datepicker("option", "maxDate", '+2y');
-                    $('.date-picker1').datepicker('setDate', date);
-                }
-            });
-
-            $(".date-picker").datepicker("option", { minDate: + 0 });
-
-            $(".date-picker1").datepicker({
-                dateFormat: 'yy-mm-dd',
-                showAnim: 'clip',
                 disabled: true
             });
+
+            $('.date-picker1').datepicker({
+                dateFormat: 'yy-mm-dd',
+                showAnim: 'clip'
+            });
+
+            $(".date-picker").datepicker("setDate", new Date());
+
+            $(".date-picker1").datepicker("option", { minDate: + 0 });
+
+            
         });
     </script>
 
