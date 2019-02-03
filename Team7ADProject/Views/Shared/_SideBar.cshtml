@@ -10,6 +10,8 @@
     var sm =0;
     var dm =0;
     var cm=0;
+    var sr = 0;
+    var sp = 0;
     foreach (var i in Model)
     { if (User.IsInRole(i.Roles)) {
             if (i.SubMenu == "Stationery Management")
@@ -23,6 +25,10 @@
             if(i.SubMenu == "Department Management")
             {
                 dm++;
+            }
+            if (i.SubMenu == "Stationery Requisition")
+            {
+                sr++;
             }
         }
     }
@@ -75,6 +81,20 @@
         </details>
     }
 
+    @if (sp > 0)
+    {
+        <details>
+            @foreach (var i in Model)
+            {
+                if (User.IsInRole(i.Roles) && i.SubMenu == "Stationery Procurement")
+                {
+                    <a href="@Url.Action(i.Action, i.Controller)"> @Html.Raw(i.Title)</a>
+                }
+            }
+            <summary><p><b>Stationery Procurement ▼</b></p></summary>
+        </details>
+    }
+
     @if (cm > 0)
     {<details>
             @foreach (var i in Model)
@@ -102,13 +122,27 @@
         </details>
     }
 
-        @foreach (var i in Model)
-        {
-            if (User.IsInRole(i.Roles) && i.SubMenu == null)
+    @if (sr > 0)
+    {
+        <details>
+            @foreach (var i in Model)
             {
-                <a href="@Url.Action(i.Action, i.Controller)"> @Html.Raw(i.Title)</a>
+                if (User.IsInRole(i.Roles) && i.SubMenu == "Stationery Requisition")
+                {
+                    <a href="@Url.Action(i.Action, i.Controller)"> @Html.Raw(i.Title)</a>
+                }
             }
+            <summary><p><b>Stationery Requisition ▼</b></p></summary>
+        </details>
+    }
+
+    @foreach (var i in Model)
+    {
+        if (User.IsInRole(i.Roles) && i.SubMenu == null)
+        {
+            <a href="@Url.Action(i.Action, i.Controller)"> @Html.Raw(i.Title)</a>
         }
-        <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-    </div>
+    }
+    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+</div>
 
