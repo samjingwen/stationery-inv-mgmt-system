@@ -5,70 +5,87 @@
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
 @section scripts{
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    @*<script>
+            $("#stattable").DataTable();
+
+            var table = document.getElementById('stattable');
+            var tbody = table.getElementsByTagName('tbody')[0];
+            var cells = tbody.getElementsByTagName('td');
+
+
+            for (var i = 0, len = cells.length; i < len; i++) {
+                if (parseInt(cells[i].innerHTML, 6) > parseInt(cells[i].innerHTML, 4)) {
+                    cells[i].style.color = 'red';
+                }
+            }
+
+        </script>*@
+
     <script>
         $("#stattable").DataTable();
-
         var table = document.getElementById('stattable');
         var tbody = table.getElementsByTagName('tbody')[0];
         var cells = tbody.getElementsByTagName('td');
 
-
-        for (var i = 0, len = cells.length; i < len; i++) {
-            if (parseInt(cells[i].innerHTML, 6) > parseInt(cells[i].innerHTML, 4)) {
-                cells[i].style.color = 'red';
+        for (var j = 0; j < table.rows.length; j++) {      
+                if (parseInt(table.rows[j].cells[6].innerHTML) < parseInt(table.rows[j].cells[4].innerHTML)) {
+                    table.rows[j].style.color = 'red';                  // to highlight the entire row
+                    //table.rows[j].cells[6].style.color = 'red';       // to highlight only the warehouse qty
             }
+
         }
 
+   
     </script>
-    
+
+}
+
+<div class="custcontainer">
+
+    <h2>Stationery Listing</h2>
+    <br />
+    @if (User.IsInRole("Store Clerk"))
+    {<form>
+            <button type="submit" id="purchaseBtn" formaction='@Url.Action("RaisePo","RaiseOrder")' class="blueBtn pull-right" formmethod="post">Reorder Stationeries</button>
+            <br />
+            <br />
+        </form>
     }
 
-    <div class="custcontainer">
+    <table class="cusTable" id="stattable">
+        <thead>
+            <tr>
+                <th>Item Code</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Unit of Measure</th>
+                <th id="rol">Reorder Level</th>
+                <th>Reorder Quantity</th>
+                <th id="qty">Quantity in Warehouse</th>
+                <th>Location in Warehouse</th>
+                <th>Quantity in Transit</th>
 
-        <h2>Stationery Listing</h2>
-        <br />
-        @if (User.IsInRole("Store Clerk"))
-        {<form>
-    <button type="submit" id="purchaseBtn" formaction='@Url.Action("RaisePo","RaiseOrder")' class="blueBtn pull-right" formmethod="post">Reorder Stationeries</button>
-    <br />
-    <br />
-</form>
-        }
+            </tr>
+        </thead>
 
-        <table class="cusTable" id="stattable">
-            <thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>Item Code</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>Unit of Measure</th>
-                    <th id="rol">Reorder Level</th>
-                    <th>Reorder Quantity</th>
-                    <th id="qty">Quantity in Warehouse</th>
-                    <th>Location in Warehouse</th>
-                    <th>Quantity in Transit</th>
+                    <td>@item.ItemId</td>
+                    <td>@item.Category</td>
+                    <td>@item.Description</td>
+                    <td>@item.UnitOfMeasure</td>
+                    <td>@item.ReorderLevel</td>
+                    <td>@item.ReorderQuantity</td>
+                    <td>@item.QuantityWarehouse</td>
+                    <td>@item.Location</td>
+                    <td>@item.QuantityTransit</td>
 
                 </tr>
-            </thead>
+            }
+        </tbody>
+    </table>
 
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.ItemId</td>
-                        <td>@item.Category</td>
-                        <td>@item.Description</td>
-                        <td>@item.UnitOfMeasure</td>
-                        <td>@item.ReorderLevel</td>
-                        <td>@item.ReorderQuantity</td>
-                        <td>@item.QuantityWarehouse</td>
-                        <td>@item.Location</td>
-                        <td>@item.QuantityTransit</td>
-
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <br />
-    </div>
+    <br />
+</div>
