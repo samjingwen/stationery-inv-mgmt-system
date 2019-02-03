@@ -10,7 +10,10 @@
         <label class="control-label">Invoice No</label>
         <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo" required>
         <label class="control-label">Invoice Amount</label>
-        <input type="number" min="0.01" step="0.01" max="9999999" id="InvoiceAmt" class="form-control" name="InvoiceAmt">
+            <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="text" readonly id="InvoiceAmt" class="form-control" style="width:250px;" name="InvoiceAmt" value="0">
+            </div>
         <label class="control-label">Supplier</label>
         <select class="form-control" name="SupplierId" id="SupplierId"></select>
         <a id="detailsBtn" class="greenBtn pull-right" onclick="alert('Please select a supplier.')">Show Details</a>
@@ -44,7 +47,7 @@
             var selected = this.value;
             var url = '/ValidateInvoice/RenderTable/' + selected;
             document.getElementById('detailsBtn').onclick = function () { GetData(url) };
-        }); 
+        });
 
         function GetData(url) {
             $.ajax({
@@ -53,6 +56,21 @@
                 success: function (response) {
                     if (response.success) {
                         $("#SupplierDOTable").html(response.html);
+                        $("input[type='checkbox']").change(function () {
+                            var total = 0;
+                            $("input[type='checkbox']").each(function () {
+                                if (this.checked) {
+                                    var name = "Del" + this.className;
+                                    var amount = document.getElementsByClassName(name);
+                                    for (var i = 0; i < amount.length; i++) {
+                                        total += parseFloat(amount[i].value);
+                                    }
+                                }
+                                var txtbox = document.getElementById('InvoiceAmt');
+                                txtbox.value = total;
+
+                            });
+                        });
                     }
                     else {
                         $.notify(response.message, {
@@ -67,7 +85,7 @@
 
 
 
-        
+
 
 
 

@@ -42,7 +42,8 @@ namespace Team7ADProject.ViewModels
                                  {
                                      ItemId = y.ItemId,
                                      Description = z.Description,
-                                     Quantity = y.Quantity
+                                     Quantity = y.Quantity,
+                                     Amount = y.Quantity * (decimal) y.UnitPrice
                                  }).ToList();
                     return query;
                 }
@@ -56,6 +57,7 @@ namespace Team7ADProject.ViewModels
         public string ItemId { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
+        public decimal Amount { get; set; }
     }
 
     public class BriefSupplier

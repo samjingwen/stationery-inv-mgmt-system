@@ -31,7 +31,7 @@
         {
             <tr>
                 <td>
-                    @Html.CheckBoxFor(x => x.DelOrderDetails[i].isSelected)
+                    @Html.CheckBoxFor(x => x.DelOrderDetails[i].isSelected, new { @class = Model.DelOrderDetails[i].DelOrderNo })
                 </td>
                 <td>
                     @Html.DisplayFor(x => x.DelOrderDetails[i].DelOrderNo)
@@ -55,7 +55,7 @@
                     <td>
                         @Html.DisplayFor(x => x.DelOrderDetails[i].Details[j].Quantity)
                     </td>
-
+                    @Html.HiddenFor(x => x.DelOrderDetails[i].Details[j].Amount, new { @class = "Del" + Model.DelOrderDetails[i].DelOrderNo })
                 </tr>
             }
         }
