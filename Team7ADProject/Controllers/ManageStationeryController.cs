@@ -169,7 +169,8 @@ namespace Team7ADProject.Controllers
         {
            
 
-            var stationeryList = _context.Stationery.Where(x => x.ActiveState == true).ToList().Select(x => new StationeryViewModel()
+            var stationeryList = _context.Stationery.Where(x => x.ActiveState == true).
+                ToList().Select(x => new StationeryViewModel()
             {
                 ItemId = x.ItemId,
                 Category = x.Category,
@@ -182,6 +183,8 @@ namespace Team7ADProject.Controllers
                 Location = x.Location
 
             });
+
+            stationeryList = stationeryList.OrderBy(x => x.QuantityWarehouse).ToList();
 
             return View(stationeryList);
         }
