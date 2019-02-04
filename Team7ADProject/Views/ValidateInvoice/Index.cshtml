@@ -34,7 +34,7 @@
             dropdown.empty();
             dropdown.append('<option selected="true" disabled>Choose Supplier</option>');
             dropdown.prop('selectedIndex', 0);
-            const url = '../ValidateInvoice/GetSuppliers/';
+            const url = '../../ValidateInvoice/GetSuppliers/';
             // Populate dropdown with suppliers
             $.getJSON(url, function (data) {
                 $.each(data.suppliers,
@@ -49,7 +49,7 @@
             $('#SupplierDOTable').empty();
             document.getElementById('InvoiceAmt').value = 0;
             var selected = this.value;
-            var url = '/ValidateInvoice/RenderTable/' + selected;
+            var url = '../../ValidateInvoice/RenderTable/' + selected;
             document.getElementById('detailsBtn').onclick = function () { GetData(url) };
         });
 
@@ -84,6 +84,22 @@
                     }
                 }
 
+            });
+        }
+
+    </script>
+    <script>
+        var successHandler = @ViewBag.successHandler;
+        if (successHandler == 2) {
+            $.notify("Invoice is not created.", {
+                globalPosition: "top center",
+                className: "error"
+            });
+        }
+        else if (successHandler == 1) {
+            $.notify("Invoice successfully created!", {
+                globalPosition: "top center",
+                className: "success"
             });
         }
     </script>

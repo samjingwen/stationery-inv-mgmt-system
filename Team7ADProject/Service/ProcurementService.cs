@@ -148,8 +148,9 @@ namespace Team7ADProject.Service
 
 
 
-        public void CreateInvoice(ValidateInvoiceViewModel model)
+        public bool CreateInvoice(ValidateInvoiceViewModel model)
         {
+            bool isSuccess;
             string invoiceNo = model.InvoiceNo;
             DateTime invoiceDate = DateTime.Now;
             string supplierId = model.SupplierId;
@@ -178,12 +179,16 @@ namespace Team7ADProject.Service
                         }
                     }
                     dbContextTransaction.Commit();
+                    isSuccess = true;
                 }
                 catch (Exception)
                 {
                     dbContextTransaction.Rollback();
+                    isSuccess = false;
                 }
             }
+
+            return isSuccess;
         }
 
 
