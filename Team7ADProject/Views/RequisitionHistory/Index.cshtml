@@ -36,14 +36,14 @@
                     <td>
                         @if (@item.Status == "Pending Approval")
                         {
-                            <input id="requestId" name="itemId" type="hidden" value="@item.RequestId">
-                            <input id="itemId" name="itemQuantity" type="hidden" value="@item.ItemId">
-                            <input id="itemQuantity" name="itemQuantity" type="hidden" value="@item.ItemQuantity">
+                            <input class="requestId" name="itemId" type="hidden" value="@item.RequestId">
+                            <input class="itemId" name="itemQuantity" type="hidden" value="@item.ItemId">
+                            <input class="itemQuantity" name="itemQuantity" type="hidden" value="@item.ItemQuantity">
                             <div class="inline-view">
                                 @item.ItemQuantity
                             </div>
                             <div class='inline-edit' style="display: none">
-                                @Html.EditorFor(modelItem => item.ItemQuantity, new { htmlAttributes = new { @type = "number", @min = "1", style = "width: 50px", @class = "edit" } })
+                                @Html.EditorFor(modelItem => item.ItemQuantity, new { htmlAttributes = new { @type = "number", @min = "1", @step = "1", max="1000", style = "width: 70px", @class = "edit form-control" } })
                             </div>
                         }
                         else
@@ -52,19 +52,19 @@
                         }
                     </td>
                     <td>@item.UnitOfMeasure</td>
-                    <td>@String.Format("{0:dd MMM yyyy}", item.RequestDate)</td>
+                    <td>@($"{item.RequestDate:dd MMM yyyy}")</td>
                     <td>@item.Status</td>
                     @if (@item.Status == "Pending Approval")
                     {
                         <td>
                             <div class='inline-view'>
-                                <a href='#' class="edit" onclick='startEdit();return false;'>Edit</a>
+                                <a href='#' class="edit">Edit</a>
                             </div>
                             <div class='inline-edit' style='display:none;'>
-                                <a href='#' onclick='saveEdit();return false;'>Save</a>
+                                <a href='#' class="save">Save</a>
                             </div>
                             <div class='inline-edit' style='display:none;'>
-                                <a href='#' onclick='cancelEdit();return false;'>Cancel</a>
+                                <a href='#' class="cancel">Cancel</a>
                             </div>
                         </td>
                     }
@@ -82,22 +82,26 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
+        var table = $("table");
+        $("table tr a.edit").click(function (event) {
+            clearTableSelection();
+            var tr = $(this).parents("tr");
+            tr.find(".inline-view").hide();
+            tr.find(".inline-edit").show();
+        });
 
-        function startEdit() {
-            $(".inline-view").hide();
-            $(".inline-edit").show();
-        }
+        $("table tr a.cancel").click(function (event) {
+            var tr = $(this).parents("tr");
+            tr.find(".inline-view").show();
+            tr.find(".inline-edit").hide();
+        });
 
-        function cancelEdit() {
-            $(".inline-edit").hide();
-            $(".inline-view").show();
-        }
-
-        function saveEdit() {
-            var requestId = $("#requestId").val();
-            var itemId = $("#itemId").val();
-            var oldItemQuantity = $("#itemQuantity").val();
-            var newItemQuantity = $(".edit").val();
+        $("table tr a.save").click(function (event) {
+            var tr = $(this).parents("tr");
+            var requestId = tr.find(".requestId").val();
+            var itemId = tr.find(".itemId").val();
+            var oldItemQuantity = tr.find(".itemQuantity").val();
+            var newItemQuantity = tr.find(".edit").val();
 
             var data = JSON.stringify({
                 requestId: requestId,
@@ -111,6 +115,11 @@
             }).fail(function (err) {
                 console.log(err);
             });
+        });
+
+        function clearTableSelection() {
+            table.find(".inline-view").show();
+            table.find(".inline-edit").hide();
         }
 
         function saveRequest(data) {
@@ -118,7 +127,7 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: 'POST',
-                url: "RequisitionHistory/Save",
+                url: "../RequisitionHistory/Save",
                 data: data,
                 success: function (result) {
                     bootbox.dialog({
@@ -132,10 +141,10 @@
 
                 error: function () {
                     bootbox.dialog({
-                        message: 'Error! Invalid data.',
+                        message: 'Error! Invalid data. Numbers must be round value more than 0.',
                         size: 'small',
                         onEscape: function () {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }

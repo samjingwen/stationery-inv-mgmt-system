@@ -29,6 +29,7 @@ namespace Team7ADProject.Controllers
         {
             _context = new LogicDB();
         }
+
         #region Author:Lynn Lynn Oo || Teh Li Heng
         [Authorize(Roles = "Store Clerk,Employee,Department Representative")]
 

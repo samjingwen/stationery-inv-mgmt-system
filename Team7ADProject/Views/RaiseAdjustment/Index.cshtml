@@ -3,8 +3,6 @@
     ViewBag.Title = "Index";
 }
 
-<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -173,7 +171,7 @@
             });
         });
 
-        $("#quantity").change(function() {
+        $("#quantity").change(function () {
             $("#quantity").css("borderColor", "");
         });
 
@@ -200,7 +198,7 @@
                 $("#description").css("borderColor", "red");
                 return;
             }
-            if ($.trim($("#quantity").val()) == "" || $.trim($("#quantity").val()) <= 0 || $.trim($("#quantity").val()) > 10000 || (Number($.trim($("#quantity").val())))<-currentQuantity) {
+            if ($.trim($("#quantity").val()) == "" || $.trim($("#quantity").val()) <= 0 || $.trim($("#quantity").val()) > 10000 || (Number($.trim($("#quantity").val()))) < -currentQuantity) {
                 $("#quantity").css("borderColor", "red");
                 bootbox.alert("Error! Value of stock adjustment should be between the range 1-10000!");
                 return;
@@ -212,11 +210,11 @@
                 stockQuantity = $("#stockQuantity").val(),
                 price = $("#price").val(),
                 name = $("#description option:selected").text(),
-                detailsTableBody = $("#adjustmentTable tbody")
-                amount = (quantity * price).toFixed(2);
-            
+                detailsTableBody = $("#adjustmentTable tbody");
+            var amount = (quantity * price).toFixed(2);
 
-            var requestItem = '<tr><td style="display:none;">' + id + '</td><td>' + category + '</td><td>' + name + '</td><td>' + quantity + '</td><td>' + stockQuantity + '</td><td>$'+ amount + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+
+            var requestItem = '<tr><td style="display:none;">' + id + '</td><td>' + category + '</td><td>' + name + '</td><td>' + quantity + '</td><td>' + stockQuantity + '</td><td>$' + amount + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
             detailsTableBody.append(requestItem);
             clearItem();
             $("#newItemModal").modal("hide");
@@ -298,7 +296,7 @@
                 requestArr.push({
                     ItemId: $(this).find('td:eq(0)').html(),
                     //category: $(this).find('td:eq(1)').html(),
-                    Quantity: $(this).find('td:eq(3)').html(),
+                    Quantity: $(this).find('td:eq(3)').html()
                 });
             });
 
@@ -315,4 +313,4 @@
             });
         });
     </script>
-    }
+}
