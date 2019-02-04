@@ -8,7 +8,7 @@
         @using (Html.BeginForm("Validate", "ValidateInvoice", FormMethod.Post, new { @class = "form-horizontal", id = "retForm", role = "form" }))
         {
             <label class="control-label">Invoice No</label>
-            <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo" required>
+            <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo" required maxlength="10">
             <label class="control-label">Invoice Amount</label>
             <div class="input-group">
                 <span class="input-group-addon">$</span>
@@ -16,7 +16,7 @@
             </div>
             <label class="control-label">Supplier</label>
             <select class="form-control" name="SupplierId" id="SupplierId"></select>
-            <a id="detailsBtn" class="greenBtn pull-right" onclick="alert('Please select a supplier.')">Show Details</a>
+            <a id="detailsBtn" class="greenBtn pull-right" onclick="bootbox.alert('Please select a supplier.')">Show Details</a>
             <br />
             <br />
 
@@ -37,9 +37,11 @@
             const url = '../ValidateInvoice/GetSuppliers/';
             // Populate dropdown with suppliers
             $.getJSON(url, function (data) {
-                $.each(data.suppliers, function (key, entry) {
-                    dropdown.append($('<option></option>').attr('value', entry.SupplierId).text(entry.SupplierName));
-                })
+                $.each(data.suppliers,
+                    function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.SupplierId)
+                            .text(entry.SupplierName));
+                    });
             });
         });
 
@@ -70,28 +72,19 @@
                                 }
                                 var txtbox = document.getElementById('InvoiceAmt');
                                 txtbox.value = total;
-
                             });
                         });
                     }
                     else {
-                        $.notify(response.message, {
-                            globalPosition: "top center",
-                            className: "error"
-                        })
+                        $.notify(response.message,
+                            {
+                                globalPosition: "top center",
+                                className: "error"
+                            });
                     }
                 }
 
             });
         }
-
-
-
-
-
-
-
     </script>
-
-
 }

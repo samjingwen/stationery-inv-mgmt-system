@@ -76,7 +76,7 @@ namespace Team7ADProject.Controllers
             pService.CreateInvoice(model);
             return RedirectToAction("Index");
         }
-        
+
         #endregion
     }
 }
