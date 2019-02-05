@@ -66,4 +66,23 @@
 <input type="submit" value="Validate" class="greenBtn pull-right" />
 
 
+<script>
+    //var table = $("#retForm");
+    $(".form-horizontal").submit(function (e) {
+        e.preventDefault();
+        var valid = true;
+        //check if any selected
+        if ($("#retForm input:checkbox:checked").length > 0) {
+            //bootbox.alert("Approved Successfully.", function () { $("#retForm").submit(); });
+            //bootbox.alert('Approved Successfully.', function () {
+            valid = true;
+            //});
+        }
+        else {
+            bootbox.alert("No delivery order selected to validate.");
+            valid = false;
+        }
 
+        if (valid) this.submit();
+    });
+</script>

@@ -10,66 +10,61 @@
     <p>
         @Html.ActionLink("Back to List", "Index")
     </p>
-
-    @using (Html.BeginForm("ApproveOrReject", "ApproveOrder"))
-    {
-        <div style="width:93%;">
-            <div class="row">
-                <div>
-                    @Html.LabelFor(m => m.PurchaseOrder.PONo) :
-                    @Html.Label(Model.PurchaseOrder.PONo)<br />
+    <div style="width:93%;">
+        <div class="row">
+            <div>
+                @Html.LabelFor(m => m.PurchaseOrder.PONo) :
+                @Html.Label(Model.PurchaseOrder.PONo)<br />
 
 
-                    @Html.LabelFor(m => m.PurchaseOrder.Supplier.SupplierName) :
-                    @Html.Label(Model.PurchaseOrder.Supplier.SupplierName)<br />
+                @Html.LabelFor(m => m.PurchaseOrder.Supplier.SupplierName) :
+                @Html.Label(Model.PurchaseOrder.Supplier.SupplierName)<br />
 
-                    @Html.LabelFor(m => m.PurchaseOrder.Date) :
-                    @String.Format("{0:dd MMM yyyy}", Model.PurchaseOrder.Date)<br />
-                    <table class="cusTable">
-                        <thead>
-                            <tr>
-                                <th>Item No</th>
-                                <th>Description</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                decimal? unitamount = 0;
-                                decimal? amount = 0;
+                @Html.LabelFor(m => m.PurchaseOrder.Date) :
+                @($"{Model.PurchaseOrder.Date:dd MMM yyyy}")<br />
+                <table class="cusTable">
+                    <thead>
+                        <tr>
+                            <th>Item No</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            decimal? unitamount = 0;
+                            decimal? amount = 0;
 
 
-                                foreach (var po in Model.PODetails)
-                                {
-                                    unitamount = po.Quantity * po.UnitPrice;
-                                    <tr>
-                                        <td>@po.ItemId</td>
-                                        <td>@po.Stationery.Description</td>
-                                        <td>@po.Quantity</td>
-                                        <td>$@po.UnitPrice.ToString()</td>
-                                        <td>$@unitamount</td>
-                                    </tr>
-                                    amount += unitamount;
-                                }
+                            foreach (var po in Model.PODetails)
+                            {
+                                unitamount = po.Quantity * po.UnitPrice;
+                                <tr>
+                                    <td>@po.ItemId</td>
+                                    <td>@po.Stationery.Description</td>
+                                    <td>@po.Quantity</td>
+                                    <td>$@po.UnitPrice.ToString()</td>
+                                    <td>$@unitamount</td>
+                                </tr>
+                                amount += unitamount;
                             }
+                        }
 
 
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><strong>Total:</strong></td>
-                                <td>
-                                    <strong>$@amount</strong>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total:</strong></td>
+                            <td>
+                                <strong>$@amount</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-
-    }
+    </div>
 </div>

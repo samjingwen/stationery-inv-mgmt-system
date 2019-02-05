@@ -8,7 +8,7 @@
         @using (Html.BeginForm("Validate", "ValidateInvoice", FormMethod.Post, new { @class = "form-horizontal", id = "retForm", role = "form" }))
         {
             <label class="control-label">Invoice No</label>
-            <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo" required>
+            <input type="text" id="InvoiceNo" class="form-control" name="InvoiceNo" required maxlength="10">
             <label class="control-label">Invoice Amount</label>
             <div class="input-group">
                 <span class="input-group-addon">$</span>
@@ -16,7 +16,7 @@
             </div>
             <label class="control-label">Supplier</label>
             <select class="form-control" name="SupplierId" id="SupplierId"></select>
-            <a id="detailsBtn" class="greenBtn pull-right" onclick="alert('Please select a supplier.')">Show Details</a>
+            <a id="detailsBtn" class="greenBtn pull-right" onclick="bootbox.alert('Please select a supplier.')">Show Details</a>
             <br />
             <br />
 
@@ -34,12 +34,14 @@
             dropdown.empty();
             dropdown.append('<option selected="true" disabled>Choose Supplier</option>');
             dropdown.prop('selectedIndex', 0);
-            const url = '../ValidateInvoice/GetSuppliers/';
+            const url = '../../ValidateInvoice/GetSuppliers/';
             // Populate dropdown with suppliers
             $.getJSON(url, function (data) {
-                $.each(data.suppliers, function (key, entry) {
-                    dropdown.append($('<option></option>').attr('value', entry.SupplierId).text(entry.SupplierName));
-                })
+                $.each(data.suppliers,
+                    function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.SupplierId)
+                            .text(entry.SupplierName));
+                    });
             });
         });
 
@@ -47,7 +49,7 @@
             $('#SupplierDOTable').empty();
             document.getElementById('InvoiceAmt').value = 0;
             var selected = this.value;
-            var url = '/ValidateInvoice/RenderTable/' + selected;
+            var url = '../../ValidateInvoice/RenderTable/' + selected;
             document.getElementById('detailsBtn').onclick = function () { GetData(url) };
         });
 
@@ -70,28 +72,35 @@
                                 }
                                 var txtbox = document.getElementById('InvoiceAmt');
                                 txtbox.value = total;
-
                             });
                         });
                     }
                     else {
-                        $.notify(response.message, {
-                            globalPosition: "top center",
-                            className: "error"
-                        })
+                        $.notify(response.message,
+                            {
+                                globalPosition: "top center",
+                                className: "error"
+                            });
                     }
                 }
 
             });
         }
 
-
-
-
-
-
-
     </script>
-
-
+    <script>
+        var successHandler = @ViewBag.successHandler;
+        if (successHandler == 2) {
+            $.notify("Invoice is not created.", {
+                globalPosition: "top center",
+                className: "error"
+            });
+        }
+        else if (successHandler == 1) {
+            $.notify("Invoice successfully created!", {
+                globalPosition: "top center",
+                className: "success"
+            });
+        }
+    </script>
 }

@@ -61,17 +61,16 @@
             @Html.DisplayNameFor(model => model.Status)
         </dt>
 
-        
-            @if (@Model.Status.Equals("0"))
-            {
-                <dd>Inactive</dd>
-            }
-            else
-            {
-                <dd>Active</dd>
-            }
-           
-     
+        @if (@Model.Status.Equals("0"))
+        {
+            <dd>Inactive</dd>
+        }
+        else
+        {
+            <dd>Active</dd>
+        }
+
+
         <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>

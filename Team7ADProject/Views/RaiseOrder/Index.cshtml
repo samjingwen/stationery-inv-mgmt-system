@@ -1,8 +1,5 @@
 ﻿@using Team7ADProject.Entities
 @model List<PurchaseOrder>
-
-@*@model Team7ADProject.ViewModels.RaisePOCustomViewModel*@
-
 @{
     ViewBag.Title = "PO History";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,7 +13,7 @@
     <br />
     <br />
 
-     
+
     <div class="row">
         <div>
             <table id="poTable" class="cusTable">
@@ -76,7 +73,4 @@
     <script>
         $("#poTable").DataTable();
     </script>
-
-
-
 }

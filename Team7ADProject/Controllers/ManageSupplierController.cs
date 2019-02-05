@@ -18,14 +18,14 @@ namespace Team7ADProject.Controllers
     [RoleAuthorize(Roles = "Store Manager")]
     public class ManageSupplierController : Controller
     {
-        private LogicDB context = new LogicDB();
+        private LogicDB _context = new LogicDB();
 
         #region Author: Zan Tun Khine
 
         // GET: ManageSupplier
         public ActionResult Index()
         {
-            return View(context.Supplier.ToList());
+            return View(_context.Supplier.ToList());
         }
 
 
@@ -45,8 +45,8 @@ namespace Team7ADProject.Controllers
             {
                 if (!(CheckSupplier(supplier.SupplierId)))
                 {
-                    context.Supplier.Add(supplier);
-                    context.SaveChanges();
+                    _context.Supplier.Add(supplier);
+                    _context.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 else
@@ -62,7 +62,7 @@ namespace Team7ADProject.Controllers
         // to check whether the newly added supplier already exists or not
         public bool CheckSupplier(string id)
         {
-            Supplier supplier = context.Supplier.Find(id);
+            Supplier supplier = _context.Supplier.Find(id);
 
             if (supplier != null)
             {
@@ -82,7 +82,7 @@ namespace Team7ADProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = context.Supplier.Find(id);
+            Supplier supplier = _context.Supplier.Find(id);
             if (supplier == null)
             {
                 return HttpNotFound();
@@ -98,8 +98,8 @@ namespace Team7ADProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Entry(supplier).State = EntityState.Modified;
-                context.SaveChanges();
+                _context.Entry(supplier).State = EntityState.Modified;
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(supplier);
@@ -113,7 +113,7 @@ namespace Team7ADProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = context.Supplier.Find(id);
+            Supplier supplier = _context.Supplier.Find(id);
             if (supplier == null)
             {
                 return HttpNotFound();

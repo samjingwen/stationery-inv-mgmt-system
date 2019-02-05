@@ -51,9 +51,10 @@ namespace Team7ADProject.Service
                 return null;
             }
             var poDetailsViewModel = new PoDetailsViewModel
-                                    {
-                                        PurchaseOrder = purchaseOrder, PODetails = transactionDetail
-                                    };
+            {
+                PurchaseOrder = purchaseOrder,
+                PODetails = transactionDetail
+            };
             return poDetailsViewModel;
         }
 
@@ -133,9 +134,9 @@ namespace Team7ADProject.Service
                              Date = x.Date,
                          }).ToList();
             ValidateInvoiceViewModel model = new ValidateInvoiceViewModel
-                                        {
-                                            DelOrderDetails = query
-                                        };
+            {
+                DelOrderDetails = query
+            };
 
             return model;
         }
@@ -144,16 +145,17 @@ namespace Team7ADProject.Service
         {
             return context.DeliveryOrder.FirstOrDefault(x => x.DelOrderNo == DelOrderNo).DelOrderId;
         }
-       
-        
 
-        public void CreateInvoice(ValidateInvoiceViewModel model)
+
+
+        public bool CreateInvoice(ValidateInvoiceViewModel model)
         {
+            bool isSuccess;
             string invoiceNo = model.InvoiceNo;
             DateTime invoiceDate = DateTime.Now;
             string supplierId = model.SupplierId;
             decimal invoiceAmt = model.InvoiceAmt;
-            using(var dbContextTransaction = context.Database.BeginTransaction())
+            using (var dbContextTransaction = context.Database.BeginTransaction())
             {
                 try
                 {
@@ -177,12 +179,16 @@ namespace Team7ADProject.Service
                         }
                     }
                     dbContextTransaction.Commit();
+                    isSuccess = true;
                 }
                 catch (Exception)
                 {
                     dbContextTransaction.Rollback();
+                    isSuccess = false;
                 }
             }
+
+            return isSuccess;
         }
 
 

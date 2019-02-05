@@ -27,8 +27,13 @@ namespace Team7ADProject.Controllers
             _context.Dispose();
         }
         // GET: ValidateInvoice
-        public ActionResult Index()
+        public ActionResult Index(int id = 0)
         {
+            if (id == 1)
+                ViewBag.successHandler = 1;
+            else if (id == 2)
+                ViewBag.successHandler = 2;
+
             return View();
         }
 
@@ -73,10 +78,11 @@ namespace Team7ADProject.Controllers
         [HttpPost]
         public ActionResult Validate(ValidateInvoiceViewModel model)
         {
-            pService.CreateInvoice(model);
-            return RedirectToAction("Index");
+            bool isSuccess = pService.CreateInvoice(model);
+
+            return RedirectToAction("Index", isSuccess ? new { id = 1 } : new { id = 2 });
         }
-        
+
         #endregion
     }
 }

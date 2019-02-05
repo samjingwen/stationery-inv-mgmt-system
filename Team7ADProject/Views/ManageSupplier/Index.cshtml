@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<Team7ADProject.Entities.Supplier>
 
 @{
-    ViewBag.Title = "View";
+                /**/
+
+                ViewBag.Title = "View";
 }
 
 <h2>Manage Suppliers</h2>
@@ -31,29 +33,29 @@
 
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactNo)
-            </td>
-            @if (item.Status.Equals("0"))
-            {
-                <td>Inactive</td>
-            }
-            else
-            {
-                <td>Active</td>
-            }
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.SupplierId })
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNo)
+                </td>
+                @if (item.Status.Equals("0"))
+                {
+                    <td>Inactive</td>
+                }
+                else
+                {
+                    <td>Active</td>
+                }
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.SupplierId })
 
-            </td>
-        </tr>
+                </td>
+            </tr>
         }
 
     </table>

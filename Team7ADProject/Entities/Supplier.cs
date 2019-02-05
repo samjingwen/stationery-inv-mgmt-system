@@ -21,32 +21,39 @@ namespace Team7ADProject.Entities
         }
 
         [StringLength(4)]
+        [Display(Name = "Supplier ID")]
         public string SupplierId { get; set; }
 
         [Required]
-        [Display(Name = "Suppiler")]
+        [Display(Name = "Supplier Name")]
         public string SupplierName { get; set; }
 
         [Required]
+        [Display(Name = "Contact Name")]
         public string ContactName { get; set; }
 
         [Required]
         [StringLength(8)]
+        [Display(Name = "Contact Number")]
         public string ContactNo { get; set; }
 
         [StringLength(8)]
+        [Display(Name = "Fax Number")]
         public string FaxNo { get; set; }
 
         [Required]
         public string Address { get; set; }
 
+        [Required]
         [StringLength(25)]
+        [Display(Name = "GST Registration Number")]
         public string GSTRegNo { get; set; }
 
         [Required]
         [StringLength(25)]
         public string Status { get; set; }
 
+        [EmailAddress]
         public string Email { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
