@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 *.cs
+/Team7ADProject/ClassDiagram2.cd
+/Team7ADProject/ClassDiagram3.cd

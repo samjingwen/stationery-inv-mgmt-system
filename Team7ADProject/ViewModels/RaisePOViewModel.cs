@@ -23,9 +23,11 @@ namespace Team7ADProject.ViewModels
         [Display(Name = "Supplier")]
         public IEnumerable<Supplier> Suppliers { get; set; }
 
+        #region From TopSupplierAndPriceDTO
         [Required]
         [Display(Name = "SupplierPrice")]
         public decimal SupplierPrice { get; set; }
+        #endregion
 
         #region From Stationery
 
@@ -81,8 +83,8 @@ namespace Team7ADProject.ViewModels
 
         #endregion
 
-        [Key]
         #region From Supplier 
+        [Key]
         [StringLength(4)]
         public string SupplierId { get; set; }
 
@@ -96,54 +98,7 @@ namespace Team7ADProject.ViewModels
 
         #endregion
 
-        //[Required]
-        //[StringLength(4)]
-
-        ////need to change to display user
-        //public string SupplierId { get; set; }
-
-
-        ////to be initialized at backend to ""
-        ////public string ApprovedBy { get; set; }
-
-        //[Column(TypeName = "numeric")]
-        //public decimal Amount { get; set; }
-
-        //[Column(TypeName = "date")]
-        //public DateTime Date { get; set; }
-
-        //[Required]
-        //[StringLength(25)]
-        //public string Status { get; set; }
-
-        //public IEnumerable<PurchaseOrder> PurchaseOrders { get; set; }
-
-        //public IEnumerable<TransactionDetail> TransactionDetail { get; set; }
-
-        //public IEnumerable<String> SupplierAndPrice { get; set; }
-
-        //public RaisePOViewModel()
-        //{
-
-        //}
-
-        //[Required]
-        //[StringLength(4)]
-        //public string ItemId { get; set; }
-
-        //public int Quantity { get; set; }
-
-        //[Required]
-        //public string Description { get; set; }
-
-        //[Required]
-        //[StringLength(50)]
-        //public string Category { get; set; }
-
-
-        //[Display(Name = "Category")]
-        //public IEnumerable<String> Categories { get; set; }
-
+        
 
     }
 }

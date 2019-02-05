@@ -151,10 +151,20 @@ namespace Team7ADProject.Controllers
         private static string GetSerialNumber()
         {
             LogicDB context1 = new LogicDB();
+              
             var lastPoNo = context1.PurchaseOrder.OrderByDescending(x => x.PONo).FirstOrDefault();
             string current = lastPoNo.PONo.Substring(8);
+            int month = Int32.Parse(lastPoNo.PONo.Substring(5, 2));
             int newSerial = Int32.Parse(current);
-            return ((newSerial + 1).ToString("00"));
+            int currentmonth = Int32.Parse(DateTime.Now.Month.ToString("00"));
+            if (currentmonth != month)
+            {
+                return "01";
+            }
+            else
+            {
+                return (newSerial + 1).ToString("00");
+            }
         }
 
         #endregion
