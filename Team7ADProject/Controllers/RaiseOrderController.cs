@@ -67,7 +67,7 @@ namespace Team7ADProject.Controllers
          
             if(poModel == null)
             {
-                result = "Invalid Items! Please check the items again!";
+                result = "The List is Empty!Please check the list again!";
             }
      
             //Add New Items
