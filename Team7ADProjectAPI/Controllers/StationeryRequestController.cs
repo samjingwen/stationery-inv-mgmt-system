@@ -44,8 +44,8 @@ namespace Team7ADProjectApi.Controllers
         public bool ApproveRequest([FromBody]StationeryRequestApiModel req)
         {
             GlobalClass gc = new GlobalClass();
-            // return gc.ApproveReq(req);
-            return true;// change temporary because I got error .
+           return gc.ApproveReq(req);
+     
            
         }
         #endregion

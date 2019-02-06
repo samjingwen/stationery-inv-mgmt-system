@@ -106,7 +106,7 @@ namespace Team7ADProject.Service
 
                 #region SendEmail
                 string recipientEmail, subject, content;
-                //recipientEmail = thisPo.AspNetUsers1.Email;
+                recipientEmail = thisPo.AspNetUsers1.Email;
                 recipientEmail = "gaojiaxue@outlook.com";
                 subject = " PO rejected!";
                 content = "Unfortunately, your PO was rejected";
