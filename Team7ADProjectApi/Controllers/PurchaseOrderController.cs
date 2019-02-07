@@ -18,7 +18,7 @@ namespace Team7ADProjectApi.Controllers
         #region Zan Tun Khine
 
         #region List all the POs   
-        [Authorize(Roles = "Store Manager")]
+        [Authorize(Roles = "Store Manager, Store Supervisor")]
         [HttpGet]
         [Route("api/allpo")]
         public IEnumerable<PendingPO> ListAllPO()
@@ -30,7 +30,7 @@ namespace Team7ADProjectApi.Controllers
         #endregion
 
         #region List all the pending POs
-        [Authorize(Roles = "Store Manager")]
+        [Authorize(Roles = "Store Manager, Store Supervisor")]
         [HttpGet]
         [Route("api/pendingpo")]
         public IEnumerable<PendingPO> ListAllPendingPO()
@@ -42,7 +42,7 @@ namespace Team7ADProjectApi.Controllers
         #endregion
 
         #region Display selected PO details
-        [Authorize(Roles = "Store Manager, Store Clerk")]
+        [Authorize(Roles = "Store Manager, Store Clerk, Store Supervisor")]
         [HttpGet]
         [Route("api/pendingpo/{*poNo}")]
         public IEnumerable<PendingPODetails> ListAllPendingPODetails(string poNo)
@@ -54,7 +54,7 @@ namespace Team7ADProjectApi.Controllers
         #endregion
 
         #region Approve PO
-        [Authorize(Roles = "Store Manager")]
+        [Authorize(Roles = "Store Manager, Store Supervisor")]
         [HttpPost]
         [Route("api/pendingpo/approve")]
         public IHttpActionResult ApprovePO([FromBody] PurchaseOrder po)
@@ -66,7 +66,7 @@ namespace Team7ADProjectApi.Controllers
         #endregion
 
         #region Reject PO
-        [Authorize(Roles = "Store Manager")]
+        [Authorize(Roles = "Store Manager, Store Supervisor")]
         [HttpPost]
         [Route("api/pendingpo/reject")]
         public IHttpActionResult RejectPO([FromBody] PurchaseOrder po)

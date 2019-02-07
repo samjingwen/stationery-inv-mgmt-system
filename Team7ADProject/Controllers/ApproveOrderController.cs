@@ -12,7 +12,7 @@ using Team7ADProject.ViewModels;
 namespace Team7ADProject.Controllers
 {
     #region Author:Gao Jiaxue
-    [RoleAuthorize(Roles = "Store Manager, Acting Department Head")]
+    [RoleAuthorize(Roles = "Store Manager, Store Supervisor")]
     public class ApproveOrderController : Controller
     {
         ProcurementService pService = ProcurementService.Instance;
