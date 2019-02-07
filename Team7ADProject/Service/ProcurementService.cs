@@ -39,7 +39,10 @@ namespace Team7ADProject.Service
 
         public List<PurchaseOrder> GetPurchaseOrders()
         {
-            return context.PurchaseOrder.ToList();
+            var result = from x in context.PurchaseOrder
+                         orderby x.Date descending
+                         select x;
+            return result.ToList();
         }
 
         public PoDetailsViewModel GetPoDetailsViewModel(string poNo)
@@ -107,7 +110,7 @@ namespace Team7ADProject.Service
                 #region SendEmail
                 string recipientEmail, subject, content;
                 recipientEmail = thisPo.AspNetUsers1.Email;
-                recipientEmail = "gaojiaxue@outlook.com";
+                //recipientEmail = "gaojiaxue@outlook.com";
                 subject = " PO rejected!";
                 content = "Unfortunately, your PO was rejected";
                 Email.Send(recipientEmail, subject, content);
