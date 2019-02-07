@@ -107,6 +107,9 @@
             </div>
         </form>
     </div>
+    <div class="loaderbody" id="loaderbody">
+        <div class="loader"></div>
+    </div>
 </body>
 
 </html>
@@ -310,6 +313,18 @@
                 console.log(response);
             }).fail(function (err) {
                 console.log(err);
+            });
+        });
+
+
+        $(function () {
+            $("#loaderbody").addClass('hide');
+
+
+            $(document).bind('ajaxStart', function () {
+                $("#loaderbody").removeClass('hide');
+            }).bind('ajaxStop', function () {
+                $("#loaderbody").addClass('hide');
             });
         });
     </script>
