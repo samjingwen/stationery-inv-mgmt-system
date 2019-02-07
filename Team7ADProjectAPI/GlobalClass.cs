@@ -402,9 +402,8 @@ namespace Team7ADProjectApi
         {
             string depid = GetUserDepId(userid);
             var result = from x in context.StationeryRequest
-                         join y in context.AspNetUsers
-                         on x.RequestedBy equals y.Id
-                         where y.DepartmentId == depid
+                         where x.DepartmentId == depid
+                         orderby x.RequestDate descending
                          select new StationeryRequestApiModel
                          {
                              RequestId = x.RequestId,
@@ -431,12 +430,13 @@ namespace Team7ADProjectApi
                               UnitPrice=x.UnitPrice
                           };
 
-            var resultS = from x in context.StationeryRequest
-                          where x.RequestId == rid
-                          select x;
+            //var resultS = from x in context.StationeryRequest
+            //              where x.RequestId == rid
+            //              select x;
 
-            StationeryRequest ss = resultS.First();
-           List<RequestTransactionDetailApiModel> tt = resultT.ToList();
+            //StationeryRequest ss = resultS.First();
+            StationeryRequest ss = RetrieveReq(rid);
+            List<RequestTransactionDetailApiModel> tt = resultT.ToList();
           
             StationeryRequestApiModel stModel = new StationeryRequestApiModel();
             stModel.RequestId = rid;
@@ -469,23 +469,37 @@ namespace Team7ADProjectApi
             StationeryRequest stationeryRequest = RetrieveReq(req.RequestId);
             if (stationeryRequest != null)
             {
-                stationeryRequest.ApprovedBy = req.ApprovedBy;
+                stationeryRequest.ApprovedBy = req.Userid;
                 stationeryRequest.Status = "Pending Disbursement";
                 DateTime nextMonday = DateTime.Today.AddDays(7-((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday));
-                //S1:postpone has expired so if the day is before friday,collection date should be set to next monday
-                if (DateTime.Today > department.NextAvailableDate && DateTime.Now.DayOfWeek < DayOfWeek.Friday)
-                { stationeryRequest.CollectionDate = nextMonday; }
                 DateTime nextAD = (DateTime)department.NextAvailableDate;
+                //S1:postpone has expired so if the day is before friday,collection date should be set to next monday
+                if (DateTime.Today > nextAD && DateTime.Now.DayOfWeek < DayOfWeek.Friday)
+                { stationeryRequest.CollectionDate = nextMonday; }
+               
                 //S2： postpone has expired,if request is raised in Friday or after Friday,date should be set to next next monday
                 if (DateTime.Today > nextAD && DateTime.Now.DayOfWeek > DayOfWeek.Friday)
                 { stationeryRequest.CollectionDate = nextMonday.AddDays(7); }
+
                 //S3:postpone is avaliable so if the day is before friday,collection date should be set to postpone date
                 if (DateTime.Today < nextAD.AddDays(-3))
                 { stationeryRequest.CollectionDate = department.NextAvailableDate; }
+
                 //S4:postpone is avaliable so if the day is before friday,collection date should be set to postpone date +7
                 if (nextAD.AddDays(-3) <= DateTime.Today && DateTime.Today < nextAD)
                 { stationeryRequest.CollectionDate = nextAD.AddDays(7); }
                 context.SaveChanges();
+
+                #region SendEmail
+                StationeryRequest ss = RetrieveReq(req.RequestId);
+                string recipientEmail, subject, content;
+                //recipientEmail =ss.AspNetUsers1.Email;
+                recipientEmail = "gaojiaxue@outlook.com";
+                subject = " Request approved!";
+                content = "Unfortunately, your PO was approved";
+                Email.Send(recipientEmail, subject, content);
+                #endregion
+
                 return true;
             }
 
@@ -501,6 +515,15 @@ namespace Team7ADProjectApi
                 stationeryRequest.ApprovedBy = req.ApprovedBy;
                 stationeryRequest.Status = "Rejected";
                 context.SaveChanges();
+                #region SendEmail
+                StationeryRequest ss = RetrieveReq(req.RequestId);
+                string recipientEmail, subject, content;
+                //recipientEmail =ss.AspNetUsers1.Email;
+                recipientEmail = "gaojiaxue@outlook.com";
+                subject = " Request rejected!";
+                content = "Unfortunately, your Request was rejected";
+                Email.Send(recipientEmail, subject, content);
+                #endregion
                 return true;
             }
 
