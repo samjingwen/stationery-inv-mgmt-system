@@ -341,8 +341,8 @@
     <Content Include="Content\images\CollPoint\cpImage_4.png" />
     <Content Include="Content\images\CollPoint\cpImage_5.png" />
     <Content Include="Content\images\CollPoint\cpImage_6.png" />
-    <Content Include="Content\images\imageupload.png" />
     <Content Include="Content\images\cplogo.png" />
+    <Content Include="Content\images\imageupload.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="App_Data\useremails.txt" />
     <Content Include="App_Data\usernames.txt" />
