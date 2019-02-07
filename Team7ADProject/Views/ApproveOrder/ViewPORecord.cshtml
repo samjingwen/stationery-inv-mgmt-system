@@ -16,6 +16,7 @@
                 <table id="ApprovePOTable" class="cusTable">
                     <thead>
                         <tr>
+                            <th hidden></th>
                             <th>Date</th>
                             <th>PO Number</th>
                             <th>Supplier</th>
@@ -28,6 +29,21 @@
                         @foreach (var po in Model)
                         {
                             <tr>
+                                <td hidden>
+                                    @{ 
+                                        int x;
+                                        if (po.Status == "Pending Approval")
+                                        {
+                                            x = 0;
+                                        }
+                                        else if (po.Status == "Pending Delivery")
+                                        { x = 1; }
+                                        else if (po.Status == "Partially Fulfilled")
+                                        { x = 2; }
+                                        else { x = 3; }
+                                    }
+                                    @x
+                                </td>
                                 <td>@Html.Label(po.Date.ToString("dd MMM yyyy"))</td>
                                 <td>@po.PONo</td>
                                 <td>@po.Supplier.SupplierName</td>
@@ -59,6 +75,8 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script>
         $("#ApprovePOTable").DataTable();
+
+        var a = 0;
     </script>
 
 
