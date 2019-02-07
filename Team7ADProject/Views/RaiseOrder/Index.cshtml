@@ -19,6 +19,7 @@
             <table id="poTable" class="cusTable">
                 <thead>
                     <tr>
+                        <th hidden></th>
                         <th>
                             PO Number
                         </th>
@@ -40,6 +41,15 @@
                     @foreach (var item in Model)
                     {
                         <tr>
+                            <td hidden>
+                                @{ 
+                                    int x;
+                                    if(item.Status == "Completed")
+                                    { x = 9; }
+                                    else { x = 0; }
+                                }
+                                @x
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.PONo)
                             </td>
