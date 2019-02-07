@@ -44,9 +44,9 @@
                             <td hidden>
                                 @{ 
                                     int x;
-                                    if(item.Status == "Completed")
-                                    { x = 9; }
-                                    else { x = 0; }
+                                    if(item.Status == "Pending Approval" || item.Status == "Pending Delivery")
+                                    { x = 0; }
+                                    else { x = 9; }
                                 }
                                 @x
                             </td>
