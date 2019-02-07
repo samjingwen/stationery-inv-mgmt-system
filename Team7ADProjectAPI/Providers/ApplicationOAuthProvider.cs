@@ -48,7 +48,7 @@ namespace Team7ADProjectApi.Providers
             ApplicationDbContext appDb = new ApplicationDbContext();
 
             //check doa for list of invalid acting department heads
-            var doaExpList = dbContext.DelegationOfAuthority.Where(x => x.StartDate > todayDate || x.EndDate < todayDate).ToList();
+            var doaExpList = dbContext.DelegationOfAuthority.Where(x => x.StartDate > todayDate || x.EndDate < todayDate || x.Status == "VOID").ToList();
             foreach (var doaExp in doaExpList)
             {
                 if (userManager.IsInRole(doaExp.DelegatedTo, "Acting Department Head"))
@@ -74,7 +74,7 @@ namespace Team7ADProjectApi.Providers
             }
 
             //Check for valid
-            var doaList = dbContext.DelegationOfAuthority.Where(x => x.StartDate <= todayDate && x.EndDate >= todayDate).ToList();
+            var doaList = dbContext.DelegationOfAuthority.Where(x => x.StartDate <= todayDate && x.EndDate >= todayDate).Where(x => x.Status != "VOID").ToList();
             foreach (var doa in doaList)
             {
                 if (userManager.IsInRole(doa.DelegatedTo, "Acting Department Head"))
