@@ -201,9 +201,9 @@
                 $("#description").css("borderColor", "red");
                 return;
             }
-            if ($.trim($("#quantity").val()) == "" || $.trim($("#quantity").val()) <= 0 || $.trim($("#quantity").val()) > 10000 || (Number($.trim($("#quantity").val()))) < -currentQuantity || !Number.isInteger(parseFloat($.trim($("#quantity").val())))) {
+            if ($.trim($("#quantity").val()) == "" || $.trim($("#quantity").val()) > 10000 || (Number($.trim($("#quantity").val()))) < -currentQuantity || !Number.isInteger(parseFloat($.trim($("#quantity").val())))) {
                 $("#quantity").css("borderColor", "red");
-                bootbox.alert("Error! Value of stock adjustment should be between the range 1-10000!");
+                bootbox.alert("Error! Please check the quantity input");
                 return;
             }
 
