@@ -23,6 +23,7 @@ namespace Team7ADProject.ViewModels
             menulist.Add(new SideBarViewModel() { Roles = "All", Title = "Contact", SubMenu = "Index", Action = "Contact", Controller = "Home", IsAction = true });
 
             //Store Supervisor
+            menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Procurement", Title = "Procurement", Action = "ViewPORecord", Controller = "ApproveOrder", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Management", Title = "Stock Adjustment", Action = "Index", Controller = "ApproveAdjustment", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Management", Title = "Stationery Management", Action = "Index", Controller = "ManageStationery", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Supervisor", SubMenu = "Stationery Management", Title = "Stationery Listing", Action = "ViewStationery", Controller = "ManageStationery", IsAction = true });
