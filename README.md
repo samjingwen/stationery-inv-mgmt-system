@@ -30,16 +30,25 @@ All Passwords are "Password1!". All passwords in the database are encrypted.
 ### Usernames
 
 Store Manager			          - 	manager@logic.u.edu
+
 Store Supervisor			      - 	supervisor@logic.u.edu
+
 Store Clerk				          - 	clerk@logic.u.edu
+
 Employee				            - 	emp@logic.u.edu
+
 Department Head			        - 	dephead@logic.u.edu
+
 Department Representative	  - 	deprep@logic.u.edu
+
 
 #### Stationery Store
 Clerk					            -	 clerk@logic.u.edu
+
 Supervisor				        - 	supervisor@logic.u.edu
+
 Manager / Department Head	-	manager@logic.u.edu
+
 
 #### Accountancy Department
 •	Head of Department 		    -	 dephead@logic.u.edu
