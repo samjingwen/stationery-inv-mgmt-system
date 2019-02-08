@@ -498,7 +498,7 @@ namespace Team7ADProjectApi
                 //recipientEmail =ss.AspNetUsers1.Email;
                 recipientEmail = "gaojiaxue@outlook.com";
                 subject = " Request approved!";
-                content = "Unfortunately, your PO was approved";
+                content = "Your Request was approved";
                 Email.Send(recipientEmail, subject, content);
                 #endregion
 
