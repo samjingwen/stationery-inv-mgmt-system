@@ -23,7 +23,7 @@ Android Application provides functionalities for "Store Clerk", "Store Superviso
 
 Web Application also provides functionalities for all users.
 
-Department Representatives may not be accurately shown below if database has been modified.
+Department Representatives may not be as accurately shown below if database has been modified.
 
 All Passwords are "Password1!". All passwords in the database are encrypted.
 
@@ -116,8 +116,11 @@ Department Representative	  - 	deprep@logic.u.edu
 
 #### Tools
 •	Microsoft Visual Studio
+
 •	Android Studio (Minimum API level 26)
+
 •	MSSQL Server Management Studio
+
 •	IIS Server
 
 #### Recommended Browser 
@@ -125,11 +128,18 @@ Department Representative	  - 	deprep@logic.u.edu
 
 ### 4) Authors
 •	Chan Yuling Elaine 
+
 •	Cheng Zongpei 
+
 •	Gao Jia Xue 
+
 •	Kay Thi Swe Tun	
+
 •	Lynn Lynn Oo 
+
 •	Sam Jing Wen 
+
 •	Teh Li Heng 
+
 •	Zan Tun Khine
 
