@@ -43,56 +43,73 @@ Department Representative	  - 	deprep@logic.u.edu
 
 
 #### Stationery Store
-Clerk					            -	 clerk@logic.u.edu
+•	Clerk					            -	 clerk@logic.u.edu
 
-Supervisor				        - 	supervisor@logic.u.edu
+•	Supervisor				        - 	supervisor@logic.u.edu
 
-Manager / Department Head	-	manager@logic.u.edu
-
+•	Manager / Department Head	-	manager@logic.u.edu
 
 #### Accountancy Department
 •	Head of Department 		    -	 dephead@logic.u.edu
+
 •	Department Representative	-	 deprep@logic.u.edu
+
 •	Employee 				          -	 emp@logic.u.edu
 
 #### Business Department
 •	Head of Department 		    -	dephead1@logic.u.edu
+
 •	Department Representative	-	Donald-Tan@logic.u.edu 
+
 •	Employee 				          -	Jerry-Coleman@logic.u.edu
 
 #### Computer Science Department
 •	Head of Department 		    -	Anna-Chan@logic.u.edu 
+
 •	Department Representative	-	Sonic-Chan@logic.u.edu
+
 •	Employee 				          -	Kerry-Jackman@logic.u.edu
 
 #### Economics Department
 •	Head of Department 		    -	Andrew-Ng@logic.u.edu
+
 •	Department Representative	-	Anne-Pelosi@logic.u.edu
+
 •	Employee 				          -	Stephen-Meyers@logic.u.edu
 
 #### English Department
 •	Head of Department 		    -	Andrew-Chan@logic.u.edu
+
 •	Department Representative -	Anna-Summers@logic.u.edu
+
 •	Employee                  -	Venkat-Ramanathan@logic.u.edu
 
 #### Finance Department
 •	Head of Department 		    - Anna-Hathaway@logic.u.edu
+
 •	Department Representative	- Axel-Pompeo@logic.u.edu
+
 •	Employee 				          - Melania-the-Cat@logic.u.edu
 
 #### Humanities Department
 •	Head of Department 		    - Andrew-Jackson@logic.u.edu
+
 •	Department Representative	- 	deprep1@logic.u.edu
+
 •	Employee 				          - Donald-Meyers@logic.u.edu
 
 #### Internal Audit Department
 •	Head of Department        - Anna-Stark@logic.u.edu
+
 •	Department Representative - Axel-the-Hedgehog@logic.u.edu
+
 •	Employee                  - Sonic-Meyers@logic.u.edu
 
 #### Social Sciences Department
 •	Head of Department        - Andrew-Lee@logic.u.edu
+
 •	Department Representative - Anne-Meyers@logic.u.edu
+
 •	Employee                  - Sam-Tan@logic.u.edu
 
 ### 3) System Requirements
