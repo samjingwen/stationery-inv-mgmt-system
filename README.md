@@ -37,9 +37,9 @@ Department Head			        - 	dephead@logic.u.edu
 Department Representative	  - 	deprep@logic.u.edu
 
 Stationery Store
-•	Clerk					            -	 clerk@logic.u.edu
-•	Supervisor				        - 	supervisor@logic.u.edu
-•	Manager / Department Head	-	manager@logic.u.edu
+Clerk					            -	 clerk@logic.u.edu
+Supervisor				        - 	supervisor@logic.u.edu
+Manager / Department Head	-	manager@logic.u.edu
 
 Accountancy Department
 •	Head of Department 		    -	 dephead@logic.u.edu
