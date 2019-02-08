@@ -1,21 +1,21 @@
 # Logic University Stationery Store Inventory System
 
-1) Installation Guide
+## 1) Installation Guide
 
-## Configuration for Web API and Web Application
+### Configuration for Web API and Web Application
 
 1.	Restore the database (adteam7db.bak) file that is located inside "DatabaseBackup" folder in the project solution directory. (Team7ADProject\DatabaseBackup)
 2.	Open Team7ADProject solution with Visual Studio. Check that the "connectionString" of the Web.config files of projects Team7ADProject and Team7ADProjectAPI is pointing to the local database server. Include any SQL Authentication if necessary.
 3.	Run Visual Studio as Administrator and publish the project “Team7ADProjectAPI”.
 4.	Right click on "Team7ADProject" and select "View" then click “View in Browser”.
 
-## Configuration for Android
+### Configuration for Android
 
 1.	Open the android source code with android studio and go to “app/java/data/ReturntoWarehouseApi” and “app/java/network/APIDataAgentImpl”.
 2.	Change the String “host” to the IP address of the published “Team7ADProjectAPI” or change to whatever URL the Web API Application is running on.
 3.	Compile the solution and run it on the device or emulator.
 
-## 2) Username and Password
+### 2) Username and Password
 
 Android and Web Application share the same database. So, they have the same access.
 
