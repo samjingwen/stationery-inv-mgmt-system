@@ -291,6 +291,7 @@ namespace Team7ADProjectApi
             return false;
         }
 
+
         //Create a Single DO 
         public bool CreateDO(DeliveryOrder dOrder)
         {
@@ -306,8 +307,8 @@ namespace Team7ADProjectApi
             }
         }
 
-        //Create multiple DOs
 
+        //Create multiple DOs
         public bool CreateMDO(List<DeliveryOrder> dOrderlist)
         {
             try
@@ -345,7 +346,7 @@ namespace Team7ADProjectApi
                 foreach (var item in itemlist)
                 {
                     Stationery stat = RetrieveStationery(item.ItemId);
-                    stat.QuantityWarehouse = stat.QuantityWarehouse + item.Quantity;
+                    stat.QuantityWarehouse += item.Quantity;
                     PurchaseOrder po = RetrievePO(item.PONo);
                     po.Status = "Delivered";
                     PONum = po.PONo;
@@ -364,6 +365,7 @@ namespace Team7ADProjectApi
                     context.TransactionDetail.Add(transac);
                     context.SaveChanges();
                 }
+                
 
                 DeliveryOrder newDo = new DeliveryOrder
                 {
