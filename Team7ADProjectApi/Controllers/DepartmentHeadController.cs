@@ -93,7 +93,7 @@ namespace Team7ADProjectApi.Controllers
 
         #region Teh Li Heng
 
-        [Authorize(Roles = RoleName.DepartmentHead)]
+       [Authorize(Roles = RoleName.DepartmentHead)]
         [HttpGet]
         [Route("api/departmenthead/getdepartmenthead/{*id}")]
         public IHttpActionResult GetDepartmentHeadListEmployees(string id)

@@ -10,7 +10,7 @@ using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
-    [RoleAuthorize(Roles = "Store Supervisor")]
+    [RoleAuthorize(Roles = "Store Supervisor, Store Manager")]
     public class ManagePostponeCollectionDateController : Controller
     {
         LogicDB _context;

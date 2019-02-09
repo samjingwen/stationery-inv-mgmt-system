@@ -37,6 +37,7 @@ namespace Team7ADProject.ViewModels
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Procurement", Title = "Supplier Management", Action = "Index", Controller = "ManageSupplier", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Management", Title = "Stationery Management", Action = "Index", Controller = "ManageStationery", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Stationery Management", Title = "Stationery Listing", Action = "ViewStationery", Controller = "ManageStationery", IsAction = true });
+            menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Collection Management", Title = "Collection Date (For All Dep)", Action = "Index", Controller = "ManagePostponeCollectionDate", IsAction = true });
             menulist.Add(new SideBarViewModel() { Roles = "Store Manager", SubMenu = "Collection Management", Title = "Add New Collection Point", Action = "Index", Controller = "ManagePoint", IsAction = true });
 
             //Store Clerk

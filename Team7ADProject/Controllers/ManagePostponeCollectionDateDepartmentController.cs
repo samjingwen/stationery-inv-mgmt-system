@@ -10,7 +10,7 @@ using Team7ADProject.ViewModels;
 
 namespace Team7ADProject.Controllers
 {
-    [RoleAuthorize(Roles = "Department Head, Department Representative")]
+    [RoleAuthorize(Roles = "Department Head,Department Representative")]
     public class ManagePostponeCollectionDateDepartmentController : Controller
     {
         #region Author:Lynn Lynn Oo
