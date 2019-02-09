@@ -4,109 +4,124 @@
     ViewBag.Title = "Detail";
 }
 
-<!DOCTYPE html>
+@{decimal total = 0;
+    foreach (var item in Model.Details)
+    {
+        var q = item.UnitPrice * item.Quantity;
+        total = total + (decimal)q;
+    }
+}
+    <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div class="custcontainer">
-        <table>
-            <tr>
-                <td width="1000px">
-                    <h2>Request Details</h2>
-                </td>
-                <td>
-                    @Html.ActionLink("Back", "Index", "History", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
-                </td>
-            </tr>
-        </table>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Details</title>
+    </head>
+    <body>
+        <div class="custcontainer">
+            <table>
+                <tr>
+                    <td width="1000px">
+                        <h2>Request Details</h2>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Back", "Index", "History", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @role = "button" })
+                    </td>
+                </tr>
+            </table>
 
-        @if (Model != null)
-        {
-            <div>
-                <table class="table">
-                    <tr>
-                        <td>
-                            @Html.DisplayNameFor(model => model.Request.RequestedBy):
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => model.Request.AspNetUsers1.EmployeeName)
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            @Html.DisplayNameFor(model => model.Request.ApprovedBy):
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => model.Request.AspNetUsers.EmployeeName)
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            @Html.DisplayNameFor(model => model.Request.Status):
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => model.Request.Status)
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            @Html.DisplayNameFor(model => model.Request.RequestDate):
-                        </td>
-                        <td>
-                            @($"{Model.Request.RequestDate:dd MMM yyyy}")
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div>
-                <table class="table">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Details.First().Stationery.Description)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Details.First().Quantity)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Details.First().Remarks)
-                        </th>
-                        @*<th>
-                                Request Date
-                            </th>*@
-                    </tr>
-                    @foreach (var item in Model.Details)
-                    {
+            @if (Model != null)
+            {
+                <div>
+                    <table class="table">
                         <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Request.RequestedBy):
+                            </th>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Stationery.Description)
+                                @Html.DisplayFor(model => model.Request.AspNetUsers1.EmployeeName)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Quantity)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Remarks)
-                            </td>
-                            @*<td>
-                                    @String.Format("{0:dd MMM yyyy}", item.TransactionDate)
-                                </td>*@
                         </tr>
-                    }
-                </table>
-            </div>
-        }
-        else
-        {
-            <div class="panel-body">
-                <h3 style="color:red;">Invalid url.</h3>
-            </div>
-        }
-    </div>
-</body>
+
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Request.ApprovedBy):
+                            </th>
+                            <td>
+                                @Html.DisplayFor(model => model.Request.AspNetUsers.EmployeeName)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Request.Status):
+                            </th>
+                            <td>
+                                @Html.DisplayFor(model => model.Request.Status)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Request.RequestDate):
+                            </th>
+                            <td>
+                                @($"{Model.Request.RequestDate:dd MMM yyyy}")
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Total Amount ($)
+                            </th>
+                            <td>
+                                @total
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Details.First().Stationery.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Details.First().Quantity)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Details.First().Remarks)
+                            </th>
+                            <th>
+                                Amount ($)
+                            </th>
+                        </tr>
+                        @foreach (var item in Model.Details)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Stationery.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Remarks)
+                                </td>
+                                <td>
+                                    @(item.Quantity * item.UnitPrice)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="panel-body">
+                    <h3 style="color:red;">Invalid url.</h3>
+                </div>
+            }
+        </div>
+    </body>
 </html>

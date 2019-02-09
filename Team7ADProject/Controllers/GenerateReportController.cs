@@ -296,7 +296,7 @@ namespace Team7ADProject.Controllers
                 #region Requests by Dept
 
                 var gendeptRpt = context.TransactionDetail.
-                    Where(x => x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                    Where(x => x.StationeryRequest.Status != "Pending Approval" && x.StationeryRequest.Status != "Rejected" && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
                             grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
                             grvm.selectentcategory.Any(id => id == x.StationeryRequest.DepartmentId)).
                     GroupBy(y=> new { y.StationeryRequest.DepartmentId}).
@@ -311,7 +311,7 @@ namespace Team7ADProject.Controllers
                 #region Requests by Stationery Category
 
                 var genstatRpt = context.TransactionDetail.
-                    Where(x => x.StationeryRequest.RequestDate >= fromDateTP && x.TransactionDate <= toDateTP &&
+                    Where(x => x.StationeryRequest.Status != "Pending Approval" && x.StationeryRequest.Status != "Rejected" && x.StationeryRequest.RequestDate >= fromDateTP && x.TransactionDate <= toDateTP &&
                             grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
                             grvm.selectentcategory.Any(id => id == x.StationeryRequest.DepartmentId)).
                         GroupBy(y => new { y.Stationery.Category }).
@@ -329,7 +329,7 @@ namespace Team7ADProject.Controllers
                 foreach (var j in grvm.selectentcategory)
                 {
 
-                    var timeRpt = context.TransactionDetail.Where(x => x.StationeryRequest.DepartmentId == j
+                    var timeRpt = context.TransactionDetail.Where(x => x.StationeryRequest.Status != "Pending Approval" && x.StationeryRequest.Status != "Rejected" && x.StationeryRequest.DepartmentId == j
                     && x.TransactionDate >= fromDateTP && x.TransactionDate <= toDateTP &&
                                 grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
                                 grvm.selectentcategory.Any(id => id == x.StationeryRequest.DepartmentId)).
@@ -352,7 +352,7 @@ namespace Team7ADProject.Controllers
 
                 foreach (var j in grvm.selectstatcategory) { 
 
-                var timeRpt = context.TransactionDetail.Where(x => x.Stationery.Category == j
+                var timeRpt = context.TransactionDetail.Where(x => x.StationeryRequest.Status != "Pending Approval" && x.StationeryRequest.Status != "Rejected" && x.Stationery.Category == j 
                 && x.StationeryRequest.RequestDate >= fromDateTP && x.TransactionDate <= toDateTP && 
                             grvm.selectstatcategory.Any(id => id == x.Stationery.Category) &&
                             grvm.selectentcategory.Any(id => id == x.StationeryRequest.DepartmentId)).
