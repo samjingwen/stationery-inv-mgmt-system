@@ -11,7 +11,7 @@
 
 ### Configuration for Android
 
-1.	Open the android source code with android studio and go to “app/java/data/ReturntoWarehouseApi” and “app/java/network/APIDataAgentImpl”.
+1.	Open the android source code with android studio and go to “app/java/model/ReturntoWarehouseApi” and “app/java/network/APIDataAgentImpl”.
 2.	Change the String “host” to the IP address of the published “Team7ADProjectAPI” or change to whatever URL the Web API Application is running on.
 3.	Compile the solution and run it on the device or emulator.
 
