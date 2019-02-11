@@ -126,6 +126,9 @@ Department Representative	  - 	deprep@logic.u.edu
 #### Recommended Browser 
 •	Mozilla Firefox
 
+#### Recommended Mobile Device
+•	Pixel 2 XL
+
 ### 4) Authors
 •	Chan Yuling Elaine 
 
