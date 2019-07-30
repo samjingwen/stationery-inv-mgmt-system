@@ -1,5 +1,15 @@
 # Logic University Stationery Store Inventory System
 
+<img src="https://user-images.githubusercontent.com/43515914/62100321-ddbc9000-b2c3-11e9-9fe9-b30eb7fa92b5.png" width="32%"></img> 
+<img src="https://user-images.githubusercontent.com/43515914/62100334-e9a85200-b2c3-11e9-86a5-cff217cb00d9.png" width="32%"></img> 
+<img src="https://user-images.githubusercontent.com/43515914/62100335-e9a85200-b2c3-11e9-9ce9-6264ddeb6eef.png" width="32%"></img> 
+<img src="https://user-images.githubusercontent.com/43515914/62100336-e9a85200-b2c3-11e9-91df-158363b99a10.png" width="32%"></img> 
+<img src="https://user-images.githubusercontent.com/43515914/62113149-a7443c80-b2e6-11e9-8c59-8478061ace66.png" width="32%"></img> 
+<img src="https://user-images.githubusercontent.com/43515914/62100337-ea40e880-b2c3-11e9-9eb9-88856fb40b63.png" width="32%"></img> 
+
+
+
+
 ## 1) Installation Guide
 
 ### Configuration for Web API and Web Application
